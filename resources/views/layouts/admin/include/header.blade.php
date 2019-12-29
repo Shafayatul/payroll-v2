@@ -391,9 +391,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="ti-email"></i> 
-                                    Inbox
+                                <a href="{{ route('password-change') }}">
+                                    <i class="ti-key"></i> 
+                                    Password Change
                                 </a>
                             </li>
                             <li role="separator" class="divider"></li>
