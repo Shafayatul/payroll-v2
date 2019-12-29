@@ -36,6 +36,11 @@
         <div class="login-register" style="background-image:url(admin/assets/images/background/login-register.jpg);">        
             <div class="login-box card">
             <div class="card-body">
+                @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 <form class="form-horizontal form-material" id="loginform" action="{{ route('login') }}" method="POST">
                     @csrf
                     <h3 class="box-title mb-3">Sign In</h3>
@@ -89,7 +94,7 @@
                         </div>
                     </div>
                 </form>
-                <form class="form-horizontal" id="recoverform" action="{{ route('password.email') }}l">
+                <form class="form-horizontal" id="recoverform" action="{{ route('password.email') }}" method="POST">
                     @csrf
                     <div class="form-group ">
                         <div class="col-xs-12">
@@ -97,6 +102,7 @@
                             <p class="text-muted">Enter your Email and instructions will be sent to you! </p>
                         </div>
                     </div>
+
                     <div class="form-group ">
                         <div class="col-xs-12">
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Email" autocomplete="email" autofocus>
