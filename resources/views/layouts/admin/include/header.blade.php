@@ -4,7 +4,7 @@
         <!-- Logo -->
         <!-- ============================================================== -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{{ route('home') }}">
                 <!-- Logo icon -->
                 <b>
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -16,10 +16,12 @@
                 <!--End Logo icon -->
                 <!-- Logo text -->
                 <span>
-                 <!-- dark Logo text -->
-                 <img src="{{ asset('admin/assets/images/logo-text.png') }}" alt="homepage" class="dark-logo" />
-                 <!-- Light Logo text -->    
-                 <img src="{{ asset('admin/assets/images/logo-light-text.png') }}" class="light-logo" alt="homepage" /></span> </a>
+                    <!-- dark Logo text -->
+                    <img src="{{ asset('admin/assets/images/logo-text.png') }}" alt="homepage" class="dark-logo" />
+                    <!-- Light Logo text -->    
+                    <img src="{{ asset('admin/assets/images/logo-light-text.png') }}" class="light-logo" alt="homepage" />
+                </span> 
+             </a>
         </div>
         <!-- ============================================================== -->
         <!-- End Logo -->
@@ -367,9 +369,9 @@
                                         <img src="{{ asset('admin/assets/images/users/1.jpg') }}" alt="user">
                                     </div>
                                     <div class="u-text">
-                                        <h4>Steave Jobs</h4>
-                                        <p class="text-muted">varun@gmail.com</p>
-                                        <a href="profile.html" class="btn btn-rounded btn-danger btn-sm">
+                                        <h4>{{ Auth::user()->name }}</h4>
+                                        <p class="text-muted">{{ Auth::user()->email }}</p>
+                                        <a href="#" class="btn btn-rounded btn-danger btn-sm">
                                             View Profile
                                         </a>
                                     </div>
