@@ -1,6 +1,11 @@
 @extends('layouts.admin.master')
-@section('title', "Industry $industry->id")
+@section('title', "Industry $industry->name")
 @section('admin-additional-css')
+<style type="text/css">
+    .table th{
+        border: 1px solid #dee2e6;
+    }
+</style>
 @endsection
 @section('content')
 <div class="row page-titles">
@@ -8,7 +13,7 @@
         <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="javascript:void(0)">Industry</a></li>
-            <li class="breadcrumb-item active">Industry {{ $industry->id }}</li>
+            <li class="breadcrumb-item active">Industry {{ $industry->name }}</li>
         </ol>
     </div>
 </div>
@@ -16,7 +21,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header">Industry {{ $industry->id }}</div>
+            <div class="card-header">Industry {{ $industry->name }}</div>
             <div class="card-body">
 
                 <a href="{{ url('/industries') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>

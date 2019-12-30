@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
-@section('title', 'Edit Company #{{ $company->id }}')
+@section('title', "Edit Company $company->name")
 @section('admin-additional-css')
 @endsection
 @section('content')
@@ -8,7 +8,7 @@
         <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="javascript:void(0)">Company</a></li>
-            <li class="breadcrumb-item active">Edit Company #{{ $company->id }}</li>
+            <li class="breadcrumb-item active">Edit Company #{{ $company->name }}</li>
         </ol>
     </div>
 </div>
@@ -16,7 +16,7 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header">Edit Company #{{ $company->id }}</div>
+            <div class="card-header">Edit Company #{{ $company->name }}</div>
             <div class="card-body">
                 <a href="{{ url('/companies') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                 <br />

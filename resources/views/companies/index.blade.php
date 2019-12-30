@@ -1,6 +1,11 @@
 @extends('layouts.admin.master')
 @section('title', 'Companies')
 @section('admin-additional-css')
+<style type="text/css">
+    .table thead th{
+        border: 1px solid #dee2e6;
+    }
+</style>
 @endsection
 @section('content')
 <div class="row page-titles">
@@ -43,6 +48,9 @@
                                 <th>Name</th>
                                 <th>Is Sub Company Enable</th>
                                 <th>Is Email Notification Enable</th>
+                                <th>Language</th>
+                                <th>Currency</th>
+                                <th>Timezone</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -65,6 +73,17 @@
                                         <span class="text-danger">No</span>
                                     @endif
                                 </td>
+                                <td>
+                                     @if($item->language == 1)
+                                        <span class="text-success">English</span>
+                                    @elseif($item->language == 2)
+                                        <span class="text-success">Deutsch</span>
+                                    @else
+                                        <span class="text-success">Not Selected</span>
+                                    @endif
+                                </td>
+                                <td>{{ $item->currency }}</td>
+                                <td>{{ $item->timezone }}</td>
                                 <td>
                                     <a href="{{ url('/companies/' . $item->id) }}" title="View Company"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
                                     <a href="{{ url('/companies/' . $item->id . '/edit') }}" title="Edit Company"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>

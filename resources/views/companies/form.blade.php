@@ -6,7 +6,7 @@
 <div class="form-group {{ $errors->has('is_sub_company_enable') ? 'has-error' : ''}}">
     {!! Form::label('is_sub_company_enable', 'Sub-companies enabled', ['class' => 'control-label']) !!}
     <div class="checkbox checkbox-success">
-        {!! Form::checkbox('is_sub_company_enable', '1', false, ['id' => 'checkbox3']) !!}
+        <input type="checkbox" name="is_sub_company_enable" id="checkbox3" @isset($company->is_sub_company_enable) @if($company->is_sub_company_enable == 1) ? checked @endif @endisset>
         <label for="checkbox3" style="width: 4% !important"> Yes </label>
     </div>
     {!! $errors->first('is_sub_company_enable', '<p class="help-block">:message</p>') !!}
@@ -14,7 +14,7 @@
 <div class="form-group {{ $errors->has('is_email_notification_enable') ? 'has-error' : ''}}">
     {!! Form::label('is_email_notification_enable', 'Email notifications enabled', ['class' => 'control-label']) !!}
     <div class="checkbox checkbox-success">
-        {!! Form::checkbox('is_email_notification_enable', '1', false, ['id' => 'checkbox2'] ) !!}
+        <input type="checkbox" name="is_email_notification_enable" id="checkbox2" @isset($company->is_email_notification_enable) @if($company->is_email_notification_enable == 1) ? checked @endif @endisset>
         <label for="checkbox2" style="width: 4% !important"> Yes </label>
     </div>
     {!! $errors->first('is_email_notification_enable', '<p class="help-block">:message</p>') !!}
@@ -29,7 +29,7 @@
     <select name="currency" class="form-control select2" required>
         <option value="">--Select Currency--</option>
         @foreach($currencies as $key => $value)
-            <option value="{{ $value->abbreviation }}">
+            <option value="{{ $value->abbreviation }}" @isset($company->currency) @if($value->abbreviation == $company->currency) ? selected @endif @endisset>
                 {!! $value->abbreviation.' ('.$value->symbol.')' !!}
             </option>
         @endforeach
@@ -45,8 +45,8 @@
     {!! Form::label('timezone', 'Timezone', ['class' => 'control-label']) !!}
     <select name="timezone" class="form-control select2" required>
         <option value="">--Select Timezone--</option>
-        @foreach($timezones as $key => $value)
-            <option value="{{ $value }}" @if($key == isset($company->timezone)) ? selected :  @endif>
+        @foreach($timezones as $value)
+            <option value="{{ $value }}" @isset($company->timezone) @if($value == $company->timezone) ? selected @endif @endisset>
                 {!! $value !!}
             </option>
         @endforeach
@@ -70,7 +70,11 @@
     {!! Form::file('logo', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('logo', '<p class="help-block">:message</p>') !!}
 </div>
-
+@if($formMode == 'edit')
+    <div class="form-group">
+        <img src="{{ asset($company->logo) }}" alt="" style="width: 200px; height: 200px;">
+    </div>
+@endif
 
 <div class="form-group">
     {!! Form::submit($formMode === 'edit' ? 'Update' : 'Create', ['class' => 'btn btn-primary']) !!}

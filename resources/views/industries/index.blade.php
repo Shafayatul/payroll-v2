@@ -1,6 +1,11 @@
 @extends('layouts.admin.master')
 @section('title', 'Industries')
 @section('admin-additional-css')
+<style type="text/css">
+    .table thead th{
+        border: 1px solid #dee2e6;
+    }
+</style>
 @endsection
 @section('content')
 <div class="row page-titles">

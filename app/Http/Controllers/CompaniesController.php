@@ -53,6 +53,7 @@ class CompaniesController extends Controller
         $json_currencies = $this->currencies();
         $currencies = json_decode($json_currencies);
         $timezones = $this->timezones();
+        // dd($timezones);
         $industries = Industry::pluck('name', 'id');
         $company = null;
         return view('companies.create', compact('currencies', 'timezones', 'industries', 'company'));
