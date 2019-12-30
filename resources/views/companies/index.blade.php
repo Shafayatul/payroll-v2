@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
-@section('title', 'Users')
+@section('title', 'Companies')
 @section('admin-additional-css')
 @endsection
 @section('content')
@@ -7,8 +7,8 @@
     <div class="col-md-6 col-8 align-self-center">
         <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Users</a></li>
-            <li class="breadcrumb-item active">Users</li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Companies</a></li>
+            <li class="breadcrumb-item active">Companies</li>
         </ol>
     </div>
 </div>
@@ -16,13 +16,13 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header">Users</div>
+            <div class="card-header">Companies</div>
             <div class="card-body">
-                <a href="{{ url('/users/create') }}" class="btn btn-success btn-sm" title="Add New User">
+                <a href="{{ url('/companies/create') }}" class="btn btn-success btn-sm" title="Add New Company">
                     <i class="fa fa-plus" aria-hidden="true"></i> Add New
                 </a>
 
-                {!! Form::open(['method' => 'GET', 'url' => '/users', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
+                {!! Form::open(['method' => 'GET', 'url' => '/companies', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
                 <div class="input-group">
                     <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
                     <span class="input-group-append">
@@ -41,59 +41,42 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
-                                <th>Email</th>
-                                <th>Status</th>
+                                <th>Is Sub Company Enable</th>
+                                <th>Is Email Notification Enable</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($users as $item)
+                        @foreach($companies as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->name }}</td>
-                                <td>{{ $item->email }}</td>
                                 <td>
-                                    @if($item->status == 1)
-                                        <span class="text-success">Active</span>
+                                    @if($item->is_sub_company_enable == 1)
+                                        <span class="text-success">Yes</span>
                                     @else
-                                        <span class="text-warning">Deactive</span>
+                                        <span class="text-danger">No</span>
                                     @endif
                                 </td>
                                 <td>
-                                     @if($item->status == 1)
-                                        <a href="{{ route('user-inactive', ['id' => $item->id]) }}" title="Inactive User">
-                                            <button class="btn btn-warning btn-sm">
-                                                <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                                            </button>
-                                        </a>
+                                    @if($item->is_email_notification_enable == 1)
+                                        <span class="text-success">Yes</span>
                                     @else
-                                        <a href="{{ route('user-active', ['id' => $item->id]) }}" title="Active User">
-                                            <button class="btn btn-success btn-sm">
-                                                <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                                            </button>
-                                        </a>
+                                        <span class="text-danger">No</span>
                                     @endif
-                                    <a href="{{ url('/users/' . $item->id) }}" title="View User">
-                                        <button class="btn btn-info btn-sm">
-                                            <i class="fa fa-eye" aria-hidden="true"></i> 
-                                            View
-                                        </button>
-                                    </a>
-                                    <a href="{{ url('/users/' . $item->id . '/edit') }}" title="Edit User">
-                                        <button class="btn btn-primary btn-sm">
-                                            <i class="fa fa-edit" aria-hidden="true"></i> 
-                                            Edit
-                                        </button>
-                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ url('/companies/' . $item->id) }}" title="View Company"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                    <a href="{{ url('/companies/' . $item->id . '/edit') }}" title="Edit Company"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>
                                     {!! Form::open([
                                         'method'=>'DELETE',
-                                        'url' => ['/users', $item->id],
+                                        'url' => ['/companies', $item->id],
                                         'style' => 'display:inline'
                                     ]) !!}
                                         {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', array(
                                                 'type' => 'submit',
                                                 'class' => 'btn btn-danger btn-sm',
-                                                'title' => 'Delete User',
+                                                'title' => 'Delete Company',
                                                 'onclick'=>'return confirm("Confirm delete?")'
                                         )) !!}
                                     {!! Form::close() !!}
@@ -102,7 +85,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <div class="pagination-wrapper"> {!! $users->appends(['search' => Request::get('search')])->render() !!} </div>
+                    <div class="pagination-wrapper"> {!! $companies->appends(['search' => Request::get('search')])->render() !!} </div>
                 </div>
 
             </div>

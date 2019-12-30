@@ -110,6 +110,22 @@ class UsersController extends Controller
         return redirect('users')->with('success', 'User updated!');
     }
 
+    public function userInactive($id)
+    {
+        $user           = User::findOrFail($id);
+        $user->status   = 0;
+        $user->save();
+        return redirect('users')->with('success', 'User Deactivated!');
+    }
+
+    public function userActive($id)
+    {
+        $user           = User::findOrFail($id);
+        $user->status   = 1;
+        $user->save();
+        return redirect('users')->with('success', 'User Activated!');
+    }
+
     /**
      * Remove the specified resource from storage.
      *

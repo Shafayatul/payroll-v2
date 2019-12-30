@@ -27,6 +27,30 @@
                         <li><a href="{{ url('users') }}">Manage</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <i class="mdi mdi-account"></i>
+                        <span class="hide-menu">
+                            Company 
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ url('companies/create') }}">Create</a></li>
+                        <li><a href="{{ url('companies') }}">Manage</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <i class="mdi mdi-account"></i>
+                        <span class="hide-menu">
+                            Industry 
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ url('industries/create') }}">Create</a></li>
+                        <li><a href="{{ url('industries') }}">Manage</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->
