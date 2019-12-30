@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
-@section('title', 'Create New %%modelName%%')
+@section('title', 'Create New User')
 @section('admin-additional-css')
 @endsection
 @section('content')
@@ -7,8 +7,8 @@
     <div class="col-md-6 col-8 align-self-center">
         <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">%%modelName%%</a></li>
-            <li class="breadcrumb-item active">Create New %%modelName%%</li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+            <li class="breadcrumb-item active">Create New User</li>
         </ol>
     </div>
 </div>
@@ -16,9 +16,9 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header">Create New %%modelName%%</div>
+            <div class="card-header">Create New User</div>
             <div class="card-body">
-                <a href="{{ url('/%%routeGroup%%%%viewName%%') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                <a href="{{ url('/users') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                 <br />
                 <br />
 
@@ -30,9 +30,9 @@
                     </ul>
                 @endif
 
-                {!! Form::open(['url' => '/%%routeGroup%%%%viewName%%', 'class' => 'form-horizontal', 'files' => true]) !!}
+                {!! Form::open(['url' => '/users', 'class' => 'form-horizontal', 'files' => true]) !!}
 
-                @include ('%%viewTemplateDir%%.form', ['formMode' => 'create'])
+                @include ('users.form', ['formMode' => 'create'])
 
                 {!! Form::close() !!}
 

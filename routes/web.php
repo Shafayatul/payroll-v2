@@ -21,4 +21,5 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('/password-change', 'UsersController@passwordWordChange')->name('password-change');
 	Route::post('/password-update', 'UsersController@passwordUpdate')->name('password-update');
+	Route::resource('users', 'UsersController');
 });

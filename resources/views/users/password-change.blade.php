@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
-@section('title', 'Home')
+@section('title', 'Password Change')
 @section('admin-additional-css')
 @endsection
 @section('content')

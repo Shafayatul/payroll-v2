@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
-@section('title', '%%crudNameCap%%')
+@section('title', 'Users')
 @section('admin-additional-css')
 @endsection
 @section('content')
@@ -7,8 +7,8 @@
     <div class="col-md-6 col-8 align-self-center">
         <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">%%crudNameCap%%</a></li>
-            <li class="breadcrumb-item active">%%crudNameCap%%</li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Users</a></li>
+            <li class="breadcrumb-item active">Users</li>
         </ol>
     </div>
 </div>
@@ -16,13 +16,13 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header">%%crudNameCap%%</div>
+            <div class="card-header">Users</div>
             <div class="card-body">
-                <a href="{{ url('/%%routeGroup%%%%viewName%%/create') }}" class="btn btn-success btn-sm" title="Add New %%modelName%%">
+                <a href="{{ url('/users/create') }}" class="btn btn-success btn-sm" title="Add New User">
                     <i class="fa fa-plus" aria-hidden="true"></i> Add New
                 </a>
 
-                {!! Form::open(['method' => 'GET', 'url' => '/%%routeGroup%%%%viewName%%', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
+                {!! Form::open(['method' => 'GET', 'url' => '/users', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
                 <div class="input-group">
                     <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
                     <span class="input-group-append">
@@ -39,26 +39,38 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>#</th>%%formHeadingHtml%%<th>Actions</th>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($%%crudName%% as $item)
+                        @foreach($users as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                %%formBodyHtml%%
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->email }}</td>
                                 <td>
-                                    <a href="{{ url('/%%routeGroup%%%%viewName%%/' . $item->%%primaryKey%%) }}" title="View %%modelName%%"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                    <a href="{{ url('/%%routeGroup%%%%viewName%%/' . $item->%%primaryKey%% . '/edit') }}" title="Edit %%modelName%%"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                    @if($item->status == 1)
+                                        <span class="text-success">Active</span>
+                                    @else
+                                        <span class="text-warning">Deactive</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ url('/users/' . $item->id) }}" title="View User"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                    <a href="{{ url('/users/' . $item->id . '/edit') }}" title="Edit User"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>
                                     {!! Form::open([
                                         'method'=>'DELETE',
-                                        'url' => ['/%%routeGroup%%%%viewName%%', $item->%%primaryKey%%],
+                                        'url' => ['/users', $item->id],
                                         'style' => 'display:inline'
                                     ]) !!}
-                                        {!! Form::button('<i class="fa fa-trash-o" aria-hidden="true"></i> Delete', array(
+                                        {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', array(
                                                 'type' => 'submit',
                                                 'class' => 'btn btn-danger btn-sm',
-                                                'title' => 'Delete %%modelName%%',
+                                                'title' => 'Delete User',
                                                 'onclick'=>'return confirm("Confirm delete?")'
                                         )) !!}
                                     {!! Form::close() !!}
@@ -67,7 +79,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <div class="pagination-wrapper"> {!! $%%crudName%%->appends(['search' => Request::get('search')])->render() !!} </div>
+                    <div class="pagination-wrapper"> {!! $users->appends(['search' => Request::get('search')])->render() !!} </div>
                 </div>
 
             </div>

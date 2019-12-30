@@ -14,6 +14,19 @@
                         </span>
                     </a>
                 </li>
+
+                <li>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <i class="mdi mdi-account"></i>
+                        <span class="hide-menu">
+                            Users 
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ url('users/create') }}">Create</a></li>
+                        <li><a href="{{ url('users') }}">Manage</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

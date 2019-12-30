@@ -1,40 +1,50 @@
-@extends('layouts.app')
-
+@extends('layouts.admin.master')
+@section('title', 'Edit %%modelName%% #{{ $%%crudNameSingular%%->%%primaryKey%% }}')
+@section('admin-additional-css')
+@endsection
 @section('content')
-    <div class="container">
-        <div class="row">
-            @include('admin.sidebar')
+<div class="row page-titles">
+    <div class="col-md-6 col-8 align-self-center">
+        <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">%%modelName%%</a></li>
+            <li class="breadcrumb-item active">Edit %%modelName%% #{{ $%%crudNameSingular%%->%%primaryKey%% }}</li>
+        </ol>
+    </div>
+</div>
+@include('layouts.admin.include.alert')
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">Edit %%modelName%% #{{ $%%crudNameSingular%%->%%primaryKey%% }}</div>
+            <div class="card-body">
+                <a href="{{ url('/%%routeGroup%%%%viewName%%') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                <br />
+                <br />
 
-            <div class="col-md-9">
-                <div class="card">
-                    <div class="card-header">Edit %%modelName%% #{{ $%%crudNameSingular%%->%%primaryKey%% }}</div>
-                    <div class="card-body">
-                        <a href="{{ url('/%%routeGroup%%%%viewName%%') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
-                        <br />
-                        <br />
+                @if ($errors->any())
+                    <ul class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
 
-                        @if ($errors->any())
-                            <ul class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        @endif
+                {!! Form::model($%%crudNameSingular%%, [
+                    'method' => 'PATCH',
+                    'url' => ['/%%routeGroup%%%%viewName%%', $%%crudNameSingular%%->%%primaryKey%%],
+                    'class' => 'form-horizontal',
+                    'files' => true
+                ]) !!}
 
-                        {!! Form::model($%%crudNameSingular%%, [
-                            'method' => 'PATCH',
-                            'url' => ['/%%routeGroup%%%%viewName%%', $%%crudNameSingular%%->%%primaryKey%%],
-                            'class' => 'form-horizontal',
-                            'files' => true
-                        ]) !!}
+                @include ('%%viewTemplateDir%%.form', ['formMode' => 'edit'])
 
-                        @include ('%%viewTemplateDir%%.form', ['formMode' => 'edit'])
+                {!! Form::close() !!}
 
-                        {!! Form::close() !!}
-
-                    </div>
-                </div>
             </div>
         </div>
     </div>
+</div>
+@endsection
+@section('admin-additional-js')
 @endsection
