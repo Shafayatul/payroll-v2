@@ -74,7 +74,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                     @if($item->language == 1)
+                                    @if($item->language == 1)
                                         <span class="text-success">English</span>
                                     @elseif($item->language == 2)
                                         <span class="text-success">Deutsch</span>

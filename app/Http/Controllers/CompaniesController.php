@@ -53,10 +53,8 @@ class CompaniesController extends Controller
         $json_currencies = $this->currencies();
         $currencies = json_decode($json_currencies);
         $timezones = $this->timezones();
-        // dd($timezones);
         $industries = Industry::pluck('name', 'id');
-        $company = null;
-        return view('companies.create', compact('currencies', 'timezones', 'industries', 'company'));
+        return view('companies.create', compact('currencies', 'timezones', 'industries'));
     }
 
     /**
@@ -167,7 +165,7 @@ class CompaniesController extends Controller
 
         if($request->hasFile('logo')){
             $logo       = $request->file('logo');
-            $name       = uniqid().'.'.strtolower($logo->getClientOriginalExtebsion());
+            $name       = uniqid().'.'.strtolower($logo->getClientOriginalExtension());
             $path       = 'company-logo/';
             $logo_url   = $path.$name;
             $logo->move($path, $name);

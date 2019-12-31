@@ -26,4 +26,5 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('/user-active/{id}', 'UsersController@userActive')->name('user-active');
 	Route::resource('companies', 'CompaniesController');
 	Route::resource('industries', 'IndustriesController');
+	Route::resource('offices', 'OfficesController');
 });

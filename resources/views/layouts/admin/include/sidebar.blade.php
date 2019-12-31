@@ -43,6 +43,18 @@
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <i class="mdi mdi-account"></i>
                         <span class="hide-menu">
+                            Offices 
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ url('offices/create') }}">Create</a></li>
+                        <li><a href="{{ url('offices') }}">Manage</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <i class="mdi mdi-account"></i>
+                        <span class="hide-menu">
                             Industry 
                         </span>
                     </a>

@@ -1,6 +1,11 @@
 @extends('layouts.admin.master')
 @section('title', "%%modelName%% $%%crudNameSingular%%->%%primaryKey%%")
 @section('admin-additional-css')
+<style type="text/css">
+    .table th{
+        border: 1px solid #dee2e6;
+    }
+</style>
 @endsection
 @section('content')
 <div class="row page-titles">
