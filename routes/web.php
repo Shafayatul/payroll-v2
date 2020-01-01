@@ -35,6 +35,8 @@ Route::group(
 		Route::resource('holidays', 'HolidaysController');
 		Route::resource('feedback-categories', 'FeedbackCategoriesController');
 		Route::resource('feedback-category-attributes', 'FeedbackCategoryAttributesController');
+		Route::resource('departments', 'DepartmentsController');
+		Route::resource('interview-types', 'InterviewTypesController');
 	});
 });
 

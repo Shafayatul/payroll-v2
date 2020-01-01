@@ -1,3 +1,3 @@
 <footer class="footer">
-    © 2019 Monster Admin by wrappixel.com
+    © {{ Carbon\Carbon::now()->format('Y') }} Monster Admin by wrappixel.com
 </footer>

@@ -111,6 +111,30 @@
                         <li><a href="{{ url('feedback-category-attributes') }}">Manage</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <i class="mdi mdi-account"></i>
+                        <span class="hide-menu">
+                            Department
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ url('departments/create') }}">Create</a></li>
+                        <li><a href="{{ url('departments') }}">Manage</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <i class="mdi mdi-account"></i>
+                        <span class="hide-menu">
+                            Interview Type
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ url('interview-types/create') }}">Create</a></li>
+                        <li><a href="{{ url('interview-types') }}">Manage</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->
