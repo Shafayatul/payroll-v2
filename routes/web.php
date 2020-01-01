@@ -37,6 +37,7 @@ Route::group(
 		Route::resource('feedback-category-attributes', 'FeedbackCategoryAttributesController');
 		Route::resource('departments', 'DepartmentsController');
 		Route::resource('interview-types', 'InterviewTypesController');
+		Route::resource('email-templates', 'EmailTemplatesController');
 	});
 });
 
