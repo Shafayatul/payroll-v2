@@ -28,7 +28,7 @@
                 <a href="{{ url('/email-templates/' . $emailtemplate->id . '/edit') }}" title="Edit EmailTemplate"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>
                 {!! Form::open([
                     'method'=>'DELETE',
-                    'url' => ['emailtemplates', $emailtemplate->id],
+                    'url' => ['email-templates', $emailtemplate->id],
                     'style' => 'display:inline'
                 ]) !!}
                     {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', array(

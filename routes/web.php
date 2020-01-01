@@ -38,6 +38,7 @@ Route::group(
 		Route::resource('departments', 'DepartmentsController');
 		Route::resource('interview-types', 'InterviewTypesController');
 		Route::resource('email-templates', 'EmailTemplatesController');
+		Route::resource('cost-centers', 'CostCentersController');
 	});
 });
 

@@ -147,6 +147,18 @@
                         <li><a href="{{ url('email-templates') }}">Manage</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <i class="mdi mdi-account"></i>
+                        <span class="hide-menu">
+                            Cost Center
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ url('cost-centers/create') }}">Create</a></li>
+                        <li><a href="{{ url('cost-centers') }}">Manage</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation -->
