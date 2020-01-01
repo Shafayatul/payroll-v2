@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
-@section('title', '%%crudNameCap%%')
+@section('title', 'Publicholidaycalendars')
 @section('admin-additional-css')
 <style type="text/css">
     .table thead th{
@@ -12,8 +12,8 @@
     <div class="col-md-6 col-8 align-self-center">
         <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">%%crudNameCap%%</a></li>
-            <li class="breadcrumb-item active">%%crudNameCap%%</li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Publicholidaycalendars</a></li>
+            <li class="breadcrumb-item active">Publicholidaycalendars</li>
         </ol>
     </div>
 </div>
@@ -21,13 +21,13 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header">%%crudNameCap%%</div>
+            <div class="card-header">Publicholidaycalendars</div>
             <div class="card-body">
-                <a href="{{ url('/%%routeGroup%%%%viewName%%/create') }}" class="btn btn-success btn-sm" title="Add New %%modelName%%">
+                <a href="{{ url('/public-holiday-calendars/create') }}" class="btn btn-success btn-sm" title="Add New PublicHolidayCalendar">
                     <i class="fa fa-plus" aria-hidden="true"></i> Add New
                 </a>
 
-                {!! Form::open(['method' => 'GET', 'url' => '/%%routeGroup%%%%viewName%%', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
+                {!! Form::open(['method' => 'GET', 'url' => '/public-holiday-calendars', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
                 <div class="input-group">
                     <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
                     <span class="input-group-append">
@@ -44,26 +44,36 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>#</th>%%formHeadingHtml%%<th>Actions</th>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Office</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($%%crudName%% as $item)
+                        @foreach($publicholidaycalendars as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                %%formBodyHtml%%
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->type }}</td>
                                 <td>
-                                    <a href="{{ url('/%%routeGroup%%%%viewName%%/' . $item->%%primaryKey%%) }}" title="View %%modelName%%"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                    <a href="{{ url('/%%routeGroup%%%%viewName%%/' . $item->%%primaryKey%% . '/edit') }}" title="Edit %%modelName%%"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>
+                                    @isset($offices[$item->office_id])
+                                        {{ $offices[$item->office_id] }}
+                                    @endisset
+                                </td>
+                                <td>
+                                    <a href="{{ url('/public-holiday-calendars/' . $item->id) }}" title="View PublicHolidayCalendar"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                    <a href="{{ url('/public-holiday-calendars/' . $item->id . '/edit') }}" title="Edit PublicHolidayCalendar"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>
                                     {!! Form::open([
                                         'method'=>'DELETE',
-                                        'url' => ['/%%routeGroup%%%%viewName%%', $item->%%primaryKey%%],
+                                        'url' => ['/public-holiday-calendars', $item->id],
                                         'style' => 'display:inline'
                                     ]) !!}
                                         {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', array(
                                                 'type' => 'submit',
                                                 'class' => 'btn btn-danger btn-sm',
-                                                'title' => 'Delete %%modelName%%',
+                                                'title' => 'Delete PublicHolidayCalendar',
                                                 'onclick'=>'return confirm("Confirm delete?")'
                                         )) !!}
                                     {!! Form::close() !!}
@@ -72,7 +82,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <div class="pagination-wrapper"> {!! $%%crudName%%->appends(['search' => Request::get('search')])->render() !!} </div>
+                    <div class="pagination-wrapper"> {!! $publicholidaycalendars->appends(['search' => Request::get('search')])->render() !!} </div>
                 </div>
 
             </div>

@@ -41,7 +41,7 @@
                 </li>
                 <li>
                     <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
+                        <i class="mdi mdi-bank"></i>
                         <span class="hide-menu">
                             Offices 
                         </span>
@@ -61,6 +61,18 @@
                     <ul aria-expanded="false" class="collapse">
                         <li><a href="{{ url('industries/create') }}">Create</a></li>
                         <li><a href="{{ url('industries') }}">Manage</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="has-arrow" href="#" aria-expanded="false">
+                        <i class="mdi mdi-account"></i>
+                        <span class="hide-menu">
+                            Holiday Calendar 
+                        </span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="{{ url('public-holiday-calendars/create') }}">Create</a></li>
+                        <li><a href="{{ url('public-holiday-calendars') }}">Manage</a></li>
                     </ul>
                 </li>
             </ul>

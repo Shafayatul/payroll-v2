@@ -31,6 +31,7 @@ Route::group(
 		Route::resource('companies', 'CompaniesController');
 		Route::resource('industries', 'IndustriesController');
 		Route::resource('offices', 'OfficesController');
+		Route::resource('public-holiday-calendars', 'PublicHolidayCalendarsController');
 	});
 });
 
