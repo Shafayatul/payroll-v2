@@ -93,6 +93,14 @@
                                 </td>
                             </tr>
                             <tr>
+                                <th>Public Holiday</th>
+                                <td>
+                                    @isset($holidays[$company->public_holiday_id])
+                                        {{ $holidays[$company->public_holiday_id] }}
+                                    @endisset
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>Timezone</th>
                                 <td>{{ $company->timezone }}</td>
                             </tr>

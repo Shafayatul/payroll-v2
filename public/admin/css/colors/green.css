@@ -178,3 +178,31 @@ a.link:hover, a.link:focus {
   background: #ffffff;
   color: #55ce63;
 }
+
+.left-sidebar{
+  overflow-y: scroll !important;
+  top: 0 !important;
+  bottom: 0 !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #55ce63; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #55CE63; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #55ce63; 
+}

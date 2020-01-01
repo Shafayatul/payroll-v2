@@ -7,6 +7,7 @@ use App\Http\Requests;
 
 use App\Company;
 use App\Industry;
+use App\Holiday;
 use Illuminate\Http\Request;
 use App\Companies\timezoneCurrencyTrait;
 use File;
@@ -40,7 +41,8 @@ class CompaniesController extends Controller
             $companies = Company::latest()->paginate($perPage);
         }
         $industries = Industry::pluck('name', 'id');
-        return view('companies.index', compact('companies', 'industries'));
+        $holidays = Holiday::pluck('name', 'id');
+        return view('companies.index', compact('companies', 'industries', 'holidays'));
     }
 
     /**
@@ -54,7 +56,8 @@ class CompaniesController extends Controller
         $currencies = json_decode($json_currencies);
         $timezones = $this->timezones();
         $industries = Industry::pluck('name', 'id');
-        return view('companies.create', compact('currencies', 'timezones', 'industries'));
+        $holidays = Holiday::pluck('name', 'id');
+        return view('companies.create', compact('currencies', 'timezones', 'industries', 'holidays'));
     }
 
     /**
@@ -118,7 +121,8 @@ class CompaniesController extends Controller
         $currencies = json_decode($json_currencies);
         $timezones = $this->timezones();
         $industries = Industry::pluck('name', 'id');
-        return view('companies.show', compact('company', 'currencies', 'timezones', 'industries'));
+        $holidays = Holiday::pluck('name', 'id');
+        return view('companies.show', compact('company', 'currencies', 'timezones', 'industries', 'holidays'));
     }
 
     /**
@@ -131,12 +135,12 @@ class CompaniesController extends Controller
     public function edit($id)
     {
         $company = Company::findOrFail($id);
-        // dd($company);
+        $holidays = Holiday::pluck('name', 'id');
         $json_currencies = $this->currencies();
         $currencies = json_decode($json_currencies);
         $timezones = $this->timezones();
         $industries = Industry::pluck('name', 'id');
-        return view('companies.edit', compact('company', 'currencies', 'timezones', 'industries'));
+        return view('companies.edit', compact('company', 'currencies', 'timezones', 'industries', 'holidays'));
     }
 
     /**

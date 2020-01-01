@@ -115,7 +115,7 @@
     <div class="col-md-6">
         <div class="form-group {{ $errors->has('public_holiday_id') ? 'has-error' : ''}}">
             {!! Form::label('public_holiday_id', 'Public Holiday', ['class' => 'control-label']) !!}
-            {!! Form::select('public_holiday_id', [], null, ('' == 'required') ? ['class' => 'form-control select2', 'required' => 'required', 'placeholder' => '--Select Public Holiday--'] : ['class' => 'form-control select2', 'placeholder' => '--Select Public Holiday--']) !!}
+            {!! Form::select('public_holiday_id', $holidays, null, ('' == 'required') ? ['class' => 'form-control select2', 'required' => 'required', 'placeholder' => '--Select Public Holiday--'] : ['class' => 'form-control select2', 'placeholder' => '--Select Public Holiday--']) !!}
             {!! $errors->first('public_holiday_id', '<p class="help-block">:message</p>') !!}
         </div>
     </div>

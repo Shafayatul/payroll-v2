@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Office;
 use App\Company;
+use App\Holiday;
 use Illuminate\Http\Request;
 use App\Companies\timezoneCurrencyTrait;
 
@@ -54,7 +55,8 @@ class OfficesController extends Controller
         $timezones = $this->timezones();
         $countries = $this->countries();
         $companies = Company::pluck('name', 'id');
-        return view('offices.create', compact('currencies', 'timezones', 'countries', 'companies'));
+        $holidays = Holiday::pluck('name', 'id');
+        return view('offices.create', compact('currencies', 'timezones', 'countries', 'companies', 'holidays'));
     }
 
     /**
@@ -96,7 +98,8 @@ class OfficesController extends Controller
         $office    = Office::findOrFail($id);
         $countries = $this->countries();
         $companies = Company::pluck('name', 'id');
-        return view('offices.show', compact('office', 'countries', 'companies'));
+        $holidays = Holiday::pluck('name', 'id');
+        return view('offices.show', compact('office', 'countries', 'companies', 'holidays'));
     }
 
     /**
@@ -114,7 +117,8 @@ class OfficesController extends Controller
         $timezones = $this->timezones();
         $countries = $this->countries();
         $companies = Company::pluck('name', 'id');
-        return view('offices.edit', compact('office', 'currencies', 'timezones', 'countries', 'companies'));
+        $holidays = Holiday::pluck('name', 'id');
+        return view('offices.edit', compact('office', 'currencies', 'timezones', 'countries', 'companies', 'holidays'));
     }
 
     /**

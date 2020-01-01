@@ -97,6 +97,14 @@
                                     @endisset 
                                 </td>
                             </tr>
+                            <tr>
+                                <th> Public Holiday </th>
+                                <td>
+                                    @isset($holidays[$office->public_holiday_id]) 
+                                        {{ $holidays[$office->public_holiday_id] }}
+                                    @endisset 
+                                </td>
+                            </tr>
 
                         </tbody>
                     </table>
