@@ -41,6 +41,7 @@ Route::group(
 		Route::resource('cost-centers', 'CostCentersController');
 		Route::resource('payroll-groups', 'PayrollGroupsController');
 		Route::resource('recruiting-phases', 'RecruitingPhasesController');
+		Route::resource('recurring-compensation-types', 'RecurringCompensationTypesController');
 	});
 });
 
