@@ -5,6 +5,9 @@
     .table th{
         border: 1px solid #dee2e6;
     }
+    .table thead th{
+        border: 1px solid #dee2e6;
+    }
 </style>
 @endsection
 @section('content')
@@ -59,7 +62,59 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
 
+        <div class="card">
+            <div class="card-header card-success text-white">FeedbackCategoryAttributes</div>
+            <div class="card-body">
+                <a href="{{ url('/feedback-category-attributes/create') }}" class="btn btn-success btn-sm" title="Add New FeedbackCategoryAttribute">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                </a>
+                <br/>
+                <br/>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Is Required</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($feedbackcategoryattributes as $item)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td>
+                                    @if($item->is_required == 1)
+                                        <span class="text-success">Yes</span>
+                                    @else
+                                        <span class="text-danger">No</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ url('/feedback-category-attributes/' . $item->id . '/edit') }}" title="Edit FeedbackCategoryAttribute"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>
+                                    {!! Form::open([
+                                        'method'=>'DELETE',
+                                        'url' => ['/feedback-category-attributes', $item->id],
+                                        'style' => 'display:inline'
+                                    ]) !!}
+                                        {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', array(
+                                                'type' => 'submit',
+                                                'class' => 'btn btn-danger btn-sm',
+                                                'title' => 'Delete FeedbackCategoryAttribute',
+                                                'onclick'=>'return confirm("Confirm delete?")'
+                                        )) !!}
+                                    {!! Form::close() !!}
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

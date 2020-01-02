@@ -63,7 +63,7 @@
                                     @endisset
                                 </td>
                                 <td>
-                                    <a href="{{ url('/departments/' . $item->id) }}" title="View Department"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                    {{-- <a href="{{ url('/departments/' . $item->id) }}" title="View Department"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a> --}}
                                     <a href="{{ url('/departments/' . $item->id . '/edit') }}" title="Edit Department"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>
                                     {!! Form::open([
                                         'method'=>'DELETE',

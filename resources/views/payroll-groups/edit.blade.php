@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
-@section('title', "Edit FeedbackCategoryAttribute # $feedbackcategoryattribute->name ")
+@section('title', "Edit PayrollGroup # $payrollgroup->id ")
 @section('admin-additional-css')
 @endsection
 @section('content')
@@ -7,8 +7,8 @@
     <div class="col-md-6 col-8 align-self-center">
         <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">FeedbackCategoryAttribute</a></li>
-            <li class="breadcrumb-item active">Edit FeedbackCategoryAttribute #{{ $feedbackcategoryattribute->name }}</li>
+            <li class="breadcrumb-item"><a href="javascript:void(0)">PayrollGroup</a></li>
+            <li class="breadcrumb-item active">Edit PayrollGroup #{{ $payrollgroup->id }}</li>
         </ol>
     </div>
 </div>
@@ -16,9 +16,9 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header">Edit FeedbackCategoryAttribute #{{ $feedbackcategoryattribute->name }}</div>
+            <div class="card-header">Edit PayrollGroup #{{ $payrollgroup->id }}</div>
             <div class="card-body">
-                <a href="{{ url('/feedback-categories/'.$feedbackcategoryattribute->feedback_category_id) }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                <a href="{{ url('/payroll-groups') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                 <br />
                 <br />
 
@@ -30,14 +30,14 @@
                     </ul>
                 @endif
 
-                {!! Form::model($feedbackcategoryattribute, [
+                {!! Form::model($payrollgroup, [
                     'method' => 'PATCH',
-                    'url' => ['/feedback-category-attributes', $feedbackcategoryattribute->id],
+                    'url' => ['/payroll-groups', $payrollgroup->id],
                     'class' => 'form-horizontal',
                     'files' => true
                 ]) !!}
 
-                @include ('feedback-category-attributes.form', ['formMode' => 'edit'])
+                @include ('payroll-groups.form', ['formMode' => 'edit'])
 
                 {!! Form::close() !!}
 

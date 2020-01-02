@@ -65,7 +65,7 @@ class FeedbackCategoryAttributesController extends Controller
         $feedbackcategoryattribute->feedback_category_id = $request->feedback_category_id;
         $feedbackcategoryattribute->save();
 
-        return redirect('feedback-category-attributes')->with('success', 'FeedbackCategoryAttribute added!');
+        return redirect('/feedback-categories/'.$request->feedback_category_id)->with('success', 'FeedbackCategoryAttribute added!');
     }
 
     /**
@@ -118,7 +118,7 @@ class FeedbackCategoryAttributesController extends Controller
         $feedbackcategoryattribute->feedback_category_id = $request->feedback_category_id;
         $feedbackcategoryattribute->save();
         
-        return redirect('feedback-category-attributes')->with('success', 'FeedbackCategoryAttribute updated!');
+        return redirect('/feedback-categories/'.$request->feedback_category_id)->with('success', 'FeedbackCategoryAttribute updated!');
     }
 
     /**
@@ -130,8 +130,9 @@ class FeedbackCategoryAttributesController extends Controller
      */
     public function destroy($id)
     {
+        $feedbackcategoryattribute = FeedbackCategoryAttribute::findOrFail($id);
         FeedbackCategoryAttribute::destroy($id);
 
-        return redirect('feedback-category-attributes')->with('success', 'FeedbackCategoryAttribute deleted!');
+        return redirect('/feedback-categories/'.$feedbackcategoryattribute->feedback_category_id)->with('success', 'FeedbackCategoryAttribute deleted!');
     }
 }

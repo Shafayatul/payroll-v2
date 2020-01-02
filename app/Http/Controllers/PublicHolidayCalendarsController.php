@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
 use App\PublicHolidayCalendar;
+use App\Holiday;
 use App\Office;
 use Illuminate\Http\Request;
 
@@ -72,7 +73,8 @@ class PublicHolidayCalendarsController extends Controller
     {
         $publicholidaycalendar = PublicHolidayCalendar::findOrFail($id);
         $offices = Office::pluck('name', 'id');
-        return view('public-holiday-calendars.show', compact('publicholidaycalendar', 'offices'));
+        $holidays = Holiday::where('public_holiday_calendar_id', $id)->latest()->get();
+        return view('public-holiday-calendars.show', compact('publicholidaycalendar', 'offices', 'holidays'));
     }
 
     /**

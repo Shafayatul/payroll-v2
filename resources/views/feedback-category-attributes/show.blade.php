@@ -24,7 +24,7 @@
             <div class="card-header">FeedbackCategoryAttribute {{ $feedbackcategoryattribute->name }}</div>
             <div class="card-body">
 
-                <a href="{{ url('/feedback-category-attributes') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
+                <a href="{{ url('/feedback-categories') }}" title="Back"><button class="btn btn-warning btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a>
                 <a href="{{ url('/feedback-category-attributes/' . $feedbackcategoryattribute->id . '/edit') }}" title="Edit FeedbackCategoryAttribute"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>
                 {!! Form::open([
                     'method'=>'DELETE',

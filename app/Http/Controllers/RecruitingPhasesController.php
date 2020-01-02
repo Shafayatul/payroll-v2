@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
-use App\FeedbackCategory;
-use App\FeedbackCategoryAttribute;
-use App\Office;
+use App\RecruitingPhase;
 use Illuminate\Http\Request;
 
-class FeedbackCategoriesController extends Controller
+class RecruitingPhasesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,14 +21,16 @@ class FeedbackCategoriesController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $feedbackcategories = FeedbackCategory::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('office_id', 'LIKE', "%$keyword%")
+            $recruitingphases = RecruitingPhase::where('name', 'LIKE', "%$keyword%")
+                ->orWhere('type', 'LIKE', "%$keyword%")
+                ->orWhere('color', 'LIKE', "%$keyword%")
+                ->orWhere('max_days_in_phase', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $feedbackcategories = FeedbackCategory::latest()->paginate($perPage);
+            $recruitingphases = RecruitingPhase::latest()->paginate($perPage);
         }
-        $offices = Office::pluck('name', 'id');
-        return view('feedback-categories.index', compact('feedbackcategories', 'offices'));
+
+        return view('recruiting-phases.index', compact('recruitingphases'));
     }
 
     /**
@@ -40,8 +40,7 @@ class FeedbackCategoriesController extends Controller
      */
     public function create()
     {
-        $offices = Office::pluck('name', 'id');
-        return view('feedback-categories.create', compact('offices'));
+        return view('recruiting-phases.create');
     }
 
     /**
@@ -56,9 +55,9 @@ class FeedbackCategoriesController extends Controller
         
         $requestData = $request->all();
         
-        FeedbackCategory::create($requestData);
+        RecruitingPhase::create($requestData);
 
-        return redirect('feedback-categories')->with('success', 'FeedbackCategory added!');
+        return redirect('recruiting-phases')->with('success', 'RecruitingPhase added!');
     }
 
     /**
@@ -70,10 +69,9 @@ class FeedbackCategoriesController extends Controller
      */
     public function show($id)
     {
-        $feedbackcategory = FeedbackCategory::findOrFail($id);
-        $offices = Office::pluck('name', 'id');
-        $feedbackcategoryattributes = FeedbackCategoryAttribute::where('feedback_category_id', $id)->latest()->get();
-        return view('feedback-categories.show', compact('feedbackcategory', 'offices', 'feedbackcategoryattributes'));
+        $recruitingphase = RecruitingPhase::findOrFail($id);
+
+        return view('recruiting-phases.show', compact('recruitingphase'));
     }
 
     /**
@@ -85,9 +83,9 @@ class FeedbackCategoriesController extends Controller
      */
     public function edit($id)
     {
-        $feedbackcategory = FeedbackCategory::findOrFail($id);
-        $offices = Office::pluck('name', 'id');
-        return view('feedback-categories.edit', compact('feedbackcategory', 'offices'));
+        $recruitingphase = RecruitingPhase::findOrFail($id);
+
+        return view('recruiting-phases.edit', compact('recruitingphase'));
     }
 
     /**
@@ -103,10 +101,10 @@ class FeedbackCategoriesController extends Controller
         
         $requestData = $request->all();
         
-        $feedbackcategory = FeedbackCategory::findOrFail($id);
-        $feedbackcategory->update($requestData);
+        $recruitingphase = RecruitingPhase::findOrFail($id);
+        $recruitingphase->update($requestData);
 
-        return redirect('feedback-categories')->with('success', 'FeedbackCategory updated!');
+        return redirect('recruiting-phases')->with('success', 'RecruitingPhase updated!');
     }
 
     /**
@@ -118,8 +116,8 @@ class FeedbackCategoriesController extends Controller
      */
     public function destroy($id)
     {
-        FeedbackCategory::destroy($id);
+        RecruitingPhase::destroy($id);
 
-        return redirect('feedback-categories')->with('success', 'FeedbackCategory deleted!');
+        return redirect('recruiting-phases')->with('success', 'RecruitingPhase deleted!');
     }
 }

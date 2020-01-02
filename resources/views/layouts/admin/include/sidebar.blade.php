@@ -14,149 +14,60 @@
                         </span>
                     </a>
                 </li>
-
+                {{-- 
                 <li>
                     <a class="has-arrow" href="#" aria-expanded="false">
                         <i class="mdi mdi-account"></i>
                         <span class="hide-menu">
-                            Users 
+                            Payroll Group
                         </span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('users/create') }}">Create</a></li>
-                        <li><a href="{{ url('users') }}">Manage</a></li>
+                        <li><a href="{{ url('payroll-groups/create') }}">Create</a></li>
+                        <li><a href="{{ url('payroll-groups') }}">Manage</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">
-                            Company 
-                        </span>
-                    </a>
+                    <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Settings </span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('companies/create') }}">Create</a></li>
-                        <li><a href="{{ url('companies') }}">Manage</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-bank"></i>
-                        <span class="hide-menu">
-                            Offices 
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('offices/create') }}">Create</a></li>
-                        <li><a href="{{ url('offices') }}">Manage</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">
-                            Industry 
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('industries/create') }}">Create</a></li>
-                        <li><a href="{{ url('industries') }}">Manage</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">
-                            Holiday Calendar 
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('public-holiday-calendars/create') }}">Create</a></li>
-                        <li><a href="{{ url('public-holiday-calendars') }}">Manage</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">
-                            Holiday
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('holidays/create') }}">Create</a></li>
-                        <li><a href="{{ url('holidays') }}">Manage</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">
-                            Category
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('feedback-categories/create') }}">Create</a></li>
-                        <li><a href="{{ url('feedback-categories') }}">Manage</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">
-                            Category Attribute
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('feedback-category-attributes/create') }}">Create</a></li>
-                        <li><a href="{{ url('feedback-category-attributes') }}">Manage</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">
-                            Department
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('departments/create') }}">Create</a></li>
-                        <li><a href="{{ url('departments') }}">Manage</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">
-                            Interview Type
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('interview-types/create') }}">Create</a></li>
-                        <li><a href="{{ url('interview-types') }}">Manage</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">
-                            Email Template
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('email-templates/create') }}">Create</a></li>
-                        <li><a href="{{ url('email-templates') }}">Manage</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">
-                            Cost Center
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('cost-centers/create') }}">Create</a></li>
-                        <li><a href="{{ url('cost-centers') }}">Manage</a></li>
+                        <li><a href="{{ url('users') }}">Users</a></li>
+                        <li><a href="{{ url('companies') }}">Company</a></li>
+                        <li><a href="{{ url('offices') }}">Office</a></li>
+                        <li><a href="{{ url('departments') }}">Departments</a></li>
+                        <li><a href="{{ url('industries') }}">Industry</a></li>
+                        <li><a href="{{ url('public-holiday-calendars') }}">Public Holiday</a></li>
+                       <li>
+                            <a class="has-arrow" href="#" aria-expanded="false">Performance</a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="#">General</a></li>
+                                <li><a href="{{ url('feedback-categories') }}">Feedback Catgory</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false">Recruiting</a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="#">General</a></li>
+                                <li><a href="#">Catgories</a></li>
+                                <li><a href="{{ url('recruiting-phases') }}">Phases</a></li>
+                                <li><a href="{{ url('email-templates') }}">Email</a></li>
+                                <li><a href="{{ url('interview-types') }}">Interview Types</a></li>
+                                <li><a href="#">Evaluations</a></li>
+                                <li><a href="#">Career page</a></li>
+                                <li><a href="#">Job descriptions</a></li>
+                                <li><a href="#">Applicants</a></li>
+                                <li><a href="#">Channels</a></li>
+                                <li><a href="#">Roles</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{{ url('cost-centers') }}">Cost Center</a></li>
+                        <li>
+                            <a class="has-arrow" href="#" aria-expanded="false">Salary & Payroll</a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="#">General</a></li>
+                                <li><a href="{{ url('payroll-groups') }}">Payroll Groups</a></li>
+                                <li><a href="#">Recurring Compensation Types</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>

@@ -66,7 +66,7 @@ class HolidaysController extends Controller
         $holiday->is_halfday                 = $is_halfday;
         $holiday->public_holiday_calendar_id = $request->public_holiday_calendar_id;
         $holiday->save();
-        return redirect('holidays')->with('success', 'Holiday added!');
+        return redirect('/public-holiday-calendars/'.$request->public_holiday_calendar_id)->with('success', 'Holiday added!');
     }
 
     /**
@@ -119,7 +119,7 @@ class HolidaysController extends Controller
         $holiday->is_halfday                 = $is_halfday;
         $holiday->public_holiday_calendar_id = $request->public_holiday_calendar_id;
         $holiday->save();
-        return redirect('holidays')->with('success', 'Holiday updated!');
+        return redirect('/public-holiday-calendars/'.$holiday->public_holiday_calendar_id)->with('success', 'Holiday updated!');
     }
 
     /**
@@ -130,9 +130,9 @@ class HolidaysController extends Controller
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy($id)
-    {
+    {   $holiday = Holiday::findOrFail($id);
         Holiday::destroy($id);
 
-        return redirect('holidays')->with('success', 'Holiday deleted!');
+        return redirect('/public-holiday-calendars/'.$holiday->public_holiday_calendar_id)->with('success', 'Holiday deleted!');
     }
 }

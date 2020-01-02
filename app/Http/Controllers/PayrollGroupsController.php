@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
-use App\FeedbackCategory;
-use App\FeedbackCategoryAttribute;
-use App\Office;
+use App\PayrollGroup;
+use App\Company;
 use Illuminate\Http\Request;
 
-class FeedbackCategoriesController extends Controller
+class PayrollGroupsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,14 +22,19 @@ class FeedbackCategoriesController extends Controller
         $perPage = 25;
 
         if (!empty($keyword)) {
-            $feedbackcategories = FeedbackCategory::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('office_id', 'LIKE', "%$keyword%")
+            $payrollgroups = PayrollGroup::where('company_id', 'LIKE', "%$keyword%")
+                ->orWhere('name', 'LIKE', "%$keyword%")
+                ->orWhere('type', 'LIKE', "%$keyword%")
+                ->orWhere('val_id', 'LIKE', "%$keyword%")
+                ->orWhere('start', 'LIKE', "%$keyword%")
+                ->orWhere('end', 'LIKE', "%$keyword%")
+                ->orWhere('start_from', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $feedbackcategories = FeedbackCategory::latest()->paginate($perPage);
+            $payrollgroups = PayrollGroup::latest()->paginate($perPage);
         }
-        $offices = Office::pluck('name', 'id');
-        return view('feedback-categories.index', compact('feedbackcategories', 'offices'));
+        $companies = Company::pluck('name', 'id');
+        return view('payroll-groups.index', compact('payrollgroups', 'companies'));
     }
 
     /**
@@ -40,8 +44,8 @@ class FeedbackCategoriesController extends Controller
      */
     public function create()
     {
-        $offices = Office::pluck('name', 'id');
-        return view('feedback-categories.create', compact('offices'));
+        $companies = Company::pluck('name', 'id');
+        return view('payroll-groups.create', compact('companies'));
     }
 
     /**
@@ -56,9 +60,9 @@ class FeedbackCategoriesController extends Controller
         
         $requestData = $request->all();
         
-        FeedbackCategory::create($requestData);
+        PayrollGroup::create($requestData);
 
-        return redirect('feedback-categories')->with('success', 'FeedbackCategory added!');
+        return redirect('payroll-groups')->with('success', 'PayrollGroup added!');
     }
 
     /**
@@ -70,10 +74,9 @@ class FeedbackCategoriesController extends Controller
      */
     public function show($id)
     {
-        $feedbackcategory = FeedbackCategory::findOrFail($id);
-        $offices = Office::pluck('name', 'id');
-        $feedbackcategoryattributes = FeedbackCategoryAttribute::where('feedback_category_id', $id)->latest()->get();
-        return view('feedback-categories.show', compact('feedbackcategory', 'offices', 'feedbackcategoryattributes'));
+        $payrollgroup = PayrollGroup::findOrFail($id);
+        $companies = Company::pluck('name', 'id');
+        return view('payroll-groups.show', compact('payrollgroup', 'companies'));
     }
 
     /**
@@ -85,9 +88,9 @@ class FeedbackCategoriesController extends Controller
      */
     public function edit($id)
     {
-        $feedbackcategory = FeedbackCategory::findOrFail($id);
-        $offices = Office::pluck('name', 'id');
-        return view('feedback-categories.edit', compact('feedbackcategory', 'offices'));
+        $payrollgroup = PayrollGroup::findOrFail($id);
+        $companies = Company::pluck('name', 'id');
+        return view('payroll-groups.edit', compact('payrollgroup', 'companies'));
     }
 
     /**
@@ -103,10 +106,10 @@ class FeedbackCategoriesController extends Controller
         
         $requestData = $request->all();
         
-        $feedbackcategory = FeedbackCategory::findOrFail($id);
-        $feedbackcategory->update($requestData);
+        $payrollgroup = PayrollGroup::findOrFail($id);
+        $payrollgroup->update($requestData);
 
-        return redirect('feedback-categories')->with('success', 'FeedbackCategory updated!');
+        return redirect('payroll-groups')->with('success', 'PayrollGroup updated!');
     }
 
     /**
@@ -118,8 +121,8 @@ class FeedbackCategoriesController extends Controller
      */
     public function destroy($id)
     {
-        FeedbackCategory::destroy($id);
+        PayrollGroup::destroy($id);
 
-        return redirect('feedback-categories')->with('success', 'FeedbackCategory deleted!');
+        return redirect('payroll-groups')->with('success', 'PayrollGroup deleted!');
     }
 }
