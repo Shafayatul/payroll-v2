@@ -42,6 +42,7 @@ Route::group(
 		Route::resource('payroll-groups', 'PayrollGroupsController');
 		Route::resource('recruiting-phases', 'RecruitingPhasesController');
 		Route::resource('recurring-compensation-types', 'RecurringCompensationTypesController');
+		Route::resource('payroll-histories', 'PayrollHistoriesController');
 	});
 });
 

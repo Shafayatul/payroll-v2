@@ -14,19 +14,6 @@
                         </span>
                     </a>
                 </li>
-                {{-- 
-                <li>
-                    <a class="has-arrow" href="#" aria-expanded="false">
-                        <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">
-                            Payroll Group
-                        </span>
-                    </a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('payroll-groups/create') }}">Create</a></li>
-                        <li><a href="{{ url('payroll-groups') }}">Manage</a></li>
-                    </ul>
-                </li> --}}
                 <li>
                     <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Settings </span></a>
                     <ul aria-expanded="false" class="collapse">
@@ -65,6 +52,7 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="#">General</a></li>
                                 <li><a href="{{ url('payroll-groups') }}">Payroll Groups</a></li>
+                                <li><a href="{{ url('payroll-histories') }}">Payroll History</a></li>
                                 <li><a href="{{ url('recurring-compensation-types') }}">Recurring Compensation Types</a></li>
                             </ul>
                         </li>
