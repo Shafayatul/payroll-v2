@@ -1,0 +1,31 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class AttendenceWorkingHour extends Model
+{
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'attendence_working_hours';
+
+    /**
+    * The database primary key value.
+    *
+    * @var string
+    */
+    protected $primaryKey = 'id';
+
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['office_id', 'name', 'is_track_overtime', 'overtime_calculation', 'overtime_cliff', 'deficit_hours', ', is_prorate_vacation', 'reference_value'];
+
+    
+}

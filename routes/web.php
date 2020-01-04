@@ -43,6 +43,7 @@ Route::group(
 		Route::resource('recruiting-phases', 'RecruitingPhasesController');
 		Route::resource('recurring-compensation-types', 'RecurringCompensationTypesController');
 		Route::resource('payroll-histories', 'PayrollHistoriesController');
+		Route::resource('attendence-working-hours', 'AttendenceWorkingHoursController');
 	});
 });
 

@@ -23,7 +23,8 @@
                         <li><a href="{{ url('departments') }}">Departments</a></li>
                         <li><a href="{{ url('industries') }}">Industry</a></li>
                         <li><a href="{{ url('public-holiday-calendars') }}">Public Holiday</a></li>
-                       <li>
+                        <li><a href="{{ url('attendence-working-hours') }}">Attendence</a></li>
+                        <li>
                             <a class="has-arrow" href="#" aria-expanded="false">Performance</a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="#">General</a></li>
