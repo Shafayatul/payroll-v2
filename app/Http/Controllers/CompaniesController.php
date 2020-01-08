@@ -22,27 +22,11 @@ class CompaniesController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $companies = Company::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('is_sub_company_enable', 'LIKE', "%$keyword%")
-                ->orWhere('is_email_notification_enable', 'LIKE', "%$keyword%")
-                ->orWhere('language', 'LIKE', "%$keyword%")
-                ->orWhere('currency', 'LIKE', "%$keyword%")
-                ->orWhere('industry_id', 'LIKE', "%$keyword%")
-                ->orWhere('timezone', 'LIKE', "%$keyword%")
-                ->orWhere('public_holiday_id', 'LIKE', "%$keyword%")
-                ->orWhere('maintenance_emails', 'LIKE', "%$keyword%")
-                ->orWhere('logo', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $companies = Company::latest()->paginate($perPage);
-        }
+        
+        $company = Company::first();
         $industries = Industry::pluck('name', 'id');
         $holidays = Holiday::pluck('name', 'id');
-        return view('companies.index', compact('companies', 'industries', 'holidays'));
+        return view('companies.index', compact('company', 'industries', 'holidays'));
     }
 
     /**

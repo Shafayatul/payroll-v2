@@ -1,11 +1,8 @@
 @extends('layouts.admin.master')
 @section('title', 'Companies')
 @section('admin-additional-css')
-<style type="text/css">
-    .table thead th{
-        border: 1px solid #dee2e6;
-    }
-</style>
+<link href="{{ asset('admin/css/app-contact.css') }}" id="app-contact" rel="stylesheet" media="all">
+<link href="{{ asset('admin/css/company.css') }}"  rel="stylesheet" media="all">
 @endsection
 @section('content')
 <div class="row page-titles">
@@ -18,95 +15,353 @@
     </div>
 </div>
 @include('layouts.admin.include.alert')
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">Companies</div>
-            <div class="card-body">
-                <a href="{{ url('/companies/create') }}" class="btn btn-success btn-sm" title="Add New Company">
-                    <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                </a>
-
-                {!! Form::open(['method' => 'GET', 'url' => '/companies', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
-                <div class="input-group">
-                    <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                    <span class="input-group-append">
-                        <button class="btn btn-secondary" type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
+<div class="company-submenu-content ">
+    <!-- Block Tabs -->
+    <div class="block block-tabs full">
+        <div class="tab-content">
+            <div class="tab-pane active">
+                <h2 class="company-title">Company</h2>
+                <br>
+                <div class="alert alert-warning">
+                    This account was pre-filled with demo employees.
+                    To clear all demo data, please 
+                    <a href="" class="text-warning ">complete the setup wizard</a>.
                 </div>
-                {!! Form::close() !!}
+                <div class="row gutter30">
+                    <div class="col-md-12 tab-content">
+                        <div class="block-section">
+                            <h4 class="sub-header">
+                                Company information
+                                <small><a href="javascript:void(0)" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="">(Edit)</a></small>
+                            </h4>
+                            <div id="status-page-info-react-entrypoint" class="status">
+                                <div class="_1eEHQ">
+                                    <div class="_1A_Fo _3SL8z _3d3hy">
+                                       <div class="_3eTCz">
+                                           <div>
+                                              <i class="fas fa-info-circle _3A0CB" ></i>
+                                            </div>
+                                            <div class="_3d3hy">
+                                              <div> Visit<a href="" target="_blank" rel="noopener noreferrer">
+                                                https://status.saiful.de
+                                                </a> for info on any maintenance work we do on Personio. 
+                                                If you'd like to stay up-to-date at all times, you can also
+                                                 subscribe to our email notification service there.
+                                               </div>
+                                           </div>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                <br/>
-                <br/>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Is Sub Company Enable</th>
-                                <th>Is Email Notification Enable</th>
-                                <th>Language</th>
-                                <th>Currency</th>
-                                <th>Timezone</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($companies as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>
-                                    @if($item->is_sub_company_enable == 1)
-                                        <span class="text-success">Yes</span>
-                                    @else
-                                        <span class="text-danger">No</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($item->is_email_notification_enable == 1)
-                                        <span class="text-success">Yes</span>
-                                    @else
-                                        <span class="text-danger">No</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($item->language == 1)
-                                        <span class="text-success">English</span>
-                                    @elseif($item->language == 2)
-                                        <span class="text-success">Deutsch</span>
-                                    @else
-                                        <span class="text-success">Not Selected</span>
-                                    @endif
-                                </td>
-                                <td>{{ $item->currency }}</td>
-                                <td>{{ $item->timezone }}</td>
-                                <td>
-                                    <a href="{{ url('/companies/' . $item->id) }}" title="View Company"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                    <a href="{{ url('/companies/' . $item->id . '/edit') }}" title="Edit Company"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>
-                                    {!! Form::open([
-                                        'method'=>'DELETE',
-                                        'url' => ['/companies', $item->id],
-                                        'style' => 'display:inline'
-                                    ]) !!}
-                                        {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', array(
-                                                'type' => 'submit',
-                                                'class' => 'btn btn-danger btn-sm',
-                                                'title' => 'Delete Company',
-                                                'onclick'=>'return confirm("Confirm delete?")'
-                                        )) !!}
-                                    {!! Form::close() !!}
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    <div class="pagination-wrapper"> {!! $companies->appends(['search' => Request::get('search')])->render() !!} </div>
+                            <div class="form-horizontal form-striped compact">
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">Company name</label>
+                                    <div class="col-md-5">
+                                        <p class="form-control-static">{{ $company->name }}</p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Sub-companies enabled
+                                        <i class="fas fa-info-circle" data-toggle="tooltip" data-title="When you enable sub-companies you will be able to assign each employee to a subcompany which will affect reports, payroll and other related grouped views of your employees" data-original-title="" title="">                                   
+                                        </i>
+                                    </label>
+                                    <div class="col-md-5 form-control-static">
+                                        @if($company->is_sub_company_enable == 1)
+                                            <span class="text-success">Yes</span>
+                                        @else
+                                            <span class="text-danger">No</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                   <label class="col-md-4 control-label">
+                                    Email notifications enabled
+                                        <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" data-title="If enabled, users will be able to receive email notifications, e.g., for approval requests or reminders. Users can adjust this in their personal settings. If disabled, Personio won't send notification emails to anyone within the company. Not affected by this setting are 1) Personio invites, e.g., when a new employee is provided with a Personio login, and 2) manually typed and sent emails, e.g., an onboarding welcome email." data-original-title="" title="">
+                                            
+                                        </i>
+                                    </label>
+                                    <div class="col-md-5 form-control-static">
+                                        @if($company->is_email_notification_enable == 1)
+                                            <span class="text-success">Yes</span>
+                                        @else
+                                            <span class="text-danger">No</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Language preference
+                                    </label>
+                                    <div class="col-md-5">
+                                        <p class="form-control-static">
+                                            @if($company->language == 1)
+                                                English
+                                            @elseif($company->language == 2)
+                                                Deutsch
+                                            @else
+                                                Not Selected
+                                            @endif
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Default currency
+                                    </label>
+                                    <div class="col-md-5 form-control-static">
+                                        {{ $company->currency }}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Industry
+                                    </label>
+                                    <div class="col-md-5 form-control-static">
+                                        @isset($industries[$company->industry_id])
+                                            {{ $industries[$company->industry_id] }}
+                                        @endisset
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Timezone
+                                    </label>
+                                    <div class="col-md-5 form-control-static">
+                                        {{ $company->timezone }}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Public holidays
+                                    </label>
+                                    <div class="col-md-5 form-control-static">
+                                        @isset($holidays[$company->public_holiday_id])
+                                            {{ $holidays[$company->public_holiday_id] }}
+                                        @endisset
+                                   </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Logo
+                                    </label>
+                                    <div class="col-md-8 form-control-static configuration-logo-container">
+                                        <img src="{{ asset($company->logo) }}" alt="" style="width: 100px; height: 100px;">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form method="POST" action=""  class="form-horizontal collapse">
+                                <input name="_token" type="hidden" value="">
+                                <input name="update_company_id" type="hidden" value="22786">
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Company name
+                                    </label>
+                                    <div class="col-md-5">
+                                        <input class="form-control" name="name" type="text" value="saifulit">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Sub-companies enabled
+                                    </label>
+                                    <div class="col-md-5 form-control-static">
+                                        <input name="subcompanies_enabled" type="hidden" value="">
+                                        <input name="subcompanies_enabled" type="checkbox" value="1">
+                                          Yes
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                 <label class="col-md-4 control-label">
+                                    Email notifications enabled
+                                  </label>
+                                    <div class="col-md-5 form-control-static">
+                                        <input name="email_notification_enabled" type="hidden" value="">
+                                        <input checked="checked" name="email_notification_enabled" type="checkbox" value="1">
+                                        Yes
+                                    </div>
+                                 </div>
+                                 <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Language preference
+                                    </label>
+                                    <div class="col-md-5">
+                                        <select name="language_preference_id" class="form-control" style="width: 100%">
+                                           <option value="2">
+                                             Deutsch
+                                           </option>
+                                            <option value="1" selected="selected">
+                                             English
+                                            </option>
+                                       </select>
+                                    </div>
+                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Default currency
+                                    </label>
+                                    <div class="col-md-5">  
+                                    <div class="chosen-container chosen-container-single" title="" style="width: 100%;">
+                                        <a class="chosen-single">
+                                          <span>EUR (€)</span>
+                                          <div><b></b></div>
+                                        </a>
+                                    <div class="chosen-drop">
+                                      <div class="chosen-search">
+                                        <input class="chosen-search-input" type="text" autocomplete="off">
+                                      </div>
+                                      <ul class="chosen-results"> </ul>
+                                    </div>
+                                   </div>
+                                   </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Industry
+                                    </label>
+                                    <div class="col-md-5">
+                                      <div class="chosen-container chosen-container-single" title="" style="width: 100%;">
+                                        <a class="chosen-single">
+                                          <span>Software and Internet Services</span>
+                                          <div><b></b></div>
+                                         </a>
+                                        <div class="chosen-drop">
+                                          <div class="chosen-search">
+                                            <input class="chosen-search-input" type="text" autocomplete="off">
+                                          </div>
+                                          <ul class="chosen-results"></ul>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Timezone
+                                    </label>
+                                    <div class="col-md-5">
+                                        <a class="chosen-single">
+                                         <span>Europe/Berlin</span>
+                                          <div><b></b></div>
+                                       </a>
+                                        <div class="chosen-drop">
+                                          <div class="chosen-search">
+                                            <input class="chosen-search-input" type="text" autocomplete="off">
+                                          </div>
+                                          <ul class="chosen-results"></ul>
+                                        </div>
+                                    </div>
+                                </div>     
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Public holidays
+                                    </label>
+                                    <div class="col-md-5">
+                                      <div class="chosen-container chosen-container-single" title="" style="width: 100%;">
+                                        <a class="chosen-single">
+                                                <span>DE Feiertage</span>
+                                               <div><b></b></div>
+                                        </a>
+                                        <div class="chosen-drop">
+                                          <div class="chosen-search">
+                                            <input class="chosen-search-input" type="text" autocomplete="off">
+                                          </div>
+                                          <ul class="chosen-results"></ul>
+                                       </div>
+                                     </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Email contacts for maintenances
+                                        <i class="far fa-info-circle" data-toggle="tooltip" title="" data-original-title="The specified contacts will receive notifications regarding maintenances. We recommend to provide a contact from your HR and IT team."></i>
+                                    </label>
+                                  <!--   <div class="col-md-8">
+                                        <input class="form-control input-tags" data-default-text="Optional" name="maintenance_emails" type="text" data-tagsinput-init="true" style="display: none;" >
+                                        <div class="tagsinput" style="width: auto; min-height: auto; height: auto;">
+                                            <div>
+                                            <input  value="" data-default="Optional" style="color: rgb(102, 102, 102); width: 188px;">
+                                            </div>
+                                        <div class="tags_clear"></div>
+                                       </div>
+                                    </div -->>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Logo
+                                    </label>
+                                    <div class="col-md-8 configuration-logo-container">
+                                        <div>
+                                            <img src="">
+                                            <br><br>
+                                            <a id="remove-company-logo" href="javascript:void(0)" class="text-danger">Remove</a>
+                                        </div>
+                                        <div class="collapse">
+                                            <input accept=".png, .jpg, .jpeg, .gif, image/png, image/jpeg, image/gif" name="logo" type="file">
+                                            <small class="form-text text-muted">
+                                                The following limitations apply: only files up to 10MB and of the type .png, .gif, .jpg, or .jpeg
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row" >
+                                    <div class="col-md-8 col-md-offset-4">
+                                        <button type="reset" class="btn btn-default edit-cancel">
+                                            <i class="fas fa-times"></i> Cancel
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-arrow-right"></i> Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>               
+                        </div>
+                    </div>
+                </div>
+                <div id="modal-enable-subcompanies" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title">Warning</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>You’re about to activate subcompanies. Due to technical constraints, this will lead to loss of history data in your payroll wherever past payrolls have not been closed. Before proceeding, please get in touch with our support team.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-default" data-dismiss="modal">Proceed</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+                <div class="block-section">
+                    <h4 class="sub-header">
+                        Delete trial account
+                    </h4>
+                    <div>
+                        <p>
+                            Delete your trial account and all data associated with it permanently. You will no longer have access to your account or data.
+                        </p>
+
+                        <a class="btn btn-danger" href="#modal-delete-demo-account" data-toggle="modal">
+                            Delete everything now
+                        </a>
+                    </div>
+                </div>
+    
+                <div id="company-export">
+                    <div class="block-section">
+                        <h4 class="sub-header">Data export</h4>
+                        <div>
+                            <p>Export all data and documents associated with your company stored in Personio. After creating an export, you'll be able to download it as a zip file.  (A zip extractor is required to open the export.)</p>
+                            <button data-action-name="dataportability-send" data-test-id="dataportability-send" type="button" class="btn btn-primary">Create new data export</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

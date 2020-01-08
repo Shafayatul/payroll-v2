@@ -1,11 +1,8 @@
 @extends('layouts.admin.master')
 @section('title', 'Departments')
 @section('admin-additional-css')
-<style type="text/css">
-    .table thead th{
-        border: 1px solid #dee2e6;
-    }
-</style>
+<link href="{{ asset('admin/css/app-contact.css') }}" id="app-contact" rel="stylesheet" media="all">
+<link href="{{ asset('admin/css/departments.css') }}"  rel="stylesheet" media="all">
 @endsection
 @section('content')
 <div class="row page-titles">
@@ -18,77 +15,128 @@
     </div>
 </div>
 @include('layouts.admin.include.alert')
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">Departments</div>
-            <div class="card-body">
-                <a href="{{ url('/departments/create') }}" class="btn btn-success btn-sm" title="Add New Department">
-                    <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                </a>
 
-                {!! Form::open(['method' => 'GET', 'url' => '/departments', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
-                <div class="input-group">
-                    <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                    <span class="input-group-append">
-                        <button class="btn btn-secondary" type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-                {!! Form::close() !!}
+<div class="row gutter30">
+    <div class="col-md-4">
+        <div class="block-section customvtab vtabs row">
+            <h4 class="sub-header">Departments</h4>
+            <form method="POST" action="" accept-charset="UTF-8" id="new_office_form" novalidate="novalidate">
+                <input name="_token" type="hidden" value=""> 
+                <div class="input-group input-group-sm"> 
+                    <input class="form-control" placeholder="New departments..." required="" minlength="2" name="name" type="text"> 
+                    <span class="input-group-btn"> 
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                        </button> 
+                    </span> 
+                </div> 
+            </form>
+            <br>
 
-                <br/>
-                <br/>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Weekly Working Hour</th>
-                                <th>Office</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($departments as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->working_hour }}</td>
-                                <td>
-                                    @isset($offices[$item->office_id])
-                                        {{ $offices[$item->office_id] }}
-                                    @endisset
-                                </td>
-                                <td>
-                                    {{-- <a href="{{ url('/departments/' . $item->id) }}" title="View Department"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a> --}}
-                                    <a href="{{ url('/departments/' . $item->id . '/edit') }}" title="Edit Department"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>
-                                    {!! Form::open([
-                                        'method'=>'DELETE',
-                                        'url' => ['/departments', $item->id],
-                                        'style' => 'display:inline'
-                                    ]) !!}
-                                        {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', array(
-                                                'type' => 'submit',
-                                                'class' => 'btn btn-danger btn-sm',
-                                                'title' => 'Delete Department',
-                                                'onclick'=>'return confirm("Confirm delete?")'
-                                        )) !!}
-                                    {!! Form::close() !!}
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    <div class="pagination-wrapper"> {!! $departments->appends(['search' => Request::get('search')])->render() !!} </div>
-                </div>
-
-            </div>
+            <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
+                @foreach($departments as $key => $item)
+                    <li class="nav-item">
+                        <a class="nav-link {{ $key == 1 ? 'active':'' }}" serial="{{ $item->id }}" data-toggle="tab" href="#{{ $item->id }}" role="tab">
+                            {{ $item->name }}
+                            <span class="badge pull-right" data-toggle="tooltip" title="" data-original-title="7 active employees, 9 total">
+                                7
+                            </span>
+                        </a> 
+                    </li>
+                @endforeach
+            </ul>
         </div>
+    </div>
+    <div class="col-md-8 tab-content">
+        @foreach($departments as $key => $item)
+        <div class="block-section tab-pane active" id="{{ $item->id }}" role="tabpanel">
+            <h4 class="sub-header">
+                {{ $item->name }} 
+                <small> 
+                    <a href="#" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible1();">
+                        (Edit)
+                    </a> 
+                </small> 
+                <a href="#modal-delete-office" data-toggle="modal"> 
+                    <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete this office">
+                        
+                    </i> 
+                </a>
+            </h4>
+            <div class="form-horizontal form-striped compact" id="office-div1">
+                <div class="form-group row"><label class="col-md-3 control-label"> Department name </label>
+                    <div class="col-md-5"> <p class="form-control-static">{{ $item->name }} </p> </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-3 control-label"> Weekly working hours </label>
+                    <div class="col-md-5 form-control-static"> {{ $item->working_hour }} </div>
+                </div>
+            </div>
+            <form method="POST" action="" accept-charset="UTF-8" class="form-horizontal" id="office1" novalidate="novalidate">
+               
+                <div class="form-group row">
+                    <label class="col-md-3 control-label">
+                        Office name
+                    </label>
+                    <div class="col-md-5">
+                        <input class="form-control" placeholder="Office name" required="" minlength="2" name="name" type="text" value="ddd">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-3 control-label">
+                        Office name
+                    </label>
+                    <div class="col-md-5">
+                        <input class="form-control" placeholder="Office name" required="" minlength="2" name="name" type="text" value="ddd">
+                    </div>
+                </div>
+
+                
+                <div class="form-group row">
+                    <div class="col-md-9 col-md-offset-3">
+                        <button type="reset" class="btn btn-default edit-cancel" onclick="switchVisible1();"><i class="fas fa-times"></i> Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div> 
+        @endforeach
+
     </div>
 </div>
 @endsection
 @section('admin-additional-js')
+<script type="text/javascript">
+    
+
+    $(document).ready(function(){
+        var tabpanel_id = $(".tab-pane").attr('id');
+        $("#"+tabpanel_id).hide();
+        $(".nav-link").click(function(){
+            var tab_id = $(this).attr('serial');
+            if(tab_id == tabpanel_id){
+                $("#"+tabpanel_id).show(500);
+            }    
+        });
+      
+    });
+    
+     
+    function switchVisible() {
+        if (document.getElementById('office-div')) {
+
+            if (document.getElementById('office-div').style.display == 'none') {
+                document.getElementById('office-div').style.display = 'block';
+                document.getElementById('office').style.display = 'none';
+            }
+            else {
+                document.getElementById('office-div').style.display = 'none';
+                document.getElementById('office').style.display = 'block';
+            }
+        }
+    }
+
+
+  </script>
 @endsection
