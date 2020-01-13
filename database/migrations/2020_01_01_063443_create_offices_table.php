@@ -29,7 +29,7 @@ class CreateOfficesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('public_holiday_calendar_id')->references('id')->on('public holiday_calendars');
             });
     }

@@ -29,8 +29,8 @@ class CreateCompaniesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
             
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('industry_id')->references('id')->on('industries')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('industry_id')->references('id')->on('industries');
             // $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendars');
             });
     }

@@ -14,7 +14,7 @@ class CreateAttendenceWorkingHoursTable extends Migration
     public function up()
     {
         Schema::create('attendence_working_hours', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->boolean('is_track_overtime')->nullable();
             $table->string('overtime_calculation')->nullable();
@@ -22,7 +22,7 @@ class CreateAttendenceWorkingHoursTable extends Migration
             $table->boolean('is_deficit')->default(false);
             $table->boolean('is_prorate_vacation')->default(false);
             $table->integer('reference_value')->nullable();
-            $table->integer('office_id')->unsigned();
+            $table->unsignedBigInteger('office_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
 
