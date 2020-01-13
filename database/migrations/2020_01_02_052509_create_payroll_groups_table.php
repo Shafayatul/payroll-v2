@@ -23,8 +23,6 @@ class CreatePayrollGroupsTable extends Migration
             $table->unsignedBigInteger('company_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

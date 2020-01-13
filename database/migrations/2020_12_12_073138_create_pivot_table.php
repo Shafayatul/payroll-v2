@@ -18,7 +18,7 @@ class CreatePivotTable extends Migration
            $table->unsignedBigInteger('permission_id');
 
            $table->foreign('rule_id')->references('id')->on('rules');
-           $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade')->onUpdate('cascade');
+           $table->foreign('permission_id')->references('id')->on('permissions');
         });
     }
 

@@ -19,9 +19,7 @@ class CreateRecurringCompensationTypesTable extends Migration
             $table->unsignedBigInteger('company_id')->default(null);
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('company_id')->references('id')->on('companies');
-            });
+        });
     }
 
     /**

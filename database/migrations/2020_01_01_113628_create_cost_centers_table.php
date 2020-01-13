@@ -18,9 +18,7 @@ class CreateCostCentersTable extends Migration
             $table->unsignedBigInteger('office_id')->default(null);
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('office_id')->references('id')->on('offices');
-            });
+        });
     }
 
     /**

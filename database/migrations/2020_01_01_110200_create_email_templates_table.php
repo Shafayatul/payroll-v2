@@ -22,8 +22,6 @@ class CreateEmailTemplatesTable extends Migration
             $table->unsignedBigInteger('office_id')->default(null);
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('office_id')->references('id')->on('offices');
         });
 
         Schema::create('recruiting_email_templates', function (Blueprint $table) {
@@ -34,8 +32,6 @@ class CreateEmailTemplatesTable extends Migration
             $table->unsignedBigInteger('smtp_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            
-            $table->foreign('smtp_id')->references('id')->on('smtp_settings');
         });
     }
 
@@ -46,6 +42,7 @@ class CreateEmailTemplatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('email_templates');
+        Schema::dropIfExists('recruiting_email_templates');
+        Schema::dropIfExists('smtp_settings');
     }
 }

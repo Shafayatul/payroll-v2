@@ -20,9 +20,7 @@ class CreateHolidaysTable extends Migration
             $table->unsignedBigInteger('public_holiday_calendar_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('public_holiday_calendar_id')->references('id')->on('public holiday_calendars')->onDelete('cascade');
-            });
+        });
     }
 
     /**

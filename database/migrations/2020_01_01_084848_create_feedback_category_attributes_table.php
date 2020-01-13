@@ -19,9 +19,7 @@ class CreateFeedbackCategoryAttributesTable extends Migration
             $table->unsignedBigInteger('feedback_category_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('feedback_category_id')->references('id')->on('feedback_categories')->onDelete('cascade');
-            });
+        });
     }
 
     /**

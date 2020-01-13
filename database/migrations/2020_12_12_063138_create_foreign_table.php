@@ -13,15 +13,154 @@ class CreateForeignTable extends Migration
      */
     public function up()
     {
-        // Schema::create('permission_rule', function (Blueprint $table) {
-        //    $table->unsignedBigInteger('rule_id');
-        //    $table->unsignedBigInteger('permission_id');
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('office_id')->references('id')->on('offices');
+            $table->foreign('department_id')->references('id')->on('departments');
+        });
 
-        //    $table->foreign('rule_id')->references('id')->on('rules');
-        //    $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade')->onUpdate('cascade');
-        // });
+        Schema::table('companies', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('industry_id')->references('id')->on('industries');
+            $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendars');
+        });
+
+        Schema::table('public_holiday_calendars', function (Blueprint $table) {
+            $table->foreign('company_id')->references('id')->on('companies');
+        });
+        
+        Schema::table('holidays', function (Blueprint $table) {
+            $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendars');
+        });
+        
+        Schema::table('offices', function (Blueprint $table) {
+            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendars');
+        });
+        
+        Schema::table('feedback_categories', function (Blueprint $table) {
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
+        
+        Schema::table('feedback_category_attributes', function (Blueprint $table) {
+            $table->foreign('feedback_category_id')->references('id')->on('feedback_categories');
+        });
+        
+        Schema::table('departments', function (Blueprint $table) {
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
+        
+        Schema::table('interview_types', function (Blueprint $table) {
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
+        
+        Schema::table('smtp_settings', function (Blueprint $table) {
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
+        
+        Schema::table('recruiting_email_templates', function (Blueprint $table) {
+            $table->foreign('smtp_id')->references('id')->on('smtp_settings');
+        });
+        
+        Schema::table('cost_centers', function (Blueprint $table) {
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
+        
+        Schema::table('payroll_groups', function (Blueprint $table) {
+            $table->foreign('company_id')->references('id')->on('companies');
+        
+        });
+        
+        Schema::table('recruiting_phases', function (Blueprint $table) {
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
+        
+        Schema::table('recurring_compensation_types', function (Blueprint $table) {
+            $table->foreign('company_id')->references('id')->on('companies');
+        });
+        
+        Schema::table('payroll_histories', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+        
+        Schema::table('attendence_working_hours', function (Blueprint $table) {
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
+        
+        Schema::table('weekdays', function (Blueprint $table) {
+            $table->foreign('working_hour_id')->references('id')->on('attendence_working_hours');
+        });
+        
+        Schema::table('employee_information_sections', function (Blueprint $table) {
+            $table->foreign('company_id')->references('id')->on('companies');
+        });
+        
+        Schema::table('employee_detail_attributes', function (Blueprint $table) {
+            $table->foreign('section_id')->references('id')->on('employee_information_sections');
+        });
+        
+        Schema::table('employee_details', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes');
+        });
+        
+        Schema::table('employee_attribute_datatypes', function (Blueprint $table) {
+            $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes');
+        });
+        
+        Schema::table('employee_attribute_metas', function (Blueprint $table) {
+            $table->foreign('attribute_type_id')->references('id')->on('employee_attribute_datatypes');
+        });
+        
+        Schema::table('payroll_settings', function (Blueprint $table) {
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
+        
+        Schema::table('recurring_compensation_values', function (Blueprint $table) {
+            $table->foreign('payroll_history_id')->references('id')->on('payroll_histories');
+            $table->foreign('compensation_type_id')->references('id')->on('recurring_compensation_types');
+        });
+        
+        Schema::table('recuriting_categories', function (Blueprint $table) {
+            $table->foreign('autoresponder_template_id')->references('id')->on('recruiting_email_templates');
+            $table->foreign('autoresponder_id')->references('id')->on('users');
+        });
+
+        Schema::table('boarding_templates', function (Blueprint $table) {
+            $table->foreign('company_id')->references('id')->on('companies');
+        });
+
+        Schema::table('boarding_step_items', function (Blueprint $table) {
+            $table->foreign('boarding_step_id')->references('id')->on('boarding_steps');
+        });
+
+        Schema::table('recuriting_settings', function (Blueprint $table) {
+            $table->foreign('company_id')->references('id')->on('companies');
+        });
+
+        Schema::table('form_sections', function (Blueprint $table) {
+            $table->foreign('company_id')->references('id')->on('companies');
+        });
+
+        Schema::table('evaluation_forms', function (Blueprint $table) {
+            $table->foreign('company_id')->references('id')->on('companies');
+        });
+
+        Schema::table('form_section_items', function (Blueprint $table) {
+            $table->foreign('form_section_id')->references('id')->on('form_sections');
+        });
+
+        Schema::table('rules', function (Blueprint $table) {
+            $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes');
+        });
+
+        Schema::table('role_reminders', function (Blueprint $table) {
+            $table->foreign('role_id')->references('id')->on('roles');
+        });
+
+        Schema::table('special_role_reminders', function (Blueprint $table) {
+            $table->foreign('role_reminder_id')->references('id')->on('role_reminders');
+        });
     }
-
     /**
      * Reverse the migrations.
      *

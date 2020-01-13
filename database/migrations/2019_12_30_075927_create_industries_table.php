@@ -17,7 +17,7 @@ class CreateIndustriesTable extends Migration
             $table->string('name')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            });
+        });
     }
 
     /**

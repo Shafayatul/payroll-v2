@@ -21,7 +21,7 @@ class CreateRecuritingSettingsTable extends Migration
             $table->string('email_sender_name')->nullable();
             $table->boolean('is_autometic_applicant_anonymization')->default(false);
             $table->string('anonymization_after')->nullable();
-            $table->unsignedBigInteger('boarding_step_id')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

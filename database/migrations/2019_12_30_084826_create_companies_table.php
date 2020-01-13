@@ -25,14 +25,10 @@ class CreateCompaniesTable extends Migration
             $table->string('logo')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('industry_id')->nullable();
-            // $table->unsignedBigInteger('public_holiday_calendar_id')->nullable();
+            $table->unsignedBigInteger('public_holiday_calendar_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('industry_id')->references('id')->on('industries');
-            // $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendars');
-            });
+        });
     }
 
     /**

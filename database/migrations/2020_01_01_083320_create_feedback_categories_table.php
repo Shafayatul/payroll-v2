@@ -18,8 +18,6 @@ class CreateFeedbackCategoriesTable extends Migration
             $table->unsignedBigInteger('office_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
-            
-            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade');
         });
     }
 

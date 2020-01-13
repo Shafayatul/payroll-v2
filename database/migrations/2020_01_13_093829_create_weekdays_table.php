@@ -23,8 +23,6 @@ class CreateWeekdaysTable extends Migration
             $table->unsignedBigInteger('working_hour_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('working_hour_id')->references('id')->on('attendence_working_hours');
         });
     }
 
