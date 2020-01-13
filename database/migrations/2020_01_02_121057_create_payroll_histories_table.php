@@ -13,7 +13,7 @@ class CreatePayrollHistoriesTable extends Migration
     public function up()
     {
         Schema::create('payroll_histories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('amount')->nullable();
             $table->date('date')->nullable();
             $table->longText('description')->nullable();

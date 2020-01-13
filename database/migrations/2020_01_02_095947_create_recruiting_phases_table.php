@@ -13,7 +13,7 @@ class CreateRecruitingPhasesTable extends Migration
     public function up()
     {
         Schema::create('recruiting_phases', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('type')->nullable();
             $table->string('color')->nullable();

@@ -13,7 +13,7 @@ class CreatePayrollGroupsTable extends Migration
     public function up()
     {
         Schema::create('payroll_groups', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->string('name')->nullable();

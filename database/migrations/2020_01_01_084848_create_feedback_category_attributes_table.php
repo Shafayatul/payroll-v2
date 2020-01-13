@@ -13,7 +13,7 @@ class CreateFeedbackCategoryAttributesTable extends Migration
     public function up()
     {
         Schema::create('feedback_category_attributes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->tinyInteger('is_required')->default(0)->nullable();
             $table->integer('feedback_category_id')->unsigned();

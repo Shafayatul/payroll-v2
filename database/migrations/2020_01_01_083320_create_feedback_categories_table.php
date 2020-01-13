@@ -13,7 +13,7 @@ class CreateFeedbackCategoriesTable extends Migration
     public function up()
     {
         Schema::create('feedback_categories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->integer('office_id')->unsigned();
             $table->foreign('office_id')->references('id')->on('offices');

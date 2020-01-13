@@ -13,20 +13,24 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->tinyInteger('is_sub_company_enable')->default(0);
-            $table->tinyInteger('is_email_notification_enable')->default(1);
+            $table->tinyInteger('is_sub_company_enable')->default(false);
+            $table->tinyInteger('is_email_notification_enable')->default(true);
             $table->string('language')->nullable();
             $table->string('currency')->nullable();
-            $table->integer('industry_id')->nullable();
-            // $table->foreign('industry_id')->references('id')->on('industries');
             $table->string('timezone')->nullable();
-            $table->integer('public_holiday_id')->nullable();
-            // $table->foreign('public_holiday_id')->references('id')->on('public_holidays');
-            $table->string('maintenance_emails')->nullable();
+            $table->string('contact_for_maintenance')->nullable();
+            $table->integer('company_employee_size')->nullable();
             $table->string('logo')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('industry_id')->nullable();
+            // $table->unsignedBigInteger('public_holiday_calendar_id')->nullable();
             $table->timestamps();
+            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('industry_id')->references('id')->on('industries')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendars');
             });
     }
 

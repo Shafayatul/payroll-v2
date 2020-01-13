@@ -13,7 +13,7 @@ class CreateRecurringCompensationTypesTable extends Migration
     public function up()
     {
         Schema::create('recurring_compensation_types', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->tinyInteger('is_system_type')->default(0)->nullable();
             $table->timestamps();

@@ -13,7 +13,7 @@ class CreateInterviewTypesTable extends Migration
     public function up()
     {
         Schema::create('interview_types', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('sort_order')->nullable();
             $table->timestamps();

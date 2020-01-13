@@ -13,7 +13,7 @@ class CreateOfficesTable extends Migration
     public function up()
     {
         Schema::create('offices', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('currency')->nullable();
             $table->string('timezone')->nullable();

@@ -13,7 +13,7 @@ class CreateHolidaysTable extends Migration
     public function up()
     {
         Schema::create('holidays', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->text('details')->nullable();
             $table->tinyInteger('is_halfday')->nullable();

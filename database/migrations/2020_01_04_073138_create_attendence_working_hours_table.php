@@ -13,7 +13,7 @@ class CreateAttendenceWorkingHoursTable extends Migration
     public function up()
     {
         Schema::create('attendence_working_hours', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer('office_id')->unsigned();
             $table->foreign('office_id')->references('id')->on('offices');
             $table->string('name')->nullable();
