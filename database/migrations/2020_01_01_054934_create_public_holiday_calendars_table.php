@@ -12,13 +12,15 @@ class CreatePublicHolidayCalendarsTable extends Migration
      */
     public function up()
     {
-        Schema::create('public_holiday_calendars', function (Blueprint $table) {
+        Schema::create('public holiday_calendars', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('type')->nullable();
-            $table->integer('office_id')->unsigned();
-            $table->foreign('office_id')->references('id')->on('offices');
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             });
     }
 
@@ -29,6 +31,6 @@ class CreatePublicHolidayCalendarsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('public_holiday_calendars');
+        Schema::dropIfExists('public_holiday_calendars');
     }
 }

@@ -16,9 +16,11 @@ class CreateDepartmentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('working_hour')->nullable();
-            $table->integer('office_id')->unsigned();
-            $table->foreign('office_id')->references('id')->on('offices');
+            $table->unsignedBigInteger('office_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade');
             });
     }
 
@@ -29,6 +31,6 @@ class CreateDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('departments');
+        Schema::dropIfExists('departments');
     }
 }

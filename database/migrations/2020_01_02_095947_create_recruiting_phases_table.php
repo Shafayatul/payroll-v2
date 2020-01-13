@@ -18,7 +18,11 @@ class CreateRecruitingPhasesTable extends Migration
             $table->string('type')->nullable();
             $table->string('color')->nullable();
             $table->integer('max_days_in_phase')->nullable();
+            $table->unsignedBigInteger('office_id')->default(null);
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('office_id')->references('id')->on('offices');
             });
     }
 
@@ -29,6 +33,6 @@ class CreateRecruitingPhasesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('recruiting_phases');
+        Schema::dropIfExists('recruiting_phases');
     }
 }

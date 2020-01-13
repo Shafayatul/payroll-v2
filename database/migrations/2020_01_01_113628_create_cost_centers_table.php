@@ -15,9 +15,11 @@ class CreateCostCentersTable extends Migration
         Schema::create('cost_centers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->integer('office_id')->unsigned();
-            $table->foreign('office_id')->references('id')->on('offices');
+            $table->unsignedBigInteger('office_id')->default(null);
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('office_id')->references('id')->on('offices');
             });
     }
 
@@ -28,6 +30,6 @@ class CreateCostCentersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('cost_centers');
+        Schema::dropIfExists('cost_centers');
     }
 }

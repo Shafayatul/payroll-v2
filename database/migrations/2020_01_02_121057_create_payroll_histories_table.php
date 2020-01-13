@@ -17,9 +17,11 @@ class CreatePayrollHistoriesTable extends Migration
             $table->string('amount')->nullable();
             $table->date('date')->nullable();
             $table->longText('description')->nullable();
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
             });
     }
 
@@ -30,6 +32,6 @@ class CreatePayrollHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('payroll_histories');
+        Schema::dropIfExists('payroll_histories');
     }
 }

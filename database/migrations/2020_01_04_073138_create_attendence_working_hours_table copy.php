@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateAttendenceWorkingHoursTable extends Migration
 {
@@ -13,17 +14,19 @@ class CreateAttendenceWorkingHoursTable extends Migration
     public function up()
     {
         Schema::create('attendence_working_hours', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('office_id')->unsigned();
-            $table->foreign('office_id')->references('id')->on('offices');
+            $table->increments('id');
             $table->string('name')->nullable();
-            $table->tinyInteger('is_track_overtime')->nullable();
+            $table->boolean('is_track_overtime')->nullable();
             $table->string('overtime_calculation')->nullable();
             $table->string('overtime_cliff')->nullable();
-            $table->tinyInteger('deficit_hours')->nullable();
-            $table->tinyInteger('is_prorate_vacation')->nullable();
+            $table->boolean('is_deficit')->default(false);
+            $table->boolean('is_prorate_vacation')->default(false);
             $table->integer('reference_value')->nullable();
+            $table->integer('office_id')->unsigned();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('office_id')->references('id')->on('offices');
             });
     }
 
@@ -34,6 +37,6 @@ class CreateAttendenceWorkingHoursTable extends Migration
      */
     public function down()
     {
-        Schema::drop('attendence_working_hours');
+        Schema::dropIfExists('attendence_working_hours');
     }
 }

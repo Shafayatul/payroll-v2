@@ -15,6 +15,7 @@ class CreateIndustriesTable extends Migration
         Schema::create('industries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             });
     }
@@ -26,6 +27,6 @@ class CreateIndustriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('industries');
+        Schema::dropIfExists('industries');
     }
 }
