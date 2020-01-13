@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAttendenceWorkingHoursTable extends Migration
+class PivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -29,6 +29,6 @@ class CreateAttendenceWorkingHoursTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attendence_working_hours');
+        // Schema::dropIfExists('attendence_working_hours');
     }
 }

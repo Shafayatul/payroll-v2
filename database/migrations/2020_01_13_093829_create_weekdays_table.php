@@ -15,7 +15,16 @@ class CreateWeekdaysTable extends Migration
     {
         Schema::create('weekdays', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('weekday')->nullable();
+            $table->string('working_hours')->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('end_time')->nullable();
+            $table->boolean('is_active')->default(false);
+            $table->unsignedBigInteger('working_hour_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('working_hour_id')->references('id')->on('attendence_working_hours');
         });
     }
 
