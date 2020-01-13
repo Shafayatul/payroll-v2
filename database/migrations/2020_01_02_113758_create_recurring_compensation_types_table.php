@@ -15,8 +15,12 @@ class CreateRecurringCompensationTypesTable extends Migration
         Schema::create('recurring_compensation_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->tinyInteger('is_system_type')->default(0)->nullable();
+            $table->boolean('is_system_type')->default(0)->nullable();
+            $table->unsignedBigInteger('company_id')->default(null);
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companies');
             });
     }
 
@@ -27,6 +31,6 @@ class CreateRecurringCompensationTypesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('recurring_compensation_types');
+        Schema::dropIfExists('recurring_compensation_types');
     }
 }

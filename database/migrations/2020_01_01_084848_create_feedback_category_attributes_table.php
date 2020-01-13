@@ -15,10 +15,12 @@ class CreateFeedbackCategoryAttributesTable extends Migration
         Schema::create('feedback_category_attributes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->tinyInteger('is_required')->default(0)->nullable();
-            $table->integer('feedback_category_id')->unsigned();
-            $table->foreign('feedback_category_id')->references('id')->on('feedback_categories');
+            $table->boolean('is_required')->default(false);
+            $table->unsignedBigInteger('feedback_category_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('feedback_category_id')->references('id')->on('feedback_categories')->onDelete('cascade');
             });
     }
 
@@ -29,6 +31,6 @@ class CreateFeedbackCategoryAttributesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('feedback_category_attributes');
+        Schema::dropIfExists('feedback_category_attributes');
     }
 }

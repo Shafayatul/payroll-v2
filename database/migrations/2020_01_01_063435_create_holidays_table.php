@@ -16,10 +16,12 @@ class CreateHolidaysTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->text('details')->nullable();
-            $table->tinyInteger('is_halfday')->nullable();
-            $table->integer('public_holiday_calendar_id')->unsigned();
-            $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendars');
+            $table->boolean('is_halfday')->nullable();
+            $table->unsignedBigInteger('public_holiday_calendar_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('public_holiday_calendar_id')->references('id')->on('public holiday_calendars')->onDelete('cascade');
             });
     }
 
@@ -30,6 +32,6 @@ class CreateHolidaysTable extends Migration
      */
     public function down()
     {
-        Schema::drop('holidays');
+        Schema::dropIfExists('holidays');
     }
 }

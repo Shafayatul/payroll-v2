@@ -18,16 +18,19 @@ class CreateOfficesTable extends Migration
             $table->string('currency')->nullable();
             $table->string('timezone')->nullable();
             $table->string('street')->nullable();
-            $table->string('street_additional')->nullable();
             $table->string('house')->nullable();
+            $table->string('street_additional')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('zip')->nullable();
             $table->string('country')->nullable();
-            $table->string('public_holiday_id')->nullable();
-            $table->integer('company_id')->unsigned();
-            $table->foreign('company_id')->references('id')->on('companies');
+            $table->unsignedBigInteger('public_holiday_calendar_id')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('public_holiday_calendar_id')->references('id')->on('public holiday_calendars');
             });
     }
 
@@ -38,6 +41,6 @@ class CreateOfficesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('offices');
+        Schema::dropIfExists('offices');
     }
 }

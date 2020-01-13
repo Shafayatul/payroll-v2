@@ -14,16 +14,18 @@ class CreatePayrollGroupsTable extends Migration
     {
         Schema::create('payroll_groups', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('company_id')->unsigned();
-            $table->foreign('company_id')->references('id')->on('companies');
             $table->string('name')->nullable();
             $table->string('type')->nullable();
-            $table->string('val_id')->nullable();
+            $table->string('group_key')->nullable();
             $table->string('start')->nullable();
             $table->string('end')->nullable();
             $table->string('start_from')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
-            });
+
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+        });
     }
 
     /**
@@ -33,6 +35,6 @@ class CreatePayrollGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('payroll_groups');
+        Schema::dropIfExists('payroll_groups');
     }
 }

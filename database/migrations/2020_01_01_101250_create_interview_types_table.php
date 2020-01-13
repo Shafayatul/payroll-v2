@@ -16,7 +16,11 @@ class CreateInterviewTypesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('sort_order')->nullable();
+            $table->unsignedBigInteger('office_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('office_id')->references('id')->on('offices');
             });
     }
 
@@ -27,6 +31,6 @@ class CreateInterviewTypesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('interview_types');
+        Schema::dropIfExists('interview_types');
     }
 }

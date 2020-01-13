@@ -15,10 +15,12 @@ class CreateFeedbackCategoriesTable extends Migration
         Schema::create('feedback_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->integer('office_id')->unsigned();
-            $table->foreign('office_id')->references('id')->on('offices');
+            $table->unsignedBigInteger('office_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
-            });
+            
+            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade');
+        });
     }
 
     /**
@@ -28,6 +30,6 @@ class CreateFeedbackCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('feedback_categories');
+        Schema::dropIfExists('feedback_categories');
     }
 }

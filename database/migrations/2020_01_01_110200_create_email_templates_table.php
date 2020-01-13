@@ -12,18 +12,31 @@ class CreateEmailTemplatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('email_templates', function (Blueprint $table) {
+        Schema::create('smtp_settings', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('host')->nullable();
+            $table->string('port')->nullable();
+            $table->boolean('encrypt_type')->default(false);
+            $table->string('username')->default(null);
+            $table->string('password')->default(null);
+            $table->unsignedBigInteger('office_id')->default(null);
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
+
+        Schema::create('recruiting_email_templates', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('subject')->nullable();
             $table->longText('message')->nullable();
-            $table->string('smtp_host')->nullable();
-            $table->string('smtp_port')->nullable();
-            $table->string('smtp_encryption')->nullable();
-            $table->string('smtp_username')->nullable();
-            $table->string('smtp_password')->nullable();
+            $table->unsignedBigInteger('smtp_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
-            });
+            
+            $table->foreign('smtp_id')->references('id')->on('smtp_settings');
+        });
     }
 
     /**
@@ -33,6 +46,6 @@ class CreateEmailTemplatesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('email_templates');
+        Schema::dropIfExists('email_templates');
     }
 }

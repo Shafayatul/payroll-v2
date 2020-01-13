@@ -15,8 +15,8 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->tinyInteger('is_sub_company_enable')->default(false);
-            $table->tinyInteger('is_email_notification_enable')->default(true);
+            $table->boolean('is_sub_company_enable')->default(false);
+            $table->boolean('is_email_notification_enable')->default(true);
             $table->string('language')->nullable();
             $table->string('currency')->nullable();
             $table->string('timezone')->nullable();
@@ -26,6 +26,7 @@ class CreateCompaniesTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('industry_id')->nullable();
             // $table->unsignedBigInteger('public_holiday_calendar_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
             
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
@@ -41,6 +42,6 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('companies');
+        Schema::dropIfExists('companies');
     }
 }
