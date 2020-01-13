@@ -15,6 +15,13 @@ class CreateFormSectionItemsTable extends Migration
     {
         Schema::create('form_section_items', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title_key')->nullable();
+            $table->string('label_min')->nullable();
+            $table->string('label_max')->nullable();
+            $table->string('evaluator_info')->nullable();
+            $table->string('weight')->nullable();
+            $table->unsignedBigInteger('form_section_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

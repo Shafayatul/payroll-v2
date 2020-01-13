@@ -15,6 +15,8 @@ class CreateEmployeeFiltersTable extends Migration
     {
         Schema::create('employee_filters', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

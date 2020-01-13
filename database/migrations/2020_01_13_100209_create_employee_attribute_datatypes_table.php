@@ -15,6 +15,10 @@ class CreateEmployeeAttributeDatatypesTable extends Migration
     {
         Schema::create('employee_attribute_datatypes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->string('key')->nullable();
+            $table->unsignedBigInteger('attribute_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

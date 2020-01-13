@@ -15,6 +15,10 @@ class CreateEmployeeDetailsTable extends Migration
     {
         Schema::create('employee_details', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('value')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('attribute_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

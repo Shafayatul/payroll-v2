@@ -15,6 +15,10 @@ class CreateRecurringCompensationValuesTable extends Migration
     {
         Schema::create('recurring_compensation_values', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('value')->nullable();
+            $table->unsignedBigInteger('payroll_history_id')->nullable();
+            $table->unsignedBigInteger('compensation_type_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

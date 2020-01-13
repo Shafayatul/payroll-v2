@@ -15,6 +15,16 @@ class CreateAbsencesTable extends Migration
     {
         Schema::create('absences', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->string('color')->nullable();
+            $table->boolean('is_halfday_request')->default(false);
+            $table->boolean('certificate_required')->default(false);
+            $table->boolean('is_substituting')->default(false);
+            $table->string('valid_on')->nullable();
+            $table->boolean('is_absence_period_as_overtime')->default(false);
+            $table->boolean('is_accrual_policies')->default(false);
+            $table->boolean('is_active')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -15,6 +15,9 @@ class CreateEvaluationFormsTable extends Migration
     {
         Schema::create('evaluation_forms', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

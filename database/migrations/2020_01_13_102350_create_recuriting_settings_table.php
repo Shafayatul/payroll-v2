@@ -15,6 +15,14 @@ class CreateRecuritingSettingsTable extends Migration
     {
         Schema::create('recuriting_settings', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_xml_interface_enabled')->default(false);
+            $table->string('email_for_applicants')->nullable();
+            $table->boolean('is_interview_calendar_invites')->default(false);
+            $table->string('email_sender_name')->nullable();
+            $table->boolean('is_autometic_applicant_anonymization')->default(false);
+            $table->string('anonymization_after')->nullable();
+            $table->unsignedBigInteger('boarding_step_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

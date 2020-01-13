@@ -15,6 +15,10 @@ class CreateRulesTable extends Migration
     {
         Schema::create('rules', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('characteristic')->nullable();
+            $table->string('value')->nullable();
+            $table->unsignedBigInteger('attribute_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -15,6 +15,16 @@ class CreateRoleRemindersTable extends Migration
     {
         Schema::create('role_reminders', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('about_key')->nullable();
+            $table->string('filter_type')->nullable();
+            $table->string('automatic_offset')->nullable();
+            $table->string('automatic_offset_unit')->nullable();
+            $table->string('automatic_offset_sign')->nullable();
+            $table->boolean('reminder_type')->default(false);
+            $table->boolean('is_yearly')->default(false);
+            $table->string('title')->nullable();
+            $table->unsignedBigInteger('role_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
