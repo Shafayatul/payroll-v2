@@ -11,6 +11,8 @@
     <title>Payroll - Registration Panel</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/monsteradmin/" />
     <link href="{{ asset('admin/assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/assets/plugins/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/colors/green.css') }}" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -19,6 +21,11 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+    <style>
+        .login-register{
+            position: relative !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -39,6 +46,16 @@
                 <form class="form-horizontal form-material" id="loginform" action="{{ route('register') }}" method="POST">
                     @csrf
                     <h3 class="box-title mb-3">Sign Up</h3>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <input class="form-control @error('company_name') is-invalid @enderror" id="company_name" type="text" name="company_name" required placeholder="Company Name">
+                            @error('company_name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-xs-12">
                             <input class="form-control @error('name') is-invalid @enderror" id="name" type="text" name="name" value="{{ old('name') }}" required placeholder="Name" autocomplete="name" autofocus>
@@ -72,6 +89,37 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             <input class="form-control" id="password-confirm" type="password" name="password_confirmation" required placeholder="Confirm Password" autocomplete="new-password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <select class="form-control select2" required name="company_employee_size">
+                                <option value="">--Select Employee Size--</option>
+                                <option value="25">< 25 employees</option>
+                                <option value="50">< 50 employees</option>
+                                <option value="75">< 75 employees</option>
+                                <option value="100">< 100 employees</option>
+                                <option value="150">< 150 employees</option>
+                                <option value="200">< 200 employees</option>
+                                <option value="250">< 250 employees</option>
+                                <option value="300">< 300 employees</option>
+                                <option value="400">< 400 employees</option>
+                                <option value="500">< 500 employees</option>
+                                <option value="600">< 600 employees</option>
+                                <option value="700">< 700 employees</option>
+                                <option value="800">< 800 employees</option>
+                                <option value="900">< 900 employees</option>
+                                <option value="1000"> 1000 employees</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <select class="form-control select2" required name="language">
+                                <option value="">--Select Account Language--</option>
+                                <option value="en">English</option>
+                                <option value="de">German</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -125,6 +173,8 @@
     <!--Menu sidebar -->
     <script src="{{ asset('admin/js/sidebarmenu.js') }}"></script>
     <!--stickey kit -->
+    <script src="{{ asset('admin/assets/plugins/select2/dist/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin/assets/plugins/bootstrap-select/bootstrap-select.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('admin/assets/plugins/sticky-kit-master/dist/sticky-kit.min.js') }}"></script>
     <!--Custom JavaScript -->
     <script src="{{ asset('admin/js/custom.min.js') }}"></script>
@@ -132,6 +182,9 @@
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="{{ asset('admin/assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script>
+    <script type="text/javascript">
+         $(".select2").select2();
+    </script>
 </body>
 
 </html>

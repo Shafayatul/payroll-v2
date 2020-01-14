@@ -22,6 +22,9 @@ Route::group(
 	Auth::routes();
 
 	Route::group(['middleware' => 'auth'], function(){
+
+		Route::get('get-ajax-office-data/{id}', 'OfficesController@getAjaxOfficeData');
+
 		Route::get('/home', 'HomeController@index')->name('home');
 		Route::get('/password-change', 'UsersController@passwordWordChange')->name('password-change');
 		Route::post('/password-update', 'UsersController@passwordUpdate')->name('password-update');

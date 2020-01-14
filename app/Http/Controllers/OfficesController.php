@@ -7,9 +7,10 @@ use App\Http\Controllers\Controller;
 
 use App\Office;
 use App\Company;
-use App\Holiday;
+use App\PublicHolidayCalendar;
 use Illuminate\Http\Request;
 use App\Companies\timezoneCurrencyTrait;
+use Auth;
 
 class OfficesController extends Controller
 {
@@ -37,10 +38,15 @@ class OfficesController extends Controller
                 ->orWhere('company_id', 'LIKE', "%$keyword%")
                 ->latest()->paginate($perPage);
         } else {
-            $offices = Office::latest()->paginate($perPage);
+            $company = Company::where('user_id', Auth::id())->first();
+            $offices = Office::where('company_id', $company->id)->get();
+            
         }
-
-        return view('offices.index', compact('offices'));
+        $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
+        $json_currencies = $this->currencies();
+        $currencies = json_decode($json_currencies);
+        $timezones = $this->timezones();
+        return view('offices.index', compact('offices', 'currencies', 'timezones', 'public_holiday_calendars'));
     }
 
     /**
@@ -50,13 +56,8 @@ class OfficesController extends Controller
      */
     public function create()
     {
-        $json_currencies = $this->currencies();
-        $currencies = json_decode($json_currencies);
-        $timezones = $this->timezones();
-        $countries = $this->countries();
-        $companies = Company::pluck('name', 'id');
-        $holidays = Holiday::pluck('name', 'id');
-        return view('offices.create', compact('currencies', 'timezones', 'countries', 'companies', 'holidays'));
+       
+        return view('offices.create');
     }
 
     /**
@@ -68,19 +69,21 @@ class OfficesController extends Controller
      */
     public function store(Request $request)
     {
-        $office                    = new Office;
-        $office->name              = $request->name;
-        $office->currency          = $request->currency;
-        $office->timezone          = $request->timezone;
-        $office->street            = $request->street;
-        $office->house             = $request->house;
-        $office->street_additional = $request->street_additional;
-        $office->zip               = $request->zip;
-        $office->city              = $request->city;
-        $office->state             = $request->state;
-        $office->country           = $request->country;
-        $office->public_holiday_id = $request->public_holiday_id;
-        $office->company_id        = $request->company_id;
+        $company = Company::where('user_id', Auth::id())->first();
+
+        $office                             = new Office;
+        $office->name                       = $request->name;
+        $office->currency                   = $company->currency;
+        $office->timezone                   = $company->timezone;
+        $office->street                     = $request->street;
+        $office->house                      = $request->house;
+        $office->street_additional          = $request->street_additional;
+        $office->zip                        = $request->zip;
+        $office->city                       = $request->city;
+        $office->state                      = $request->state;
+        $office->country                    = $request->country;
+        $office->public_holiday_calendar_id = $company->public_holiday_calendar_id;
+        $office->company_id                 = $company->id;
         $office->save();
 
         return redirect('offices')->with('success', 'Office added!');
@@ -98,8 +101,16 @@ class OfficesController extends Controller
         $office    = Office::findOrFail($id);
         $countries = $this->countries();
         $companies = Company::pluck('name', 'id');
-        $holidays = Holiday::pluck('name', 'id');
+        $holidays = PublicHolidayCalendar::pluck('name', 'id');
         return view('offices.show', compact('office', 'countries', 'companies', 'holidays'));
+    }
+
+    public function getAjaxOfficeData($id)
+    {
+        $office = Office::findOrFail($id);
+        $office->calendar;
+        $office->company;
+        return response()->json($office);
     }
 
     /**
@@ -117,7 +128,7 @@ class OfficesController extends Controller
         $timezones = $this->timezones();
         $countries = $this->countries();
         $companies = Company::pluck('name', 'id');
-        $holidays = Holiday::pluck('name', 'id');
+        $holidays = PublicHolidayCalendar::pluck('name', 'id');
         return view('offices.edit', compact('office', 'currencies', 'timezones', 'countries', 'companies', 'holidays'));
     }
 

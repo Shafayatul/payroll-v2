@@ -21,7 +21,7 @@
 </div>
 <div class="form-group {{ $errors->has('language') ? 'has-error' : ''}}">
     {!! Form::label('language', 'Language', ['class' => 'control-label']) !!}
-    {!! Form::select('language', ['' => '--Select Language--', '1' => 'English', '2' => 'Deutsch'], null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+    {!! Form::select('language', ['' => '--Select Language--', 'en' => 'English', 'de' => 'German'], null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
     {!! $errors->first('language', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('currency') ? 'has-error' : ''}}">
@@ -53,17 +53,17 @@
     </select> 
     {!! $errors->first('timezone', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('public_holiday_id') ? 'has-error' : ''}}">
-    {!! Form::label('public_holiday_id', 'Public Holiday', ['class' => 'control-label']) !!}
-    {!! Form::select('public_holiday_id', $holidays, null, ('' == 'required') ? ['class' => 'form-control select2', 'required' => 'required', 'placeholder' => '--Select Public Holiday--'] : ['class' => 'form-control select2', 'placeholder' => '--Select Public Holiday--']) !!}
-    {!! $errors->first('public_holiday_id', '<p class="help-block">:message</p>') !!}
+<div class="form-group {{ $errors->has('public_holiday_calendar_id') ? 'has-error' : ''}}">
+    {!! Form::label('public_holiday_calendar_id', 'Public Holiday Calendar', ['class' => 'control-label']) !!}
+    {!! Form::select('public_holiday_calendar_id', $public_holiday_calendars, null, ('' == 'required') ? ['class' => 'form-control select2', 'required' => 'required', 'placeholder' => '--Select Public Holiday--'] : ['class' => 'form-control select2', 'placeholder' => '--Select Public Holiday--']) !!}
+    {!! $errors->first('public_holiday_calendar_id', '<p class="help-block">:message</p>') !!}
 </div>
-<div class="form-group {{ $errors->has('maintenance_emails') ? 'has-error' : ''}}">
-    {!! Form::label('maintenance_emails', 'Maintenance Emails', ['class' => 'control-label']) !!}
+<div class="form-group {{ $errors->has('contact_for_maintenance') ? 'has-error' : ''}}">
+    {!! Form::label('contact_for_maintenance', 'Maintenance Emails', ['class' => 'control-label']) !!}
     <div class="tags-default">
-        {!! Form::text('maintenance_emails[]', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required', 'data-role' => 'tagsinput'] : ['class' => 'form-control', 'data-role' => 'tagsinput']) !!}
+        {!! Form::text('contact_for_maintenance[]', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required', 'data-role' => 'tagsinput'] : ['class' => 'form-control', 'data-role' => 'tagsinput']) !!}
     </div>
-    {!! $errors->first('maintenance_emails', '<p class="help-block">:message</p>') !!}
+    {!! $errors->first('contact_for_maintenance', '<p class="help-block">:message</p>') !!}
 </div>
 <div class="form-group {{ $errors->has('logo') ? 'has-error' : ''}}">
     {!! Form::label('logo', 'Logo', ['class' => 'control-label']) !!}
@@ -72,7 +72,7 @@
 </div>
 @if($formMode == 'edit')
     <div class="form-group">
-        <img src="{{ asset($company->logo) }}" alt="" style="width: 200px; height: 200px;">
+        <img src="{{ asset('storage/company-logo/'.$company->logo) }}" alt="" style="width: 200px; height: 200px;">
     </div>
 @endif
 

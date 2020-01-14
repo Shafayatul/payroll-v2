@@ -32,7 +32,12 @@
                         <div class="block-section">
                             <h4 class="sub-header">
                                 Company information
-                                <small><a href="javascript:void(0)" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="">(Edit)</a></small>
+                                <small>
+                                <a href="javascript:void(0)" class="edit-toggle" data-toggle="modal" data-target="#company-{{ $company->id }}">
+                                    (Edit)
+                                </a>
+                                @include('companies.edit-company-modal')
+                                </small>
                             </h4>
                             <div id="status-page-info-react-entrypoint" class="status">
                                 <div class="_1eEHQ">
@@ -96,9 +101,9 @@
                                     </label>
                                     <div class="col-md-5">
                                         <p class="form-control-static">
-                                            @if($company->language == 1)
+                                            @if($company->language == 'en')
                                                 English
-                                            @elseif($company->language == 2)
+                                            @elseif($company->language == 'de')
                                                 Deutsch
                                             @else
                                                 Not Selected
@@ -137,8 +142,8 @@
                                         Public holidays
                                     </label>
                                     <div class="col-md-5 form-control-static">
-                                        @isset($holidays[$company->public_holiday_id])
-                                            {{ $holidays[$company->public_holiday_id] }}
+                                        @isset($public_holiday_calendars[$company->public_holiday_calendar_id])
+                                            {{ $public_holiday_calendars[$company->public_holiday_calendar_id] }}
                                         @endisset
                                    </div>
                                 </div>
@@ -147,7 +152,7 @@
                                         Logo
                                     </label>
                                     <div class="col-md-8 form-control-static configuration-logo-container">
-                                        <img src="{{ asset($company->logo) }}" alt="" style="width: 100px; height: 100px;">
+                                        <img src="{{ asset('storage/company-logo/'.$company->logo) }}" alt="" style="width: 100px; height: 100px;">
                                     </div>
                                 </div>
                             </div>

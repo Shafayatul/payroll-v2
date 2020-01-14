@@ -7,10 +7,12 @@ use App\Http\Requests;
 
 use App\Company;
 use App\Industry;
-use App\Holiday;
+use App\PublicHolidayCalendar;
 use Illuminate\Http\Request;
 use App\Companies\timezoneCurrencyTrait;
 use File;
+use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CompaniesController extends Controller
 {
@@ -23,10 +25,13 @@ class CompaniesController extends Controller
     public function index(Request $request)
     {
         
-        $company = Company::first();
+        $company = Company::where('user_id', Auth::id())->first();
+        $json_currencies = $this->currencies();
+        $currencies = json_decode($json_currencies);
+        $timezones = $this->timezones();
         $industries = Industry::pluck('name', 'id');
-        $holidays = Holiday::pluck('name', 'id');
-        return view('companies.index', compact('company', 'industries', 'holidays'));
+        $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
+        return view('companies.index', compact('company', 'industries', 'public_holiday_calendars', 'currencies', 'timezones'));
     }
 
     /**
@@ -40,8 +45,8 @@ class CompaniesController extends Controller
         $currencies = json_decode($json_currencies);
         $timezones = $this->timezones();
         $industries = Industry::pluck('name', 'id');
-        $holidays = Holiday::pluck('name', 'id');
-        return view('companies.create', compact('currencies', 'timezones', 'industries', 'holidays'));
+        $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
+        return view('companies.create', compact('currencies', 'timezones', 'industries', 'public_holiday_calendars'));
     }
 
     /**
@@ -83,7 +88,7 @@ class CompaniesController extends Controller
         $company->currency                     = $request->currency;
         $company->industry_id                  = $request->industry_id;
         $company->timezone                     = $request->timezone;
-        $company->public_holiday_id            = $request->public_holiday_id;
+        $company->public_holiday_calendar_id   = $request->public_holiday_calendar_id;
         $company->maintenance_emails           = implode(',',$request->maintenance_emails);
         $company->logo                         = $logo_url;
         $company->save();
@@ -105,8 +110,8 @@ class CompaniesController extends Controller
         $currencies = json_decode($json_currencies);
         $timezones = $this->timezones();
         $industries = Industry::pluck('name', 'id');
-        $holidays = Holiday::pluck('name', 'id');
-        return view('companies.show', compact('company', 'currencies', 'timezones', 'industries', 'holidays'));
+        $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
+        return view('companies.show', compact('company', 'currencies', 'timezones', 'industries', 'public_holiday_calendars'));
     }
 
     /**
@@ -119,12 +124,12 @@ class CompaniesController extends Controller
     public function edit($id)
     {
         $company = Company::findOrFail($id);
-        $holidays = Holiday::pluck('name', 'id');
+        $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
         $json_currencies = $this->currencies();
         $currencies = json_decode($json_currencies);
         $timezones = $this->timezones();
         $industries = Industry::pluck('name', 'id');
-        return view('companies.edit', compact('company', 'currencies', 'timezones', 'industries', 'holidays'));
+        return view('companies.edit', compact('company', 'currencies', 'timezones', 'industries', 'public_holiday_calendars'));
     }
 
     /**
@@ -154,15 +159,13 @@ class CompaniesController extends Controller
         if($request->hasFile('logo')){
             $logo       = $request->file('logo');
             $name       = uniqid().'.'.strtolower($logo->getClientOriginalExtension());
-            $path       = 'company-logo/';
-            $logo_url   = $path.$name;
-            $logo->move($path, $name);
-            $result     = File::exists($company->logo);
+            $logo->storeAs('public/company-logo', $name);
+            $result = Storage::disk('public')->exists('company-logo/'.$name);
             if(($result == true) && ($company->logo != null)){
-                unlink($company->logo);
+                Storage::disk('public')->delete('company-logo/'.$company->logo);
             }
         }else{
-            $logo_url = $company->logo;
+            $name = $company->logo;
         }
 
         $company->name                         = $request->name;
@@ -172,9 +175,9 @@ class CompaniesController extends Controller
         $company->currency                     = $request->currency;
         $company->industry_id                  = $request->industry_id;
         $company->timezone                     = $request->timezone;
-        $company->public_holiday_id            = $request->public_holiday_id;
-        $company->maintenance_emails           = implode(',',$request->maintenance_emails);
-        $company->logo                         = $logo_url;
+        $company->public_holiday_calendar_id   = $request->public_holiday_calendar_id;
+        $company->contact_for_maintenance      = implode(',',$request->contact_for_maintenance);
+        $company->logo                         = $name;
         $company->save();
 
         return redirect('companies')->with('success', 'Company updated!');
@@ -190,9 +193,9 @@ class CompaniesController extends Controller
     public function destroy($id)
     {
         $company =Company::findOrFail($id);
-        $result = File::exists($company->logo);
+        $result = Storage::disk('public')->exists('company-logo/'.$company->logo);
         if(($result == true) && ($company->logo != null)){
-            unlink($company->logo);
+            Storage::disk('public')->delete('company-logo/'.$company->logo);
         }
         Company::destroy($id);
 
