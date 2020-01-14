@@ -36,4 +36,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function companies(){
+        return $this->hasMany(\App\Company::class, 'user_id');
+    }
+
+    public function payrollHistories(){
+        return $this->hasMany(\App\PayrollHistory::class, 'user_id');
+    }
+
+    public function employeeDetails(){
+        return $this->hasMany(\App\EmployeeDetail::class, 'user_id');
+    }
+
+    public function recuritingCategories(){
+        return $this->hasMany(\App\RecuritingCategory::class, 'autoresponder_id');
+    }
 }

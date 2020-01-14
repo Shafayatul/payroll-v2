@@ -16,7 +16,7 @@ class CreateEmployeeAttributeMetasTable extends Migration
         Schema::create('employee_attribute_metas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->unsignedBigInteger('attribute_type_id')->nullable();
+            $table->unsignedBigInteger('attribute_datatype_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -27,5 +27,7 @@ class InterviewType extends Model
      */
     protected $fillable = ['name', 'sort_order'];
 
-    
+    public function office(){
+        return $this->belongsTo(\App\Office::class, 'office_id');
+    }
 }

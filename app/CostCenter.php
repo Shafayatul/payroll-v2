@@ -27,5 +27,7 @@ class CostCenter extends Model
      */
     protected $fillable = ['name', 'office_id'];
 
-    
+    public function office(){
+        return $this->belongsTo(\App\Office::class, 'office_id');
+    }
 }

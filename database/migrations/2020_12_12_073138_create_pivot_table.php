@@ -20,6 +20,14 @@ class CreatePivotTable extends Migration
            $table->foreign('rule_id')->references('id')->on('rules');
            $table->foreign('permission_id')->references('id')->on('permissions');
         });
+        Schema::create('employee_details', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('value')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('attribute_id')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+        });                
     }
 
     /**

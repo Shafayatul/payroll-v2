@@ -25,7 +25,13 @@ class RecurringCompensationType extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'is_system_type'];
+    protected $fillable = ['name', 'is_system_type', 'company_id'];
 
+    public function company(){
+        return $this->belongsTo(\App\Company::class, 'company_id');
+    }
     
+    public function recurringCompensations(){
+        return $this->hasMany(\App\RecurringCompensationValue::class, 'compensation_type_id');
+    }
 }

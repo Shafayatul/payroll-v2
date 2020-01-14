@@ -25,7 +25,9 @@ class RecruitingPhase extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'type', 'color', 'max_days_in_phase'];
+    protected $fillable = ['name', 'type', 'color', 'max_days_in_phase', 'office_id'];
 
-    
+    public function office(){
+        return $this->belongsTo(\App\Office::class, 'office_id');
+    }
 }

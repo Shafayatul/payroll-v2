@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AttendenceWorkingHour extends Model
+class Smtp extends Model
 {
-    /**
+     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'attendence_working_hours';
+    protected $table = 'smtp_settings';
 
     /**
     * The database primary key value.
@@ -25,13 +25,13 @@ class AttendenceWorkingHour extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'is_track_overtime', 'overtime_calculation', 'overtime_cliff', 'deficit_hours', ', is_prorate_vacation', 'reference_value', 'office_id'];
+    protected $fillable = ['host', 'port', 'encrypt_type', 'username', 'password', 'office_id'];
 
     public function office(){
         return $this->belongsTo(\App\Office::class, 'office_id');
     }
-    
-    public function weekdays(){
-        return $this->hasMany(\App\Weekday::class, 'working_hour_id');
+
+    public function emailTemplates(){
+        return $this->hasMany(\App\RecuritingEmailTemplate::class, 'smtp_id');
     }
 }

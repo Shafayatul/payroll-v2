@@ -25,7 +25,13 @@ class PayrollHistory extends Model
      *
      * @var array
      */
-    protected $fillable = ['amount', 'date', 'description'];
+    protected $fillable = ['amount', 'date', 'description', 'user_id'];
 
-    
+    public function user(){
+        return $this->belongsTo(\App\User::class, 'user_id');
+    }
+
+    public function recurringCompensations(){
+        return $this->hasMany(\App\RecurringCompensationValue::class, 'payroll_history_id');
+    }
 }

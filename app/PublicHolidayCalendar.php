@@ -27,5 +27,19 @@ class PublicHolidayCalendar extends Model
      */
     protected $fillable = ['name', 'type', 'office_id'];
 
+    public function companies(){
+        return $this->hasMany(\App\Company::class, 'public_holiday_calendar_id');
+    }
     
+    public function offices(){
+        return $this->hasMany(\App\Office::class, 'public_holiday_calendar_id');
+    }
+    
+    public function company(){
+        return $this->belongsTo(\App\Company::class, 'company_id');
+    }
+
+    public function holidays(){
+        return $this->hasMany(\App\Holiday::class, 'public_holiday_calendar_id');
+    }
 }

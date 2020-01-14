@@ -27,5 +27,11 @@ class FeedbackCategory extends Model
      */
     protected $fillable = ['name', 'office_id'];
 
-    
+    public function office(){
+        return $this->belongsTo(\App\Office::class, 'office_id');
+    }
+
+    public function attributes(){
+        return $this->hasMany(\App\FeedbackCategoryAttribute::class, 'feedback_category_id');
+    }
 }

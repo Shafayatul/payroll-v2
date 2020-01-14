@@ -27,5 +27,7 @@ class Department extends Model
      */
     protected $fillable = ['name', 'working_hour', 'office_id'];
 
-    
+    public function office(){
+        return $this->belongsTo(\App\Office::class, 'office_id');
+    }
 }

@@ -27,5 +27,7 @@ class PayrollGroup extends Model
      */
     protected $fillable = ['company_id', 'name', 'type', 'val_id', 'start', 'end', 'start_from'];
 
-    
+    public function company(){
+        return $this->belongsTo(\App\Company::class, 'company_id');
+    }
 }

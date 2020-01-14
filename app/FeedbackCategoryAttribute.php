@@ -27,5 +27,7 @@ class FeedbackCategoryAttribute extends Model
      */
     protected $fillable = ['name', 'is_required', 'feedback_category_id'];
 
-    
+    public function feedback_category(){
+        return $this->belongsTo(\App\FeedbackCategory::class, 'feedback_category_id');
+    }
 }

@@ -27,5 +27,8 @@ class Holiday extends Model
      */
     protected $fillable = ['name', 'details', 'is_halfday', 'public_holiday_calendar_id'];
 
-    
+    public function publicHoliday(){
+        return $this->belongsTo(\App\PublicHolidayCalendar::class, 'public_holiday_calendar_id');
+    }
+
 }

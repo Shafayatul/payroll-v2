@@ -34,7 +34,7 @@ class CreateForeignTable extends Migration
         
         Schema::table('offices', function (Blueprint $table) {
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendars');
+            $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendar_id');
         });
         
         Schema::table('feedback_categories', function (Blueprint $table) {
@@ -108,7 +108,7 @@ class CreateForeignTable extends Migration
         });
         
         Schema::table('employee_attribute_metas', function (Blueprint $table) {
-            $table->foreign('attribute_type_id')->references('id')->on('employee_attribute_datatypes');
+            $table->foreign('attribute_datatype_id')->references('id')->on('employee_attribute_datatypes');
         });
         
         Schema::table('payroll_settings', function (Blueprint $table) {

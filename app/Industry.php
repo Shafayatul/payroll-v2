@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Company;
+
 class Industry extends Model
 {
     /**
@@ -27,5 +29,8 @@ class Industry extends Model
      */
     protected $fillable = ['name'];
 
+    public function companies(){
+        return $this->hasMany(Company::class, 'industry_id');
+    }
     
 }
