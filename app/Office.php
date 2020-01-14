@@ -35,6 +35,10 @@ class Office extends Model
         return $this->belongsTo(\App\Company::class, 'company_id');
     }
 
+    public function users(){
+        return $this->hasMany(\App\User::class, 'office_id');
+    }
+
     public function feedbackCategories(){
         return $this->hasMany(\App\FeedbackCategory::class, 'office_id');
     }

@@ -30,4 +30,8 @@ class RoleReminder extends Model
     public function role(){
         return $this->belongsTo(\App\Role::class, 'role_id');
     }
+
+    public function specialrole(){
+        return $this->hasMany(\App\SpecialRoleReminder::class, 'role_reminder_id');
+    }
 }

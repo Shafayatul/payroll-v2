@@ -30,4 +30,8 @@ class Department extends Model
     public function office(){
         return $this->belongsTo(\App\Office::class, 'office_id');
     }
+    
+    public function users(){
+        return $this->hasMany(\App\User::class, 'department_id');
+    }
 }

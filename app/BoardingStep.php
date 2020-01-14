@@ -28,6 +28,6 @@ class BoardingStep extends Model
     protected $fillable = ['name', 'type'];
 
     public function stepItems(){
-        return $this->belongsTo(\App\BoardingStepItem::class, 'boarding_step_id');
+        return $this->hasMany(\App\BoardingStepItem::class, 'boarding_step_id');
     }
 }

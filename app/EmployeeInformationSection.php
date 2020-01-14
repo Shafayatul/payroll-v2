@@ -32,6 +32,6 @@ class EmployeeInformationSection extends Model
     }
 
     public function employeeDetailAttributes(){
-        return $this->hasMany(\App\Company::class, 'section_id');
+        return $this->hasMany(\App\EmployeeDetailAttribute::class, 'section_id');
     }
 }

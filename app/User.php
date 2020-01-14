@@ -37,8 +37,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function companies(){
-        return $this->hasMany(\App\Company::class, 'user_id');
+    public function company(){
+        return $this->hasOne(\App\Company::class, 'user_id');
+    }
+
+    public function office(){
+        return $this->belongsTo(\App\Office::class, 'office_id');
+    }
+
+    public function department(){
+        return $this->belongsTo(\App\Department::class, 'department_id');
     }
 
     public function payrollHistories(){
