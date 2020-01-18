@@ -1,0 +1,82 @@
+.company-submenu-content{
+background-color: #fff;
+display: block;
+}
+.alert{
+color:#000;
+background-color:#ffe4cc;
+border-color:#ffd6b2;
+}
+.full  {
+    padding: 20px;
+    margin: 0 0 20px;
+}
+.text-warning{
+	font-weight:bold;
+   color: #e67e22;
+}
+.company-title{
+	margin:0 auto;
+	font-size:30px;
+
+}
+.sub-header {
+    margin: 20px 0;
+    padding: 10px 0;
+    border-bottom: 1px dotted 
+    #ccc;
+}
+.status{
+	margin-top: 20px !important;
+	margin-bottom: 20px !important;
+}
+._3A0CB {
+    color:#17a2b8;
+    font-size: 16px;
+}
+._3d3hy {
+    width: 100%;
+}
+._1A_Fo {
+    text-align: initial;
+    display: inline-block;
+    min-width: 150px;
+    padding: 12px 16px;
+    background:#fff;
+    font-size: 14px;
+    color:#555;
+   border-radius: 4px;
+   border: 1px solid #dce6ec;
+}
+._3eTCz {
+    display: flex;
+    align-items: flex-start;
+}
+._3SL8z {
+    border-left: 3px solid 
+    #17a2b8;
+}
+._1A_Fo {
+    text-align: initial;
+    font-size: 14px;
+    color: 
+    #555;
+}
+.form-group {
+    margin-bottom: 25px;
+}
+._3eTCz > div:not(:last-child) {
+    margin-right: 8px;
+}
+.form-horizontal.form-striped > .form-group:nth-child(2n+1) {
+    background-color:#f8fafb;
+}
+.form-horizontal .form-group::after, .form-horizontal .form-group::before {
+    content: " ";
+    display: table;
+}
+.form-horizontal .control-label {  
+    margin-bottom: 0;
+    padding-top: 9px;
+    font-weight: 600;
+}

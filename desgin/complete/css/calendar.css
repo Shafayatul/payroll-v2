@@ -1,0 +1,87 @@
+body {
+    font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+    color: #555;
+    font-size: 14px;
+}
+.card-no-border .page-wrapper {
+    background: #fff;
+}
+
+.personio-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 24px;
+    margin-right: 24px;
+    padding-bottom: 24px;
+}
+.modal-header::after, .modal-header::before {
+    content: " ";
+    display: table;
+}
+
+.modal-header .close {
+    margin-top: -4px;
+    outline: none;
+    background:#f4f7f9;
+	border-radius: 2px 2px 2px 2px;
+	height: 32px;
+	width: 32px;
+	opacity: 1;
+	text-shadow: none;
+	font-weight: 400;
+	transition: all .3s ease;
+	margin-right: 10px;
+	padding: 0;
+}
+.absence-heading{
+	font-weight: 700;
+	font-size: 30px;
+}
+#modal-ical{
+	display: none;
+}
+.modal-title {
+    color: 
+    #333;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.col-md-offset-3 {
+    margin-left: 25%;
+}
+.checkbox label, .radio label {
+    min-height: 20px;
+    padding-left: 20px;
+    margin-bottom: 15px;
+    font-weight: 400;
+    cursor: pointer;
+    font-size: 16px;
+}
+.modal-body {
+    padding: 24px;
+}
+@media (min-width:768px) {
+ .modal-dialog {
+ max-width: 600px;	
+  width:600px;
+  margin:30px auto
+ }
+.alert {
+    border-width: 0 0 0 5px;
+    border-radius: 0;
+}
+.alert a {
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+ .btn-default {
+    color: 
+#555;
+background-color:
+#f4f7f9;
+border-color:
+    transparent;
+}

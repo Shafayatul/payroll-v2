@@ -1,0 +1,73 @@
+.card-no-border .page-wrapper {
+    background: 
+    #fff;
+}
+
+#office, #office1, #office2 {
+	display: none;
+}
+.col-md-offset-3 {
+    margin-left: 25%;
+}
+.sub-header {
+    margin: 20px 0;
+    padding: 10px 0;
+    border-bottom: 1px dotted 
+    #ccc;
+}
+.nav {
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+}
+.vtabs {
+    display: table;
+    width: 100%;
+}
+.vtabs .tabs-vertical {
+    width: 100%;
+    display: block;
+}
+
+.customvtab .tabs-vertical li .nav-link.active, .customvtab .tabs-vertical li .nav-link:focus{
+    background: 
+#009efb;
+border-right: 2px solid
+#009efb;
+margin-right: -1px;
+color:
+    #fff;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 300;
+}
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    color: 
+    #fff;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    background-color: #777;
+    border-radius: 10px;
+}
+.pull-right {
+    float: right !important;
+}
+.input-group-addon, .input-group-btn {  
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.input-group-sm > .form-control, .input-group-sm > .input-group-addon, .input-group-sm > .input-group-btn > .btn, .input-sm {
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
