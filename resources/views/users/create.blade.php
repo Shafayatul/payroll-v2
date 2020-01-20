@@ -3,15 +3,6 @@
 @section('admin-additional-css')
 @endsection
 @section('content')
-<div class="row page-titles">
-    <div class="col-md-6 col-8 align-self-center">
-        <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
-            <li class="breadcrumb-item active">Create New User</li>
-        </ol>
-    </div>
-</div>
 @include('layouts.admin.include.alert')
 <div class="row">
     <div class="col-md-12">

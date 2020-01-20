@@ -35,7 +35,7 @@ class EmployeeDetailAttribute extends Model
         return $this->hasMany(\App\EmployeeDetail::class, 'attribute_id');
     }
 
-    public function datatypes(){
+    public function dataTypes(){
         return $this->hasMany(\App\EmployeeAttributeDatatype::class, 'attribute_id');
     }
 

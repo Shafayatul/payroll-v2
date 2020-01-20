@@ -17,10 +17,11 @@
                 <li>
                     <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Settings </span></a>
                     <ul aria-expanded="false" class="collapse">
-                        <li><a href="{{ url('users') }}">Users</a></li>
-                        <li><a href="{{ url('companies') }}">Company</a></li>
-                        <li><a href="{{ url('offices') }}">Office</a></li>
+                        {{-- <li><a href="{{ url('users') }}">Users</a></li> --}}
+                        <li><a href="{{ route('companies.index') }}">Company</a></li>
+                        <li><a href="{{ url('offices') }}">Offices</a></li>
                         <li><a href="{{ url('departments') }}">Departments</a></li>
+                        <li><a href="{{ route('setting.employee-information') }}">Employee Information</a></li>
                         <li><a href="{{ url('industries') }}">Industry</a></li>
                         <li><a href="{{ url('public-holiday-calendars') }}">Public Holiday</a></li>
                         <li><a href="{{ url('attendence-working-hours') }}">Attendence</a></li>

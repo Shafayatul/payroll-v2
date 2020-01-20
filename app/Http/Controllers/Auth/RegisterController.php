@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Auth;
+
 use App\User;
+use App\Office;
 use App\Company;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -80,7 +83,12 @@ class RegisterController extends Controller
         $company->name                  = $data['company_name'];
         $company->language              = $data['language'];
         $company->company_employee_size = $data['company_employee_size'];
-        $company->save();
+        $company->save();     
+
+        $office = new Office;
+        $office->name = $company->name.' Main Office';
+        $office->company_id = $company->id;
+        $office->save();
 
         return $user;
     }

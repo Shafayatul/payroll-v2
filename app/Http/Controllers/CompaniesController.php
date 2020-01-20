@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-
-use App\Company;
-use App\Industry;
-use App\PublicHolidayCalendar;
 use Illuminate\Http\Request;
-use App\Companies\timezoneCurrencyTrait;
+
 use File;
 use Auth;
 use Illuminate\Support\Facades\Storage;
+
+use App\Office;
+use App\Company;
+use App\Industry;
+use App\PublicHolidayCalendar;
+
+use App\Traits\timezoneCurrencyTrait;
 
 class CompaniesController extends Controller
 {
@@ -24,8 +27,8 @@ class CompaniesController extends Controller
      */
     public function index(Request $request)
     {
-        
         $company = Company::where('user_id', Auth::id())->first();
+        // dd($company);
         $json_currencies = $this->currencies();
         $currencies = json_decode($json_currencies);
         $timezones = $this->timezones();
@@ -39,15 +42,15 @@ class CompaniesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
-    {
-        $json_currencies = $this->currencies();
-        $currencies = json_decode($json_currencies);
-        $timezones = $this->timezones();
-        $industries = Industry::pluck('name', 'id');
-        $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
-        return view('companies.create', compact('currencies', 'timezones', 'industries', 'public_holiday_calendars'));
-    }
+    // public function create()
+    // {
+    //     $json_currencies = $this->currencies();
+    //     $currencies = json_decode($json_currencies);
+    //     $timezones = $this->timezones();
+    //     $industries = Industry::pluck('name', 'id');
+    //     $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
+    //     return view('companies.create', compact('currencies', 'timezones', 'industries', 'public_holiday_calendars'));
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -93,7 +96,7 @@ class CompaniesController extends Controller
         $company->logo                         = $logo_url;
         $company->save();
 
-        return redirect('companies')->with('success', 'Company added!');
+        return redirect()->route('companies.index')->with('success', 'Company added!');
     }
 
     /**
@@ -103,16 +106,16 @@ class CompaniesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function show($id)
-    {
-        $company = Company::findOrFail($id);
-        $json_currencies = $this->currencies();
-        $currencies = json_decode($json_currencies);
-        $timezones = $this->timezones();
-        $industries = Industry::pluck('name', 'id');
-        $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
-        return view('companies.show', compact('company', 'currencies', 'timezones', 'industries', 'public_holiday_calendars'));
-    }
+    // public function show($id)
+    // {
+    //     $company = Company::findOrFail($id);
+    //     $json_currencies = $this->currencies();
+    //     $currencies = json_decode($json_currencies);
+    //     $timezones = $this->timezones();
+    //     $industries = Industry::pluck('name', 'id');
+    //     $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
+    //     return view('companies.show', compact('company', 'currencies', 'timezones', 'industries', 'public_holiday_calendars'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -121,16 +124,16 @@ class CompaniesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function edit($id)
-    {
-        $company = Company::findOrFail($id);
-        $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
-        $json_currencies = $this->currencies();
-        $currencies = json_decode($json_currencies);
-        $timezones = $this->timezones();
-        $industries = Industry::pluck('name', 'id');
-        return view('companies.edit', compact('company', 'currencies', 'timezones', 'industries', 'public_holiday_calendars'));
-    }
+    // public function edit($id)
+    // {
+    //     $company = Company::findOrFail($id);
+    //     $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
+    //     $json_currencies = $this->currencies();
+    //     $currencies = json_decode($json_currencies);
+    //     $timezones = $this->timezones();
+    //     $industries = Industry::pluck('name', 'id');
+    //     return view('companies.edit', compact('company', 'currencies', 'timezones', 'industries', 'public_holiday_calendars'));
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -142,7 +145,6 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $company = Company::findOrFail($id);
         if($request->is_sub_company_enable != null){
             $is_sub_company_enable = 1;
@@ -180,7 +182,7 @@ class CompaniesController extends Controller
         $company->logo                         = $name;
         $company->save();
 
-        return redirect('companies')->with('success', 'Company updated!');
+        return redirect()->route('companies.index')->with('success', 'Company updated!');
     }
 
     /**

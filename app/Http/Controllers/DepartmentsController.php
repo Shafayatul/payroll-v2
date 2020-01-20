@@ -53,12 +53,12 @@ class DepartmentsController extends Controller
      */
     public function store(Request $request)
     {
-        
-       $department               = new Department;
-       $department->name         = $request->name;
-       $department->working_hour = $request->working_hour;
-       $department->office_id    = $request->office_id;
-       $department->save();
+        $department               = new Department;
+        $department->name         = $request->name;
+        $department->working_hour = 40;
+        $department->office_id    = $request->office_id;
+        $department->save();
+
         return redirect('departments')->with('success', 'Department added!');
     }
 

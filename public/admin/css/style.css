@@ -2,3 +2,8 @@
 ul{
 	list-style:none;
 }
+.left-sidebar {
+    overflow-y: scroll !important;
+    top: 0 !important;
+    bottom: 0 !important;
+}

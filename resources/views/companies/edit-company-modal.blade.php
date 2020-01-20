@@ -13,7 +13,7 @@
       <div class="modal-body">
         {!! Form::model($company, [
             'method' => 'PATCH',
-            'url' => ['/companies', $company->id],
+            'url' => route('companies.update', $company->id),
             'class' => 'form-horizontal',
             'files' => true
         ]) !!}

@@ -1,3 +1,9 @@
+.shadowed-box {
+    box-shadow: 0 1px 4px 0 
+    rgba(0,0,0,.1);
+}
+
+
 .employee-header {
     border-bottom: 1px solid 
     #f3f3f3;
@@ -21,7 +27,7 @@ width: 20%;
 border-right: 1px solid
 #f3f3f3;
 }
-.nav-item{	
+.tab-secction .nav-item{	
     padding: 10px 8px 10px 16px;
     margin-bottom: 8px;
     border-radius: 3px;
@@ -87,7 +93,7 @@ border-right: 1px solid
     cursor: pointer;
     outline: none;
 }
-.spandv {
+.name{
     padding: 12px 20px 12px 24px;
     border-radius: 4px;
     border: 1px solid #dce6ec;
@@ -97,8 +103,8 @@ border-right: 1px solid
 }
 .right-icon {
     margin-right: 16px;
-    color: 
-    #aaa;
+    color:#aaa;
+    font-size: 28px;
 }
 .inputdv span {
     color:#555;
@@ -143,6 +149,11 @@ border-color:
     padding: 8px;
     margin: 1px 0 0;
     outline: 15px;
+    background:#f7f7f7;
+    border-color:#f7f7f7;
+   opacity: .5;
+cursor: auto;
+pointer-events: none;
 }
 .panel-body{
     padding: 0 8px 16px 54px;
@@ -153,13 +164,48 @@ border-color:
     border-top-color: currentcolor;
 }
 
-._13GRYiR7twonLdYbqlxERb {
+.strings{
     width: 325px;
     margin-top: 12px;
+    background:
+#f7f7f7;
+border-color:
+#f7f7f7;
+opacity: .5;
+cursor: auto;
+pointer-events: none;
 }
 
 .coll-title{
     color:#555;
     font-weight: 600;
     font-size: 14px;
+}
+._333holGKf6kP50GkaibUzr {
+    display: flex;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.uniqueid{
+    width: 180px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+.name[aria-expanded='true'] .right-icon {
+  display: block;
+  transform: rotate(90deg) !important;
+  
+}
+.name[aria-expanded='true'] .name-1 {
+  display: none;
+  
+}
+.name[aria-expanded='false'] .name-2 {
+  display: none;
+  
+}
+.gender{
+    margin-top: 2%;
 }

@@ -5,15 +5,6 @@
 <link href="{{ asset('admin/css/office.css') }}"  rel="stylesheet" media="all">
 @endsection
 @section('content')
-<div class="row page-titles">
-    <div class="col-md-6 col-8 align-self-center">
-        <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Offices</a></li>
-            <li class="breadcrumb-item active">Offices</li>
-        </ol>
-    </div>
-</div>
 @include('layouts.admin.include.alert')
 <div class="row gutter30">
     <div class="col-md-4">
@@ -33,12 +24,10 @@
             <br>
 
             <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
-                @foreach($offices as $item)
+                @foreach($offices as $office)
                     <li class="nav-item"> 
-                    <a class="nav-link office-edit" data-toggle="tab" id="{{ $item->id }}" href="#{{ $item->id }}" role="tab">
-                           {{ $item->name }}
-                            <span class="badge pull-right" data-toggle="tooltip" title="" data-original-title="7 active employees, 9 total">
-                                7
+                    <a class="nav-link office-edit {{$loop->iteration == 1? 'active':''}}" data-toggle="tab" onclick="openTab({{ $office->id }})" role="tab">{{ $office->name }}<span class="badge pull-right" data-toggle="tooltip" title="" data-original-title="7 active employees, 9 total">
+                                {{ count($office->users) }}
                             </span>
                         </a> 
                     </li>
@@ -47,36 +36,24 @@
         </div>
     </div>
     <div class="col-md-8 tab-content">
+        @foreach ($offices as $office)
+        <div class="block-section tab-pane {{$loop->iteration == 1? 'active':''}}" id="tab{{ $office->id }}" role="tabpanel">
+            <h4 class="sub-header"><span class="office_name">{{ $office->name }}</span> <small> <a href="#" class="edit-toggle" onclick="updateOffice({{ $office->id }});" data-toggle="tooltip" data-original-title="" title="">(Edit)</a> </small> <a href="#modal-delete-office" data-toggle="modal"> <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> </a> </h4>
 
-        <div class="block-section tab-pane" id="office-tab" role="tabpanel">
-            <h4 class="sub-header">
-                <span class="office_name">ddd</span> 
-                <small> 
-                    <a href="#" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible1();">
-                        (Edit)
-                    </a> 
-                </small> 
-                <a href="#modal-delete-office" data-toggle="modal"> 
-                    <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete this office">
-                        
-                    </i> 
-                </a>
-            </h4>
-
-             <div class="form-horizontal form-striped compact" id="office-div1">
+            <div class="form-horizontal form-striped compact office-details" id="office-div{{$office->id}}">
                 <div class="form-group row"><label class="col-md-3 control-label"> Office name </label>
-                    <div class="col-md-5"> <p class="form-control-static"><span class="office_name">ddd</span></p> </div>
+                    <div class="col-md-5"> <p class="form-control-static"><span class="office_name">{{ $office->name }}</span></p> </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Currency </label>
                     <div class="col-md-5">
-                        <p class="form-control-static office_currency">EUR (€)</p>
+                        <p class="form-control-static office_currency">{{ $office->currency }}</p>
                         <i>(Company default)</i>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Timezone </label>
-                    <div class="col-md-5 form-control-static office_timezone"> Europe/Berlin<br> <i>(Company default)</i> </div>
+                    <div class="col-md-5 form-control-static office_timezone">{{  $office->timezone }}<br> <i>(Company default)</i> </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Street </label>
@@ -99,16 +76,16 @@
                     </div>
                 </div>
             </div>
-
-            <form method="POST" action="" accept-charset="UTF-8" class="form-horizontal" id="office1" novalidate="novalidate">
-                <input name="_token" type="hidden" value="">
-                <input name="update_office_id" type="hidden" value="198659">
+            <form method="POST" action="{{ route('offices.update', $office->id)  }}" accept-charset="UTF-8" style="display:none" class="form-horizontal" id="office-{{$office->id}}" novalidate="novalidate">
+                @csrf
+                @method('PUT')
+                <input name="update_office_id" type="hidden" value="{{$office->id}}">
                 <div class="form-group row">
                     <label class="col-md-3 control-label">
                         Office name
                     </label>
                     <div class="col-md-5">
-                        <input class="form-control" placeholder="Office name" required="" minlength="2" name="name" type="text" value="ddd">
+                        <input class="form-control" placeholder="Office name" required="" minlength="2" name="name" type="text" value="{{ $office->name }}">
                     </div>
                 </div>
 
@@ -117,7 +94,7 @@
                         Currency
                     </label>
                     <div class="col-md-5">
-                         <select class="select-chosen form-control"  >
+                            <select class="select-chosen form-control"  >
                     <option value="null">Same as company</option>
                     <optgroup label="System holiday calendars">
                         <option value="1">DE Feiertage</option>
@@ -154,8 +131,8 @@
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Timezone </label>
                     <div class="col-md-5">
-                         <select class="select-chosen form-control"  >
-                       <option value="null">Same as company</option>                        
+                            <select class="select-chosen form-control"  >
+                        <option value="null">Same as company</option>                        
                         <option value="1">DE Feiertage</option>
                         <option value="2">DE (Bayern) Feiertage</option>
                         <option value="6">DE (Berlin) Feiertage</option>
@@ -182,11 +159,11 @@
                         <option value="209">France public holidays</option>
                         <option value="211">Canada public holidays</option>
                         <option value="213">Italy public holidays</option>
-                   
+                    
                     </select>
                         
-                       </div>
-                 </div>
+                        </div>
+                    </div>
                 <div class="form-group row">
                     <label class="col-md-3 control-label">
                         Street
@@ -226,7 +203,7 @@
                         
                     </div>
                     <div class="col-md-3">
-                         <select class="select-chosen form-control">
+                            <select class="select-chosen form-control">
                             <option value="null">Same as company</option>
                             <optgroup label="System holiday calendars">
                                 <option value="1">DE Feiertage</option>
@@ -261,8 +238,8 @@
                 </div>
 
                 <div class="form-group row">
-                 <label class="col-md-3 control-label"> Public holidays </label>
-                  <div class="col-md-5">
+                    <label class="col-md-3 control-label"> Public holidays </label>
+                    <div class="col-md-5">
                     <select class="select-chosen form-control"  >
                     <option value="null">Same as company</option>
                     <optgroup label="System holiday calendars">
@@ -294,17 +271,18 @@
                         <option value="213">Italy public holidays</option>
                     </optgroup>
                     </select>                            
-                 </div>
-             </div>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-md-9 col-md-offset-3">
-                        <button type="reset" class="btn btn-default edit-cancel" onclick="switchVisible1();"><i class="fas fa-times"></i> Cancel</button>
+                        <button type="reset" class="btn btn-default edit-cancel" onclick="cancelUpdate({{ $office->id }});"><i class="fas fa-times"></i> Cancel</button>
                         <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Submit</button>
                     </div>
                 </div>
             </form>
         </div>
-
+                    
+        @endforeach
     </div>
 </div>
 @endsection
@@ -324,18 +302,20 @@
     //         }
     //     }
     // }
-    function switchVisible1() {
-        if (document.getElementById('office-div')) {
 
-            if (document.getElementById('office-div1').style.display == 'none') {
-                document.getElementById('office-div1').style.display = 'block';
-                document.getElementById('office1').style.display = 'none';
-            }
-            else {
-                document.getElementById('office-div1').style.display = 'none';
-                document.getElementById('office1').style.display = 'block';
-            }
-        }
+    function openTab(id){
+        $('.tab-pane').hide();
+        $('#tab'+id).show();
+        // $('#office'+id).attr('style', 'display:none !important');
+        $('#office-div'+id).show();
+    }
+    function updateOffice(id) {
+        $('.office-details').hide();
+        $('#office-'+id).show();
+    }
+    function cancelUpdate(id){
+        $('#office-'+id).hide();
+        $('#office-div'+id).show();
     }
     // function switchVisible2() {
     //     if (document.getElementById('office-div2')) {

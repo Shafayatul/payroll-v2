@@ -14,8 +14,8 @@ class CreateForeignTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('office_id')->references('id')->on('offices');
-            $table->foreign('department_id')->references('id')->on('departments');
+            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
         });
 
         Schema::table('companies', function (Blueprint $table) {
@@ -34,7 +34,7 @@ class CreateForeignTable extends Migration
         
         Schema::table('offices', function (Blueprint $table) {
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendar_id');
+            $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendars');
         });
         
         Schema::table('feedback_categories', function (Blueprint $table) {
@@ -46,7 +46,7 @@ class CreateForeignTable extends Migration
         });
         
         Schema::table('departments', function (Blueprint $table) {
-            $table->foreign('office_id')->references('id')->on('offices');
+            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade');
         });
         
         Schema::table('interview_types', function (Blueprint $table) {
@@ -95,16 +95,16 @@ class CreateForeignTable extends Migration
         });
         
         Schema::table('employee_detail_attributes', function (Blueprint $table) {
-            $table->foreign('section_id')->references('id')->on('employee_information_sections');
+            $table->foreign('section_id')->references('id')->on('employee_information_sections')->onDelete('cascade');
         });
         
         Schema::table('employee_details', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes');
+            $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes')->onDelete('cascade');
         });
         
         Schema::table('employee_attribute_datatypes', function (Blueprint $table) {
-            $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes');
+            $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes')->onDelete('cascade');
         });
         
         Schema::table('employee_attribute_metas', function (Blueprint $table) {
@@ -150,7 +150,7 @@ class CreateForeignTable extends Migration
         });
 
         Schema::table('rules', function (Blueprint $table) {
-            $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes');
+            $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes')->onDelete('cascade');
         });
 
         Schema::table('role_reminders', function (Blueprint $table) {
