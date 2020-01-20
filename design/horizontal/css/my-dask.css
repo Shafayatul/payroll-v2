@@ -1,0 +1,353 @@
+.icon-font{
+    font-size: 14px;
+}
+.employees-icon{
+    font-size: 32px;
+}
+
+.card-no-border .page-wrapper {
+    background: 
+    #fff;
+}
+.my-desk-container {
+    padding: 20px 40px;
+}
+.main-title{
+	font-size: 24px;
+	color: #333;
+	font-weight: bolder;
+    line-height: 32px;
+    margin-bottom: 8px;
+}
+
+
+.dask-box > div {
+    flex: 3;
+    margin: 0 40px 0 0;
+}
+.dask-box {
+    display: flex;
+    flex-direction: row;
+}
+.profile-body{
+   flex: 3;
+margin: 0 40px 0 0; 
+}
+
+.prolist{
+   list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    font-size: 14px;	
+}
+.li-title{
+   
+    margin: 0 0 16px;
+}
+.dask-box > div:first-child, .dask-box > div:last-child {
+    flex: 1;
+}
+.profile {
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+}
+
+.user-title{
+color: #333;
+font-size: 24px;
+font-weight: bolder;
+line-height: 32px;
+margin-bottom: 8px;
+}
+
+.dask-border {
+    border: 1px solid 
+    #dce6ec;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    padding: 20px 16px;
+    margin: 0 0 64px;
+    margin-bottom: 64px;
+}
+.onborad{
+    display: flex;
+}
+.onboradiv:first-child {
+    margin-right: 8px;
+}
+.onboradiv{
+    background: 
+    #f7f7f7;
+    width: calc(50% - 8px);
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 4px;
+}
+.onboradbody {
+    width: 135px;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+.imgbody{
+    display: flex;
+    margin-left: auto;
+    flex-direction: row-reverse;
+    width: calc(100% - 163px);
+    padding: 0 12px 0 8px;
+    position: relative;
+}
+.borad-img{
+    width: 48px;
+    height: 48px;
+    border: 2px solid 
+    hsla(0,0%,83.9%,.2);
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+.boradnumbar {
+    color:#333;
+    margin: 0;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 36px;
+    font-feature-settings: "tnum";
+}
+.borad-title{
+    margin: 0;
+    font-size: 14px;
+    color: 
+    #333;
+    line-height: 20px;
+}
+
+.header-title{
+    display: flex;   
+    margin: 0 0 16px;
+    margin-bottom: 16px;
+    padding: 0 0 16px;
+    padding-bottom: 16px;
+}
+.sshtd td:nth-child(3) {
+    color: 
+    #555;
+    font-size: 13px;
+    font-weight: 600;
+}
+.sshtd td:last-child {
+    width: 120px;
+    text-align: right;
+}
+.sshtd td {
+    padding: 16px;
+    border-bottom: 1px solid 
+    #dce6ec;
+}
+.sshtd tr:not(:hover) td:last-child a {
+    color: 
+#555;
+background-color:
+#f4f7f9;
+border-color:
+    transparent;
+}
+.sshtd tr td:last-child a {
+    width: 40px;
+}
+
+
+
+.badge-num {
+    background-color: 
+    #dc7c7c;
+}
+.badge-div {
+    margin-left: 8px;
+}
+
+.badge, .label {
+    font-weight: 400;
+    font-size: 90%;
+}
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    color: 
+    #fff;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    background-color: #777;
+    border-radius: 10px;
+}
+.approval-over {
+    display: flex;
+}
+.approval-over a:not(:last-child) {
+    margin: 0 8px 0 0;
+}
+.approval-over a {
+    transition: all .3s ease;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    color: 
+#333;
+background:
+    #f4f7f9;
+    border-radius: 4px;
+    padding: 12px 24px;
+    text-decoration: none;
+}
+
+.approval-over a strong {
+    color:#fd7e14;
+    font-size: 36px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0 12px 0 0;
+    vertical-align: middle;
+}
+.employees-container{
+    display: flex;
+}
+.employees-container-body:not(:last-child) {
+    margin: 0 8px 0 0;
+}
+
+.employees-container-body, .employees-container-body:hover {
+    color:#333;
+    text-decoration: none;
+}
+.employees-container-body {
+    display: block;
+    flex: 1;
+    background: 
+    #f4f7f9;
+    border-radius: 4px;
+    padding: 24px;
+}
+.employees-container-body .employees-container-numbar {
+    font-size: 36px;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
+}
+.out{
+    display: flex;
+    height: 32px;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.icon-circle {
+    margin-top: 4px;
+}
+.out-today-container:not(:last-child) {
+    border-bottom: 1px dotted 
+    #dce6ec;
+}
+.out-today-container{
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+}
+.ba-day-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.ba-day li {
+    font-size: 13px;
+    margin-bottom: 16px;
+    color: 
+    #999;
+    display: flex;
+}
+.bdsearch {
+    margin-bottom: 16px;
+    position: relative;
+}
+.bdsearch-icon {
+   position: absolute;
+   top: 10px;
+   left: 12px;
+   color:    #e6eaec;
+
+    
+}
+
+
+.bd-img-body > span {
+    margin: 0 2px 0 0;
+}
+.G2Mft {
+    min-width: 75px;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 15px;
+    color: #333;
+   background:#fff;
+   border: 1px solid #dce6ec;        
+    border-radius: 2px;
+    box-shadow: none;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    padding: 8px;
+     padding-left: 8px;
+    margin: 1px 0 0;
+    outline: 15px;
+    padding-left: 34px !important;
+    border-color:#dce6ec !important;
+    border-radius: 4px !important;
+}
+.bd-header span {
+    color: 
+    #000;
+    font-size: 16px;
+    font-weight: 600;
+}
+.ba-day {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.bd-img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transition: all .2s ease-in;
+    margin-right: 6px;
+}
+._6Qhh1mqCEltaEavjZaDBe li {
+    font-size: 13px;
+    color: 
+    #999;
+}
+.nobd {
+    color: 
+    #000;
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+.check-circle {
+    color:#74c970;
+    font-size: 26px;
+}
+.bdcontainer {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+.cel-bd {
+    color: 
+    #555;
+    margin-bottom: 24px;
+    font-weight: 400;
+    text-align: center;
+}
