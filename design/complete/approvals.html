@@ -22,9 +22,10 @@
     <link href="css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="css/colors/green.css" id="theme" rel="stylesheet"> 
-     <link href="css/app-contact.css" id="app-contact" rel="stylesheet" media="all">
+     
      <link href="css/departments.css"  rel="stylesheet" media="all">
-     <link href="css/employee-information.css"  rel="stylesheet" media="all">
+     <link href="css/approvals.css"  rel="stylesheet" media="all">
+   
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -472,221 +473,142 @@
                 <!-- ============================================================== -->
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
-                <div class="row page-titles">
-                    <div class="col-md-6 col-8 align-self-center">
-                        <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
-                    </div>
-                    <div class="col-md-6 col-4 align-self-center">
-                        <button
-                            class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm float-right ml-2"><i
-                                class="ti-settings text-white"></i></button>
-                        <button class="btn float-right hidden-sm-down btn-success"><i class="mdi mdi-plus-circle"></i>
-                            Create</button>
-                        <div class="dropdown float-right mr-2 hidden-sm-down">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> January 2019
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> <a class="dropdown-item"
-                                    href="#">February 2019</a> <a class="dropdown-item" href="#">March 2019</a> <a
-                                    class="dropdown-item" href="#">April 2019</a> </div>
-                        </div>
-                    </div>
-                </div>
+               
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
              <!--  -->
-             <div class="row">
-                <header class="employee-header">
-                    <h1 class="employee-title">Employee information</h1>
-                    <p class="">Manage all your attributes and sections from here. Add, edit and delete attributes or sections.</p>
-                </header>
-            </div>
-             <div class="row gutter30">
-             <div class="col-md-2 tab-secction">
-              <div class="block-section customvtab vtabs row">
-               <button data-test-id="create-new-section-button" class="my-button create" type="button"><div class="attrdiv"><div>Create a section</div></div></button>
+                 <div class="background-white shadowed-box personio-submenu-content  approvals ">
+                         <!-- Block Tabs -->
+                    <div class="block block-tabs full">
+                        <div class="tab-content">
+                            <div class="tab-pane active">
+                                    <div class="block-title">
+                                         <ul id="office_list " class="nav nav-tabs tabs-vertical ul-tab" data-toggle="tabs" ole="tablist">
+                                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab1" role="tab"> Absence / Paid vacation </a> </li>
+                                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab2" role="tab">Absence / Sick days </a> </li>
+                                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab3" role="tab"> Absence / Parental leave </a> </li>
+                                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab4" role="tab"> Absence / Maternity protection </a> </li>
+                                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab5" role="tab"> Absence / Unpaid vacation </a> </li>
+                                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab6" role="tab"> Absence / Home office </a> </li>
+                                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab7" role="tab"> Attendance </a> </li>
+                                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab8" role="tab"> Employee data </a> </li>
+                                       </ul>
+                                    </div>
+                                    <div class="tab-content">
+                                  <!--       tab one  -->
+                                       <div class="tab-pane row gutter30 active" id="tab1">
+                                            <div class=" col-md-12 margin-top-20 text-muted">
+                                              Please define the chain of required approval steps. For each step the responsible employee(s) will have to confirm the request before it is passed on to the next level.
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="ruleFilterSet margin-bottom-25">
+                                                    <h4 class="sub-header"> Default </h4>
+                                                     <p class="filter-details text-muted">
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">
+                                                                    <input type="hidden" name="step_active[1]" value="1">
+                                                                    <select class="form-control" name="step_approval[1]">
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                             <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">2</div>
+                                                              
+                                                                <div class="col-md-5  role-dependant" >
+                                                                    <select class="form-control" name="approver_employee_role[2]">
+                                                                        <option value="172505">Administrator</option>
+                                                                        <option value="172506" selected="selected">HR Manager</option>
+                                                                        <option value="172507">Supervisor</option>
+                                                                        <option value="172508">Working Student</option>
+                                                                        <option value="172510">Recruiting Manager</option>
+                                                                        <option value="172511">Accounting</option>
+                                                                        <option value="172512">Management</option>
+                                                                        <option value="172513">Office Management</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-5  employee-dependant" >
+                                                                    <select class="form-control" name="approver_employee[2]">
+                                                                        <option value="1617410">Alan Foster</option>
+                                                                        <option value="1617411">Alexander Bergmann</option>
+                                                                        <option value="1617412">Alison Bell</option>
+                                                                        <option value="1617414">Charlotte Haas</option>
+                                                                        <option value="1617416">Emma Weber</option>
+                                                                        <option value="1617417">Jasmin Hofman</option>
+                                                                        <option value="1617418">Johannes Graf</option>
+                                                                        <option value="1617419">Jörn Peters</option>
+                                                                        <option value="1617420">Josephine Friedrich</option>
+                                                                        <option value="1617421">Julian Schneider</option>
+                                                                        <option value="1617422">Kai Schumacher</option>
+                                                                        <option value="1617423">Karsten Becker</option>
+                                                                        <option value="1617424">Larissa Morgan</option>
+                                                                        <option value="1617425">Manuel Dietrich</option>
+                                                                        <option value="1617426">Marc Porter</option>
+                                                                        <option value="1617427">Norman Scott</option>
+                                                                        <option value="1617428">Patrick Wagner</option>
+                                                                        <option value="1617429">Sebastian Meyer</option>
+                                                                        <option value="1617430">Stephan Klein</option>
+                                                                        <option value="1617431">saiful islam</option>
+                                                                    </select>
+                                                                </div>
+                                                                <a href="#" class="text-danger remove-approval-step" data-step="2" >
+                                                                    <i class="fas fa-times-circle"></i>
+                                                                     Add approval step
+                                                                </a>
+                                                            </div>
 
 
-                <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
-                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Public profile</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab2" role="tab">HR information</a> </li>
-                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab3" role="tab">Personal data</a></li>
-                    <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Payroll information</a></li>
-                    <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Bank details</a></li>
-                    <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Emergency contact</a></li>
-                    <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Employee equipment</a></li>
+                                                         </div> 
+                                                     </form>
+                                                 </div>
+                                              </div>
+                                            <div class="col-md-4">
+                                            <h4 class="sub-header">
+                                                Employee filters
+                                            </h4>
+                                            <div>
+                                                <p class="text-muted">Employee filters allow you to define specific approval processes for certain employees</p>
+                                                <a href="">
+                                                    <i class="far fa-pencil"></i>
+                                                    Manage employee filters
+                                                </a>
+                                            </div>
 
-                </ul>
-                   
-              </div>
-             </div>
-             <div class="col-md-9 tab-content">
-                 <div class="block-section tab-pane active" id="tab1" role="tabpanel">
-                  <div id="accordion">
-                        <div class="accordion-header">
-                            <div class="accordion-header-title">Public profile</div>
-                            <div class="b-group">
-                                <button data-test-id="add-new-attribute-button" class="my-button addattr" type="button">
-                                    <div class="attrdiv"><div>Add an attribute</div></div>
-                                </button>
-                                <div class="">
-                                    <div data-test-id="section-options-button" class="_1-53j"><button class="my-button " type="button"><div class="attrdiv"><div><i class="fas fa-ellipsis-h" style="font-size: 14px;"></i></div></div></button>
-                                 </div>
-                              </div>
+                                        </div> 
+                                           
+                                        </div>
+                                  <!--       tab two -->
+                                        <div class="tab-pane row gutter30 " id="tab2">
+                                        </div>
+                                         <div class="tab-pane row gutter30 " id="tab3">
+                                         </div> 
+                                         <div class="tab-pane row gutter30 " id="tab4">
+                                         </div>
+                                         <div class="tab-pane row gutter30 " id="tab5">
+                                         </div>
+                                         <div class="tab-pane row gutter30 " id="tab6">
+                                         </div>
+                                         <div class="tab-pane row gutter30 " id="tab8">
+                                         </div>
+                                        
+                                            
+
+                                   </div>
                             </div>
-                        </div>
-                      <div class="card">
-                        <div class="panel-heading" id="headingTwo">                                                
-                              <div class="spandv collapsed " data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                <i class="fas fa-angle-right right-icon" style="font-size: 28px;"></i>
-                                <span class="coll-title" data-editable>First saiful name</span>
-                                <i class="fas fa-lock icon" style="font-size: 12px;"></i>
-                            </div>
-                         
-                        </div>
-                        <div id="collapseTwo" class="collapse collapsed" aria-labelledby="headingTwo" data-parent="#accordion">
-                          <div class="panel-body"><div data-test-id="edit-attribute-type-list"><input name="deprecated-select" class="G2Mft _1JVwu _1-h8H NXC2m _13GRYiR7twonLdYbqlxERb" value="string"></div><div class="_333holGKf6kP50GkaibUzr"><label class="aPByIBm451-bJEYXdaQSE">Unique Id</label><input disabled="" data-test-id="edit-attribute-restriction-is-unique" type="checkbox"></div></div>
-                        </div>
-                      </div>
-                      <div class="card">
-                        <div class="" id="headingThree">                          
-                           <div class="spandv collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                <i class="fas fa-angle-right right-icon" style="font-size: 28px;"></i>
-                                <span class="coll-title">Last name</span>
-                                <i class="fas fa-lock icon" style="font-size: 12px;"></i>
-                            </div>
-                        </div>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">                     
-                        <div class="panel-body"><div data-test-id="edit-attribute-type-list"><input name="deprecated-select" class="G2Mft _1JVwu _1-h8H NXC2m _13GRYiR7twonLdYbqlxERb" value="string"></div><div class="_333holGKf6kP50GkaibUzr"><label class="aPByIBm451-bJEYXdaQSE">Unique Id</label><input disabled="" data-test-id="edit-attribute-restriction-is-unique" type="checkbox"></div>
-                          </div>
-                        </div>
-                      </div>
-                       <div class="card">
-                        <div class="" id="headingThree">                          
-                           <div class="spandv collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                <i class="fas fa-angle-right right-icon" style="font-size: 28px;"></i>
-                                <span class="coll-title">Linkedin</span>
-                                <i class="fas fa-lock icon" style="font-size: 12px;"></i>
-                            </div>
-                        </div>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">                     
-                        <div class="panel-body"><div data-test-id="edit-attribute-type-list"><input name="deprecated-select" class="G2Mft _1JVwu _1-h8H NXC2m _13GRYiR7twonLdYbqlxERb" value="string"></div><div class="_333holGKf6kP50GkaibUzr"><label class="aPByIBm451-bJEYXdaQSE">Unique Id</label><input disabled="" data-test-id="edit-attribute-restriction-is-unique" type="checkbox"></div>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                   
-
-                </div>                
-                <div class="tab-pane p-3" id="tab2" role="tabpanel">
-                    
-                 </div>      
-                    
-                 
-
-
-
+                         </div>
+                     </div>                              
                  </div>
-
-                       
-             </div>
-
-
-
-
-
-        
-
-                   
               <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <div class="right-sidebar">
-                    <div class="slimscrollright">
-                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span>
-                        </div>
-                        <div class="r-panel-body">
-                            <ul id="themecolors" class="mt-3">
-                                <li><b>With Light sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
-                                <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
-                                <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
-                                <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
-                                <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
-                                <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
-                                <li class="d-block mt-4"><b>With Dark sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-theme="default-dark"
-                                        class="default-dark-theme">7</a></li>
-                                <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a>
-                                </li>
-                                <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
-                                <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a>
-                                </li>
-                                <li><a href="javascript:void(0)" data-theme="purple-dark"
-                                        class="purple-dark-theme">11</a></li>
-                                <li><a href="javascript:void(0)" data-theme="megna-dark"
-                                        class="megna-dark-theme ">12</a></li>
-                            </ul>
-                            <ul class="mt-3 chatonline">
-                                <li><b>Chat option</b></li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user-img"
-                                            class="img-circle"> <span>Varun Dhavan <small
-                                                class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/2.jpg" alt="user-img"
-                                            class="img-circle"> <span>Genelia Deshmukh <small
-                                                class="text-warning">Away</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/3.jpg" alt="user-img"
-                                            class="img-circle"> <span>Ritesh Deshmukh <small
-                                                class="text-danger">Busy</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/4.jpg" alt="user-img"
-                                            class="img-circle"> <span>Arijit Sinh <small
-                                                class="text-muted">Offline</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/5.jpg" alt="user-img"
-                                            class="img-circle"> <span>Govinda Star <small
-                                                class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/6.jpg" alt="user-img"
-                                            class="img-circle"> <span>John Abraham<small
-                                                class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/7.jpg" alt="user-img"
-                                            class="img-circle"> <span>Hritik Roshan<small
-                                                class="text-success">online</small></span></a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/8.jpg" alt="user-img"
-                                            class="img-circle"> <span>Pwandeep rajan <small
-                                                class="text-success">online</small></span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
-            </div>
-            <!-- ============================================================== -->
+                </div>          
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
             <!-- ============================================================== -->
@@ -751,18 +673,6 @@ $(document).on('click','.spandv',function(){
         return false;
     });
 
-// $(document).on('click','.spandv',function(){    
-//         var $lnk = $(this);
-//         var $replace = $('<div class="inputdv collapsed " data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="fas fa-angle-down right-icon" style="font-size: 28px;"></i><input data-test-id="edit-attribute-name-input" name="edit-attribute-name-input" class="G2Mft _1JVwu _1-h8H NXC2m" value="First name"><i class="fas fa-lock icon" ></i></div>');
-       
-//         // Link to Text
-//         $lnk.replaceWith($replace);
-//         // Text to Link
-//         $replace.on('click',function(){
-//             $replace.replaceWith($lnk);
-//         });
-//         return false;
-//     });
 
 
 

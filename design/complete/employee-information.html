@@ -466,71 +466,190 @@
                 <!-- ============================================================== -->
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
-                <div class="row page-titles">
-                    <div class="col-md-6 col-8 align-self-center">
-                        <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
-                    </div>
-                    <div class="col-md-6 col-4 align-self-center">
-                        <button
-                            class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm float-right ml-2"><i
-                                class="ti-settings text-white"></i></button>
-                        <button class="btn float-right hidden-sm-down btn-success"><i class="mdi mdi-plus-circle"></i>
-                            Create</button>
-                        <div class="dropdown float-right mr-2 hidden-sm-down">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> January 2019
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> <a class="dropdown-item"
-                                    href="#">February 2019</a> <a class="dropdown-item" href="#">March 2019</a> <a
-                                    class="dropdown-item" href="#">April 2019</a> </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ============================================================== -->
+   
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
              <!--  -->
              <div class="background-white shadowed-box ">
                <div class="row">
-                <header class="employee-header">
+                <div class="employee-header">
                     <h1 class="employee-title">Employee information</h1>
                     <p class="">Manage all your attributes and sections from here. Add, edit and delete attributes or sections.</p>
-                </header>
+                </div>
               </div>
-              <div class="row gutter30">
-                <div class="col-md-2 tab-secction">
-                  <div class="block-section customvtab vtabs row">
-                     <button  class="my-button create" type="button"><div class="attrdiv"><div>Create a section</div></div></button>
-                <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
-                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Public profile</a></li>
-                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab2" role="tab">HR information</a> </li>
-                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab3" role="tab">Personal data</a></li>
-                    <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Payroll information</a></li>
-                    <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Bank details</a></li>
-                    <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Emergency contact</a></li>
-                    <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Employee equipment</a></li>
-                </ul>
+              <div class="d-flex gutter30">
+                <div class="col-lg-3 tab-section">
+                     <button  class="my-button create cr" type="button"><div class="attrdiv"><div>Create a section</div></div></button>
+                  <div class="block-section customvtab vtabs ">                    
+                    <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Public profile</a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab2" role="tab">HR information</a> </li>
+                        <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#tab3" role="tab">Personal data</a></li>
+                        <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Payroll information</a></li>
+                        <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Bank details</a></li>
+                        <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Emergency contact</a></li>
+                        <li class="nav-item"><a class="nav-link"  data-toggle="tab" href="#tab4" role="tab">Employee equipment</a></li>
+                    </ul>
                    
               </div>
              </div>
-             <div class="col-md-9 tab-content">
+             <div class="col-lg-9 tab-content">
                  <div class="block-section tab-pane active" id="tab1" role="tabpanel">
                   <div id="accordion">
                         <div class="accordion-header">
                             <div class="accordion-header-title">Public profile</div>
                             <div class="b-group">
-                                <button data-test-id="add-new-attribute-button" class="my-button addattr" type="button">
-                                    <div class="attrdiv"><div>Add an attribute</div></div>
-                                </button>
-                                <div class="">
-                                   <div data-test-id="section-options-button" class="_1-53j"><button class="my-button " type="button"><div class="attrdiv"><div><i class="fas fa-ellipsis-h" style="font-size: 14px;"></i></div></div></button>
+                              
+                                    <div class="attrdiv"><div></div>
+
+                                     <!-- Button trigger modal -->
+                                    <button type="button" class=" my-button addattr" data-toggle="modal" data-target="#exampleModal">
+                                     Add an attribute
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <div class="modal-title my-model" id="exampleModalLabel">Add an attribute to Public profile</div>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="form-group">
+                                            <input  placeholder="Name your attribute" class="form-control name-attr" value="">
+                                           </div> 
+                                          <div>
+                                             <div class="col-md-6 p-0 mb-2">
+                                                <select class="form-control custom-select select-chosen ">
+                                                     <option value="null">Same as company</option>
+                                                    <option value="gen">General (e.g. Text, Email, Phone, ...)</option>
+                                                    <option value="list-options">List of options</option>                                               
+                                                    <option value="uniqueids">Number (integer)</option>
+                                                    <option value="num-dm">Number (up to two decimals)</option>
+                                                    <option value="date">Date</option>
+                                                    <option value="link">link</option>
+                                                    <option value="multi-line">Multi-line textfield</option>
+                                                    <option value="tag">tag</option>
+                                                </select>
+                                             </div>
+                                            </div>
+                                             <div id="gen" class="boxs">                                                
+                                                <label class="uniqueid" for="minimal-checkbox-1 ">Unique Id</label>
+                                               <input type="checkbox" class="check" id="minimal-checkbox-1"> 
+                                            </div>                                           
+                                            <div id="list-options" class=" boxs">
+                                               <div class="attributeFilterContainer">
+                                                <div id="education_fields"></div>
+                                                   <a class="added" href="#add-attribute-filter" id="copy"> Add an option </a>
+                                               </div>
+                                            </div>
+                                            <div id="num-dm" class="boxs">
+                                                <div class="col-md-6 d-flex num-decimal">
+                                                     <label class="uniqueid" for="minimal-checkbox-1 ">Number of Decimals</label>
+                                                     <select class="select-chosen">
+                                                         <option value="null"></option>
+                                                         <option>1</option>
+                                                         <option>2</option>
+                                                     </select>
+                                                      
+                                                </div>
+                                                 <div class="col-md-6 p-0 d-flex">
+                                                <label class="minimal" for="minimal-checkbox-1 ">Unique Id</label>
+                                                <input type="checkbox" class="check" id="minimal-checkbox-1">
+                                                </div>
+                                            </div>
+                                            <div id="uniqueids" class="boxs"> 
+                                               <div class="col-md-6  p-0 ">                                             
+                                                <label class="minimal" for="minimal-checkbox-1 ">Unique Id</label>
+                                               <input type="checkbox" class="check" id="minimal-checkbox-1">
+                                               </div>      
+                                            </div>
+                                            <div id="num-dm" class=" boxs">You have selected <strong>red option</strong> so i am here</div>
+                                            <div id="date" class=" boxs">You have selected <strong>red option</strong> so i am here</div>
+                                            <div id="link" class=" boxs">You have selected <strong>red option</strong> so i am here</div>
+                                            <div id="multi-line" class=" boxs">You have selected <strong>red option</strong> so i am here</div>
+                                            <div id="tag" class=" boxs">
+                                                <div class="attributeFilterContainer">
+                                                <div id="tags"></div>
+                                                 <a class="added" href="#add-attribute-filter" id="copy1"> Add an option </a>
+                                               </div>
+                                           </div>
+                                           
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-info">Add</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                 <div class="dropdown ">
+                                      <button class="btn  btn-light dropdown my-button create" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
+                                        <div class="attrdiv">
+                                            <div>
+                                       <i class="fas fa-ellipsis-h" style="font-size: 14px;"></i>
+                                      </button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item"  href="#rename" data-toggle="modal" data-target="#rename">Rename Section </a>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#deletesection">Delete Section</a>
+                                        
+                                      </div>
                                  </div>
-                              </div>
+                                 <!-- Button trigger modal -->
+                                   
+
+                                    <!-- Modal Rename section -->
+                                    <div class="modal fade" id="rename" tabindex="-1" role="dialog" aria-labelledby="#renameLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Rename section</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                           <div class="form-group">
+                                            <input  placeholder="Emergency contact" class="form-control name-attr" value="">
+                                           </div> 
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-primary">Edit</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                     <!--  and Modal Rename section -->
+
+                                      <!-- Modal delete section -->
+                                  <div class="modal fade" id="deletesection" tabindex="-1" role="dialog" aria-labelledby="#deletesectionLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete section Emergency contact?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="delete-section">
+                                            <p class="">Once you delete a section, it's gone for good.</p>
+                                            <ul class="dl-ul">
+                                                <li>All attributes assigned to this section will also be deleted</li>
+                                                <li>All employee data you entered for these attributes will be lost</li>
+                                            </ul>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-danger">Delete</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
                             </div>
                         </div>
                       <div class="card">
@@ -795,9 +914,6 @@
     <!--FooTable init-->
   
 
-    <!-- ============================================================== -->
-    <!-- Style switcher -->
-    <!-- ============================================================== -->
 
 
 
@@ -825,10 +941,61 @@
      <script src="../assets/plugins/select2/dist/js/select2.min.js"></script>
 
     <script src="../assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-    <script type="text/javascript">
-         
 
-    </script>
+
+   <script>
+$(document).ready(function(){
+    $("select").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+                $(".boxs").hide();
+                $("#" + optionValue).show();
+        });
+    }).change();
+});
+
+
+$(".select-chosen").select2({
+    placeholder: "What type of attribute is this?",
+    allowClear: true,
+});
+
+var room = 1;
+$('#copy').click(function() {
+    room++;
+    var objTo = document.getElementById('education_fields')
+    var divtest = document.createElement("div");
+    divtest.setAttribute("class", "input-group removeclass" + room);
+    var rdiv = 'removeclass' + room;
+    divtest.innerHTML = '<div class="input-group mb-3 m-input"> <input type="text" class="form-control"   aria-describedby="basic-addon2"> <div class="input-group-append"> <button class="btn btn-outline-secondary mr-2" type="button" onclick="remove_education_fields(' + room + ');"><i class="fas fa-trash" data-toggle="tooltip" data-title="Delete" data-original-title="" title=""></i></button> </div> </div>';
+    objTo.appendChild(divtest)
+  
+});
+
+
+
+var room = 1;
+$('#copy1').click(function() {
+    room++;
+    var objTo = document.getElementById('tags')
+    var divtest = document.createElement("div");
+    divtest.setAttribute("class", "input-group removeclass" + room);
+    var rdiv = 'removeclass' + room;
+    divtest.innerHTML = '<div class="input-group mb-3 m-input"> <input type="text" class="form-control"   aria-describedby="basic-addon2"> <div class="input-group-append"> <button class="btn btn-outline-secondary mr-2" type="button" onclick="remove_education_fields(' + room + ');"><i class="fas fa-trash" data-toggle="tooltip" data-title="Delete" data-original-title="" title=""></i></button> </div> </div>';
+    objTo.appendChild(divtest)
+  
+});
+
+function remove_education_fields(rid) {
+    $('.removeclass' + rid).remove();
+}
+
+
+
+
+
+
+</script>
 
 
 

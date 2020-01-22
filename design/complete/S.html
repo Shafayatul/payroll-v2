@@ -1,106 +1,47 @@
-<ul class="personio-vertical-list">
-                <li class="list-title">
-                    <strong>Settings</strong>
-                </li>
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title> 
+    Adding options to a select element using jQuery? 
+</title> 
+</head> 
 
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/company" data-test-id="settings-listitem-company" data-action-name="settings-listitem-company">
-                            Company
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/offices" data-test-id="settings-listitem-offices" data-action-name="settings-listitem-offices">
-                            Offices
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/departments" data-test-id="settings-listitem-departments" data-action-name="settings-listitem-departments">
-                            Departments
-                                                    </a>
-                    </li>
-                                    <li class="active">
-                        <a href="https://tola.personio.de/configuration/custom-fields" data-test-id="settings-listitem-employee-information" data-action-name="settings-listitem-employee-information">
-                            Employee information
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/roles" data-test-id="settings-listitem-employee-roles" data-action-name="settings-listitem-employee-roles">
-                            Employee Roles
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/approvals" data-test-id="settings-listitem-approvals" data-action-name="settings-listitem-approvals">
-                            Approvals
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/time-off" data-test-id="settings-listitem-absence" data-action-name="settings-listitem-absence">
-                            Absence
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/holidays" data-test-id="settings-listitem-public-holidays" data-action-name="settings-listitem-public-holidays">
-                            Public Holidays
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/calendars" data-test-id="settings-listitem-calendars" data-action-name="settings-listitem-calendars">
-                            Calendars
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/attendance" data-test-id="settings-listitem-attendance" data-action-name="settings-listitem-attendance">
-                            Attendance
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/performance" data-test-id="settings-listitem-performance" data-action-name="settings-listitem-performance">
-                            Performance
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/documents" data-test-id="settings-listitem-documents" data-action-name="settings-listitem-documents">
-                            Documents
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/onboarding" data-test-id="settings-listitem-on-offboarding" data-action-name="settings-listitem-on-offboarding">
-                            On-/Offboarding
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/cost-centers" data-test-id="settings-listitem-cost-centers" data-action-name="settings-listitem-cost-centers">
-                            Cost centers
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/payroll" data-test-id="settings-listitem-salary-payroll" data-action-name="settings-listitem-salary-payroll">
-                            Salary &amp; Payroll
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/recruiting" data-test-id="settings-listitem-recruiting" data-action-name="settings-listitem-recruiting">
-                            Recruiting
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/api" data-test-id="settings-listitem-api" data-action-name="settings-listitem-api">
-                            API
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/billing" data-test-id="settings-listitem-plan-billing" data-action-name="settings-listitem-plan-billing">
-                            Plan &amp; Billing
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/support/crm-contacts" data-test-id="settings-listitem-support" data-action-name="settings-listitem-support">
-                            Support
-                                                    </a>
-                    </li>
-                                    <li>
-                        <a href="https://tola.personio.de/configuration/auth/oauth" data-test-id="settings-listitem-authentication" data-action-name="settings-listitem-authentication">
-                            Authentication
-                                                    </a>
-                    </li>
-                            </ul>
+<body> 
+    <h1 style="color: green"> 
+    GeeksForGeeks 
+</h1> 
+    <b> 
+    Adding options to a select element using jQuery? 
+</b> 
+    <p> 
+        Select one from the given options: 
+        <select id="select1"> 
+            <option value="free">Free</option> 
+            <option value="basic">Basic</option> 
+        </select> 
+    </p> 
+    <p> 
+    Click the button below to add 
+    one option to the select box. 
+</p> 
+    
+    <button onclick="addOption()"> 
+    Add option 
+</button> 
+    
+    <script src= 
+"https://code.jquery.com/jquery-3.3.1.min.js"> 
+</script> 
+    <script type="text/javascript"> 
+        function addOption() { 
+            optionText = 'Premium'; 
+            optionValue = 'premium'; 
+
+            $('#select1').append(`<option value="${optionValue}"> 
+                                    ${optionText} 
+                                </option>`); 
+        } 
+    </script> 
+</body> 
+
+</html> 
