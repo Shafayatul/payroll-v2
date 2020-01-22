@@ -3,9 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Traits\keyFunctionTrait;
 class EmployeeInformationSection extends Model
 {
+    use keyFunctionTrait;
     /**
      * The database table used by the model.
      *

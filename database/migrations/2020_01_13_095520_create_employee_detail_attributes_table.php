@@ -17,6 +17,7 @@ class CreateEmployeeDetailAttributesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->boolean('is_unique')->default(false);
+            $table->boolean('is_system')->default(false);
             $table->unsignedBigInteger('section_id')->nullable();
             $table->softDeletes();
             $table->timestamps();

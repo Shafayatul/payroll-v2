@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Companies;
+namespace App\Traits;
 
 trait timezoneCurrencyTrait
 {

@@ -9,7 +9,7 @@ use App\Office;
 use App\Company;
 use App\PublicHolidayCalendar;
 use Illuminate\Http\Request;
-use App\Companies\timezoneCurrencyTrait;
+use App\Traits\timezoneCurrencyTrait;
 use Auth;
 
 class OfficesController extends Controller

@@ -499,26 +499,26 @@
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
              <!--  -->
-             <div class="row gutter30">
-             <div class="col-md-4">
-              <div class="block-section customvtab vtabs row">
-                <h4 class="sub-header">Offices</h4>
-                <form method="POST" action="" accept-charset="UTF-8" id="new_office_form" novalidate="novalidate"><input name="_token" type="hidden" value=""> <div class="input-group input-group-sm"> <input class="form-control" placeholder="New office..." required="" minlength="2" name="new_office_name" type="text"> <span class="input-group-btn"> <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i></button> </span> </div> </form><br>
-                <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
-                  <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Accounting<span class="badge pull-right">7</span></a> </li>
-                  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab2" role="tab">Customer Support<span class="badge pull-right">7</span></a></li>
-                  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab3" role="tab">Finance & Lega<span class="badge pull-right" >12</span></a></li>
-                  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab4" role="tab">HR<span class="badge pull-right">7</span></a> </li>
-                  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab5" role="tab">IT<span class="badge pull-right">7</span></a> </li>
-                  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab6" role="tab">Management<span class="badge pull-right">7</span></a> </li>
-                  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab7" role="tab">Marketing<span class="badge pull-right">7</span></a> </li>
-                  <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab8" role="tab">Sales <span class="badge pull-right">7</span></a> </li>
-                </ul>
-              </div>
-           </div>
-           <div class="col-md-8 tab-content">
-                 <div class="block-section tab-pane active" id="tab1" role="tabpanel">
-                   <h4 class="sub-header">Accounting<small> <a href="#" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible1();">(Edit)</a> </small> <a href="#modal-delete-office" data-toggle="modal"> <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> </a>
+        <div class="row gutter30">
+            <div class="col-md-4">
+                <div class="block-section customvtab vtabs row">
+                    <h4 class="sub-header">Offices</h4>
+                    <form method="POST" action="" accept-charset="UTF-8" id="new_office_form" novalidate="novalidate"><input name="_token" type="hidden" value=""> <div class="input-group input-group-sm"> <input class="form-control" placeholder="New office..." required="" minlength="2" name="new_office_name" type="text"> <span class="input-group-btn"> <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i></button> </span> </div> </form><br>
+                    <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
+                        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Accounting<span class="badge pull-right">7</span></a> </li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab2" role="tab">Customer Support<span class="badge pull-right">7</span></a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab3" role="tab">Finance & Lega<span class="badge pull-right" >12</span></a></li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab4" role="tab">HR<span class="badge pull-right">7</span></a> </li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab5" role="tab">IT<span class="badge pull-right">7</span></a> </li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab6" role="tab">Management<span class="badge pull-right">7</span></a> </li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab7" role="tab">Marketing<span class="badge pull-right">7</span></a> </li>
+                        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab8" role="tab">Sales <span class="badge pull-right">7</span></a> </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8 tab-content">
+                <div class="block-section tab-pane active" id="tab1" role="tabpanel">
+                    <h4 class="sub-header">Accounting<small> <a href="#" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible1();">(Edit)</a> </small> <a href="#modal-delete-office" data-toggle="modal"> <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> </a>
                     </h4>
                      <div class="form-horizontal form-striped compact" id="office-div1">
                         <div class="form-group row">
@@ -595,9 +595,8 @@
                         </div>
                     </form>
                 </div>  
-               
-              </div>                       
-           </div>
+            </div>                       
+        </div>
         
      
 
@@ -730,19 +729,7 @@
     <!--FooTable init-->
   <script type="text/javascript">
      
-       function switchVisible() {
-if (document.getElementById('office-div')) {
 
-    if (document.getElementById('office-div').style.display == 'none') {
-        document.getElementById('office-div').style.display = 'block';
-        document.getElementById('office').style.display = 'none';
-    }
-    else {
-        document.getElementById('office-div').style.display = 'none';
-        document.getElementById('office').style.display = 'block';
-    }
-}
-}
        function switchVisible1() {
 if (document.getElementById('office-div1')) {
 
