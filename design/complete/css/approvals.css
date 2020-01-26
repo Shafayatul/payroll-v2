@@ -35,16 +35,38 @@
 }
 
 .tabs-vertical li .nav-link.active, .tabs-vertical li .nav-link.active:focus, .tabs-vertical li .nav-link:hover {
-    padding: 14px 12px 8px;
-    color: #34393a;
-    text-decoration: none;
-    font-size: 14px;
-    border-bottom: 3px solid 
-    transparent;
+      padding: 14px 12px 8px;
+      color: #34393a;
+      text-decoration: none;
+      font-size: 14px;
+      border-bottom: 3px solid 
+     transparent;
      border-bottom-color: transparent;
      background: none;
 }
 .approval-step {
 	margin-left: 0;
 	margin-right: 0;
+}
+.approval-step-label {
+    float: left;
+    background: #f7f7f7;
+    font-weight: 600;
+	width: 34px;
+	height: 34px;
+	line-height: 34px;
+	border-radius: 5px;
+	border: 1px solid	#ddd;
+	color:#777;
+    text-align: center;
+}
+.well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid 
+    #e3e3e3;
+    border-radius: 4px;
+    background-color: #fdfdfd;
 }

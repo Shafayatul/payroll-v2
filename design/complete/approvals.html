@@ -498,22 +498,22 @@
                                     </div>
                                     <div class="tab-content">
                                   <!--       tab one  -->
-                                       <div class="tab-pane row gutter30 active" id="tab1">
-                                            <div class=" col-md-12 margin-top-20 text-muted">
+                                       <div class="tab-pane  active" id="tab1">
+                                            <div class=" col-md-12 mt-3 text-muted">
                                               Please define the chain of required approval steps. For each step the responsible employee(s) will have to confirm the request before it is passed on to the next level.
                                             </div>
+                                            <div class="row gutter30">
                                             <div class="col-md-8">
-                                                <div class="ruleFilterSet margin-bottom-25">
+                                                <div class="">
                                                     <h4 class="sub-header"> Default </h4>
                                                      <p class="filter-details text-muted">
                                                     </p>
                                                     <form method="POST" >                                                       
-                                                        <div class="well">                                                            
+                                                        <div class="well" id="well">                                                            
                                                             <div class="row approval-step mb-2" >
                                                                 <div class="approval-step-label">1</div>
-                                                                <div class="col-md-5 margin-left-5">
-                                                                    <input type="hidden" name="step_active[1]" value="1">
-                                                                    <select class="form-control" name="step_approval[1]">
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
                                                                         <option value="employee">Specific employee</option>
                                                                         <option value="employee-role">Employees with role</option>
                                                                         <option value="super-supervisor">Supervisor's supervisor</option>
@@ -521,53 +521,44 @@
                                                                     </select>
                                                                   </div>
                                                              </div>
-                                                             <div class="row approval-step mb-2" >
-                                                                <div class="approval-step-label">2</div>
-                                                              
-                                                                <div class="col-md-5  role-dependant" >
-                                                                    <select class="form-control" name="approver_employee_role[2]">
-                                                                        <option value="172505">Administrator</option>
-                                                                        <option value="172506" selected="selected">HR Manager</option>
-                                                                        <option value="172507">Supervisor</option>
-                                                                        <option value="172508">Working Student</option>
-                                                                        <option value="172510">Recruiting Manager</option>
-                                                                        <option value="172511">Accounting</option>
-                                                                        <option value="172512">Management</option>
-                                                                        <option value="172513">Office Management</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="col-md-5  employee-dependant" >
-                                                                    <select class="form-control" name="approver_employee[2]">
-                                                                        <option value="1617410">Alan Foster</option>
-                                                                        <option value="1617411">Alexander Bergmann</option>
-                                                                        <option value="1617412">Alison Bell</option>
-                                                                        <option value="1617414">Charlotte Haas</option>
-                                                                        <option value="1617416">Emma Weber</option>
-                                                                        <option value="1617417">Jasmin Hofman</option>
-                                                                        <option value="1617418">Johannes Graf</option>
-                                                                        <option value="1617419">Jörn Peters</option>
-                                                                        <option value="1617420">Josephine Friedrich</option>
-                                                                        <option value="1617421">Julian Schneider</option>
-                                                                        <option value="1617422">Kai Schumacher</option>
-                                                                        <option value="1617423">Karsten Becker</option>
-                                                                        <option value="1617424">Larissa Morgan</option>
-                                                                        <option value="1617425">Manuel Dietrich</option>
-                                                                        <option value="1617426">Marc Porter</option>
-                                                                        <option value="1617427">Norman Scott</option>
-                                                                        <option value="1617428">Patrick Wagner</option>
-                                                                        <option value="1617429">Sebastian Meyer</option>
-                                                                        <option value="1617430">Stephan Klein</option>
-                                                                        <option value="1617431">saiful islam</option>
-                                                                    </select>
-                                                                </div>
-                                                                <a href="#" class="text-danger remove-approval-step" data-step="2" >
-                                                                    <i class="fas fa-times-circle"></i>
-                                                                     Add approval step
-                                                                </a>
-                                                            </div>
+                                                            
 
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
+                                                     </form>
+                                                 </div>
+                                                  <div class="">
+                                                    <h4 class="sub-header">Working Student</h4>
+                                                     <p class="text-muted">
+                                                        Employee roles equals Working Student 
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well" id="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                            
 
-                                                         </div> 
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
                                                      </form>
                                                  </div>
                                               </div>
@@ -578,24 +569,410 @@
                                             <div>
                                                 <p class="text-muted">Employee filters allow you to define specific approval processes for certain employees</p>
                                                 <a href="">
-                                                    <i class="far fa-pencil"></i>
+                                                    <i class="fas fa-pencil"></i>
                                                     Manage employee filters
                                                 </a>
                                             </div>
 
                                         </div> 
+                                        </div> 
                                            
                                         </div>
                                   <!--       tab two -->
                                         <div class="tab-pane row gutter30 " id="tab2">
+                                            <div class=" col-md-12 mt-3 text-muted">
+                                              Please define the chain of required approval steps. For each step the responsible employee(s) will have to confirm the request before it is passed on to the next level.
+                                            </div>
+                                            <div class="row gutter30">
+                                            <div class="col-md-8">
+                                                <div class="">
+                                                    <h4 class="sub-header"> Default </h4>
+                                                     <p class="filter-details text-muted">
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well" id="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                            
+
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
+                                                     </form>
+                                                 </div>
+                                                  <div class="">
+                                                    <h4 class="sub-header">Working Student</h4>
+                                                     <p class="text-muted">
+                                                        Employee roles equals Working Student 
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well" id="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                            
+
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
+                                                     </form>
+                                                 </div>
+                                              </div>
+                                            <div class="col-md-4">
+                                            <h4 class="sub-header">
+                                                Employee filters
+                                            </h4>
+                                            <div>
+                                                <p class="text-muted">Employee filters allow you to define specific approval processes for certain employees</p>
+                                                <a href="">
+                                                    <i class="fas fa-pencil"></i>
+                                                    Manage employee filters
+                                                </a>
+                                            </div>
+
+                                        </div> 
+                                        </div> 
                                         </div>
                                          <div class="tab-pane row gutter30 " id="tab3">
+                                            <div class=" col-md-12 mt-3 text-muted">
+                                              Please define the chain of required approval steps. For each step the responsible employee(s) will have to confirm the request before it is passed on to the next level.
+                                            </div>
+                                            <div class="row gutter30">
+                                            <div class="col-md-8">
+                                                <div class="">
+                                                    <h4 class="sub-header"> Default </h4>
+                                                     <p class="filter-details text-muted">
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well" id="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                            
+
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
+                                                     </form>
+                                                 </div>
+                                                  <div class="">
+                                                    <h4 class="sub-header">Working Student</h4>
+                                                     <p class="text-muted">
+                                                        Employee roles equals Working Student 
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well" id="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                            
+
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
+                                                     </form>
+                                                 </div>
+                                              </div>
+                                            <div class="col-md-4">
+                                            <h4 class="sub-header">
+                                                Employee filters
+                                            </h4>
+                                            <div>
+                                                <p class="text-muted">Employee filters allow you to define specific approval processes for certain employees</p>
+                                                <a href="">
+                                                    <i class="fas fa-pencil"></i>
+                                                    Manage employee filters
+                                                </a>
+                                            </div>
+
+                                        </div> 
+                                        </div> 
                                          </div> 
                                          <div class="tab-pane row gutter30 " id="tab4">
+                                            <div class=" col-md-12 mt-3 text-muted">
+                                              Please define the chain of required approval steps. For each step the responsible employee(s) will have to confirm the request before it is passed on to the next level.
+                                            </div>
+                                            <div class="row gutter30">
+                                            <div class="col-md-8">
+                                                <div class="">
+                                                    <h4 class="sub-header"> Default </h4>
+                                                     <p class="filter-details text-muted">
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well" id="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                            
+
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
+                                                     </form>
+                                                 </div>
+                                                  <div class="">
+                                                    <h4 class="sub-header">Working Student</h4>
+                                                     <p class="text-muted">
+                                                        Employee roles equals Working Student 
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well" id="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                            
+
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
+                                                     </form>
+                                                 </div>
+                                              </div>
+                                            <div class="col-md-4">
+                                            <h4 class="sub-header">
+                                                Employee filters
+                                            </h4>
+                                            <div>
+                                                <p class="text-muted">Employee filters allow you to define specific approval processes for certain employees</p>
+                                                <a href="">
+                                                    <i class="fas fa-pencil"></i>
+                                                    Manage employee filters
+                                                </a>
+                                            </div>
+
+                                        </div> 
+                                        </div> 
                                          </div>
                                          <div class="tab-pane row gutter30 " id="tab5">
+                                            <div class=" col-md-12 mt-3 text-muted">
+                                              Please define the chain of required approval steps. For each step the responsible employee(s) will have to confirm the request before it is passed on to the next level.
+                                            </div>
+                                            <div class="row gutter30">
+                                            <div class="col-md-8">
+                                                <div class="">
+                                                    <h4 class="sub-header"> Default </h4>
+                                                     <p class="filter-details text-muted">
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well" id="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                            
+
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
+                                                     </form>
+                                                 </div>
+                                                  <div class="">
+                                                    <h4 class="sub-header">Working Student</h4>
+                                                     <p class="text-muted">
+                                                        Employee roles equals Working Student 
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well" id="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                            
+
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
+                                                     </form>
+                                                 </div>
+                                              </div>
+                                            <div class="col-md-4">
+                                            <h4 class="sub-header">
+                                                Employee filters
+                                            </h4>
+                                            <div>
+                                                <p class="text-muted">Employee filters allow you to define specific approval processes for certain employees</p>
+                                                <a href="">
+                                                    <i class="fas fa-pencil"></i>
+                                                    Manage employee filters
+                                                </a>
+                                            </div>
+
+                                        </div> 
+                                        </div> 
                                          </div>
                                          <div class="tab-pane row gutter30 " id="tab6">
+                                            <div class=" col-md-12 mt-3 text-muted">
+                                              Please define the chain of required approval steps. For each step the responsible employee(s) will have to confirm the request before it is passed on to the next level.
+                                            </div>
+                                            <div class="row gutter30">
+                                            <div class="col-md-8">
+                                                <div class="">
+                                                    <h4 class="sub-header"> Default </h4>
+                                                     <p class="filter-details text-muted">
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well" id="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                            
+
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
+                                                     </form>
+                                                 </div>
+                                                  <div class="">
+                                                    <h4 class="sub-header">Working Student</h4>
+                                                     <p class="text-muted">
+                                                        Employee roles equals Working Student 
+                                                    </p>
+                                                    <form method="POST" >                                                       
+                                                        <div class="well" id="well">                                                            
+                                                            <div class="row approval-step mb-2" >
+                                                                <div class="approval-step-label">1</div>
+                                                                <div class="col-md-5 margin-left-5">                                                                    
+                                                                    <select class="form-control" >
+                                                                        <option value="employee">Specific employee</option>
+                                                                        <option value="employee-role">Employees with role</option>
+                                                                        <option value="super-supervisor">Supervisor's supervisor</option>
+                                                                        <option value="supervisor" selected="selected">Supervisor</option>
+                                                                    </select>
+                                                                  </div>
+                                                             </div>
+                                                            
+
+                                                         </div>
+                                                         <div class="col-md-12">
+                                                                  <a href="#" class="add-approval-step" id="copy">
+                                                                    <i class="fas fa-plus-circle"></i>
+                                                                    Add approval step
+                                                                 </a>
+                                                          </div> 
+                                                     </form>
+                                                 </div>
+                                              </div>
+                                            <div class="col-md-4">
+                                            <h4 class="sub-header">
+                                                Employee filters
+                                            </h4>
+                                            <div>
+                                                <p class="text-muted">Employee filters allow you to define specific approval processes for certain employees</p>
+                                                <a href="">
+                                                    <i class="fas fa-pencil"></i>
+                                                    Manage employee filters
+                                                </a>
+                                            </div>
+
+                                        </div> 
+                                        </div> 
                                          </div>
                                          <div class="tab-pane row gutter30 " id="tab8">
                                          </div>
@@ -655,23 +1032,27 @@
     
     <!--FooTable init-->
   <script type="text/javascript">
+var room = 1;
+
+$('#copy').click(function() {
 
 
-$(document).ready(function() {
-    $('.select-chosen').select2();
+    room++;
+    var objTo = document.getElementById('well')
+    var divtest = document.createElement("div");
+    divtest.setAttribute("class", "form-group removeclass" + room);
+    var rdiv = 'removeclass' + room;
+    divtest.innerHTML = '<div class="row approval-step mb-2" > <div class="approval-step-label">2</div> <div class="col-md-5  role-dependant" > <select class="form-control"> <option value="1">Administrator</option> <option value="2" selected="selected">HR Manager</option> <option value="3">Supervisor</option> <option value="4">Working Student</option> <option value="5">Recruiting Manager</option> <option value="6">Accounting</option> <option value="7">Management</option> <option value="8">Office Management</option> </select> </div> <div class="col-md-5  employee-dependant" > <select class="form-control" > <option value="1">Alan Foster</option> <option value="2">Alexander Bergmann</option> <option value="3">Alison Bell</option> <option value="4">Charlotte Haas</option> <option value="5">Emma Weber</option> <option value="6">Jasmin Hofman</option> <option value="7">Johannes Graf</option> <option value="8">Jörn Peters</option> <option value="9">Josephine Friedrich</option> <option value="10">Julian Schneider</option> <option value="11">Kai Schumacher</option> <option value="12">Karsten Becker</option> <option value="13">Larissa Morgan</option> <option value="14">Manuel Dietrich</option> <option value="15">Marc Porter</option> <option value="16">Norman Scott</option> <option value="17">Patrick Wagner</option> <option value="18">Sebastian Meyer</option> <option value="19">Stephan Klein</option> <option value="20">saiful islam</option> </select> </div><button class="btn " type="button" onclick="remove_education_fields(' + room + ');"> <i class="fas fa-times-circle" data-toggle="tooltip" data-title="Delete" data-original-title="" title=""></i></button> </div>';
+    objTo.appendChild(divtest)
+  
 });
-$(document).on('click','.spandv',function(){    
-        var $lnk = $(this);
-        var $replace = $('<div class="inputdv collapsed " data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"><i class="fas fa-angle-down right-icon" style="font-size: 28px;"></i><input data-test-id="edit-attribute-name-input" name="edit-attribute-name-input" class="G2Mft _1JVwu _1-h8H NXC2m" value="First name"><i class="fas fa-lock icon" ></i></div>');
-       
-        // Link to Text
-        $lnk.replaceWith($replace);
-        // Text to Link
-        $replace.on('click',function(){
-            $replace.replaceWith($lnk);
-        });
-        return false;
-    });
+
+
+
+function remove_education_fields(rid) {
+    $('.removeclass' + rid).remove();
+}
+
 
 
 

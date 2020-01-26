@@ -1,3 +1,6 @@
+.full {
+    padding: 20px;
+}
 .card-no-border .page-wrapper {
     background: 
     #fff;
@@ -84,3 +87,22 @@ color:
     margin-bottom: 0;
     min-height: 34px;
 }
+.ul-tab .nav-item .nav-link.active {
+    font-weight: 700;
+    color:#0db6df !important;
+    background: none !important;
+    border-bottom: 2px solid
+    #0db6df !important;
+}
+.ul-tab .nav-item .nav-link:hover {
+   background-color: #e6eaec;
+    color:#0db6df !important;
+}
+.list-style-underline{
+    list-style-type: unset;
+}
+.office1 .form-group .col-md-3{
+   padding-left: 0px;
+   padding-right: 5px;
+}
+

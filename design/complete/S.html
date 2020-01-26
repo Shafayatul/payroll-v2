@@ -1,47 +1,282 @@
-<!DOCTYPE html> 
-<html> 
-<head> 
-    <title> 
-    Adding options to a select element using jQuery? 
-</title> 
-</head> 
 
-<body> 
-    <h1 style="color: green"> 
-    GeeksForGeeks 
-</h1> 
-    <b> 
-    Adding options to a select element using jQuery? 
-</b> 
-    <p> 
-        Select one from the given options: 
-        <select id="select1"> 
-            <option value="free">Free</option> 
-            <option value="basic">Basic</option> 
-        </select> 
-    </p> 
-    <p> 
-    Click the button below to add 
-    one option to the select box. 
-</p> 
-    
-    <button onclick="addOption()"> 
-    Add option 
-</button> 
-    
-    <script src= 
-"https://code.jquery.com/jquery-3.3.1.min.js"> 
-</script> 
-    <script type="text/javascript"> 
-        function addOption() { 
-            optionText = 'Premium'; 
-            optionValue = 'premium'; 
+            <div class="form-group">
+                <label class="col-md-3 control-label">
+                    Name
+                </label>
+                <div class="col-md-8">
+                    <input class="form-control" required="" minlength="2"  type="text" value="Freelancer - working hours on invoice">
+                </div>
+            </div>
 
-            $('#select1').append(`<option value="${optionValue}"> 
-                                    ${optionText} 
-                                </option>`); 
-        } 
-    </script> 
-</body> 
+            <div class="form-group">
+                <label class="col-sm-3 control-label">
+                    Week day
+                </label>
+                <div class="row">
+                    <div class="col-sm-2 text-center form-control-static">
+                        <b>Working hours</b>
+                    </div>
+                    <div class="col-sm-2 text-center form-control-static">
+                        <b>Start</b>
+                    </div>
+                    <div class="col-sm-2 text-center form-control-static">
+                        <b>End</b>
+                    </div>
+                    <div class="col-sm-2 text-center form-control-static">
+                        <b>Break</b>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group working-time">
+                <label class="col-sm-3 control-label week-day">
+                    Monday
+                </label>
+                <div class="row">                    
+                    <div class="col-sm-2 total">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input valid" placeholder="hh:mm"  type="text" value="08:00" autocomplete="off" default-val="08:00" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 start">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input valid" placeholder="hh:mm" type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 end">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 break">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <div class="form-group working-time">
+                <label class="col-sm-3 control-label week-day">
+                    Tuesday
+                </label>
+                <div class="row">                   
+                    <div class="col-sm-2 total">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input valid" placeholder="hh:mm"  type="text" value="08:00" autocomplete="off" default-val="08:00" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 start">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input valid" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 end">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input valid" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 break">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm" type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group working-time">
+                <label class="col-sm-3 control-label week-day">
+                    Wednesday
+                </label>
+                <div class="row">                    
+                    <div class="col-sm-2 total">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input valid" placeholder="hh:mm"  type="text" value="08:00" autocomplete="off" default-val="08:00" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 start">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input valid" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 end">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm" type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 break">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm" type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group working-time">
+                <label class="col-sm-3 control-label week-day">
+                    Thursday
+                </label>
+                <div class="row">                    
+                    <div class="col-sm-2 total">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="08:00" autocomplete="off" default-val="08:00">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 start">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm" type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 end">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm" type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 break">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm" type="text" value="" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group working-time">
+                <label class="col-sm-3 control-label week-day">
+                    Friday
+                </label>
+                <div class="row">
+                    <div class="col-sm-2 total">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input valid" placeholder="hh:mm"  type="text" value="08:00" autocomplete="off" default-val="08:00" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 start">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input valid" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 end">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 break">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group working-time">
+                <label class="col-sm-3 control-label week-day">
+                    Saturday
+                </label>
+                <div class="row">                   
+                    <div class="col-sm-2 total">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="08:00" autocomplete="off" default-val="08:00">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 start">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 end">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 break">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group working-time">
+                <label class="col-sm-3 control-label week-day">
+                    Sunday
+                </label>
+                <div class="row">
+                    <div class="col-sm-2 total">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm" type="text" value="08:00" autocomplete="off" default-val="08:00">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 start">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 end">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="col-sm-2 break">
+                        <div class="input-group bootstrap-timepicker">
+                            <input class="form-control input-timepicker24 ui-timepicker-input" placeholder="hh:mm"  type="text" value="" autocomplete="off" disabled="disabled">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group js-track-overtime">
+                <label class="col-md-3 control-label">
+                    Track overtime
+                </label>
+                <div class="col-md-8 form-control-static">           
+                    <input  type="checkbox" value="1">
+                </div>
+            </div>
 
-</html> 
+            <div class="form-group" style="display:none">
+                <label class="col-md-3 control-label">
+                    Overtime calculation
+                </label>
+                <div class="col-md-8 form-inline">
+                    on
+                    <select class="form-control" style="width:auto" >
+                    	<option value="daily" selected="selected">daily</option>
+                    	<option value="weekly">weekly</option>
+                    </select>
+                    basis
+                </div>
+            </div>
+
+            <div class="form-group" style="display:none">
+                <label class="col-md-3 control-label">
+                    Overtime cliff
+                </label>
+                <div class="col-md-8 form-inline">
+                    Overtime does not apply for the first
+                    <input class="form-control number" style="width:80px"  type="text" value="0">
+                    overtime hours an employee worked in a month
+                </div>
+            </div>
+
+            <div class="form-group deficit-hours" style="display:none">
+                <label class="col-md-3 control-label">
+                    Deficit hours
+                    <span data-toggle="tooltip" data-title="When activated, deficit hours are set off against overtime" data-original-title="" title=""><i class="far fa-info-circle"></i></span>
+                </label>
+                <div class="col-md-8 form-control-static">                 
+                    <input  type="checkbox" value="1">
+                </div>
+            </div>
+
+            <div class="form-group js-prorate-time-off">
+                <label class="col-md-3 control-label">
+                    Prorate vacation
+                    <span data-toggle="tooltip" data-title="Prorate calculation of accrued days based on number of workdays" data-original-title="" title=""><i class="far fa-info-circle"></i></span>
+                </label>
+                <div class="col-md-8 form-control-static">                    
+                    <input checked="checked"  type="checkbox" value="1">
+                </div>
+            </div>
+
+            <div class="form-group workdays">
+                <label class="col-md-3 control-label">
+                    Reference value for the prorated vacation calculation
+                    <span data-toggle="tooltip" data-title="As a reference value for prorated vacation calculation please enter the number of working days that form a full working week in your company." data-original-title="" title=""><i class="far fa-info-circle"></i></span>
+                </label>
+                <div class="col-md-8 form-inline">
+                    <select class="form-control" style="width:auto" ><option value="4">4</option><option value="5" selected="selected">5</option><option value="6">6</option><option value="7">7</option></select>
+                </div>
+            </div>
