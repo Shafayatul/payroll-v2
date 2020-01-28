@@ -29,6 +29,7 @@ class CreatePublicHolidayCalendarsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('public_holiday_calendars');
     }
 }

@@ -38,6 +38,7 @@ class CreateOfficesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('offices');
     }
 }
