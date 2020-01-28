@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,18 +10,24 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
     <title>Monster Admin Template - The Most Complete & Trusted Bootstrap 4 Admin Template</title>
-	<link rel="canonical" href="https://www.wrappixel.com/templates/monsteradmin/" />
+    <link rel="canonical" href="https://www.wrappixel.com/templates/monsteradmin/" />
     <!-- Bootstrap Core CSS -->
     <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Calendar CSS -->
-    <link href="../assets/plugins/calendar/dist/fullcalendar.css" rel="stylesheet" />
+    <link href="../assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet">
+
+  
+    
+
+     
+    <!-- Footable CSS -->
     <!-- Custom CSS -->
     <link href="css/style.css" rel="stylesheet">
-      <link href="css/calendar.css" rel="stylesheet">
-      <link href="css/sol.css" rel="stylesheet">
-       <link href="../assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
-    <link href="css/colors/green.css" id="theme" rel="stylesheet">
+     <link href="css/jquery.timepicker.min.css" rel="stylesheet">
+    <link href="css/colors/green.css" id="theme" rel="stylesheet"> 
+     <link href="css/app-contact.css" id="app-contact" rel="stylesheet" media="all">
+     <link href="css/departments.css"  rel="stylesheet" media="all">
+     <link href="css/perfomance.css"  rel="stylesheet" media="all">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -64,10 +69,11 @@
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span>
-                         <!-- dark Logo text -->
-                         <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
-                         <!-- Light Logo text -->    
-                         <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span> </a>
+                            <!-- dark Logo text -->
+                            <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                            <!-- Light Logo text -->
+                            <img src="../assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span>
+                    </a>
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -78,13 +84,19 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav mr-auto mt-md-0 ">
                         <!-- This is  -->
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
-                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a> </li>
+                        <li class="nav-item"> <a
+                                class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark"
+                                href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <li class="nav-item"> <a
+                                class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark"
+                                href="javascript:void(0)"><i class="icon-arrow-left-circle"></i></a> </li>
                         <!-- ============================================================== -->
                         <!-- Comment -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
+                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href=""
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+                                    class="mdi mdi-message"></i>
                                 <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
                             </a>
                             <div class="dropdown-menu mailbox animated bounceInDown">
@@ -98,30 +110,40 @@
                                             <a href="#">
                                                 <div class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
                                                 <div class="mail-contnet">
-                                                    <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span> </div>
+                                                    <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new
+                                                        admin!</span> <span class="time">9:30 AM</span>
+                                                </div>
                                             </a>
                                             <!-- Message -->
                                             <a href="#">
-                                                <div class="btn btn-success btn-circle"><i class="ti-calendar"></i></div>
+                                                <div class="btn btn-success btn-circle"><i class="ti-calendar"></i>
+                                                </div>
                                                 <div class="mail-contnet">
-                                                    <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>
+                                                    <h5>Event today</h5> <span class="mail-desc">Just a reminder that
+                                                        you have event</span> <span class="time">9:10 AM</span>
+                                                </div>
                                             </a>
                                             <!-- Message -->
                                             <a href="#">
                                                 <div class="btn btn-info btn-circle"><i class="ti-settings"></i></div>
                                                 <div class="mail-contnet">
-                                                    <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>
+                                                    <h5>Settings</h5> <span class="mail-desc">You can customize this
+                                                        template as you want</span> <span class="time">9:08 AM</span>
+                                                </div>
                                             </a>
                                             <!-- Message -->
                                             <a href="#">
                                                 <div class="btn btn-primary btn-circle"><i class="ti-user"></i></div>
                                                 <div class="mail-contnet">
-                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my
+                                                        admin!</span> <span class="time">9:02 AM</span>
+                                                </div>
                                             </a>
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
+                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all
+                                                notifications</strong> <i class="fa fa-angle-right"></i> </a>
                                     </li>
                                 </ul>
                             </div>
@@ -133,7 +155,9 @@
                         <!-- Messages -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-email"></i>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" id="2"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+                                    class="mdi mdi-email"></i>
                                 <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
                             </a>
                             <div class="dropdown-menu mailbox animated bounceInDown" aria-labelledby="2">
@@ -145,32 +169,49 @@
                                         <div class="message-center">
                                             <!-- Message -->
                                             <a href="#">
-                                                <div class="user-img"> <img src="../assets/images/users/1.jpg" alt="user" class="img-circle"> <span class="profile-status online float-right"></span> </div>
+                                                <div class="user-img"> <img src="../assets/images/users/1.jpg"
+                                                        alt="user" class="img-circle"> <span
+                                                        class="profile-status online float-right"></span> </div>
                                                 <div class="mail-contnet">
-                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:30 AM</span> </div>
+                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my
+                                                        admin!</span> <span class="time">9:30 AM</span>
+                                                </div>
                                             </a>
                                             <!-- Message -->
                                             <a href="#">
-                                                <div class="user-img"> <img src="../assets/images/users/2.jpg" alt="user" class="img-circle"> <span class="profile-status busy float-right"></span> </div>
+                                                <div class="user-img"> <img src="../assets/images/users/2.jpg"
+                                                        alt="user" class="img-circle"> <span
+                                                        class="profile-status busy float-right"></span> </div>
                                                 <div class="mail-contnet">
-                                                    <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See you at</span> <span class="time">9:10 AM</span> </div>
+                                                    <h5>Sonu Nigam</h5> <span class="mail-desc">I've sung a song! See
+                                                        you at</span> <span class="time">9:10 AM</span>
+                                                </div>
                                             </a>
                                             <!-- Message -->
                                             <a href="#">
-                                                <div class="user-img"> <img src="../assets/images/users/3.jpg" alt="user" class="img-circle"> <span class="profile-status away float-right"></span> </div>
+                                                <div class="user-img"> <img src="../assets/images/users/3.jpg"
+                                                        alt="user" class="img-circle"> <span
+                                                        class="profile-status away float-right"></span> </div>
                                                 <div class="mail-contnet">
-                                                    <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span> <span class="time">9:08 AM</span> </div>
+                                                    <h5>Arijit Sinh</h5> <span class="mail-desc">I am a singer!</span>
+                                                    <span class="time">9:08 AM</span>
+                                                </div>
                                             </a>
                                             <!-- Message -->
                                             <a href="#">
-                                                <div class="user-img"> <img src="../assets/images/users/4.jpg" alt="user" class="img-circle"> <span class="profile-status offline float-right"></span> </div>
+                                                <div class="user-img"> <img src="../assets/images/users/4.jpg"
+                                                        alt="user" class="img-circle"> <span
+                                                        class="profile-status offline float-right"></span> </div>
                                                 <div class="mail-contnet">
-                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
+                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my
+                                                        admin!</span> <span class="time">9:02 AM</span>
+                                                </div>
                                             </a>
                                         </div>
                                     </li>
                                     <li>
-                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>See all e-Mails</strong> <i class="fa fa-angle-right"></i> </a>
+                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>See all
+                                                e-Mails</strong> <i class="fa fa-angle-right"></i> </a>
                                     </li>
                                 </ul>
                             </div>
@@ -181,7 +222,10 @@
                         <!-- ============================================================== -->
                         <!-- Messages -->
                         <!-- ============================================================== -->
-                        <li class="nav-item dropdown mega-dropdown"> <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-view-grid"></i></a>
+                        <li class="nav-item dropdown mega-dropdown"> <a
+                                class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                    class="mdi mdi-view-grid"></i></a>
                             <div class="dropdown-menu animated bounceInDown">
                                 <ul class="mega-dropdown-menu row">
                                     <li class="col-lg-3 col-xlg-2 m-b-30">
@@ -190,55 +234,81 @@
                                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                             <div class="carousel-inner" role="listbox">
                                                 <div class="carousel-item active">
-                                                    <div class="container"> <img class="d-block img-fluid" src="../assets/images/big/img1.jpg" alt="First slide"></div>
+                                                    <div class="container"> <img class="d-block img-fluid"
+                                                            src="../assets/images/big/img1.jpg" alt="First slide"></div>
                                                 </div>
                                                 <div class="carousel-item">
-                                                    <div class="container"><img class="d-block img-fluid" src="../assets/images/big/img2.jpg" alt="Second slide"></div>
+                                                    <div class="container"><img class="d-block img-fluid"
+                                                            src="../assets/images/big/img2.jpg" alt="Second slide">
+                                                    </div>
                                                 </div>
                                                 <div class="carousel-item">
-                                                    <div class="container"><img class="d-block img-fluid" src="../assets/images/big/img3.jpg" alt="Third slide"></div>
+                                                    <div class="container"><img class="d-block img-fluid"
+                                                            src="../assets/images/big/img3.jpg" alt="Third slide"></div>
                                                 </div>
                                             </div>
-                                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a>
-                                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
+                                            <a class="carousel-control-prev" href="#carouselExampleControls"
+                                                role="button" data-slide="prev"> <span
+                                                    class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+                                                    class="sr-only">Previous</span> </a>
+                                            <a class="carousel-control-next" href="#carouselExampleControls"
+                                                role="button" data-slide="next"> <span
+                                                    class="carousel-control-next-icon" aria-hidden="true"></span> <span
+                                                    class="sr-only">Next</span> </a>
                                         </div>
                                         <!-- End CAROUSEL -->
                                     </li>
                                     <li class="col-lg-3 m-b-30">
                                         <h4 class="m-b-20">ACCORDION</h4>
                                         <!-- Accordian -->
-                                        <div id="accordion" class="nav-accordion" role="tablist" aria-multiselectable="true">
+                                        <div id="accordion" class="nav-accordion" role="tablist"
+                                            aria-multiselectable="true">
                                             <div class="card">
                                                 <div class="card-header" role="tab" id="headingOne">
                                                     <h5 class="mb-0">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                  Collapsible Group Item #1
-                                                </a>
-                                              </h5> </div>
-                                                <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high. </div>
+                                                        <a data-toggle="collapse" data-parent="#accordion"
+                                                            href="#collapseOne" aria-expanded="true"
+                                                            aria-controls="collapseOne">
+                                                            Collapsible Group Item #1
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapseOne" class="collapse show" role="tabpanel"
+                                                    aria-labelledby="headingOne">
+                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim
+                                                        eiusmod high. </div>
                                                 </div>
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" role="tab" id="headingTwo">
                                                     <h5 class="mb-0">
-                                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                  Collapsible Group Item #2
-                                                </a>
-                                              </h5> </div>
-                                                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. </div>
+                                                        <a class="collapsed" data-toggle="collapse"
+                                                            data-parent="#accordion" href="#collapseTwo"
+                                                            aria-expanded="false" aria-controls="collapseTwo">
+                                                            Collapsible Group Item #2
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapseTwo" class="collapse" role="tabpanel"
+                                                    aria-labelledby="headingTwo">
+                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim
+                                                        eiusmod high life accusamus terry richardson ad squid. </div>
                                                 </div>
                                             </div>
                                             <div class="card">
                                                 <div class="card-header" role="tab" id="headingThree">
                                                     <h5 class="mb-0">
-                                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                  Collapsible Group Item #3
-                                                </a>
-                                              </h5> </div>
-                                                <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. </div>
+                                                        <a class="collapsed" data-toggle="collapse"
+                                                            data-parent="#accordion" href="#collapseThree"
+                                                            aria-expanded="false" aria-controls="collapseThree">
+                                                            Collapsible Group Item #3
+                                                        </a>
+                                                    </h5>
+                                                </div>
+                                                <div id="collapseThree" class="collapse" role="tabpanel"
+                                                    aria-labelledby="headingThree">
+                                                    <div class="card-body"> Anim pariatur cliche reprehenderit, enim
+                                                        eiusmod high life accusamus terry richardson ad squid. </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,12 +317,15 @@
                                         <h4 class="m-b-20">CONTACT US</h4>
                                         <!-- Contact -->
                                         <form>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="exampleInputname1" placeholder="Enter Name"> </div>
-                                            <div class="form-group">
-                                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email"> </div>
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Message"></textarea>
+                                            <div class="form-group row row row">
+                                                <input type="text" class="form-control" id="exampleInputname1"
+                                                    placeholder="Enter Name"> </div>
+                                            <div class="form-group row row row">
+                                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                                    placeholder="Enter email"> </div>
+                                            <div class="form-group row row row">
+                                                <textarea class="form-control" id="exampleTextarea" rows="3"
+                                                    placeholder="Message"></textarea>
                                             </div>
                                             <button type="submit" class="btn btn-info">Submit</button>
                                         </form>
@@ -261,11 +334,16 @@
                                         <h4 class="m-b-20">List style</h4>
                                         <!-- List style -->
                                         <ul class="list-style-none">
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> You can give link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Give link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Another Give link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Forth link</a></li>
-                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i> Another fifth link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>
+                                                    You can give link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>
+                                                    Give link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>
+                                                    Another Give link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>
+                                                    Forth link</a></li>
+                                            <li><a href="javascript:void(0)"><i class="fa fa-check text-success"></i>
+                                                    Another fifth link</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -281,10 +359,13 @@
                     <ul class="navbar-nav my-lg-0">
                         <li class="nav-item hidden-sm-down">
                             <form class="app-search">
-                                <input type="text" class="form-control" placeholder="Search for..."> <a class="srh-btn"><i class="ti-search"></i></a> </form>
+                                <input type="text" class="form-control" placeholder="Search for..."> <a
+                                    class="srh-btn"><i class="ti-search"></i></a> </form>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
+                                    src="../assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
                             <div class="dropdown-menu dropdown-menu-right animated flipInY">
                                 <ul class="dropdown-user">
                                     <li>
@@ -292,7 +373,9 @@
                                             <div class="u-img"><img src="../assets/images/users/1.jpg" alt="user"></div>
                                             <div class="u-text">
                                                 <h4>Steave Jobs</h4>
-                                                <p class="text-muted">varun@gmail.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                                <p class="text-muted">varun@gmail.com</p><a href="profile.html"
+                                                    class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                            </div>
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>
@@ -307,8 +390,15 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="flag-icon flag-icon-us"></i></a>
-                            <div class="dropdown-menu  dropdown-menu-right animated bounceInDown"> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-in"></i> India</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-cn"></i> China</a> <a class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a> </div>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href=""
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i
+                                    class="flag-icon flag-icon-us"></i></a>
+                            <div class="dropdown-menu  dropdown-menu-right animated bounceInDown"> <a
+                                    class="dropdown-item" href="#"><i class="flag-icon flag-icon-in"></i> India</a> <a
+                                    class="dropdown-item" href="#"><i class="flag-icon flag-icon-fr"></i> French</a> <a
+                                    class="dropdown-item" href="#"><i class="flag-icon flag-icon-cn"></i> China</a> <a
+                                    class="dropdown-item" href="#"><i class="flag-icon flag-icon-de"></i> Dutch</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -320,7 +410,7 @@
         <!-- ============================================================== -->
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <!-- ============================================================== -->
-         <aside class="left-sidebar">
+       <aside class="left-sidebar">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
@@ -384,351 +474,284 @@
                 <!-- ============================================================== -->
                 <!-- Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
-                <div class="row page-titles">
-                    <div class="col-md-6 col-8 align-self-center">
-                        <h3 class="text-themecolor mb-0 mt-0">Icon</h3>
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Icon</li>
-                        </ol>
-                    </div>
-                    <div class="col-md-6 col-4 align-self-center">
-                        <button class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm float-right ml-2"><i class="ti-settings text-white"></i></button>
-                        <button class="btn float-right hidden-sm-down btn-success"><i class="mdi mdi-plus-circle"></i> Create</button>
-                        <div class="dropdown float-right mr-2 hidden-sm-down">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> January 2019 </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> <a class="dropdown-item" href="#">February 2019</a> <a class="dropdown-item" href="#">March 2019</a> <a class="dropdown-item" href="#">April 2019</a> </div>
-                        </div>
-                    </div>
-                 
-
-                </div>
-                  <div class="personio-heading">
-                        <h2 class="absence-heading">Absence Timeline</h2>
-                        <div>
-                            <a id="ical-btn" href="" class="btn btn-default export-button" data-toggle="modal" data-target="#modal-ical" data-action-name="export">
-                                Export
-                            </a>
-
-
-                            <div class="btn-group" role="view-selector">
-                                <a href="" class="btn btn-default  active " data-action-name="absence-timeline">
-                                    Absence Timeline
-                                </a>
-                                <a href="" class="btn btn-default " data-action-name="events-calendar">
-                                    Events Calendar
-                                </a>
-                            </div>
-                        </div>
-                        <div id="modal-ical" class="modal" tabindex="-1" role="dialog" aria-hidden="true" ><div class="modal-dialog" id="ical-popup">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                                 <h4 class="modal-title">iCal calendar export</h4>
-                               <button type="button" class="close" data-dismiss="modal">
-                                        <span aria-hidden="true">×</span>
-                                        <span class="sr-only">Close</span>
-                                    </button>
-                               
-                            </div>
-                            <div class="modal-body form-horizontal">
-                                <div class="form-group row">
-                                    <label class="col-md-3 control-label">
-                                        Calendar type
-                                    </label>
-                                    <div class="col-md-8">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="calendar-checkbox" value="employee"> My calendar
-                                            </label>
-                                        </div>
-                                         <div class="checkbox">
-                                            <label>
-                                                <input checked="" type="checkbox" class="calendar-checkbox" value="birthdays"> Birthdays
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="calendar-checkbox" value="start_end"> Start/end dates
-                                            </label>
-                                        </div>
-                                       <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="calendar-checkbox" value="holidays"> Public holidays / Empty office
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="calendar-checkbox" value="8"> Recruiting
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="calendar-checkbox" value="7"> Absences
-                                            </label>
-                                        </div>
-                                          <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="calendar-checkbox" value="7"> Paid vacation
-                                            </label>
-                                        </div>
-                                         <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="calendar-checkbox" value="6"> Sick days
-                                            </label>
-                                        </div>
-                                         <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="calendar-checkbox" value="6"> Parental leave
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="calendar-checkbox" value="1"> Maternity protection
-                                            </label>
-                                        </div>
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="calendar-checkbox" value="3"> Unpaid vacation
-                                            </label>
-                                        </div>
-                                         <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" class="calendar-checkbox" value="5"> Home office
-                                            </label>
-                                        </div>
-                                </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 control-label">
-                                        Department
-                                    </label>
-                                    <div class="col-md-8">
-                                        <select class="form-control" name="department_filter">
-                                            <option value="" selected="selected">All departments</option>
-                                            <option value="">Finance &amp; Legal</option>
-                                            <option value="">Marketing</option>
-                                            <option value="">IT</option>
-                                            <option value="">Customer Support</option>
-                                            <option value="">HR</option>
-                                            <option value="">Management</option>
-                                            <option value="">Sales</option>
-                                            <option value="">Accounting</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-md-3 control-label">
-                                        Link to calendar
-                                    </label>
-                                    <div class="col-md-8">
-                                        <input type="text" name="ical_url" class="form-control" value="https://saifulit.personio.de/calendar/ical/1490278/AprZsFi7G2kGp5QoYXbIdWE33qyLEi6tueKZt8nOJ7Ai7AL6GYOEYwqh7bTbWvRaR0m7F3FEw1ZiBTCsqkqgeh5DYcCqa1h3QLkUtXGDO7e13mY1BO2oytbarDAfvdWv/employee+birthdays+start_end+holidays/0/calendar.ics" data-base-url="" readonly="readonly" style="cursor: default">
-                                        Please copy the link from the text field and add this URL as a new calendar in Outlook or Google Apps.
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-md-8 col-md-offset-3">
-                                        <div class="alert alert-warning">
-                                            <p>Please do not share this link with anyone. It contains a token, similar to a password, that grants access to your Personio calendar events.</p>
-                                            <a href="#" data-toggle="collapse" data-target=".reset-warning">
-                                                Reset calendar token.
-                                            </a>
-                                            <div class="reset-warning collapse margin-top-10">
-                                                <p>Are you sure you want to reset the calendar share token? This will invalidate all existing calendar shares.</p>
-                                                <form method="POST" action="" accept-charset="UTF-8" class="prevent-submit-twice">
-                                                    <input name="_method" type="hidden" value="DELETE">
-                                                    <input name="_token" type="hidden" value="">
-                                                   <input class="btn btn-danger" type="submit" value="Yes">
-                                                  <button class="btn btn-default" data-toggle="collapse" data-target=".reset-warning" type="button">Cancel</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
-                        </div>
-                  </div>
-                 </div>
-                </div>
-               
-
-              <div class="container">
-               <div class="row">
-                <div class="multiple-div col-md-3">
-                     <select id="my-select" name="character" multiple="multiple">
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                     </select>
-                        <div id="my-div" data-sol-name="character"></div>
-
-               </div>
-               <div class="multiple-div col-md-3">
-                     <select id="my-select-1" name="character" multiple="multiple">
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                     </select>
-                        <div id="my-div" data-sol-name="character"></div>
-
-               </div>
-               <div class="multiple-div col-md-3">
-                     <select id="my-select-2" name="character" multiple="multiple">
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                     </select>
-                        <div id="my-div" data-sol-name="character"></div>
-
-               </div>
-               <div class="multiple-div col-md-3">
-                     <select id="my-select-3" name="character" multiple="multiple">
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                         <option value="Peter">Peter Griffin</option>
-                     </select>
-                        <div id="my-div" data-sol-name="character"></div>
-
-               </div>
-            </div>
-             </div>
-           
-
+              
                 <!-- ============================================================== -->
                 <!-- End Bread crumb and right sidebar toggle -->
                 <!-- ============================================================== -->
                 <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-                <div class="row">
-                    <div class="col-md-12 col-lg-3">
-                       
-                           <div class="chat-left-aside">                                
-                                    <div class="chat-left-inner">
-                                        <div class="form-material">
-                                            <input class="form-control p-3" type="text" placeholder="Search Contact">
-                                        </div>
-                                        <ul class="chatonline style-none ">
-                                            <li>
-                                                <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)" class="active"><img src="../assets/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)"><img src="../assets/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)"><img src="../assets/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)"><img src="../assets/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)"><img src="../assets/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)"><img src="../assets/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
-                                            </li>
-                                            <li>
-                                                <a href="javascript:void(0)"><img src="../assets/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
-                                            </li>
-                                            <li class="p-3"></li>
-                                        </ul>
-                                    </div>
-                                </div>
+             <!--  -->
+           <div class="shadowed-box">
+               <div class="full">
+           <ul id="office_list " class="nav nav-tabs tabs-vertical ul-tab" data-toggle="tabs" ole="tablist">
+              <li class="active nav-item"><a class="nav-link" data-toggle="tab" href="#home">General</a></li>
+              <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu1">Feedback Categories</a></li>             
+            </ul>
+            <div class="tab-content">
+              <div  id="home" class="tab-pane col-md-8  active">
+                <h4 class="sub-header">
+                    General performance settings
+                    <small><a href="javascript:void(0)"  class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible3();">(Edit)</a></small>
+                </h4>
+                <div class="form-horizontal form-striped compact " id="office-div3">
+                    <div class="form-group d-flex">
+                        <label class="col-md-4 control-label">
+                            Bonus distribution
+                        </label>
+                        <div class="col-md-5 form-control-static">
+                            End of period
+                        </div>
                     </div>
-                    <div class="col-md-12 col-lg-9">
+                </div>
 
-                        <div class="card">
-                            <div class="card-body">
-                                <div id="calendar"></div>
-                            </div>
-                        </div>
-                    </div>
+            <form method="POST" action="" accept-charset="UTF-8" class="form-horizontal " id="office3" style="display: none;" novalidate="novalidate">
+
+            <div class="form-group d-flex">
+                <label class="col-md-4 control-label">
+                    Bonus distribution
+                </label>
+                <div class="col-md-5">
+                    <select class="select-chosen form-control" name="bonus_distribution">
+                        <option value="">Please select...</option>
+                        <option value="after-period">After period</option>
+                        <option value="distribute">Distribute evenly over period</option>
+                        <option value="end-of-period" selected="selected">End of period</option>
+                    </select>
+                  
                 </div>
-                <!-- BEGIN MODAL -->
-                <div class="modal none-border" id="my-event">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title"><strong>Add Event</strong></h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body"></div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-success save-event waves-effect waves-light">Create event</button>
-                                <button type="button" class="btn btn-danger delete-event waves-effect waves-light" data-dismiss="modal">Delete</button>
-                            </div>
-                        </div>
-                    </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-8 offset-4">
+                    <button type="reset" class="btn btn-default edit-cancel" onclick="switchVisible3();"><i class="fas fa-times"></i> Cancel</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Submit</button>
                 </div>
-                <!-- Modal Add Category -->
-                <div class="modal fade none-border" id="add-new-event">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title"><strong>Add</strong> a category</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <form role="form">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="control-label">Category Name</label>
-                                            <input class="form-control form-white" placeholder="Enter name" type="text" name="category-name" />
+            </div>
+            </form>
+      
+              </div>  
+              <div id="menu1" class="tab-pane fade">
+                  
+                         <h2 class="text-bold">Public Holidays</h2>  
+                           <div class="d-flex gutter30">
+                           <div class="col-md-4">
+                             <div class="block-section customvtab vtabs row">
+                            <h4 class="sub-header">Public holiday calendars</h4>
+                            <form method="POST" action="" accept-charset="UTF-8" id="new_office_form" novalidate="novalidate"><input name="_token" type="hidden" value=""> <div class="input-group input-group-sm"> <input class="form-control" placeholder="New office..." required="" minlength="2" name="new_office_name" type="text"> <span class="input-group-btn"> <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i></button> </span> </div> </form><br>
+
+                            <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist"> 
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">Annual development meeting</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab2" role="tab">Feedback meeting (probation period)</a> </li>                               
+                            </ul>
+                          </div>
+                           </div>
+
+                           <div class="col-md-8 tab-content">
+                             <div class="block-section tab-pane active" id="tab1" role="tabpanel">
+                               <h4 class="sub-header">Annual development meeting<small> <a href="#" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible1();">(Edit)</a> </small> <a href="#modal-delete-office" data-toggle="modal"> <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> </a>
+                                </h4>
+                                 <div class="form-horizontal form-striped compact" id="office-div1">
+                                      <table class="table ">
+                                        <thead>
+                                            <tr class="small">
+                                                <th width="29px"></th>
+                                                <th>Name</th>
+                                                <th width="200px">Attribute is required</th>
+                                                <th width="29px"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="draggable-tbody ui-sortable">
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <p class="form-control-static">
+                                                            <input  type="hidden" value="0">
+                                                            <i class="fas fa-sort handle ui-sortable-handle" data-toggle="tooltip" data-title="Drag to sort." data-original-title="" title=""></i>
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" required="" minlength="2" name="attribute[167797][attribute_name]" type="text" value="Feedback from supervisor">
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <p class="form-control-static">
+                                                            <input name="attribute[167797][required]" type="hidden" value="">
+                                                            <input checked="checked" name="attribute[167797][required]" type="checkbox" value="1">
+                                                        </p>
+                                                    </td>
+                                                    <td class="form-group text-right">
+                                                        <p class="form-control-static">
+                                                            <a href="#modal-delete-attribute" data-toggle="modal" data-attribute-id="167797">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <p class="form-control-static">
+                                                            <input data-sort-order-field="1" name="attribute[167800][sort_order]" type="hidden" value="0">
+                                                            <i class="fas fa-sort handle ui-sortable-handle" data-toggle="tooltip" data-title="Drag to sort." data-original-title="" title=""></i>
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" required="" minlength="2" name="attribute[167800][attribute_name]" type="text" value="Target agreements">
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <p class="form-control-static">
+                                                            <input name="attribute[167800][required]" type="hidden" value="">
+                                                            <input name="attribute[167800][required]" type="checkbox" value="1">
+                                                        </p>
+                                                    </td>
+                                                    <td class="form-group text-right">
+                                                        <p class="form-control-static">
+                                                            <a href="#modal-delete-attribute" data-toggle="modal" data-attribute-id="167800">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <p class="form-control-static">
+                                                            <input data-sort-order-field="1" name="attribute[167799][sort_order]" type="hidden" value="0">
+                                                            <i class="fas fa-sort handle ui-sortable-handle" data-toggle="tooltip" data-title="Drag to sort." data-original-title="" title=""></i>
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" required="" minlength="2" name="attribute[167799][attribute_name]" type="text" value="Development goals">
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <p class="form-control-static">
+                                                            <input name="attribute[167799][required]" type="hidden" value="">
+                                                            <input name="attribute[167799][required]" type="checkbox" value="1">
+                                                        </p>
+                                                    </td>
+                                                    <td class="form-group text-right">
+                                                        <p class="form-control-static">
+                                                            <a href="#modal-delete-attribute" data-toggle="modal" data-attribute-id="167799">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <p class="form-control-static">
+                                                            <input data-sort-order-field="1" name="attribute[167798][sort_order]" type="hidden" value="0">
+                                                            <i class="fas fa-sort handle ui-sortable-handle" data-toggle="tooltip" data-title="Drag to sort." data-original-title="" title=""></i>
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control" required="" minlength="2" name="attribute[167798][attribute_name]" type="text" value="Improvement potential">
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <p class="form-control-static">
+                                                            <input name="attribute[167798][required]" type="hidden" value="">
+                                                            <input checked="checked" name="attribute[167798][required]" type="checkbox" value="1">
+                                                        </p>
+                                                    </td>
+                                                    <td class="form-group text-right">
+                                                        <p class="form-control-static">
+                                                            <a href="#modal-delete-attribute" data-toggle="modal" data-attribute-id="167798">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="form-group">
+                                                        <p class="form-control-static">
+                                                            <input data-sort-order-field="1" name="attribute[167847][sort_order]" type="hidden" value="0">
+                                                            <i class="fas fa-sort handle ui-sortable-handle" data-toggle="tooltip" data-title="Drag to sort." data-original-title="" title=""></i>
+                                                        </p>
+                                                    </td>
+                                                    <td>
+                                                        <input class="form-control valid" required="" minlength="2" name="attribute[167847][attribute_name]" type="text" value="ddd">
+                                                    </td>
+                                                    <td class="form-group">
+                                                        <p class="form-control-static">
+                                                            <input name="attribute[167847][required]" type="hidden" value="">
+                                                            <input name="attribute[167847][required]" type="checkbox" value="1">
+                                                        </p>
+                                                    </td>
+                                                    <td class="form-group text-right">
+                                                        <p class="form-control-static">
+                                                            <a href="#modal-delete-attribute" data-toggle="modal" data-attribute-id="167847">
+                                                                <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                      </table>
+                                             
+                                </div>
+                                 <form method="POST" action="" accept-charset="UTF-8" class="form-horizontal office1" id="office1" novalidate="novalidate">
+                                      <div class="form-group d-flex">
+                                        <label class="col-md-3 control-label">
+                                            Category name
+                                        </label>
+                                        <div class="col-md-8">
+                                            <input class="form-control valid" required="" minlength="2" name="name" type="text" value="Annual development meeting">
                                         </div>
-                                        <div class="col-md-6">
-                                            <label class="control-label">Choose Category Color</label>
-                                            <select class="form-control form-white" data-placeholder="Choose a color..." name="category-color">
-                                                <option value="success">Success</option>
-                                                <option value="danger">Danger</option>
-                                                <option value="info">Info</option>
-                                                <option value="primary">Primary</option>
-                                                <option value="warning">Warning</option>
-                                                <option value="inverse">Inverse</option>
-                                            </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-9 offset-3">
+                                            <button type="reset" class="btn btn-default edit-cancel" onclick="switchVisible1();"><i class="fas fa-times"></i> Cancel</button>
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Submit</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger waves-effect waves-light save-category" data-dismiss="modal">Save</button>
-                                <button type="button" class="btn btn-white waves-effect" data-dismiss="modal">Close</button>
+                         
+                           
+                            <div class="tab-pane  p-3" id="tab2" role="tabpanel">
+                               <h4 class="sub-header">Feedback meeting (probation period) <small> <a href="#" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible2();">(Edit)</a> </small> <a href="#modal-delete-office" data-toggle="modal"> <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> </a>
+                                </h4>
+                                 <div class="form-horizontal form-striped compact" id="office-div2">
+                                    
+                                </div>
+                                 <form method="POST" action="" accept-charset="UTF-8" class="form-horizontal" id="office2" novalidate="novalidate">
+                                    
+                            
+                                    <div class="form-group row">
+                                        <div class="col-md-9 col-md-offset-3">
+                                            <button type="reset" class="btn btn-default edit-cancel" onclick="switchVisible2();"><i class="fas fa-times"></i> Cancel</button>
+                                            <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                
+
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END MODAL -->
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
+                             </div> 
+                         
+
+
+
+                       
+                             </div>
+
+                                   
+                         </div>
+
+                      </div>
+                     </div>
+               </div>
+              
+
+            </div>
+</div>
+
+
+                   
+              <!-- ============================================================== -->
                 <!-- ============================================================== -->
                 <!-- Right sidebar -->
                 <!-- ============================================================== -->
                 <!-- .right-sidebar -->
                 <div class="right-sidebar">
                     <div class="slimscrollright">
-                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span>
+                        </div>
                         <div class="r-panel-body">
                             <ul id="themecolors" class="mt-3">
                                 <li><b>With Light sidebar</b></li>
@@ -739,43 +762,66 @@
                                 <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
                                 <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
                                 <li class="d-block mt-4"><b>With Dark sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a></li>
-                                <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
+                                <li><a href="javascript:void(0)" data-theme="default-dark"
+                                        class="default-dark-theme">7</a></li>
+                                <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a>
+                                </li>
                                 <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
-                                <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
-                                <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
-                                <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a></li>
+                                <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a>
+                                </li>
+                                <li><a href="javascript:void(0)" data-theme="purple-dark"
+                                        class="purple-dark-theme">11</a></li>
+                                <li><a href="javascript:void(0)" data-theme="megna-dark"
+                                        class="megna-dark-theme ">12</a></li>
                             </ul>
                             <ul class="mt-3 chatonline">
                                 <li><b>Chat option</b></li>
                                 <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/1.jpg" alt="user-img"
+                                            class="img-circle"> <span>Varun Dhavan <small
+                                                class="text-success">online</small></span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/2.jpg" alt="user-img"
+                                            class="img-circle"> <span>Genelia Deshmukh <small
+                                                class="text-warning">Away</small></span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/3.jpg" alt="user-img"
+                                            class="img-circle"> <span>Ritesh Deshmukh <small
+                                                class="text-danger">Busy</small></span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/4.jpg" alt="user-img"
+                                            class="img-circle"> <span>Arijit Sinh <small
+                                                class="text-muted">Offline</small></span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/5.jpg" alt="user-img"
+                                            class="img-circle"> <span>Govinda Star <small
+                                                class="text-success">online</small></span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/6.jpg" alt="user-img"
+                                            class="img-circle"> <span>John Abraham<small
+                                                class="text-success">online</small></span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/7.jpg" alt="user-img"
+                                            class="img-circle"> <span>Hritik Roshan<small
+                                                class="text-success">online</small></span></a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void(0)"><img src="../assets/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
+                                    <a href="javascript:void(0)"><img src="../assets/images/users/8.jpg" alt="user-img"
+                                            class="img-circle"> <span>Pwandeep rajan <small
+                                                class="text-success">online</small></span></a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
+               </div> 
                 <!-- ============================================================== -->
                 <!-- End Right sidebar -->
                 <!-- ============================================================== -->
@@ -786,9 +832,7 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer">
-                © 2019 Monster Admin by wrappixel.com
-            </footer>
+            <footer class="footer"> © 2019 Monster Admin by wrappixel.com  </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
             <!-- ============================================================== -->
@@ -803,12 +847,13 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <script src="../assets/plugins/jquery/jquery.min.js"></script>
-    <script src="../assets/plugins/calendar/jquery-ui.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="../assets/plugins/bootstrap/js/popper.min.js"></script>
     <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
     <!-- slimscrollbar scrollbar JavaScript -->
     <script src="js/jquery.slimscroll.js"></script>
     <!--Wave Effects -->
@@ -817,67 +862,90 @@
     <script src="js/sidebarmenu.js"></script>
     <!--stickey kit -->
     <script src="../assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
-    <!--Custom JavaScript -->
    
-     <script src="js/custom.min.js"></script>
-    <!-- Calendar JavaScript -->
-    <script src="../assets/plugins/calendar/jquery-ui.min.js"></script>
-    <script src="../assets/plugins/moment/moment.js"></script>
-    <script src='../assets/plugins/calendar/dist/fullcalendar.min.js'></script>
-    <script src="../assets/plugins/calendar/dist/cal-init.js"></script>
-     <script src="../assets/plugins/select2/dist/js/select2.min.js"></script>
-      <script src="js/sol.js"></script>
+    <!--Custom JavaScript -->
+    <script src="js/custom.min.js"></script>
+    <script src="../assets/plugins/moment/moment.js" type="text/javascript"></script>
+    <script src="../assets/plugins/footable/js/footable.min.js"></script>     
+    <script src="js/main.js"></script>
+   
+     <script src="js/jquery.bootstrap-duallistbox.js"></script>
+      <script src="../assets/plugins/select2/dist/js/select2.min.js"></script>
+
+  
+    <script src="js/jquery.timepicker.min.js"></script>
+    <!--FooTable init-->
+  <script type="text/javascript">
+     
+       function switchVisible() {
+if (document.getElementById('office-div')) {
+
+    if (document.getElementById('office-div').style.display == 'none') {
+        document.getElementById('office-div').style.display = 'block';
+        document.getElementById('office').style.display = 'none';
+    }
+    else {
+        document.getElementById('office-div').style.display = 'none';
+        document.getElementById('office').style.display = 'block';
+    }
+}
+}
+       function switchVisible1() {
+if (document.getElementById('office-div1')) {
+
+    if (document.getElementById('office-div1').style.display == 'none') {
+        document.getElementById('office-div1').style.display = 'block';
+        document.getElementById('office1').style.display = 'none';
+    }
+    else {
+        document.getElementById('office-div1').style.display = 'none';
+        document.getElementById('office1').style.display = 'block';
+    }
+}
+}
+       function switchVisible2() {
+if (document.getElementById('office-div2')) {
+
+    if (document.getElementById('office-div2').style.display == 'none') {
+        document.getElementById('office-div2').style.display = 'block';
+        document.getElementById('office2').style.display = 'none';
+    }
+    else {
+        document.getElementById('office-div2').style.display = 'none';
+        document.getElementById('office2').style.display = 'block';
+    }
+}
+}
+ function switchVisible3() {
+if (document.getElementById('office-div3')) {
+
+    if (document.getElementById('office-div3').style.display == 'none') {
+        document.getElementById('office-div3').style.display = 'block';
+        document.getElementById('office3').style.display = 'none';
+    }
+    else {
+        document.getElementById('office-div3').style.display = 'none';
+        document.getElementById('office3').style.display = 'block';
+    }
+}
+}
+
+$(document).ready(function() {
+    $('.select-chosen').select2();
+});
+   
+
+
+
+  </script>
+  <script type="text/javascript">
+     $('.selectExample').timepicker({ 'timeFormat': 'H:s' });
+  </script>
+
     <!-- ============================================================== -->
     <!-- Style switcher -->
-    
     <!-- ============================================================== -->
     <script src="../assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
-    <script type="text/javascript">
-     $("#e1").select2({closeOnSelect:false});
-$("#checkbox").click(function(){
-    if($("#checkbox").is(':checked') ){
-        $("#e1 > option").prop("selected","selected");
-        $("#e1").trigger("change");
-    }else{
-        $("#e1 > option").removeAttr("selected");
-         $("#e1").trigger("change");
-     }
-});
-
-$("#button").click(function(){
-       alert($("#e1").val());
-});
-    </script>
-<script type="text/javascript">
-$(function() {
-    $('#my-select').searchableOptionList({
-        showSelectAll: true,
-      
-
-    });
-});
-$(function() {
-    $('#my-select-1').searchableOptionList({
-        showSelectAll: true,
-      
-
-    });
-});
-$(function() {
-    $('#my-select-2').searchableOptionList({
-        showSelectAll: true,
-      
-
-    });
-});
-$(function() {
-    $('#my-select-3').searchableOptionList({
-        showSelectAll: true,
-      
-
-    });
-});    
-</script>
 </body>
 
 </html>
