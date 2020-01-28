@@ -32,12 +32,14 @@
                         <div class="block-section">
                             <h4 class="sub-header">
                                 Company information
-                                <small>
-                                <a href="javascript:void(0)" class="edit-toggle" data-toggle="modal" data-target="#company-{{ $company->id }}">
+                                {{-- <small> --}}
+                                {{-- <a href="javascript:void(0)" class="edit-toggle" data-toggle="modal" data-target="#company-{{ $company->id }}">
                                     (Edit)
-                                </a>
-                                @include('companies.edit-company-modal')
+                                </a> --}}
+                                <small>
+                                    <a href="javascript:void(0)" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible1();">(Edit)</a>
                                 </small>
+                                {{-- </small> --}}
                             </h4>
                             <div id="status-page-info-react-entrypoint" class="status">
                                 <div class="_1eEHQ">
@@ -59,7 +61,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-horizontal form-striped compact">
+                            <div class="form-horizontal form-striped compact" id="company-data">
                                 <div class="form-group row">
                                     <label class="col-md-4 control-label">Company name</label>
                                     <div class="col-md-5">
@@ -156,6 +158,138 @@
                                     </div>
                                 </div>
                             </div>
+
+                        {!! Form::model($company, [
+                            'method' => 'PATCH',
+                            'route' => ['companies.update', $company->id],
+                            'class' => 'form-horizontal',
+                            'id' => 'company-edit-form',
+                            'files' => true,
+                            'novalidate' => 'novalidate'
+                        ]) !!}
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Company name
+                                    </label>
+                                    <div class="col-md-5">
+                                        <input class="form-control" name="name" type="text" value="{{ $company->name }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Sub-companies enabled
+                                    </label>
+                                    <div class="col-md-5 form-control-static">
+                                        <div class="checkbox checkbox-success">
+                                            <input type="checkbox" name="is_sub_company_enable" id="checkbox3" @isset($company->is_sub_company_enable) @if($company->is_sub_company_enable == 1) ? checked @endif @endisset>
+                                            <label for="checkbox3" style="width: 4% !important"> Yes </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                <label class="col-md-4 control-label">
+                                    Email notifications enabled
+                                </label>
+                                    <div class="col-md-5 form-control-static">
+                                        <div class="checkbox checkbox-success">
+                                            <input type="checkbox" name="is_email_notification_enable" id="checkbox2" @isset($company->is_email_notification_enable) @if($company->is_email_notification_enable == 1) ? checked @endif @endisset>
+                                            <label for="checkbox2" style="width: 4% !important"> Yes </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Language preference
+                                    </label>
+                                    <div class="col-md-5">
+                                        {!! Form::select('language', ['' => '--Select Language--', 'en' => 'English', 'de' => 'German'], null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Default currency
+                                    </label>
+                                    <div class="col-md-5">  
+                                        <select name="currency" class="form-control select2" required>
+                                            <option value="">--Select Currency--</option>
+                                            @foreach($currencies as $key => $value)
+                                                <option value="{{ $value->abbreviation }}" @isset($company->currency) @if($value->abbreviation == $company->currency) ? selected @endif @endisset>
+                                                    {!! $value->abbreviation.' ('.$value->symbol.')' !!}
+                                                </option>
+                                            @endforeach
+                                        </select> 
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Industry
+                                    </label>
+                                    <div class="col-md-5">
+                                        {!! Form::select('industry_id', $industries, null, ('' == 'required') ? ['class' => 'form-control select2', 'required' => 'required', 'placeholder' => '--Select Industry--'] : ['class' => 'form-control select2', 'placeholder' => '--Select Industry--']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Timezone
+                                    </label>
+                                    <div class="col-md-5">
+                                        <select name="timezone" class="form-control select2" required>
+                                            <option value="">--Select Timezone--</option>
+                                            @foreach($timezones as $value)
+                                                <option value="{{ $value }}" @isset($company->timezone) @if($value == $company->timezone) ? selected @endif @endisset>
+                                                    {!! $value !!}
+                                                </option>
+                                            @endforeach
+                                        </select> 
+                                    </div>
+                                </div>     
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Public holidays
+                                    </label>
+                                    <div class="col-md-5">
+                                        {!! Form::select('public_holiday_calendar_id', $public_holiday_calendars, null, ('' == 'required') ? ['class' => 'form-control select2', 'required' => 'required', 'placeholder' => '--Select Public Holiday--'] : ['class' => 'form-control select2', 'placeholder' => '--Select Public Holiday--']) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Email contacts for maintenances
+                                        <i class="fa fa-info-circle" data-toggle="tooltip" title="" data-original-title="The specified contacts will receive notifications regarding maintenances. We recommend to provide a contact from your HR and IT team."></i>
+                                    </label>
+                                    <div class="col-md-8">
+                                        <div class="tags-default">
+                                            {!! Form::text('contact_for_maintenance[]', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required', 'data-role' => 'tagsinput'] : ['class' => 'form-control', 'data-role' => 'tagsinput']) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4 control-label">
+                                        Logo
+                                    </label>
+                                    <div class="col-md-8 configuration-logo-container">
+                                        {!! Form::file('logo', null, ('' == 'required') ? ['class' => 'form-control', 'required' => 'required'] : ['class' => 'form-control']) !!}
+                                        <br><br>
+                                        <div class="form-group">
+                                            <img src="{{ asset('storage/company-logo/'.$company->logo) }}" alt="" style="width: 200px; height: 200px;">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row" >
+                                    <div class="col-md-8 col-md-offset-4">
+                                        <button type="reset" class="btn btn-default edit-cancel" onclick="switchVisible1();">
+                                            <i class="fas fa-times"></i> Cancel
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-arrow-right"></i> Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            {!! Form::close() !!}
+
+
+
                         </div>
                     </div>
                 </div>
@@ -185,10 +319,18 @@
                         <p>
                             Delete your trial account and all data associated with it permanently. You will no longer have access to your account or data.
                         </p>
-
-                        <a class="btn btn-danger" href="#modal-delete-demo-account" data-toggle="modal">
-                            Delete everything now
-                        </a>
+                        {!! Form::open([
+                            'method'=>'DELETE',
+                            'route' => ['companies.destroy', $company->id],
+                            'style' => 'display:inline'
+                        ]) !!}
+                            {!! Form::button('Delete everything now', array(
+                                    'type' => 'submit',
+                                    'class' => 'btn btn-danger',
+                                    'title' => 'Delete everything now',
+                                    'onclick'=>'return confirm("Confirm delete?")'
+                            )) !!}
+                        {!! Form::close() !!}
                     </div>
                 </div>
     
@@ -207,4 +349,19 @@
 </div>
 @endsection
 @section('admin-additional-js')
+<script type="text/javascript">
+    document.getElementById('company-edit-form').style.display = 'none';
+    function switchVisible1() {
+        if (document.getElementById('company-edit-form')) {
+
+            if (document.getElementById('company-edit-form').style.display == 'none') {
+                document.getElementById('company-edit-form').style.display = 'block';
+                document.getElementById('company-data').style.display = 'none';
+            }else {
+                document.getElementById('company-edit-form').style.display = 'none';
+                document.getElementById('company-data').style.display = 'block';
+            }
+        }
+    }
+</script>
 @endsection

@@ -1,7 +1,7 @@
 <!-- Bootstrap Core CSS -->
 <link href="{{ asset('admin/assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 <!-- page CSS -->
-{{-- <link href="{{ asset('admin/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('admin/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('admin/assets/plugins/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('admin/assets/plugins/switchery/dist/switchery.min.css') }}" rel="stylesheet" />
 <link href="{{ asset('admin/assets/plugins/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" />
@@ -13,7 +13,7 @@
 <link href="{{ asset('admin/assets/plugins/chartist-js/dist/chartist-init.css') }}" rel="stylesheet">
 <link href="{{ asset('admin/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css') }}" rel="stylesheet">
 <link href="{{ asset('admin/assets/plugins/css-chart/css-chart.css') }}" rel="stylesheet">
-<!-- Custom CSS --> --}}
+<!-- Custom CSS -->
 <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
 <!-- You can change the theme colors from here -->
 <link href="{{ asset('admin/css/colors/green.css') }}" id="theme" rel="stylesheet">
