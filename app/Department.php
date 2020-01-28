@@ -34,4 +34,9 @@ class Department extends Model
     public function users(){
         return $this->hasMany(\App\User::class, 'department_id');
     }
+
+    public function workingHours()
+    {
+        return 40;
+    }
 }
