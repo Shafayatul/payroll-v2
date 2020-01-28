@@ -56,7 +56,6 @@ class OfficesController extends Controller
      */
     public function create()
     {
-       
         return view('offices.create');
     }
 
@@ -143,19 +142,19 @@ class OfficesController extends Controller
     public function update(Request $request, $id)
     {
         
-        $office                     = Office::findOrFail($id);
-        $office->name               = $request->name;
-        $office->currency           = $request->currency;
-        $office->timezone           = $request->timezone;
-        $office->street             = $request->street;
-        $office->house              = $request->house;
-        $office->street_additional  = $request->street_additional;
-        $office->zip                = $request->zip;
-        $office->city               = $request->city;
-        $office->state              = $request->state;
-        $office->country            = $request->country;
-        $office->public_holiday_id  = $request->public_holiday_id;
-        $office->company_id         = $request->company_id;
+        $office                             = Office::findOrFail($id);
+        $office->name                       = $request->name;
+        $office->currency                   = $request->currency;
+        $office->timezone                   = $request->timezone;
+        $office->street                     = $request->street;
+        $office->house                      = $request->house;
+        $office->street_additional          = $request->street_additional;
+        $office->zip                        = $request->zip;
+        $office->city                       = $request->city;
+        $office->state                      = $request->state;
+        $office->country                    = $request->country;
+        $office->public_holiday_calendar_id = $request->public_holiday_calendar_id;
+        $office->company_id                 = $id;
         $office->save();
 
         return redirect('offices')->with('success', 'Office updated!');
@@ -170,8 +169,9 @@ class OfficesController extends Controller
      */
     public function destroy($id)
     {
-        Office::destroy($id);
+        // Office::destroy($id);
 
-        return redirect('offices')->with('success', 'Office deleted!');
+        // return redirect('offices')->with('success', 'Office deleted!');
+        return redirect()->back();
     }
 }

@@ -26,7 +26,7 @@
             <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
                 @foreach($offices as $office)
                     <li class="nav-item"> 
-                    <a class="nav-link office-edit {{$loop->iteration == 1? 'active':''}}" data-toggle="tab" onclick="openTab({{ $office->id }})" role="tab">{{ $office->name }}<span class="badge pull-right" data-toggle="tooltip" title="" data-original-title="7 active employees, 9 total">
+                    <a class="nav-link office-edit {{$loop->iteration == 1? 'active':''}}" serial="{{ $office->id }}" data-toggle="tab" onclick="openTab({{ $office->id }})" role="tab">{{ $office->name }}<span class="badge pull-right" data-toggle="tooltip" title="" data-original-title="7 active employees, 9 total">
                                 {{ count($office->users) }}
                             </span>
                         </a> 
@@ -38,7 +38,24 @@
     <div class="col-md-8 tab-content">
         @foreach ($offices as $office)
         <div class="block-section tab-pane {{$loop->iteration == 1? 'active':''}}" id="tab{{ $office->id }}" role="tabpanel">
-            <h4 class="sub-header"><span class="office_name">{{ $office->name }}</span> <small> <a href="#" class="edit-toggle" onclick="updateOffice({{ $office->id }});" data-toggle="tooltip" data-original-title="" title="">(Edit)</a> </small> <a href="#modal-delete-office" data-toggle="modal"> <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> </a> </h4>
+            <h4 class="sub-header">
+                <span class="office_name">{{ $office->name }}</span> 
+                <small> 
+                    <a href="#" class="edit-toggle"  onclick="updateOffice({{ $office->id }});" data-toggle="tooltip" data-original-title="" title="">(Edit)</a> 
+                </small> 
+                {!! Form::open([
+                    'method'=>'DELETE',
+                    'route' => ['offices.destroy', $office->id],
+                    'style' => 'display:inline'
+                ]) !!}
+                    {!! Form::button('<i class="fas fa-trash" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> ', array(
+                            'type' => 'submit',
+                            'class' => 'btn btn-sm btn-danger pull-right',
+                            'title' => 'Delete this office',
+                            'onclick'=>'return confirm("Confirm delete?")'
+                    )) !!}
+                {!! Form::close() !!} 
+            </h4>
 
             <div class="form-horizontal form-striped compact office-details" id="office-div{{$office->id}}">
                 <div class="form-group row"><label class="col-md-3 control-label"> Office name </label>
@@ -76,9 +93,18 @@
                     </div>
                 </div>
             </div>
-            <form method="POST" action="{{ route('offices.update', $office->id)  }}" accept-charset="UTF-8" style="display:none" class="form-horizontal" id="office-{{$office->id}}" novalidate="novalidate">
+            {!! Form::model($office, [
+                'method' => 'PATCH',
+                'route' => ['offices.update', $office->id],
+                'class' => 'form-horizontal office-update-form',
+                'id' => "office-$office->id",
+                'files' => true,
+                'novalidate' => 'novalidate',
+                'style' => 'display:none'
+            ]) !!}
+            {{-- <form method="POST" action="{{ route('offices.update', $office->id)  }}" accept-charset="UTF-8" style="display:none" class="form-horizontal office-update-form" id="office-{{$office->id}}" novalidate="novalidate">
                 @csrf
-                @method('PUT')
+                @method('PUT') --}}
                 <input name="update_office_id" type="hidden" value="{{$office->id}}">
                 <div class="form-group row">
                     <label class="col-md-3 control-label">
@@ -94,91 +120,45 @@
                         Currency
                     </label>
                     <div class="col-md-5">
-                            <select class="select-chosen form-control"  >
-                    <option value="null">Same as company</option>
-                    <optgroup label="System holiday calendars">
-                        <option value="1">DE Feiertage</option>
-                        <option value="2">DE (Bayern) Feiertage</option>
-                        <option value="6">DE (Berlin) Feiertage</option>
-                        <option value="7">DE (Baden-Wuerttemberg) Feiertage</option>
-                        <option value="8">DE (Brandenburg) Feiertage</option>
-                        <option value="9">DE (Bremen) Feiertage</option>
-                        <option value="10">DE (Hamburg) Feiertage</option>
-                        <option value="11">DE (Hessen) Feiertage</option>
-                        <option value="12">DE (Mecklenburg-Vorpommern) Feiertage</option>
-                        <option value="13">DE (Niedersachsen) Feiertage</option>
-                        <option value="14">DE (NRW) Feiertage</option>
-                        <option value="15">DE (Rheinland-Pfalz) Feiertage</option>
-                        <option value="16">DE (Saarland) Feiertage</option>
-                        <option value="17">DE (Sachsen) Feiertage</option>
-                        <option value="18">DE (Sachsen-Anhalt) Feiertage</option>
-                        <option value="19">DE (Schleswig-Holstein) Feiertage</option>
-                        <option value="20">DE (Thueringen) Feiertage</option>
-                        <option value="56">FR public holidays</option>
-                        <option value="57">China public holidays</option>
-                        <option value="189">UK bank holidays</option>
-                        <option value="203">Northern Ireland bank holidays</option>
-                        <option value="205">US federal holidays</option>
-                        <option value="207">Austria public holidays</option>
-                        <option value="209">France public holidays</option>
-                        <option value="211">Canada public holidays</option>
-                        <option value="213">Italy public holidays</option>
-                    </optgroup>
-                    </select>
-                </div>
+                        <select name="currency" class="form-control select2" required>
+                            <option value="">--Select Currency--</option>
+                            @foreach($currencies as $key => $value)
+                                <option value="{{ $value->abbreviation }}" @isset($office->currency) @if($value->abbreviation == $office->currency) ? selected @endif @endisset>
+                                    {!! $value->abbreviation.' ('.$value->symbol.')' !!}
+                                </option>
+                            @endforeach
+                        </select> 
+                    </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Timezone </label>
                     <div class="col-md-5">
-                            <select class="select-chosen form-control"  >
-                        <option value="null">Same as company</option>                        
-                        <option value="1">DE Feiertage</option>
-                        <option value="2">DE (Bayern) Feiertage</option>
-                        <option value="6">DE (Berlin) Feiertage</option>
-                        <option value="7">DE (Baden-Wuerttemberg) Feiertage</option>
-                        <option value="8">DE (Brandenburg) Feiertage</option>
-                        <option value="9">DE (Bremen) Feiertage</option>
-                        <option value="10">DE (Hamburg) Feiertage</option>
-                        <option value="11">DE (Hessen) Feiertage</option>
-                        <option value="12">DE (Mecklenburg-Vorpommern) Feiertage</option>
-                        <option value="13">DE (Niedersachsen) Feiertage</option>
-                        <option value="14">DE (NRW) Feiertage</option>
-                        <option value="15">DE (Rheinland-Pfalz) Feiertage</option>
-                        <option value="16">DE (Saarland) Feiertage</option>
-                        <option value="17">DE (Sachsen) Feiertage</option>
-                        <option value="18">DE (Sachsen-Anhalt) Feiertage</option>
-                        <option value="19">DE (Schleswig-Holstein) Feiertage</option>
-                        <option value="20">DE (Thueringen) Feiertage</option>
-                        <option value="56">FR public holidays</option>
-                        <option value="57">China public holidays</option>
-                        <option value="189">UK bank holidays</option>
-                        <option value="203">Northern Ireland bank holidays</option>
-                        <option value="205">US federal holidays</option>
-                        <option value="207">Austria public holidays</option>
-                        <option value="209">France public holidays</option>
-                        <option value="211">Canada public holidays</option>
-                        <option value="213">Italy public holidays</option>
-                    
-                    </select>
-                        
-                        </div>
+                        <select name="timezone" class="form-control select2" required>
+                            <option value="">--Select Timezone--</option>
+                            @foreach($timezones as $value)
+                                <option value="{{ $value }}" @isset($office->timezone) @if($value == $office->timezone) ? selected @endif @endisset>
+                                    {!! $value !!}
+                                </option>
+                            @endforeach
+                        </select> 
                     </div>
+                </div>
                 <div class="form-group row">
                     <label class="col-md-3 control-label">
                         Street
                     </label>
                     <div class="col-md-4">
-                        <input class="form-control" placeholder="Street" name="street" type="text">
+                    <input class="form-control" placeholder="Street" name="street" type="text" value="{{ $office->street }}">
                     </div>
                     <div class="col-md-1">
-                        <input class="form-control" placeholder="House number" name="house_number" type="text">
+                        <input class="form-control" placeholder="House number" name="house" type="text"  value="{{ $office->house }}">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-md-5 col-md-offset-3">
-                        <input class="form-control" placeholder="Additional address information" name="street_additional" type="text">
+                        <input class="form-control" placeholder="Additional address information" name="street_additional" type="text" value="{{ $office->street_additional }}">
                     </div>
                 </div>
 
@@ -187,10 +167,10 @@
                         ZIP, City
                     </label>
                     <div class="col-md-2">
-                        <input class="form-control" placeholder="ZIP code" name="zip_code" type="text">
+                        <input class="form-control" placeholder="ZIP code" name="zip" type="text" value="{{ $office->zip }}">
                     </div>
                     <div class="col-md-3">
-                        <input class="form-control" placeholder="City" name="city" type="text">
+                        <input class="form-control" placeholder="City" name="city" type="text" value="{{ $office->city }}">
                     </div>
                 </div>
 
@@ -199,78 +179,18 @@
                         State, Country
                     </label>
                     <div class="col-md-2">
-                        <input class="form-control state-text" placeholder="State" name="state" type="text">
+                        <input class="form-control state-text" placeholder="State" name="state" type="text" value="{{ $office->state }}">
                         
                     </div>
                     <div class="col-md-3">
-                            <select class="select-chosen form-control">
-                            <option value="null">Same as company</option>
-                            <optgroup label="System holiday calendars">
-                                <option value="1">DE Feiertage</option>
-                                <option value="2">DE (Bayern) Feiertage</option>
-                                <option value="6">DE (Berlin) Feiertage</option>
-                                <option value="7">DE (Baden-Wuerttemberg) Feiertage</option>
-                                <option value="8">DE (Brandenburg) Feiertage</option>
-                                <option value="9">DE (Bremen) Feiertage</option>
-                                <option value="10">DE (Hamburg) Feiertage</option>
-                                <option value="11">DE (Hessen) Feiertage</option>
-                                <option value="12">DE (Mecklenburg-Vorpommern) Feiertage</option>
-                                <option value="13">DE (Niedersachsen) Feiertage</option>
-                                <option value="14">DE (NRW) Feiertage</option>
-                                <option value="15">DE (Rheinland-Pfalz) Feiertage</option>
-                                <option value="16">DE (Saarland) Feiertage</option>
-                                <option value="17">DE (Sachsen) Feiertage</option>
-                                <option value="18">DE (Sachsen-Anhalt) Feiertage</option>
-                                <option value="19">DE (Schleswig-Holstein) Feiertage</option>
-                                <option value="20">DE (Thueringen) Feiertage</option>
-                                <option value="56">FR public holidays</option>
-                                <option value="57">China public holidays</option>
-                                <option value="189">UK bank holidays</option>
-                                <option value="203">Northern Ireland bank holidays</option>
-                                <option value="205">US federal holidays</option>
-                                <option value="207">Austria public holidays</option>
-                                <option value="209">France public holidays</option>
-                                <option value="211">Canada public holidays</option>
-                                <option value="213">Italy public holidays</option>
-                            </optgroup>
-                        </select>
+                           <input class="form-control state-text" placeholder="Country" name="country" type="text" value="{{ $office->country }}">
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Public holidays </label>
                     <div class="col-md-5">
-                    <select class="select-chosen form-control"  >
-                    <option value="null">Same as company</option>
-                    <optgroup label="System holiday calendars">
-                        <option value="1">DE Feiertage</option>
-                        <option value="2">DE (Bayern) Feiertage</option>
-                        <option value="6">DE (Berlin) Feiertage</option>
-                        <option value="7">DE (Baden-Wuerttemberg) Feiertage</option>
-                        <option value="8">DE (Brandenburg) Feiertage</option>
-                        <option value="9">DE (Bremen) Feiertage</option>
-                        <option value="10">DE (Hamburg) Feiertage</option>
-                        <option value="11">DE (Hessen) Feiertage</option>
-                        <option value="12">DE (Mecklenburg-Vorpommern) Feiertage</option>
-                        <option value="13">DE (Niedersachsen) Feiertage</option>
-                        <option value="14">DE (NRW) Feiertage</option>
-                        <option value="15">DE (Rheinland-Pfalz) Feiertage</option>
-                        <option value="16">DE (Saarland) Feiertage</option>
-                        <option value="17">DE (Sachsen) Feiertage</option>
-                        <option value="18">DE (Sachsen-Anhalt) Feiertage</option>
-                        <option value="19">DE (Schleswig-Holstein) Feiertage</option>
-                        <option value="20">DE (Thueringen) Feiertage</option>
-                        <option value="56">FR public holidays</option>
-                        <option value="57">China public holidays</option>
-                        <option value="189">UK bank holidays</option>
-                        <option value="203">Northern Ireland bank holidays</option>
-                        <option value="205">US federal holidays</option>
-                        <option value="207">Austria public holidays</option>
-                        <option value="209">France public holidays</option>
-                        <option value="211">Canada public holidays</option>
-                        <option value="213">Italy public holidays</option>
-                    </optgroup>
-                    </select>                            
+                        {!! Form::select('public_holiday_calendar_id', $public_holiday_calendars, null, ('' == 'required') ? ['class' => 'form-control select2', 'required' => 'required', 'placeholder' => '--Select Public Holiday--'] : ['class' => 'form-control select2', 'placeholder' => '--Select Public Holiday--']) !!}                  
                     </div>
                 </div>
                 <div class="form-group row">
@@ -279,7 +199,7 @@
                         <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Submit</button>
                     </div>
                 </div>
-            </form>
+            {!! Form::close() !!}
         </div>
                     
         @endforeach
@@ -305,6 +225,7 @@
 
     function openTab(id){
         $('.tab-pane').hide();
+        $('.office-update-form').hide();
         $('#tab'+id).show();
         // $('#office'+id).attr('style', 'display:none !important');
         $('#office-div'+id).show();
@@ -335,7 +256,7 @@ $(document).ready(function() {
     $('.select-chosen').select2();
 
     $(".office-edit").click(function() {
-        var office_id = $(this).attr('id');
+        var office_id = $(this).attr('serial');
         $.ajax({
             'url' : "{{ url('get-ajax-office-data') }}/"+office_id,
             'type' : 'GET',

@@ -194,7 +194,6 @@ class CompaniesController extends Controller
      */
     public function destroy($id)
     {
-        dd('Comapy Deletd Code Waiting...');
         // $company =Company::findOrFail($id);
         // $result = Storage::disk('public')->exists('company-logo/'.$company->logo);
         // if(($result == true) && ($company->logo != null)){
@@ -203,5 +202,6 @@ class CompaniesController extends Controller
         // Company::destroy($id);
 
         // return redirect('companies')->with('success', 'Company deleted!');
+        return redirect()->back();
     }
 }
