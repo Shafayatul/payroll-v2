@@ -24,6 +24,7 @@
                         <li><a href="{{ route('setting.employee-information') }}">Employee Information</a></li>
                         <li><a href="{{ url('industries') }}">Industry</a></li>
                         <li><a href="{{ url('public-holiday-calendars') }}">Public Holiday</a></li>
+                        <li><a href="{{ url('absenses') }}">Absence</a></li>
                         <li><a href="{{ url('attendence-working-hours') }}">Attendence</a></li>
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">Performance</a>

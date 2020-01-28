@@ -61,6 +61,7 @@ Route::group(
 		
 		// AJAX REQUESTING ROUTE
 		Route::get('get-ajax-office-data/{id}', 'OfficesController@getAjaxOfficeData');
+		Route::get('absenses', 'AbsensesController@index');
 		
 		
 		

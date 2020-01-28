@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Department;
 use App\Office;
 use Illuminate\Http\Request;
+use Auth;
 
 class DepartmentsController extends Controller
 {
@@ -55,11 +56,11 @@ class DepartmentsController extends Controller
     {
         $department               = new Department;
         $department->name         = $request->name;
-        $department->working_hour = 40;
-        $department->office_id    = $request->office_id;
+        $department->working_hour = $department->workingHours();
+        $department->office_id    = Auth::user()->office_id;
         $department->save();
 
-        return redirect('departments')->with('success', 'Department added!');
+        return redirect()->route('departments.index')->with('success', 'Department added!');
     }
 
     /**
@@ -103,7 +104,6 @@ class DepartmentsController extends Controller
         $department               = Department::findOrFail($id);
         $department->name         = $request->name;
         $department->working_hour = $request->working_hour;
-        $department->office_id    = $request->office_id;
         $department->save();
 
         return redirect('departments')->with('success', 'Department updated!');
@@ -118,8 +118,9 @@ class DepartmentsController extends Controller
      */
     public function destroy($id)
     {
-        Department::destroy($id);
+        // Department::destroy($id);
 
-        return redirect('departments')->with('success', 'Department deleted!');
+        // return redirect('departments')->with('success', 'Department deleted!');
+        return redirect()->back();
     }
 }

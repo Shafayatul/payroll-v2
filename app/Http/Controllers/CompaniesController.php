@@ -106,16 +106,16 @@ class CompaniesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    // public function show($id)
-    // {
-    //     $company = Company::findOrFail($id);
-    //     $json_currencies = $this->currencies();
-    //     $currencies = json_decode($json_currencies);
-    //     $timezones = $this->timezones();
-    //     $industries = Industry::pluck('name', 'id');
-    //     $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
-    //     return view('companies.show', compact('company', 'currencies', 'timezones', 'industries', 'public_holiday_calendars'));
-    // }
+    public function show($id)
+    {
+        $company = Company::findOrFail($id);
+        $json_currencies = $this->currencies();
+        $currencies = json_decode($json_currencies);
+        $timezones = $this->timezones();
+        $industries = Industry::pluck('name', 'id');
+        $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
+        return view('companies.show', compact('company', 'currencies', 'timezones', 'industries', 'public_holiday_calendars'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -194,13 +194,14 @@ class CompaniesController extends Controller
      */
     public function destroy($id)
     {
-        $company =Company::findOrFail($id);
-        $result = Storage::disk('public')->exists('company-logo/'.$company->logo);
-        if(($result == true) && ($company->logo != null)){
-            Storage::disk('public')->delete('company-logo/'.$company->logo);
-        }
-        Company::destroy($id);
+        // $company =Company::findOrFail($id);
+        // $result = Storage::disk('public')->exists('company-logo/'.$company->logo);
+        // if(($result == true) && ($company->logo != null)){
+        //     Storage::disk('public')->delete('company-logo/'.$company->logo);
+        // }
+        // Company::destroy($id);
 
-        return redirect('companies')->with('success', 'Company deleted!');
+        // return redirect('companies')->with('success', 'Company deleted!');
+        return redirect()->back();
     }
 }
