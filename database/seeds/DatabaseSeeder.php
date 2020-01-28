@@ -1,10 +1,13 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
 
 use App\User;
 use App\Company;
 use App\Industry;
+use App\Office;
+use App\PublicHolidayCalendar;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,15 +18,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
-        factory(Industry::class, 10)
-            ->create()
-            ->each(function ($companies) {
-                $companies->companies()->factory(Company::class, 5)
-                ->create()
-                ->each(function ($offices){
-                    $offices->offices()->factory(Offices::class, 7)->create();
-                });
-            });
+        Model::unguard(); // Disable mass assignment
+
+        $this->call(UsersTableSeeder::class);
+        
+        factory(Industry::class, 5)->create();
+        // factory(Company::class, 5)->create();
+        // factory(PublicHolidayCalendar::class, 5)->create();
+        // factory(Office::class, 5)->create();
+        // factory(User::class, 5)->create();
+
+        Model::reguard(); // Enable mass assignment
     }
 }
