@@ -12,12 +12,20 @@ class CreateHolidaysTable extends Migration
      */
     public function up()
     {
-        Schema::create('holidays', function (Blueprint $table) {
+        Schema::create('calendar_years', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('year')->nullable();
+            $table->unsignedBigInteger('calendar_id')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+        });
+        
+        Schema::create('calendar_holidays', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->text('details')->nullable();
             $table->boolean('is_halfday')->nullable();
-            $table->unsignedBigInteger('public_holiday_calendar_id')->nullable();
+            $table->unsignedBigInteger('calendar_year_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +38,7 @@ class CreateHolidaysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('holidays');
+        Schema::dropIfExists('calendar_holidays');
+        Schema::dropIfExists('calendar_years');
     }
 }

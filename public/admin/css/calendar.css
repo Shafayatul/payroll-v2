@@ -1,87 +1,37 @@
-body {
-    font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
-    color: #555;
-    font-size: 14px;
-}
-.card-no-border .page-wrapper {
-    background: #fff;
-}
-
-.personio-heading {
+.ul-tab {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-left: 24px;
-    margin-right: 24px;
-    padding-bottom: 24px;
-}
-.modal-header::after, .modal-header::before {
-    content: " ";
-    display: table;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 12px 12px 0;
+    list-style: none;
+    background-color: 
+    #f4f7f9;
 }
 
-.modal-header .close {
-    margin-top: -4px;
-    outline: none;
-    background:#f4f7f9;
-	border-radius: 2px 2px 2px 2px;
-	height: 32px;
-	width: 32px;
-	opacity: 1;
-	text-shadow: none;
-	font-weight: 400;
-	transition: all .3s ease;
-	margin-right: 10px;
-	padding: 0;
+.ul-tab .nav-item .nav-link.active {
+    font-weight: 700;
+    color:#0db6df !important;
+    background: none !important;
+    border-bottom: 2px solid
+    #0db6df !important;
 }
-.absence-heading{
-	font-weight: 700;
-	font-size: 30px;
+.ul-tab .nav-item .nav-link:hover {
+   background-color: #e6eaec;
+    color:#0db6df !important;
 }
-#modal-ical{
+.input-group label {
+min-height: 20px;
+
+margin-bottom: 10px;
+font-weight: 400;
+cursor: pointer;
+margin-top: 10px;
+}
+.form-horizontal .form-group:nth-child(2n+1) {
+    background-color: 
+    #f8fafb;
+}
+#cencel-btn{
 	display: none;
-}
-.modal-title {
-    color: 
-    #333;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.col-md-offset-3 {
-    margin-left: 25%;
-}
-.checkbox label, .radio label {
-    min-height: 20px;
-    padding-left: 20px;
-    margin-bottom: 15px;
-    font-weight: 400;
-    cursor: pointer;
-    font-size: 16px;
-}
-.modal-body {
-    padding: 24px;
-}
-@media (min-width:768px) {
- .modal-dialog {
- max-width: 600px;	
-  width:600px;
-  margin:30px auto
- }
-.alert {
-    border-width: 0 0 0 5px;
-    border-radius: 0;
-}
-.alert a {
-    text-decoration: underline;
-    font-weight: 600;
-}
-
- .btn-default {
-    color: 
-#555;
-background-color:
-#f4f7f9;
-border-color:
-    transparent;
 }

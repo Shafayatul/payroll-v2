@@ -28,8 +28,12 @@ class CreateForeignTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies');
         });
         
-        Schema::table('holidays', function (Blueprint $table) {
-            $table->foreign('public_holiday_calendar_id')->references('id')->on('public_holiday_calendars');
+        Schema::table('calendar_years', function (Blueprint $table) {
+            $table->foreign('calendar_id')->references('id')->on('public_holiday_calendars');
+        });
+
+        Schema::table('calendar_holidays', function (Blueprint $table) {
+            $table->foreign('calendar_year_id')->references('id')->on('calendar_years');
         });
         
         Schema::table('offices', function (Blueprint $table) {

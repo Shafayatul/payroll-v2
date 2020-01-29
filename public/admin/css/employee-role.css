@@ -147,8 +147,14 @@ select[multiple=multiple] option:hover {
  background:none;
  color:#159eda;
  border:none;
- box-shadow:none
+ box-shadow:none;
 }
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
 a[data-toggle=collapse].collapsed i.fa-caret-down {
  transform:rotate(-90deg)
 }
@@ -248,4 +254,20 @@ a.document-icon:hover {
 }
 #education_fields{
     margin-top: 20px;
+}
+.submit-buttons-wrapper {
+    width: 100%;
+    padding: 10px 5px;
+    box-shadow: 3px -2px 4px 0 
+    rgba(0,0,0,.1);
+    background:#fff;
+    position: fixed;
+    bottom: 0;
+}
+.collapse-trigger[aria-expanded="true"] .fa-caret-down {
+    transform: rotate(90deg) !important;
+}
+.row.gutter30 {
+    margin-right: -5px;
+    margin-left: -5px;
 }

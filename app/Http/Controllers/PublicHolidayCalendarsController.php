@@ -19,19 +19,10 @@ class PublicHolidayCalendarsController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $publicholidaycalendars = PublicHolidayCalendar::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('type', 'LIKE', "%$keyword%")
-                ->orWhere('office_id', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $publicholidaycalendars = PublicHolidayCalendar::latest()->paginate($perPage);
-        }
-        $offices = Office::pluck('name', 'id');
-        return view('public-holiday-calendars.index', compact('publicholidaycalendars', 'offices'));
+        $system_holiday_calendars = PublicHolidayCalendar::where('type', 0)->latest()->get();
+        $custom_holiday_calendars = PublicHolidayCalendar::where('type', 1)->latest()->get();
+        $holiday_calendars = PublicHolidayCalendar::latest()->get();
+        return view('public-holiday-calendars.index', compact('holiday_calendars', 'system_holiday_calendars', 'custom_holiday_calendars'));
     }
 
     /**
