@@ -15,7 +15,10 @@ class AbsensesController extends Controller
     public function index()
     {
         $absences = Absence::latest()->paginate(25);
-        return view('absences.index', compact('absences'));
+        $absence = new Absence();
+        $valid_datas = $absence->validOnData();
+        $types = $absence->carryoverType();
+        return view('absences.index', compact('absences', 'valid_datas', 'types'));
     }
 
     /**
@@ -36,7 +39,15 @@ class AbsensesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required'
+        ]);
+        $absence           = new Absence;
+        $absence->name     = $request->name;
+        $absence->color    = $absence->defaultColor();
+        $absence->valid_on = 'Work Schedule on Mon-Fri';
+        $absence->save();
+        return redirect('absenses')->with('success', 'Absence Added!');
     }
 
     /**
@@ -70,7 +81,25 @@ class AbsensesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->certificate_required == 1){
+            $certificate_required = $request->required_days;
+        }else{
+            $certificate_required = 0;
+        }
+        $absence                                   = Absence::findOrFail($id);
+        $absence->name                             = $request->name;
+        $absence->color                            = $request->color;
+        $absence->is_halfday_request               = $request->is_halfday_request;
+        $absence->certificate_required             = $certificate_required;
+        $absence->is_substituting                  = $request->is_substituting;
+        $absence->is_employee_substituting_absence = $request->is_employee_substituting_absence;
+        $absence->valid_on                         = $request->valid_on;
+        $absence->is_absence_period_as_overtime    = $request->is_absence_period_as_overtime;
+        $absence->is_accrual_policies              = $request->is_accrual_policies;
+        $absence->carryover_type                   = $request->carryover_type;
+        $absence->carryover_date                   = $request->carryover_date;
+        $absence->save();
+        return redirect('absenses')->with('success', 'Absence Updated!');
     }
 
     /**
@@ -81,6 +110,6 @@ class AbsensesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return redirect()->back();
     }
 }

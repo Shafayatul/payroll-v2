@@ -62,6 +62,9 @@ Route::group(
 		// AJAX REQUESTING ROUTE
 		Route::get('get-ajax-office-data/{id}', 'OfficesController@getAjaxOfficeData');
 		Route::get('absenses', 'AbsensesController@index');
+		Route::post('absenses', 'AbsensesController@store')->name('absences.store');
+		Route::post('absenses/{id}', 'AbsensesController@update')->name('absence.update');
+		Route::delete('absences/{id}', 'AbsensesController@destroy')->name('absences.destroy');
 		
 		
 		

@@ -19,8 +19,11 @@ class CreateAbsencesTable extends Migration
             $table->string('color')->nullable();
             $table->boolean('is_halfday_request')->default(false);
             $table->boolean('certificate_required')->default(false);
-            $table->boolean('is_substituting')->default(false);
+            $table->tinyInteger('is_substituting')->default(false);
+            $table->boolean('is_employee_substituting_absence')->default(false);
             $table->string('valid_on')->nullable();
+            $table->string('carryover_type')->nullable();
+            $table->string('carryover_date')->nullable();
             $table->boolean('is_absence_period_as_overtime')->default(false);
             $table->boolean('is_accrual_policies')->default(false);
             $table->boolean('is_active')->default(false);
