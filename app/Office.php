@@ -31,6 +31,16 @@ class Office extends Model
         return $this->belongsTo(\App\PublicHolidayCalendar::class, 'public_holiday_calendar_id');
     }
 
+    public function absences()
+    {
+        return $this->hasMany(\App\Absence::class, 'office_id');
+    }
+
+    public function absenceCalendars()
+    {
+        return $this->hasMany(\App\Calendar::class, 'office_id');
+    }
+
     public function company(){
         return $this->belongsTo(\App\Company::class, 'company_id');
     }

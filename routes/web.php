@@ -66,7 +66,8 @@ Route::group(
 		Route::post('absenses/{id}', 'AbsensesController@update')->name('absence.update');
 		Route::delete('absences/{id}', 'AbsensesController@destroy')->name('absences.destroy');
 		
-		Route::get('calendars', 'CalendarsController@index');
+		Route::get('calendars', 'CalendarsController@index')->name('calendars.index');
+		Route::post('calendars/update', 'CalendarsController@update')->name('calendars.update');
 		
 		// FUNCTION REQUEST ROUTE
 		// Route::resource('companies', 'CompaniesController');

@@ -164,6 +164,15 @@ class CreateForeignTable extends Migration
         Schema::table('special_role_reminders', function (Blueprint $table) {
             $table->foreign('role_reminder_id')->references('id')->on('role_reminders');
         });
+
+        Schema::table('calendars', function (Blueprint $table) {
+            $table->foreign('absence_id')->references('id')->on('absences');
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
+
+        Schema::table('absences', function (Blueprint $table) {
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
     }
     /**
      * Reverse the migrations.

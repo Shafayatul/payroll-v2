@@ -15,6 +15,7 @@ class CreateAbsencesTable extends Migration
     {
         Schema::create('absences', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('office_id')->nullable();
             $table->string('name')->nullable();
             $table->string('color')->nullable();
             $table->boolean('is_halfday_request')->default(false);

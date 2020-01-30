@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Office;
 
 class Absence extends Model
 {
@@ -33,5 +34,15 @@ class Absence extends Model
             'none' => 'No carryover',
         ];
         return $types;
+    }
+
+    public function offieces()
+    {
+        return $this->belongsTo(Office::class, 'office_id');
+    }
+
+    public function absenceCalendars()
+    {
+        return $this->hasMany(\App\Calendar::class, 'absence_id');
     }
 }

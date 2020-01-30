@@ -28,44 +28,19 @@
                     <i class="fas fa-info-circle"></i>
                     Select the absence types that should be included in the system calendar "Absences". Employees with access to this calendar will only see that colleagues are absent but not the type of each absence period.
                 </div>
-                <form method="POST" action="" accept-charset="UTF-8" class="form-horizontal w-100">
-                    <div class="form-group d-flex">
-                        <label class="col-md-4 control-label">Paid vacation</label>
-                        <div class="col-md-5 form-control-static">									                   
-                            <input class="categories"  type="checkbox" value="1" >
-                        </div>
-                    </div>
+                <form method="POST" action="{{ route('calendars.update') }}" accept-charset="UTF-8" class="form-horizontal w-100">
+                    @csrf
+                    {{-- @foreach($calendars as $calendar)	 --}}
+                        @foreach($absences as $absence)
                         <div class="form-group d-flex">
-                        <label class="col-md-4 control-label">Sick days</label>
-                        <div class="col-md-5 form-control-static">									                    
-                            <input class="categories" type="checkbox" value="1" >
+                            <label class="col-md-4 control-label">{{ $absence->name }}</label>
+                            <div class="col-md-5 form-control-static">
+                                <input class="categories" name="is_checked[{{$absence->id}}]"  type="checkbox" value="1" {{ $is_checked->contains($absence->id) ? 'checked' : '' }}>
+                                
+                            </div>
                         </div>
-                    </div>
-                            <div class="form-group d-flex">
-                        <label class="col-md-4 control-label">Parental leave</label>
-                        <div class="col-md-5 form-control-static">									                    
-                            <input class="categories" type="checkbox" value="1" >
-                        </div>
-                    </div>
-                            <div class="form-group d-flex">
-                        <label class="col-md-4 control-label">Maternity protection</label>
-                        <div class="col-md-5 form-control-static">									                  
-                            <input class="categories"   type="checkbox" value="1" >
-                        </div>
-                    </div>
-                            <div class="form-group d-flex">
-                        <label class="col-md-4 control-label">Unpaid vacation</label>
-                        <div class="col-md-5 form-control-static">
-                            
-                            <input  class="categories" checked="checked"  type="checkbox" value="1" >
-                        </div>
-                    </div>
-                            <div class="form-group d-flex">
-                        <label class="col-md-4 control-label">Home office</label>
-                        <div class="col-md-5 form-control-static">									                    
-                            <input   class="categories"  type="checkbox" value="1" >
-                        </div>
-                    </div>
+                        @endforeach
+                    {{-- @endforeach --}}
                     <div class="form-group " id="cencel-btn" style="display: none;">
                         <button type="reset" class="btn btn-default edit-reset"><i class="fas fa-times"></i> Cancel</button>
                         <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Submit</button>
