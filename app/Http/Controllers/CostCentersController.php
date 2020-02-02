@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\CostCenter;
 use App\Office;
 use Illuminate\Http\Request;
+use Auth;
 
 class CostCentersController extends Controller
 {
@@ -39,7 +40,6 @@ class CostCentersController extends Controller
      */
     public function create()
     {
-        $offices = Office::pluck('name', 'id');
         return view('cost-centers.create', compact('offices'));
     }
 
@@ -52,10 +52,10 @@ class CostCentersController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $requestData = $request->all();
-        
-        CostCenter::create($requestData);
+        $costcenter            = new CostCenter;
+        $costcenter->name      = $request->name;
+        $costcenter->office_id = Auth::user()->office_id;
+        $costcenter->save();
 
         return redirect('cost-centers')->with('success', 'CostCenter added!');
     }
@@ -98,11 +98,10 @@ class CostCentersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $requestData = $request->all();
-        
-        $costcenter = CostCenter::findOrFail($id);
-        $costcenter->update($requestData);
+        $costcenter            = CostCenter::findOrFail($id);
+        $costcenter->name      = $request->name;
+        $costcenter->office_id = Auth::user()->office_id;
+        $costcenter->save();
 
         return redirect('cost-centers')->with('success', 'CostCenter updated!');
     }
