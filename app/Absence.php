@@ -45,4 +45,9 @@ class Absence extends Model
     {
         return $this->hasMany(\App\Calendar::class, 'absence_id');
     }
+
+    public function payrollSettings()
+    {
+        return $this->belongsToMany(\App\PayrollSetting::class, 'absences_type_payroll_settings', 'absence_id', 'payroll_setting_id');
+    }
 }

@@ -54,7 +54,7 @@
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">Salary & Payroll</a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="#">General</a></li>
+                                <li><a href="{{ route('payroll.general') }}">General</a></li>
                                 <li><a href="{{ url('payroll-groups') }}">Payroll Groups</a></li>
                                 <li><a href="{{ url('payroll-histories') }}">Payroll History</a></li>
                                 <li><a href="{{ url('recurring-compensation-types') }}">Recurring Compensation Types</a></li>

@@ -78,6 +78,6 @@ class Office extends Model
     }
 
     public function payrollSettings(){
-        return $this->hasMany(\App\PayrollSetting::class, 'office_id');
+        return $this->hasOne(\App\PayrollSetting::class, 'office_id');
     }
 }

@@ -68,6 +68,9 @@ Route::group(
 		
 		Route::get('calendars', 'CalendarsController@index')->name('calendars.index');
 		Route::post('calendars/update', 'CalendarsController@update')->name('calendars.update');
+
+		Route::get('payroll/general', 'PayrollGeneralSettingsController@index')->name('payroll.general');
+		Route::post('payroll/update/{id}', 'PayrollGeneralSettingsController@update')->name('payroll.update');
 		
 		// FUNCTION REQUEST ROUTE
 		// Route::resource('companies', 'CompaniesController');

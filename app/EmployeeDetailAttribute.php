@@ -42,4 +42,9 @@ class EmployeeDetailAttribute extends Model
     public function rules(){
         return $this->hasMany(\App\Rule::class, 'attribute_id');
     }
+
+    public function payrollSettings()
+    {
+        return $this->belongsToMany(\App\PayrollSetting::class, 'attributes_in_personal_data_sheets', 'attribute_id', 'payroll_setting_id');
+    }
 }
