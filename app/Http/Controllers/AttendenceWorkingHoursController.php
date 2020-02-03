@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 
 use App\AttendenceWorkingHour;
 use App\Office;
+use App\Weekday;
 use Illuminate\Http\Request;
+use Auth;
 
 class AttendenceWorkingHoursController extends Controller
 {
@@ -18,24 +20,9 @@ class AttendenceWorkingHoursController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $attendenceworkinghours = AttendenceWorkingHour::where('office_id', 'LIKE', "%$keyword%")
-                ->orWhere('name', 'LIKE', "%$keyword%")
-                ->orWhere('is_track_overtime', 'LIKE', "%$keyword%")
-                ->orWhere('overtime_calculation', 'LIKE', "%$keyword%")
-                ->orWhere('overtime_cliff', 'LIKE', "%$keyword%")
-                ->orWhere('deficit_hours', 'LIKE', "%$keyword%")
-                ->orWhere(', is_prorate_vacation', 'LIKE', "%$keyword%")
-                ->orWhere('reference_value', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $attendenceworkinghours = AttendenceWorkingHour::latest()->paginate($perPage);
-        }
-        $offices = Office::pluck('name', 'id');
-        return view('attendence-working-hours.index', compact('attendenceworkinghours', 'offices'));
+        $attendenceworkinghours = Auth::user()->office->attendenceWorkingHours;
+        // dd($attendenceworkinghours);
+        return view('attendence-working-hours.index', compact('attendenceworkinghours'));
     }
 
     /**
@@ -59,9 +46,33 @@ class AttendenceWorkingHoursController extends Controller
     public function store(Request $request)
     {
         
-        $requestData = $request->all();
-        
-        AttendenceWorkingHour::create($requestData);
+        $attendenceworkinghour                       = new AttendenceWorkingHour;
+        $attendenceworkinghour->name                 = $request->name;
+        $attendenceworkinghour->office_id            = Auth::user()->office_id;
+        $attendenceworkinghour->is_track_overtime    = 0;
+        $attendenceworkinghour->overtime_calculation = "weekly";
+        $attendenceworkinghour->overtime_cliff       = "0";
+        $attendenceworkinghour->is_deficit           = 0;
+        $attendenceworkinghour->is_prorate_vacation  = 1;
+        $attendenceworkinghour->reference_value      = "5";
+        $attendenceworkinghour->save();
+
+        if($attendenceworkinghour){
+            foreach($attendenceworkinghour->days() as $day){
+                $weekday                  = new Weekday;
+                $weekday->weekday         = $day;
+                $weekday->working_hour_id = $attendenceworkinghour->id;
+                if(($day == 'Saturday') || ($day == 'Sunday')){
+                    $weekday->working_hours   = "Closed";
+                }else{
+                    $weekday->working_hours   = "8:00";
+                }
+                $weekday->start_time      = null;
+                $weekday->end_time        = null;
+                $weekday->is_active       = 1;
+                $weekday->save();
+            }
+        }
 
         return redirect('attendence-working-hours')->with('success', 'AttendenceWorkingHour added!');
     }
@@ -122,8 +133,6 @@ class AttendenceWorkingHoursController extends Controller
      */
     public function destroy($id)
     {
-        AttendenceWorkingHour::destroy($id);
-
-        return redirect('attendence-working-hours')->with('success', 'AttendenceWorkingHour deleted!');
+        return redirect('attendence-working-hours');
     }
 }

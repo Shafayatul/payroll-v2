@@ -1,93 +1,117 @@
 @extends('layouts.admin.master')
-@section('title', 'Recurringcompensationtypes')
+@section('title', 'Recurring compensation types')
 @section('admin-additional-css')
-<style type="text/css">
-    .table thead th{
-        border: 1px solid #dee2e6;
-    }
-</style>
+<link href="{{ asset('admin/css/app-contact.css') }}" id="app-contact" rel="stylesheet" media="all">
+<link href="{{ asset('admin/css/office.css') }}"  rel="stylesheet" media="all">
 @endsection
 @section('content')
-<div class="row page-titles">
-    <div class="col-md-6 col-8 align-self-center">
-        <h3 class="text-themecolor mb-0 mt-0">Dashboard</h3>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">RecurringCompensationTypes</a></li>
-            <li class="breadcrumb-item active">RecurringCompensationTypes</li>
-        </ol>
-    </div>
-</div>
 @include('layouts.admin.include.alert')
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">RecurringCompensationTypes</div>
-            <div class="card-body">
-                <a href="{{ url('/recurring-compensation-types/create') }}" class="btn btn-success btn-sm" title="Add New RecurringCompensationType">
-                    <i class="fa fa-plus" aria-hidden="true"></i> Add New
-                </a>
+<div class="row gutter30">
+    <div class="col-md-4">
+        <div class="block-section customvtab vtabs row">
+            <h4 class="sub-header">Recurring compensation types</h4>
+            <form method="POST" action="{{ route('recurring-compensation-types.store') }}" accept-charset="UTF-8" id="new_office_form" novalidate="novalidate">
+                @csrf
+                <div class="input-group input-group-sm"> 
+                    <input class="form-control" placeholder="Recurring Compensation Types..." required="" minlength="2" name="name" type="text">
+                    <span class="input-group-btn"> 
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                        </button> 
+                    </span> 
+                </div> 
+            </form>
+            <br>
 
-                {!! Form::open(['method' => 'GET', 'url' => '/recurring-compensation-types', 'class' => 'form-inline my-2 my-lg-0 float-right', 'role' => 'search'])  !!}
-                <div class="input-group">
-                    <input type="text" class="form-control" name="search" placeholder="Search..." value="{{ request('search') }}">
-                    <span class="input-group-append">
-                        <button class="btn btn-secondary" type="submit">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </span>
-                </div>
-                {!! Form::close() !!}
-
-                <br/>
-                <br/>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Is System Type?</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($recurringcompensationtypes as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>
-                                    @if($item->is_system_type == 0)
-                                        <span class="text-danger">No</span>
-                                    @else
-                                        <span class="text-success">Yes</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ url('/recurring-compensation-types/' . $item->id . '/edit') }}" title="Edit RecurringCompensationType"><button class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> Edit</button></a>
-                                    {!! Form::open([
-                                        'method'=>'DELETE',
-                                        'url' => ['/recurring-compensation-types', $item->id],
-                                        'style' => 'display:inline'
-                                    ]) !!}
-                                        {!! Form::button('<i class="fa fa-trash" aria-hidden="true"></i> Delete', array(
-                                                'type' => 'submit',
-                                                'class' => 'btn btn-danger btn-sm',
-                                                'title' => 'Delete RecurringCompensationType',
-                                                'onclick'=>'return confirm("Confirm delete?")'
-                                        )) !!}
-                                    {!! Form::close() !!}
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    <div class="pagination-wrapper"> {!! $recurringcompensationtypes->appends(['search' => Request::get('search')])->render() !!} </div>
-                </div>
-
-            </div>
+            <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
+                @foreach($recurringcompensationtypes as $recurringcompensationtype)
+                    <li class="nav-item"> 
+                    <a class="nav-link office-edit {{$loop->iteration == 1? 'active':''}}" serial="{{ $recurringcompensationtype->id }}" data-toggle="tab" onclick="openTab({{ $recurringcompensationtype->id }})" role="tab">{{ $recurringcompensationtype->name }}
+                        </a> 
+                    </li>
+                @endforeach
+            </ul>
         </div>
+    </div>
+    <div class="col-md-8 tab-content">
+        @foreach ($recurringcompensationtypes as $recurringcompensationtype)
+        <div class="block-section tab-pane {{$loop->iteration == 1? 'active':''}}" id="tab{{ $recurringcompensationtype->id }}" role="tabpanel">
+            <h4 class="sub-header">
+                <span class="office_name">{{ $recurringcompensationtype->name }}</span> 
+                <small> 
+                    <a href="#" class="edit-toggle"  onclick="updateOffice({{ $recurringcompensationtype->id }});" data-toggle="tooltip" data-original-title="" title="">(Edit)</a> 
+                </small> 
+                {!! Form::open([
+                    'method'=>'DELETE',
+                    'route' => ['recurring-compensation-types.destroy', $recurringcompensationtype->id],
+                    'style' => 'display:inline'
+                ]) !!}
+                    {!! Form::button('<i class="fas fa-trash" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> ', array(
+                            'type' => 'submit',
+                            'class' => 'btn btn-sm btn-danger pull-right',
+                            'title' => 'Delete this office',
+                            'onclick'=>'return confirm("Confirm delete?")'
+                    )) !!}
+                {!! Form::close() !!} 
+            </h4>
+
+            <div class="form-horizontal form-striped compact office-details" id="office-div{{$recurringcompensationtype->id}}">
+
+                <div class="form-group row">
+                    <label class="col-md-3 control-label"> Name </label>
+                    <div class="col-md-5"> 
+                        <p class="form-control-static">
+                            <span class="office_name">{{ $recurringcompensationtype->name }}</span>
+                        </p> 
+                    </div>
+                </div>
+            </div>
+            {!! Form::model($recurringcompensationtype, [
+                'method' => 'PATCH',
+                'route' => ['recurring-compensation-types.update', $recurringcompensationtype->id],
+                'class' => 'form-horizontal office-update-form',
+                'id' => "office-$recurringcompensationtype->id",
+                'files' => true,
+                'novalidate' => 'novalidate',
+                'style' => 'display:none'
+            ]) !!}
+                <div class="form-group row">
+                    <label class="col-md-3 control-label">
+                        Name
+                    </label>
+                    <div class="col-md-5">
+                        <input class="form-control" placeholder="Recurring Compensation Types name" required="" minlength="2" name="name" type="text" value="{{ $recurringcompensationtype->name }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-9 col-md-offset-3">
+                        <button type="reset" class="btn btn-default edit-cancel" onclick="cancelUpdate({{ $recurringcompensationtype->id }});"><i class="fas fa-times"></i> Cancel</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Submit</button>
+                    </div>
+                </div>
+            {!! Form::close() !!}
+        </div>
+                    
+        @endforeach
     </div>
 </div>
 @endsection
 @section('admin-additional-js')
+ <script type="text/javascript">
+
+    function openTab(id){
+        $('.tab-pane').hide();
+        $('.office-update-form').hide();
+        $('#tab'+id).show();
+        $('#office-div'+id).show();
+    }
+    function updateOffice(id) {
+        $('.office-details').hide();
+        $('#office-'+id).show();
+    }
+    function cancelUpdate(id){
+        $('#office-'+id).hide();
+        $('#office-div'+id).show();
+    }
+  </script>
 @endsection

@@ -34,4 +34,18 @@ class AttendenceWorkingHour extends Model
     public function weekdays(){
         return $this->hasMany(\App\Weekday::class, 'working_hour_id');
     }
+
+    public function days(){
+        $data = [
+            'Sunday' => 'Sunday',
+            'Monday' => 'Monday',
+            'Tuesday' => 'Tuesday',
+            'Wednesday' => 'Wednesday',
+            'Thursday' => 'Thursday',
+            'Friday' => 'Friday',
+            'Saturday' => 'Saturday',
+        ];
+
+        return $data;
+    }
 }

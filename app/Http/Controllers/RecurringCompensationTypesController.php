@@ -7,6 +7,7 @@ use App\Http\Requests;
 
 use App\RecurringCompensationType;
 use Illuminate\Http\Request;
+use Auth;
 
 class RecurringCompensationTypesController extends Controller
 {
@@ -58,6 +59,7 @@ class RecurringCompensationTypesController extends Controller
         $recurringcompensationtype                 = new RecurringCompensationType;
         $recurringcompensationtype->name           = $request->name;
         $recurringcompensationtype->is_system_type = $is_system_type;
+        $recurringcompensationtype->company_id     = Auth::user()->company->id;
         $recurringcompensationtype->save();
 
         return redirect('recurring-compensation-types')->with('success', 'RecurringCompensationType added!');
@@ -101,15 +103,9 @@ class RecurringCompensationTypesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->is_system_type != null){
-            $is_system_type = 1;
-        }else{
-            $is_system_type = 0;
-        }
-        
         $recurringcompensationtype                 = RecurringCompensationType::findOrFail($id);
         $recurringcompensationtype->name           = $request->name;
-        $recurringcompensationtype->is_system_type = $is_system_type;
+        $recurringcompensationtype->company_id     = Auth::user()->company->id;
         $recurringcompensationtype->save();
 
         return redirect('recurring-compensation-types')->with('success', 'RecurringCompensationType updated!');
@@ -124,8 +120,6 @@ class RecurringCompensationTypesController extends Controller
      */
     public function destroy($id)
     {
-        RecurringCompensationType::destroy($id);
-
-        return redirect('recurring-compensation-types')->with('success', 'RecurringCompensationType deleted!');
+        return redirect('recurring-compensation-types');
     }
 }
