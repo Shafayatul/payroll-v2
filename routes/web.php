@@ -58,6 +58,7 @@ Route::group(
 		Route::resource('recurring-compensation-types', 'RecurringCompensationTypesController');
 		Route::resource('payroll-histories', 'PayrollHistoriesController');
 		Route::resource('attendence-working-hours', 'AttendenceWorkingHoursController');
+		Route::post('attendence-working-hours/update', 'AttendenceWorkingHoursController@update')->name('attendence-working-hours-update');
 		
 		// AJAX REQUESTING ROUTE
 		Route::get('get-ajax-office-data/{id}', 'OfficesController@getAjaxOfficeData');

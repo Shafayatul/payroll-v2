@@ -19,6 +19,7 @@ class CreateWeekdaysTable extends Migration
             $table->string('working_hours')->nullable();
             $table->string('start_time')->nullable();
             $table->string('end_time')->nullable();
+            $table->string('break_time')->nullable();
             $table->boolean('is_active')->default(false);
             $table->unsignedBigInteger('working_hour_id')->nullable();
             $table->softDeletes();

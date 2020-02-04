@@ -91,7 +91,7 @@
                                             <tr>
                                                 <td>{{ $weekday->weekday }}</td>
                                                 <td>{{ $weekday->working_hours }}</td>
-                                                <td>-</td>
+                                                <td>{{ $weekday->break_time }}</td>
                                                 <td>{{ $weekday->start_time.'-'.$weekday->end_time }}</td>
                                             </tr>
                                             @endforeach
@@ -109,6 +109,7 @@
                                     @endif 
                                 </div>
                             </div>
+                            @if($attendenceworkinghour->is_track_overtime == 1)
                             <div class="form-group d-flex">
                                 <label class="col-md-3 control-label">
                                     Overtime calculation
@@ -136,22 +137,24 @@
                                     overtime hours an employee worked in a month
                                 </div>
                             </div>
-                            <div class="form-group d-flex">
-                                <label class="col-md-3 control-label">
-                                    Deficit hours
-                                    <span data-toggle="tooltip" data-title="Prorate calculation of accrued days based on number of workdays" data-original-title="" title="">
-                                        <i class="fas fa-info-circle"></i>
-                                    </span>
-                                 </label>
-                                <div class="col-md-8 form-control-static">
-                                    @if($attendenceworkinghour->is_deficit == 1) 
-                                        Yes
-                                    @else
-                                        No
-                                    @endif 
-                                </div>
-                            </div>
-
+                                @if($attendenceworkinghour->overtime_calculation == 'daily')
+                                    <div class="form-group d-flex">
+                                        <label class="col-md-3 control-label">
+                                            Deficit hours
+                                            <span data-toggle="tooltip" data-title="Prorate calculation of accrued days based on number of workdays" data-original-title="" title="">
+                                                <i class="fas fa-info-circle"></i>
+                                            </span>
+                                         </label>
+                                        <div class="col-md-8 form-control-static">
+                                            @if($attendenceworkinghour->is_deficit == 1) 
+                                                Yes
+                                            @else
+                                                No
+                                            @endif 
+                                        </div>
+                                    </div>
+                                @endif
+                            @endif
                             <div class="form-group d-flex">
                                 <label class="col-md-3 control-label">
                                     Prorate vacation
@@ -167,6 +170,7 @@
                                     @endif 
                                 </div>
                             </div>
+                            @if($attendenceworkinghour->is_prorate_vacation == 1)
                             <div class="form-group d-flex">
                                 <label class="col-md-3 control-label">
                                     Reference value for the prorated vacation calculation
@@ -177,16 +181,19 @@
                                 <div class="col-md-8 form-control-static">
                                     5
                                 </div>
-                            </div>                            
+                            </div>
+                            @endif                            
                         </div>
                     </div>
-                    <form method="POST" action="" accept-charset="UTF-8" class="form-horizontal department-update-form" id="department-{{ $attendenceworkinghour->id }}" novalidate="novalidate" style="display:none">
+                    <form method="POST" action="{{ route('attendence-working-hours-update', ) }}" accept-charset="UTF-8" class="form-horizontal department-update-form" id="department-{{ $attendenceworkinghour->id }}" novalidate="novalidate" style="display:none">
+                        @csrf
+                        <input type="hidden" name="attendence_working_hour_id" value="{{ $attendenceworkinghour->id }}">
                         <div class="form-group d-flex">
                             <label class="col-md-3 control-label">
                                 Name
                             </label>
                             <div class="col-md-9">
-                                <input class="form-control" required="" minlength="2"  type="text" value="{{ $attendenceworkinghour->name }}">
+                                <input class="form-control" required="" name="name" minlength="2"  type="text" value="{{ $attendenceworkinghour->name }}">
                             </div>
                         </div>
                         <div class="form-group d-flex">
@@ -216,22 +223,22 @@
                                 <div class="col-md-9 d-flex">                    
                                     <div class="col-md-3 total">
                                         <div class="input-group ">
-                                           <input class="form-control selectExample" placeholder="hh:mm"  type="text" value="{{ $weekday->working_hours }}" autocomplete="off" default-val="08:00" disabled="disabled" name="working_hours">
+                                           <input class="form-control selectExample working-hour" placeholder="hh:mm"  type="text" id="working-hour-{{ $weekday->id }}" serial="{{ $weekday->id }}" value="{{ $weekday->working_hours }}" autocomplete="off" default-val="08:00" name="working_hours[{{ $weekday->weekday }}]">
                                         </div>
                                     </div>
                                     <div class="col-md-3 start">
                                         <div class="input-group ">
-                                           <input class="form-control selectExample" placeholder="hh:mm" type="text" name="start_time" value="{{ $weekday->start_time }}" autocomplete="off">
+                                           <input class="form-control selectExample start-time" placeholder="hh:mm" type="text" name="start_time[{{ $weekday->weekday }}]" serial="{{ $weekday->id }}" value="{{ $weekday->start_time }}" autocomplete="off" id="start-time-{{ $weekday->id }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3 end">
                                         <div class="input-group ">
-                                            <input class="form-control selectExample" placeholder="hh:mm"  type="text" name="end_time" value="{{ $weekday->end_time }}" autocomplete="off">
+                                            <input class="form-control selectExample end-time" placeholder="hh:mm"  type="text" serial="{{ $weekday->id }}" name="end_time[{{ $weekday->weekday }}]" value="{{ $weekday->end_time }}" autocomplete="off" id="end-time-{{ $weekday->id }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3 break">
                                         <div class="input-group ">
-                                            <input class="form-control selectExample" placeholder="hh:mm"  type="text" autocomplete="off">
+                                            <input class="form-control selectExample break-time" placeholder="hh:mm" name="break_time[{{ $weekday->weekday }}]" disabled="disabled" serial="{{ $weekday->id }}" type="text" autocomplete="off" id="break-time-{{ $weekday->id }}">
                                         </div>
                                     </div>
                                 </div>
@@ -270,16 +277,17 @@
                                 overtime hours an employee worked in a month
                             </div>
                         </div>
-                        <div class="form-group d-flex" id="deficit-data" style="display: none !important;">
-                            <label class="col-md-3 control-label">
-                                Deficit hours
-                                <span data-toggle="tooltip" data-title="When activated, deficit hours are set off against overtime" data-original-title="" title="">
-                                    <i class="far fa-info-circle"></i>
-                                </span>
-                            </label>
-                            <div class="col-md-9 form-control-static">                 
-                                <input name="is_deficit" id="is-deficit" type="checkbox" value="1" {{ ($attendenceworkinghour->is_deficit == 1) ? 'checked' : '' }}>
-                            </div>
+                    </div>
+
+                    <div class="form-group deficit-data" style="display: none;">
+                        <label class="col-md-3 control-label">
+                            Deficit hours
+                            <span data-toggle="tooltip" data-title="When activated, deficit hours are set off against overtime" data-original-title="" title="">
+                                <i class="far fa-info-circle"></i>
+                            </span>
+                        </label>
+                        <div class="col-md-9 form-control-static">                 
+                            <input name="is_deficit" id="is-deficit" type="checkbox" value="1" {{ ($attendenceworkinghour->is_deficit == 1) ? 'checked' : '' }}>
                         </div>
                     </div>
                         <div class="form-group d-flex">
@@ -293,7 +301,7 @@
                                 <input name="is_prorate_vacation" id="is-prorate-vacation" type="checkbox" value="1" {{ ($attendenceworkinghour->is_prorate_vacation == 1) ? 'checked' : '' }}>
                             </div>
                         </div>
-                        <div class="form-group d-flex" id="reference-value-div" style="display: none;">
+                        <div class="form-group" id="reference-value-div" style="display: none;">
                             <label class="col-md-3 control-label">
                                 Reference value for the prorated vacation calculation
                                 <span data-toggle="tooltip" data-title="As a reference value for prorated vacation calculation please enter the number of working days that form a full working week in your company." data-original-title="" title="">
@@ -331,6 +339,7 @@
 @endsection
 @section('admin-additional-js')
 <script src="{{ asset('admin/js/jquery.timepicker.min.js') }}"></script>
+<script src="{{ asset('admin/assets/plugins/moment/moment.js') }}"></script>
 <script type="text/javascript">
     function openTab(id){
         $('.tab-pane').hide();
@@ -348,23 +357,25 @@
         $('#department-'+id).hide();
         $('#department-div'+id).show();
     }
-
+    
     $("#is-track").click(function(){
         if($('#is-track').is(":checked")){
             $("#track-overtime-data").show(500);
+            $(".deficit-data").hide(500);
         }else{
             $("#track-overtime-data").hide(500);
+            $(".deficit-data").hide(500);
         }
+
     });
     
-    $('#overtime-calculation-type').change(function(){
+    $(document).on('change', '#overtime-calculation-type', function(){
         var overtime_calculation_type = $(this).val();
-        alert(overtime_calculation_type);
-        if(overtime_calculation_type == 'daily'){
-            $("#deficit-data").show(500);
-        }
-        if(overtime_calculation_type == 'weekly'){
-            $("#deficit-data").hide(500);
+        console.log(overtime_calculation_type);
+        if(overtime_calculation_type != 'daily'){
+            $(".deficit-data").hide(500);
+        }else{
+            $(".deficit-data").show(500);
         }
     });
 
@@ -372,10 +383,54 @@
     $("#is-prorate-vacation").click(function(){
         if($('#is-prorate-vacation').is(":checked")){
             $("#reference-value-div").show(500);
+        }else{
+            $("#reference-value-div").hide(500);
         }
     });
-</script>
-<script type="text/javascript">
-    $('.selectExample').timepicker({ 'timeFormat': 'H:s' });
+
+    $('.selectExample').timepicker({ 
+        'timeFormat': "H:i",
+        'interval': 30 
+    });
+
+    
+    $(document).on('change', '.start-time', function() {
+        var serial = $(this).attr('serial');
+        var time = $(this).val();
+        // console.log(serial);
+        $("#working-hour-"+serial).attr('disabled','disabled');
+        $("#break-time-"+serial).removeAttr('disabled','disabled');
+
+        // $("#end-time-"+serial).timepicker({ 
+        //     'timeFormat': "H:i",
+        //     'interval': 30,
+        //     'minTime' : time,
+        //     'startTime' : time,
+        // });
+        $("#end-time-"+serial).val(time);
+        $('#end-time-'+serial)
+        .timepicker({
+            'timeFormat': "H:i",
+            'interval': 30,
+            'minTime' : time,
+            'startTime' : time,
+        }).timepicker('option', 'change', function(time) {
+            // update startTime option in timepicker-2
+            $(this).timepicker('option', 'minTime', time);
+        });
+    });
+
+    $('.break-time').focusout(function() {
+        var serial = $(this).attr('serial');
+        var start_time = moment($("#start-time-"+serial).val(),['HH:mm']);
+        var end_time = moment($("#end-time-"+serial).val(),['HH:mm']);
+        var break_time = $("#break-time-"+serial).val();
+        var asBreak = moment.duration(break_time).asMinutes()
+        var diff = end_time.diff(start_time);
+        var diff = moment.duration(diff).asMinutes();
+        var WorkHour = diff-asBreak;
+        var totalWorkHour = Math.floor(WorkHour / 60) + ':' + WorkHour % 60;
+        $("#working-hour-"+serial).val(totalWorkHour);
+    });
 </script>
 @endsection

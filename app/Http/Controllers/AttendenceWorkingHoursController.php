@@ -69,6 +69,7 @@ class AttendenceWorkingHoursController extends Controller
                 }
                 $weekday->start_time      = null;
                 $weekday->end_time        = null;
+                $weekday->break_time      = null;
                 $weekday->is_active       = 1;
                 $weekday->save();
             }
@@ -87,7 +88,7 @@ class AttendenceWorkingHoursController extends Controller
     public function show($id)
     {
         $attendenceworkinghour = AttendenceWorkingHour::findOrFail($id);
-        $offices = Office::pluck('name', 'id');
+        
         return view('attendence-working-hours.show', compact('attendenceworkinghour', 'offices'));
     }
 
@@ -113,13 +114,55 @@ class AttendenceWorkingHoursController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        
-        $requestData = $request->all();
-        
+        if($request->is_track_overtime != null){
+            $is_track_overtime = 1;
+        }else{
+            $is_track_overtime = 0;
+        }
+
+        if($request->is_deficit != null){
+            $is_deficit = 1;
+        }else{
+            $is_deficit = 0;
+        }
+
+        if($request->is_prorate_vacation != null){
+            $is_prorate_vacation = 1;
+        }else{
+            $is_prorate_vacation = 0;
+        }
+
+        $id = $request->attendence_working_hour_id;
         $attendenceworkinghour = AttendenceWorkingHour::findOrFail($id);
-        $attendenceworkinghour->update($requestData);
+        $attendenceworkinghour->name                 = $request->name;
+        $attendenceworkinghour->is_track_overtime    = $is_track_overtime;
+        $attendenceworkinghour->overtime_calculation = $request->overtime_calculation;
+        $attendenceworkinghour->overtime_cliff       = $request->overtime_cliff;
+        $attendenceworkinghour->is_deficit           = $is_deficit;
+        $attendenceworkinghour->is_prorate_vacation  = $is_prorate_vacation;
+        $attendenceworkinghour->reference_value      = $request->reference_value;
+        $attendenceworkinghour->save();
+
+        if($attendenceworkinghour){
+            Weekday::where('working_hour_id', $id)->delete();
+            foreach($attendenceworkinghour->days() as $key => $day){
+                $weekday                  = new Weekday;
+                if(($day == 'Saturday') || ($day == 'Sunday')){
+                    $weekday->working_hours   = "Closed";
+                }else{
+                    $weekday->working_hours   = ($request->working_hours[$key] ?? null);
+                }
+                $weekday->weekday         = $day;
+                $weekday->working_hour_id = $attendenceworkinghour->id;
+                $weekday->start_time      = ($request->start_time[$key] ?? null);
+                $weekday->end_time        = ($request->end_time[$key] ?? null);
+                $weekday->break_time      = ($request->break_time[$key] ?? null);
+                $weekday->is_active       = 1;
+                $weekday->save();
+            }
+        }
 
         return redirect('attendence-working-hours')->with('success', 'AttendenceWorkingHour updated!');
     }
