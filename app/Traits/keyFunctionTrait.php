@@ -5,7 +5,7 @@ namespace App\Traits;
 trait keyFunctionTrait
 {
     // EmployeeAttributeDatatype
-    public function attributeType()
+    public function attributeTypes()
     {
         return [
             '0' => 'General (e.g. Text, Email, Phone...)',
@@ -15,7 +15,14 @@ trait keyFunctionTrait
             '4' => 'Date',
             '5' => 'Link',
             '6' => 'Multi-line textfield',
-            '7' => 'Tags'
+            '7' => 'Tags',
+        ];
+    }
+
+    public function decimalNumbers(){
+        return [
+            '0' => '1',
+            '1' => '2',
         ];
     }
 
