@@ -4,13 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\keyFunctionTrait;
+
 class EmployeeDetailAttribute extends Model
 {
-     /**
+    use keyFunctionTrait;
+    /**
      * The database table used by the model.
      *
      * @var string
-     */
+    */
     protected $table = 'employee_detail_attributes';
 
     /**
@@ -47,4 +50,5 @@ class EmployeeDetailAttribute extends Model
     {
         return $this->belongsToMany(\App\PayrollSetting::class, 'attributes_in_personal_data_sheets', 'attribute_id', 'payroll_setting_id');
     }
+
 }

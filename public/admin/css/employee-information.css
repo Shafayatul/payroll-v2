@@ -226,7 +226,7 @@ pointer-events: none;
     margin-top: 16px;
 }
 
-.uniqueid{
+.is-unique {
     width: 180px;
     padding-bottom: 0;
     margin-bottom: 0;

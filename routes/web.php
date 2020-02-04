@@ -41,7 +41,9 @@ Route::group(
 			Route::group(['prefix' => 'custom-fields'], function () {
 				Route::get('/', 'CustomFieldController@index')->name('setting.employee-information');
 				Route::post('section/', 'CustomFieldController@sectionStore')->name('setting.section.store');
-				Route::post('attribute/', 'CustomFieldController@attributeStore')->name('setting.attribute.store');
+				Route::post('section/update', 'CustomFieldController@updateName')->name('setting.section.update.name');
+				Route::post('section/update/name', 'CustomFieldController@updateName')->name('setting.section.update.name');
+				Route::post('section/attribute/store', 'CustomFieldController@attributeStore')->name('setting.attribute.store');
 			});
 		});
 		Route::resource('departments', 'DepartmentsController');
