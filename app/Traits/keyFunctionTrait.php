@@ -26,4 +26,43 @@ trait keyFunctionTrait
         ];
     }
 
+    //BoardingTemplate.php
+    //BoardingStep.php
+    public function boardingTemplateType()
+    {
+        $data = [
+            '0' => 'Offboarding',
+            '1' => 'Onboarding',
+        ];
+
+        return $data;
+    }
+    
+    //BoardingStep.php
+    public function boardingStepType()
+    {
+        $data = [
+            '0' => 'General step',
+        ];
+
+        return $data;
+    }
+
+    //BoardingStep.php
+    public function boardingStepItems()
+    {
+        $data = [
+            '0' => 'Text Information',
+            '1' => 'Document for download',
+            '2' => 'Employee attribute',
+            '3' => 'Profile picture',
+            '4' => 'Checkbox',
+            '5' => 'Fill text field',
+            '6' => 'Enter URL',
+            '7' => 'Upload document',
+        ];
+
+        return $data;
+    }
+
 }

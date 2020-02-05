@@ -16,7 +16,7 @@ class CreateBoardingTemplatesTable extends Migration
         Schema::create('boarding_templates', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->string('type')->nullable();
+            $table->boolean('type')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
             $table->unsignedBigInteger('office_id')->nullable();
             $table->softDeletes();

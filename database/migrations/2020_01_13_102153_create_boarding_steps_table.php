@@ -16,7 +16,8 @@ class CreateBoardingStepsTable extends Migration
         Schema::create('boarding_steps', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->string('type')->nullable();
+            $table->tinyInteger('type')->nullable();
+            $table->boolean('boarding_type')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

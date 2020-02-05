@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\keyfunctiontrait;
 
 class BoardingStep extends Model
 {
+    use keyfunctiontrait;
     /**
      * The database table used by the model.
      *
@@ -25,7 +27,7 @@ class BoardingStep extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'type'];
+    protected $fillable = ['name', 'type', 'boarding_type'];
 
     public function stepItems(){
         return $this->hasMany(\App\BoardingStepItem::class, 'boarding_step_id');
@@ -33,5 +35,5 @@ class BoardingStep extends Model
 
     public function boardingTemplateStep(){
         return $this->belongsToMany(\App\BoardingTemplate::class, 'boarding_step_id', 'boarding_template_id')->withPivot('is_ingroup', 'days', 'hire_type', 'responsible');
-    }
+    } 
 }

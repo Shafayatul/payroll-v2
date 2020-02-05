@@ -3,15 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\keyfunctiontrait;
 
 class BoardingTemplate extends Model
 {
+    use keyfunctiontrait;
      /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'recuriting_categories';
+    protected $table = 'boarding_templates';
 
     /**
     * The database primary key value.
@@ -25,7 +27,7 @@ class BoardingTemplate extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'type', 'company_id'];
+    protected $fillable = ['name', 'type', 'company_id', 'office_id'];
 
     public function company(){
         return $this->belongsTo(\App\Company::class, 'company_id');

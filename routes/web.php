@@ -76,6 +76,9 @@ Route::group(
 		Route::post('payroll/update/{id}', 'PayrollGeneralSettingsController@update')->name('payroll.update');
 
 		Route::get('on-off-boardings', 'OnOffBoardingsController@index')->name('on-off-boardings.index');
+		Route::post('boarding-template/store', 'OnOffBoardingsController@boardingTemplatestore')->name('boarding-template.store');
+		Route::post('boarding-step/store', 'OnOffBoardingsController@boardingStepstore')->name('boarding-step.store');
+		Route::post('boarding-step-item/store', 'OnOffBoardingsController@boardingStepItemstore')->name('boarding-step-item.store');
 		
 		// FUNCTION REQUEST ROUTE
 		// Route::resource('companies', 'CompaniesController');
