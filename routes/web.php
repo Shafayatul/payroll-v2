@@ -74,6 +74,8 @@ Route::group(
 
 		Route::get('payroll/general', 'PayrollGeneralSettingsController@index')->name('payroll.general');
 		Route::post('payroll/update/{id}', 'PayrollGeneralSettingsController@update')->name('payroll.update');
+
+		Route::get('on-off-boardings', 'OnOffBoardingsController@index')->name('on-off-boardings.index');
 		
 		// FUNCTION REQUEST ROUTE
 		// Route::resource('companies', 'CompaniesController');

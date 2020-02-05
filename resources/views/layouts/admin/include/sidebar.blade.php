@@ -51,6 +51,7 @@
                             </ul>
                         </li>
                         <li><a href="{{ url('cost-centers') }}">Cost Center</a></li>
+                        <li><a href="{{ route('on-off-boardings.index') }}">On Off Boarding</a></li>
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">Salary & Payroll</a>
                             <ul aria-expanded="false" class="collapse">

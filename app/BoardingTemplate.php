@@ -31,4 +31,7 @@ class BoardingTemplate extends Model
         return $this->belongsTo(\App\Company::class, 'company_id');
     }
 
+    public function boardingTemplateStep(){
+        return $this->belongsToMany(\App\BoardingStep::class, 'boarding_template_id', 'boarding_step_id')->withPivot('is_ingroup', 'days', 'hire_type', 'responsible');
+    }
 }

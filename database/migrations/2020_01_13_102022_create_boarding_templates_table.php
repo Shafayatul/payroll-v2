@@ -18,6 +18,7 @@ class CreateBoardingTemplatesTable extends Migration
             $table->string('name')->nullable();
             $table->string('type')->nullable();
             $table->unsignedBigInteger('company_id')->nullable();
+            $table->unsignedBigInteger('office_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

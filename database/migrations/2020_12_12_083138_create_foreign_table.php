@@ -131,6 +131,7 @@ class CreateForeignTable extends Migration
 
         Schema::table('boarding_templates', function (Blueprint $table) {
             $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('office_id')->references('id')->on('offices');
         });
 
         Schema::table('boarding_step_items', function (Blueprint $table) {

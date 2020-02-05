@@ -36,6 +36,21 @@ class CreatePivotTable extends Migration
            $table->foreign('absence_id')->references('id')->on('absences');
            $table->foreign('payroll_setting_id')->references('id')->on('payroll_settings');
         });
+
+        Schema::create('boarding_template_step', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('boarding_template_id');
+            $table->unsignedBigInteger('boarding_step_id');
+            $table->boolean('is_ingroup')->default(false);
+            $table->integer('days')->nullable();
+            $table->boolean('hire_type')->nullable();
+            $table->string('responsible')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->foreign('boarding_template_id')->references('id')->on('boarding_templates');
+            $table->foreign('boarding_step_id')->references('id')->on('boarding_steps');
+        });
         // Schema::create('employee_details', function (Blueprint $table) {
         //     $table->bigIncrements('id');
         //     $table->string('value')->nullable();
