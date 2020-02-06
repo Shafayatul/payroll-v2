@@ -3,12 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Traits\keyFunctionTrait;
 
 class EmployeeDetailAttribute extends Model
 {
-    use keyFunctionTrait;
+    use SoftDeletes, keyFunctionTrait;
     /**
      * The database table used by the model.
      *
@@ -39,7 +40,7 @@ class EmployeeDetailAttribute extends Model
     }
 
     public function dataTypes(){
-        return $this->hasMany(\App\EmployeeAttributeDatatype::class, 'attribute_id');
+        return $this->hasOne(\App\EmployeeAttributeDatatype::class, 'attribute_id');
     }
 
     public function rules(){

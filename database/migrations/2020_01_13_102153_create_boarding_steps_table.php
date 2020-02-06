@@ -30,6 +30,7 @@ class CreateBoardingStepsTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('boarding_steps');
     }
 }

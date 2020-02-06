@@ -111,7 +111,7 @@ class CreateForeignTable extends Migration
             $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes')->onDelete('cascade');
         });
         
-        Schema::table('employee_attribute_metas', function (Blueprint $table) {
+        Schema::table('attribute_type_options', function (Blueprint $table) {
             $table->foreign('attribute_datatype_id')->references('id')->on('employee_attribute_datatypes');
         });
         

@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use App\Traits\keyFunctionTrait;
 class EmployeeInformationSection extends Model
 {
-    use keyFunctionTrait;
+    use SoftDeletes, keyFunctionTrait;
     /**
      * The database table used by the model.
      *

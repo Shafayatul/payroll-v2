@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeeAttributeMetasTable extends Migration
+class CreateAttributeTypeOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEmployeeAttributeMetasTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_attribute_metas', function (Blueprint $table) {
+        Schema::create('attribute_type_options', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->unsignedBigInteger('attribute_datatype_id')->nullable();

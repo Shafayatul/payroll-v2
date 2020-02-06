@@ -5,7 +5,8 @@
 {{-- Custom CSS --}}
 <link href="{{ asset('admin/css/app-contact.css') }}" id="app-contact" rel="stylesheet" media="all">
 <link href="{{ asset('admin/css/departments.css') }}"  rel="stylesheet" media="all">
- <link href="{{ asset('admin/css/employee-information.css') }}"  rel="stylesheet" media="all">
+<link href="{{ asset('admin/css/employee-information.css') }}"  rel="stylesheet" media="all">
+<script>var attr_option = 0; </script>
 @endsection
 @section('content')
 @include('layouts.admin.include.alert')
@@ -71,7 +72,7 @@
                                                                 <select class="form-control custom-select select-chosen select2 attrType" name="attr_type" data-section-id="{{ $section->id }}" name="type" aria-hidden="true">
                                                                     <option value="" disabled selected>What type of attribute is this?</option>
                                                                     @foreach ($section->attributeTypes() as $key => $attributeType)
-                                                                    <option value="{{ $key }}">{{ $attributeType }}</option>
+                                                                    <option value="{{ $key }}">{{ $attributeType }} {{ $key == 0? ' (e.g. Text, Email, Phone...)':'' }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -107,6 +108,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <input type="hidden" name="section" value="{{ $section->id }}">
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
                                                         <button type="submit" class="btn btn-info">Add</button>
@@ -166,22 +168,27 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="deleteSectionLabel">Delete section Emergency contact?</h5>
+                                                <h5 class="modal-title" id="deleteSectionLabel">Delete section?</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">×</span>
                                                 </button>
                                             </div>
-                                            <div class="delete-section">
-                                                <p class="">Once you delete a section, it's gone for good.</p>
-                                                <ul class="dl-ul">
-                                                    <li>All attributes assigned to this section will also be deleted</li>
-                                                    <li>All employee data you entered for these attributes will be lost</li>
-                                                </ul>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                                                <button type="button" class="btn btn-danger">Delete</button>
-                                            </div>
+                                            <form action="{{ route('setting.section.destroy') }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="delete-section">
+                                                    <p class="">Once you delete a section, it's gone for good.</p>
+                                                    <ul class="dl-ul">
+                                                        <li>All attributes assigned to this section will also be deleted</li>
+                                                        <li>All employee data you entered for these attributes will be lost</li>
+                                                    </ul>
+                                                    <input type="hidden" name="section_id" value="{{ $section->id }}">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -189,24 +196,113 @@
                         </div>
                         @foreach ($section->employeeDetailAttributes as $attribute)
                         <div class="card">
-                            <div class="panel-heading" id="headingOne">                                                
-                                <div class="name collapsed " data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <div class="panel-heading" id="headingAttribute{{ $attribute->id }}">                                                
+                                <div class="name collapsed " data-toggle="collapse" data-target="#collapseAttribute{{ $attribute->id }}" aria-expanded="false" aria-controls="collapseAttribute{{ $attribute->id }}">
                                     <i class="fas fa-angle-right right-icon change" ></i>                             
                                     <span class="coll-title name-1" data-editable>{{ $attribute->name }}</span>
                                     <input class="G2Mft name-2" type="text" name="" value="{{ $attribute->name }}">
-                                    <i class="fas fa-lock icon" ></i>
+                                    @if($attribute->is_system == 1)
+                                        <i class="fas fa-lock icon"></i> Preset attribute
+                                    @endif
                                 </div>
                             </div>
-                            <div id="collapseOne" class="collapse collapsed" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="panel-body">
-                                    <div data-test-id="edit-attribute-type-list">
-                                        <input name="deprecated-select" class="G2Mft strings " value="string">
-                                    </div>
-                                    <div class="_333holGKf6kP50GkaibUzr">
-                                        <label class="uniqueid">Unique Id</label>
-                                        <input disabled="" data-test-id="edit-attribute-restriction-is-unique" type="checkbox">
+                            {{-- Modal Attribute Delete --}}
+                            <div class="modal fade" id="deleteAttribute{{ $attribute->id }}" tabindex="-1" role="dialog" aria-labelledby="#deleteAttributeLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <form action="{{ route('setting.attribute.destroy') }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="attribute_id" value="{{ $attribute->id }}">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="deleteAttributeLabel">Delete attribute?</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                            </div>
+                                            <div class="delete-attribute">
+                                                <p class="">Once you delete a attribute, it's gone for good.</p>
+                                                <ul class="dl-ul">
+                                                    <li>All attributes assigned to this attribute will also be deleted</li>
+                                                    <li>All employee data you entered for these attributes will be lost</li>
+                                                </ul>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
+                            </div>
+                            <div id="collapseAttribute{{ $attribute->id }}" class="collapse collapsed" aria-labelledby="headingAttribute{{ $attribute->id }}" data-parent="#accordion">
+                                <form action="{{ route('setting.attribute.update') }}" method="post">
+                                    @csrf
+                                    @method('POST')
+                                    <div class="modal-body">
+                                        <div class="boxs">
+                                            <div class="attributeFilterContainer">
+                                                <div class="input-group mb-3 m-input">
+                                                    <input type="text" name="attribute" class="form-control col-md-11 name-attr" value="{{ $attribute->name }}">
+                                                    <div class="input-group-append col-md-1">
+                                                        <a href="#" class="btn btn-outline-secondary mr-2" data-toggle="modal" data-target="#deleteAttribute{{ $attribute->id }}"><i class="fas fa-trash" data-title="Delete"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="col-md-6 mb-2">
+                                                <select class="form-control custom-select select-chosen select2 editAttrType" name="attr_type" data-attribute-id="{{ $attribute->id }}" name="type" aria-hidden="true">
+                                                    @foreach ($attribute->attributeTypes() as $key => $attributeType)
+                                                    <option value="{{ $key }}" {{ isset($attribute->dataTypes)? $attribute->dataTypes->key == $key? 'selected':'':''}}>{{ $attributeType }} {{ $key == 0? ' (e.g. Text, Email, Phone...)':'' }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div id="edit-option-attr-{{ $attribute->id }}" class="boxs attr-{{ $attribute->id }}" {{ isset($attribute->dataTypes)? ($attribute->dataTypes->key == 1 || $attribute->dataTypes->key == 7)?'':'style=display:none;':'style=display:none;'}}>
+                                            <div class="attributeFilterContainer">
+                                                @if(isset($attribute->dataTypes))
+                                                    @foreach($attribute->dataTypes->attributeOptions()->pluck('name','id') as $key => $option)
+                                                        <div class="input-group mb-3 m-input" id="remove-{{$key}}">
+                                                            <input type="text" name="old_option[{{$key}}]" class="form-control col-md-10" aria-describedby="basic-addon2" value="{{ $option }}">
+                                                            <div class="input-group-append col-md-2">
+                                                                <a href="#" class="btn btn-outline-secondary mr-2 removeOption" data-option="{{$key}}" type="button"><i class="fas fa-trash" data-title="Delete" ></i></a>
+                                                            </div>
+                                                        </div>
+                                                        <script>var attr_option = {{$key ?? 0}}; </script>
+                                                    @endforeach
+                                                @else
+                                                    <div class="input-group mb-3 m-input" id="remove-0">
+                                                        <input type="text" name="option[0]" class="form-control col-md-10" aria-describedby="basic-addon2" value="">
+                                                        <div class="input-group-append col-md-2">
+                                                            <a href="#" class="btn btn-outline-secondary mr-2 removeOption" data-option="0" type="button"><i class="fas fa-trash" data-title="Delete" ></i></a>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                                <span id="option-field{{$attribute->id}}"></span>
+                                                <a class="added editOption" href="#" id="editOption" data-attribute-id="{{ $attribute->id }}"> Add an option </a>
+                                            </div>
+                                        </div>
+                                        <div id="edit-decimal-number-attr-{{ $attribute->id }}" class="boxs attr-{{ $attribute->id }}" {{ (null !== $attribute->dataTypes && $attribute->dataTypes->key == 3)? '':'style=display:none;'}}>
+                                            <div class="col-md-6 d-flex num-decimal">
+                                                <label class="uniqueid" for="">Number of Decimals</label>
+                                                <select class="select-chosen select2 edit-attr-input-{{ $attribute->id }}" name="decimal_number" aria-hidden="true">
+                                                    @foreach ($attribute->decimalNumbers() as $key => $decimal)
+                                                    <option value="{{ $key }}" {{ (null !== $attribute->dataTypes && null !== $attribute->dataTypes->attributeOptions)? $attribute->dataTypes->attributeOptions()->first()['name'] == $key?'selected':'': '' }}>{{ $decimal }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div id="edit-is-unique-attr-{{ $attribute->id }}" class="boxs attr-{{ $attribute->id }}" {{ $attribute->dataTypes && ($attribute->dataTypes->key == 1 || $attribute->dataTypes->key == 7 )? 'style=display:none;':'' }}>
+                                            <div class="col-md-6 d-flex">                                                
+                                                <label class="is-unique-id" for="edit-is-unique-{{ $attribute->id }}">Unique Id</label>
+                                                <input type="checkbox" name="is_unique" value="1" class="check edit-attr-input-{{ $attribute->id }}" id="edit-is-unique-{{ $attribute->id }}" {{ $attribute->is_unique == 1? 'checked':'' }}>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="attribute_id" value="{{ $attribute->id }}">
+                                    <div class="modal-footer" style="justify-content: flex-start;">
+                                        <button type="submit" class="btn btn-info btn-sm">Save change</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         @endforeach
@@ -265,9 +361,41 @@
                                             </div>`);
             });
 
+            $('.editOption').click(function() {
+                attribute_id = $(this).data('attribute-id');
+                attr_option++;
+                $('#option-field'+attribute_id).append(`<div class="input-group mb-3 m-input" id="remove-`+attr_option+`">
+                                                            <input type="text" name="option[`+attr_option+`]" class="form-control col-md-10" aria-describedby="basic-addon2" value="">
+                                                            <div class="input-group-append col-md-2">
+                                                                <a href="#" class="btn btn-outline-secondary mr-2 removeOption" data-option="`+attr_option+`" type="button"><i class="fas fa-trash" data-title="Delete" ></i></a>
+                                                            </div>
+                                                        </div>`);
+            });
+
             $(document).on('click', '.removeOption', function() {
                 let removeOption = $(this).data('option');
                 $('#remove-'+removeOption).remove();
+            });
+
+            $(document).on('change', '.editAttrType', function() {
+            // $('.attrType').on('change', function() {
+                let attribute_id = $(this).data('attribute-id');
+                $('.attr-'+attribute_id).hide();
+                // $('.attr-input-'+attribute_id).val('');
+                console.log(attribute_id);
+                if($(this).val() == 0){
+                    $('#edit-is-unique-attr-'+attribute_id).show();
+                    $('#edit-is-unique-'+attribute_id).val('1');
+                }else if($(this).val() == 1 || $(this).val() == 7){
+                    $('#edit-option-attr-'+attribute_id).show();
+                }else if($(this).val() == 2){
+                    $('#edit-is-unique-attr-'+attribute_id).show();
+                    $('#edit-is-unique-'+attribute_id).val('1');
+                }else if($(this).val() == 3){
+                    $('#edit-decimal-number-attr-'+attribute_id).show();
+                    $('#edit-is-unique-attr-'+attribute_id).show();
+                    $('#edit-is-unique-'+attribute_id).val('1');
+                }
             });
         });
     </script>
