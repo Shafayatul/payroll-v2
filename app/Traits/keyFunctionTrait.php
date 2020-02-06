@@ -65,4 +65,31 @@ trait keyFunctionTrait
         return $data;
     }
 
+    //BoardingTemplateStep.php
+    public function boardingTemplateStepHighringType()
+    {
+        $data = [
+            '0' => 'before hire',
+            '1' => 'after hire',
+        ];
+
+        return $data;
+    }
+
+    public function documentCategory()
+    {
+        $data = [
+            '0' => 'Other documents',
+            '1' => 'Certificates of employment',
+            '2' => 'Work contracts',
+            '3' => 'Absence certificates',
+            '4' => 'Application documents',
+            '5' => 'Payroll',
+            '6' => 'Performance',
+            '7' => 'Study documents',
+        ];
+
+        return $data;
+    }
+
 }
