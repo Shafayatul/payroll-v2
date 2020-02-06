@@ -8,7 +8,7 @@ trait keyFunctionTrait
     public function attributeTypes()
     {
         return [
-            '0' => 'General (e.g. Text, Email, Phone...)',
+            '0' => 'General',
             '1' => 'List of options',
             '2' => 'Number (integer)',
             '3' => 'Number (up to two decimals)',

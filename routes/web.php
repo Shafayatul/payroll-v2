@@ -38,12 +38,17 @@ Route::group(
 			Route::resource('companies', 'CompaniesController');
 
 			// CUSTOM-FIELDS REQUESTING ROUTE
-			Route::group(['prefix' => 'custom-fields'], function () {
-				Route::get('/', 'CustomFieldController@index')->name('setting.employee-information');
-				Route::post('section/', 'CustomFieldController@sectionStore')->name('setting.section.store');
-				Route::post('section/update', 'CustomFieldController@updateName')->name('setting.section.update.name');
-				Route::post('section/update/name', 'CustomFieldController@updateName')->name('setting.section.update.name');
-				Route::post('section/attribute/store', 'CustomFieldController@attributeStore')->name('setting.attribute.store');
+			Route::prefix('custom-fields')->name('setting.')->group( function () {
+				
+				Route::get('/', 'CustomFieldController@index')->name('employee-information');
+				Route::post('section/store', 'CustomFieldController@sectionStore')->name('section.store');
+				Route::post('section/update', 'CustomFieldController@sectionUpdate')->name('section.update');
+				Route::post('section/update/name', 'CustomFieldController@sectionUpdateName')->name('section.update.name');
+				Route::DELETE('section/destroy', 'CustomFieldController@sectionDestroy')->name('section.destroy');
+
+				Route::post('section/attribute/store', 'CustomFieldController@attributeStore')->name('attribute.store');
+				Route::post('section/attribute/update', 'CustomFieldController@attributeUpdate')->name('attribute.update');
+				Route::DELETE('section/attribute/destroy', 'CustomFieldController@attributeDestroy')->name('attribute.destroy');
 			});
 		});
 		Route::resource('departments', 'DepartmentsController');

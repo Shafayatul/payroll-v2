@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EmployeeAttributeMeta extends Model
+class AttributeTypeOptions extends Model
 {
-           /**
+    /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'employee_attribute_metas';
+    protected $table = 'attribute_type_options';
 
     /**
     * The database primary key value.
