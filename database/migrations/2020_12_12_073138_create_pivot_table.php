@@ -22,19 +22,19 @@ class CreatePivotTable extends Migration
         // });
 
         Schema::create('attributes_in_personal_data_sheets', function (Blueprint $table) {
-           $table->unsignedBigInteger('attribute_id');
-           $table->unsignedBigInteger('payroll_setting_id');
+            $table->unsignedBigInteger('attribute_id');
+            $table->unsignedBigInteger('payroll_setting_id');
 
-           $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes');
-           $table->foreign('payroll_setting_id')->references('id')->on('payroll_settings');
+            $table->foreign('attribute_id')->references('id')->on('employee_detail_attributes');
+            $table->foreign('payroll_setting_id')->references('id')->on('payroll_settings');
         });
 
         Schema::create('absences_type_payroll_settings', function (Blueprint $table) {
-           $table->unsignedBigInteger('absence_id');
-           $table->unsignedBigInteger('payroll_setting_id');
+            $table->unsignedBigInteger('absence_id');
+            $table->unsignedBigInteger('payroll_setting_id');
 
-           $table->foreign('absence_id')->references('id')->on('absences');
-           $table->foreign('payroll_setting_id')->references('id')->on('payroll_settings');
+            $table->foreign('absence_id')->references('id')->on('absences');
+            $table->foreign('payroll_setting_id')->references('id')->on('payroll_settings');
         });
 
         Schema::create('boarding_template_step', function (Blueprint $table) {
@@ -51,14 +51,17 @@ class CreatePivotTable extends Migration
             $table->foreign('boarding_template_id')->references('id')->on('boarding_templates');
             $table->foreign('boarding_step_id')->references('id')->on('boarding_steps');
         });
-        // Schema::create('employee_details', function (Blueprint $table) {
-        //     $table->bigIncrements('id');
-        //     $table->string('value')->nullable();
-        //     $table->unsignedBigInteger('user_id')->nullable();
-        //     $table->unsignedBigInteger('attribute_id')->nullable();
-        //     $table->softDeletes();
-        //     $table->timestamps();
-        // });                
+
+        Schema::create('employee_boarding_group', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('group_id')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('group_id')->references('id')->on('boarding_groups');
+        });                
     }
 
     /**
