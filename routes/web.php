@@ -87,6 +87,12 @@ Route::group(
 		Route::post('boarding-template-step/store', 'OnOffBoardingsController@boardingTemplateStepStore')->name('boarding-template-step.store');
 		Route::post('boarding-template-step/update', 'OnOffBoardingsController@boardingTemplateStepUpdate')->name('boarding-template-step.update');
 		Route::post('boarding-step-item/update', 'OnOffBoardingsController@boardingStepItemUpdate')->name('boarding-step-item.update');
+
+		Route::post('boarding-template-update', 'OnOffBoardingsController@templateUpdate')->name('template-update');
+		Route::post('boarding-step-update', 'OnOffBoardingsController@stepUpdate')->name('step-update');
+
+		Route::post('teams/create', 'OnOffBoardingsController@teamStore')->name('teams.create');
+		Route::post('group-user/store', 'OnOffBoardingsController@groupUserStore')->name('group-user.store');
 		
 		// FUNCTION REQUEST ROUTE
 		// Route::resource('companies', 'CompaniesController');

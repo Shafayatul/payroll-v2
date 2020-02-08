@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\BoardingTemplate;
 use App\BoardingStep;
 use App\BoardingStepItem;
+use App\Group;
 use Auth;
 use App\Traits\keyFunctiontrait;
 
@@ -27,7 +28,9 @@ class OnOffBoardingsController extends Controller
         $highringType = $this->boardingTemplateStepHighringType();
         $on_boarding_steps = BoardingStep::where('boarding_type', 1)->get();
         $off_boarding_steps = BoardingStep::where('boarding_type', 0)->get();
-        return view('on-off-boardings.index', compact('on_boarding_templates', 'off_boarding_templates', 'boardingStepType', 'boardingStepItems', 'on_boarding_steps', 'off_boarding_steps', 'highringType', 'documentCategories'));
+        $groups = Group::where('office_id', Auth::user()->office_id)->get();
+        $employees = Auth::user()->office->users;
+        return view('on-off-boardings.index', compact('on_boarding_templates', 'off_boarding_templates', 'boardingStepType', 'boardingStepItems', 'on_boarding_steps', 'off_boarding_steps', 'highringType', 'documentCategories', 'employees'));
     }
 
     /**
@@ -120,6 +123,41 @@ class OnOffBoardingsController extends Controller
         }
 
         return redirect()->route('on-off-boardings.index')->with('success', 'Update Step Item!');
+    }
+
+    public function templateUpdate(Request $request)
+    {
+        $template = BoardingTemplate::findOrFail($request->template_id);
+        $template->name = $request->name;
+        $template->save();
+
+        return redirect()->route('on-off-boardings.index')->with('success', 'Update Template!');
+    }
+
+    public function stepUpdate(Request $request)
+    {
+        $step = BoardingStep::findOrFail($request->step_id);
+        $step->name = $request->name;
+        $step->save();
+
+        return redirect()->route('on-off-boardings.index')->with('success', 'Update Step!');
+    }
+
+    public function teamStore(Request $request)
+    {
+        $group = new Group;
+        $group->name = $request->name;
+        $group->office_id = Auth::user()->office_id;
+        $group->save();
+        return redirect()->route('on-off-boardings.index')->with('success', 'Add Group!');
+    }
+
+    public function groupUserStore(Request $request)
+    {
+        $group = Group::findOrFail($request->group_id);
+        foreach($request->user_id as $key => $value){
+            $group->employees()->sync($request->group_id);
+        }
     }
 
     /**
