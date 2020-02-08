@@ -1106,7 +1106,7 @@
                             <div class="col-md-4 ">
                                 <div class="block-section customvtab vtabs row">
                                     <h4 class="sub-header">Groups</h4>
-                                    <form method="POST" action="{{ route('teams.create') }}" accept-charset="UTF-8" novalidate="novalidate">
+                                    <form method="POST" action="{{ route('groups.create') }}" accept-charset="UTF-8" novalidate="novalidate">
                                         @csrf
                                         <div class="input-group input-group-sm">
                                             <input class="form-control" placeholder="New Team Name..." required="" minlength="2" name="name" type="text">
@@ -1133,21 +1133,58 @@
                                 @foreach($groups as $group)
                                 <div class="block-section tab-pane {{ ($loop->iteration == 1) ? 'active' : '' }}" id="group-tab{{ $group->id }}" role="tabpanel">
                                     <h4 class="sub-header">{{ $group->name }}
-                                        <small> 
-                                            <a href="#" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible1();">
+                                        <small>
+                                            <a data-toggle="modal" data-target="#edit-group-{{ $group->id }}">
                                                 (Edit)
-                                            </a> 
+                                            </a>  
                                         </small> 
                                         <a href="#modal-delete-office" data-toggle="modal"> 
                                             <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> 
                                         </a>
                                      </h4>
+
+                                     <div class="modal fade" id="edit-group-{{ $group->id }}" tabindex="-1" role="dialog" aria-labelledby="edit-temLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <form action="{{ route('group-update') }}" method="POST">
+                                                @csrf
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="edit-temLabel">
+                                                            Boarding Group
+                                                        </h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-group d-flex">
+                                                            <label class="col-md-3 control-label">Name</label>
+                                                            <div class="col-md-9">
+                                                                <input class="form-control " required="" name="name" placeholder="Group name" type="text" value="{{ $group->name }}">
+                                                                <input type="hidden" name="group_id" value="{{ $group->id }}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-light" data-dismiss="modal">
+                                                            Cancel
+                                                        </button>
+                                                        <button type="submit" class="btn  btn-info">
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
                                     <div class="tab-content" id="pills-tab Content">
                                         <div class="tab-pane  active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                                         <form id="demoform office1" action="{{ route('group-user.store') }}" method="post">
-                                            <select multiple="multiple" size="10" name="user_id[]" title="duallistbox_demo1[]">
+                                            @csrf
+                                            <select multiple="multiple" size="10" name="user_id[]" title="user_id[]">
                                                 @foreach($employees as $employee)
-                                                    <option value="{{ $employee->id }}">
+                                                    <option value="{{ $employee->id }}" {{ ($group->employees->contains($employee)) ? 'selected' : '' }}>
                                                         {{ $employee->name }}
                                                     </option>
                                                 @endforeach                   
@@ -1243,9 +1280,9 @@
      $(document).ready(function() {
         $('.select-chosen').select2();
     });
-     var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
+     var demo1 = $('select[name="user_id[]"]').bootstrapDualListbox();
           $("#demoform").submit(function() {
-            alert($('[name="duallistbox_demo1[]"]').val());
+            alert($('[name="user_id[]"]').val());
             return false;
           });
           var demo2 = $('.demo2').bootstrapDualListbox({

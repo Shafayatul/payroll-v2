@@ -62,6 +62,6 @@ class User extends Authenticatable
     }
 
     public function boardingGroups(){
-        return $this->belongsToMany(\App\BoardingGroup::class, 'employee_boarding_group', 'group_id', 'user_id');
+        return $this->belongsToMany(\App\BoardingGroup::class, 'employee_boarding_group', 'user_id', 'group_id');
     }
 }

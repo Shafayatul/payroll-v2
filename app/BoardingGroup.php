@@ -36,6 +36,6 @@ class BoardingGroup extends Model
     }
 
     public function employees(){
-        return $this->belongsToMany(\App\User::class, 'employee_boarding_group', 'user_id', 'group_id');
+        return $this->belongsToMany(\App\User::class, 'employee_boarding_group', 'group_id', 'user_id');
     }
 }
