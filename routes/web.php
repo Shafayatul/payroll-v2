@@ -95,6 +95,8 @@ Route::group(
 		Route::post('group-user/store', 'OnOffBoardingsController@groupUserStore')->name('group-user.store');
 
 		Route::post('group-update', 'OnOffBoardingsController@groupUpdate')->name('group-update');
+
+		Route::get('setting/employee-role', 'EmployeeRolesController@index')->name('setting.employee-role');
 		
 		// FUNCTION REQUEST ROUTE
 		// Route::resource('companies', 'CompaniesController');
