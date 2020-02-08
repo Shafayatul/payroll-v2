@@ -13,13 +13,13 @@ class CreatePivotTable extends Migration
      */
     public function up()
     {
-        // Schema::create('permission_rule', function (Blueprint $table) {
-        //    $table->unsignedBigInteger('rule_id');
-        //    $table->unsignedBigInteger('permission_id');
+        Schema::create('permission_rule', function (Blueprint $table) {
+            $table->unsignedBigInteger('rule_id');
+            $table->unsignedBigInteger('permission_id');
 
-        //    $table->foreign('rule_id')->references('id')->on('rules');
-        //    $table->foreign('permission_id')->references('id')->on('permissions');
-        // });
+            $table->foreign('rule_id')->references('id')->on('rules');
+            $table->foreign('permission_id')->references('id')->on('permissions');
+        });
 
         Schema::create('attributes_in_personal_data_sheets', function (Blueprint $table) {
             $table->unsignedBigInteger('attribute_id');

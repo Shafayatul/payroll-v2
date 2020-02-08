@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 // use Faker\Generator as Faker;
 
 use App\User;
@@ -9,6 +10,7 @@ use App\Company;
 use App\Industry;
 use App\Department;
 use App\PublicHolidayCalendar;
+use App\Role;
 
 class UsersTableSeeder extends Seeder
 {
@@ -103,5 +105,24 @@ class UsersTableSeeder extends Seeder
         $user->save();
 
         // dump($user);
+
+        // Create Role
+        $name = [
+            'All employees',
+            'Accounting',
+            'Administrator',
+            'HR Manager',
+            'Management',
+            'Office Management',
+            'Recruiting Manager',
+            'Supervisor',
+            'Working Student',
+        ];
+        foreach ($name as $key => $value) {
+            $role = new Role();
+            $role->name = $value;
+            $role->slug = Str::slug($value);
+            $role->save();
+        }
     }
 }

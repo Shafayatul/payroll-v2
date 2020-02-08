@@ -69,7 +69,7 @@
                                 </a>    
                                 <a data-toggle="modal" data-target="#exampleModal"> <i class="fas fa-trash" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> </a> 
                                                                     
-                           </div>
+                            </div>
                             <!-- Button trigger modal -->
                             <!-- Modal -->
                             {{-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -183,8 +183,8 @@
                                                     {{-- <optgroup label="On-/Offboarding Team">
                                                         <option value="">HR Team</option>
                                                         <option value="">IT Team</option>
-                                                   </optgroup> --}}
-                                               </select>
+                                                    </optgroup> --}}
+                                                </select>
                                             </td>
                                             <td>
                                                 <div class="form-group d-flex">
@@ -316,7 +316,7 @@
                                     <input class="form-control" placeholder="New step..." required="" minlength="2" name="name" type="text">
                                     <div class="input-group-btn">
                                         <select class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown" name="type">
-                                            <option>Select Type</option>
+                                            {{-- <option>Select Type</option> --}}
                                             @foreach($boardingStepType as $key => $value)
                                                 <option value="{{ $key }}">{{ $value }}</option>
                                             @endforeach
@@ -352,7 +352,7 @@
                             <a href="#modal-delete-step" data-toggle="modal">
                                 <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete this step"></i>
                             </a>
-                         </h4>
+                        </h4>
 
                         <div class="modal fade" id="edit-step-{{ $boarding_step->id }}" tabindex="-1" role="dialog" aria-labelledby="edit-temLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">

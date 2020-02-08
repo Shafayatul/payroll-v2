@@ -6,5 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
-    //
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'permissions';
+
+    /**
+    * The database primary key value.
+    *
+    * @var string
+    */
+    protected $primaryKey = 'id';
+
+    /**
+     * Attributes that should be mass-assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['permission_meta', 'permission_key', 'foreign_id', 'access_type'];
+
+    public function permissionRule(){
+        return $this->belongsToMany(\App\Rule::class, 'permission_rule', 'rule_id', 'permission_id');
+    }
 }
