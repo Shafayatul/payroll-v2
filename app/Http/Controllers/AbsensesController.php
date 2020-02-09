@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Absence;
+use Auth;
 
 class AbsensesController extends Controller
 {
@@ -14,7 +15,7 @@ class AbsensesController extends Controller
      */
     public function index()
     {
-        $absences = Absence::latest()->paginate(25);
+        $absences = Auth::user()->office->absences;
         $absence = new Absence();
         $valid_datas = $absence->validOnData();
         $types = $absence->carryoverType();
@@ -42,10 +43,11 @@ class AbsensesController extends Controller
         $request->validate([
             'name' => 'required'
         ]);
-        $absence           = new Absence;
-        $absence->name     = $request->name;
-        $absence->color    = $absence->defaultColor();
-        $absence->valid_on = 'Work Schedule on Mon-Fri';
+        $absence            = new Absence;
+        $absence->name      = $request->name;
+        $absence->color     = $absence->defaultColor();
+        $absence->valid_on  = 'Work Schedule on Mon-Fri';
+        $absence->office_id = Auth::user()->office_id;
         $absence->save();
         return redirect('absenses')->with('success', 'Absence Added!');
     }
@@ -98,6 +100,7 @@ class AbsensesController extends Controller
         $absence->is_accrual_policies              = $request->is_accrual_policies;
         $absence->carryover_type                   = $request->carryover_type;
         $absence->carryover_date                   = $request->carryover_date;
+        $absence->office_id                        = Auth::user()->office_id;
         $absence->save();
         return redirect('absenses')->with('success', 'Absence Updated!');
     }

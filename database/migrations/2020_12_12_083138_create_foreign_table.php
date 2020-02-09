@@ -178,6 +178,10 @@ class CreateForeignTable extends Migration
         Schema::table('boarding_groups', function (Blueprint $table) {
             $table->foreign('office_id')->references('id')->on('offices');
         });
+
+        Schema::table('document_categories', function (Blueprint $table) {
+            $table->foreign('office_id')->references('id')->on('offices');
+        });
     }
     /**
      * Reverse the migrations.

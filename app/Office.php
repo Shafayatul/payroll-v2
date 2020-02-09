@@ -80,4 +80,8 @@ class Office extends Model
     public function payrollSettings(){
         return $this->hasOne(\App\PayrollSetting::class, 'office_id');
     }
+
+    public function documentCategories(){
+        return $this->hasMany(\App\DocumentCategory::class, 'office_id');
+    }
 }

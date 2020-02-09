@@ -97,6 +97,10 @@ Route::group(
 		Route::post('group-update', 'OnOffBoardingsController@groupUpdate')->name('group-update');
 
 		Route::get('setting/employee-role', 'EmployeeRolesController@index')->name('setting.employee-role');
+
+		Route::get('setting/document', 'DocumentsController@index')->name('setting.document');
+		Route::post('document-category/store', 'DocumentsController@documentCategoryStore')->name('document-category.store');
+		Route::post('document-category/update', 'DocumentsController@documentCategoryUpdate')->name('document-category.update');
 		
 		// FUNCTION REQUEST ROUTE
 		// Route::resource('companies', 'CompaniesController');
