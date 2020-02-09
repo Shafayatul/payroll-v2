@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DocumentCategory extends Model
+class DocumentTemplate extends Model
 {
     // use SoftDeletes, keyFunctionTrait;
 
@@ -13,7 +13,7 @@ class DocumentCategory extends Model
      *
      * @var string
      */
-    protected $table = 'document_categories';
+    protected $table = 'document_templates';
 
     /**
     * The database primary key value.
@@ -27,12 +27,9 @@ class DocumentCategory extends Model
      *
      * @var array
      */
-    public function offices()
-    {
-    	return $this->belongsTo(\App\Office::class, 'office_id');
-    }
+    protected $fillable = ['name', 'lang', 'template_file', 'category_id'];
 
-    public function templates(){
-        return $this->hasMany(\App\DocumentTemplate::class, 'category_id');
+    public function categories(){
+        return $this->belongsTo(\App\DocumentCategory::class, 'category_id');
     }
 }

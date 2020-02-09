@@ -20,6 +20,16 @@ class CreateDocumentCategoriesTable extends Migration
             $table->tinyInteger('sort_order')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('document_templates', function (Blueprint $table){
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('lang')->nullable();
+            $table->string('template_file')->nullable();
+            $table->timestamps();
+
+        });
     }
 
     /**
@@ -29,6 +39,7 @@ class CreateDocumentCategoriesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('document_templates');
         Schema::dropIfExists('document_categories');
     }
 }
