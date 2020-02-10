@@ -101,6 +101,8 @@ Route::group(
 		Route::get('setting/document', 'DocumentsController@index')->name('setting.document');
 		Route::post('document-category/store', 'DocumentsController@documentCategoryStore')->name('document-category.store');
 		Route::post('document-category/update', 'DocumentsController@documentCategoryUpdate')->name('document-category.update');
+
+		Route::post('documents/template-upload', 'DocumentsController@documentTemplateUpload')->name('documents.template-upload');
 		
 		// FUNCTION REQUEST ROUTE
 		// Route::resource('companies', 'CompaniesController');

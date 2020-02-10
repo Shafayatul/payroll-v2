@@ -92,4 +92,16 @@ trait keyFunctionTrait
         return $data;
     }
 
+    public function templateLang()
+    {
+        $data = [
+            '0' => 'English',
+            '1' => 'French',
+            '2' => 'German',
+            '3' => 'Spanish',
+        ];
+
+        return $data;
+    }
+
 }

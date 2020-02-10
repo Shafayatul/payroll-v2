@@ -23,78 +23,168 @@
                     <div class="col-md-4">
                         <div class="block-section customvtab vtabs row">
                             <h4 class="sub-header">Templates</h4>
-                            <form method="POST" action="" accept-charset="UTF-8" novalidate="novalidate">
-                                @csrf
-                                <div class="input-group input-group-sm">
-                                    <input class="form-control" placeholder="New Template Name..." required="" minlength="2" name="name" type="text">
-                                    <input type="hidden" name="type" value="1"> 
-                                    <span class="input-group-btn"> 
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-plus"></i>
-                                        </button> 
-                                    </span> 
-                                </div>
-                            </form>
                             <br>
                             <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
-                                
-                                <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" onclick="openTab(1)" role="tab">
-                                        Check
-                                    </a>
-                                </li>
-
+                                @foreach($categories as $category)
+                                    <li class="nav-item">
+                                        <a class="nav-link">
+                                            {{ $category->name }}
+                                        </a>
+                                        @php
+                                            $loo = $loop->iteration;
+                                        @endphp
+                                        <ul>
+                                            @foreach($category->templates as $template)
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" onclick="openTab({{ $template->id }})" role="tab">{{ $template->name }}</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endforeach
                             </ul>
+                            <br/>
+                            <a data-toggle="modal" data-target="#add-template" class="btn btn-default" style="width: 100%;"> 
+                                <i class="fas fa-plus-circle" data-toggle="tooltip" title="" data-original-title="Add this Template"></i> Add Template 
+                            </a>
+
+
+                            <div class="modal fade" id="add-template" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <form method="POST" class="form-vertical" action="{{ route('documents.template-upload') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="exampleModalLabel">
+                                                    Upload Template
+                                                </h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="category">
+                                                        Category
+                                                    </label>
+                                                    <div class="col-md-12">
+                                                        <select class="form-control" id="category" name="category_id" required>
+                                                            @foreach($categories as $category)
+                                                                <option value="{{ $category->id }}">
+                                                                    {{ $category->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="category">
+                                                        Template Name
+                                                    </label>
+                                                    <div class="col-md-12">
+                                                        <input type="text" name="name" class="form-control" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="lang">
+                                                        Template Language
+                                                    </label>
+                                                    <div class="col-md-12">
+                                                        <select class="form-control" id="lang" name="lang" required>
+                                                            @foreach($langs as $key => $lang)
+                                                                <option value="{{ $key }}">{{ $lang }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                 <div class="form-group">
+                                                    <label for="category">
+                                                        Template
+                                                    </label>
+                                                    <div class="col-md-12">
+                                                        <input type="file" name="template_file" class="form-control" required>
+                                                        <p>
+                                                            Currently we only support templates that are stored in DOCX/DOTX (MS Office 2007 and later) or ODT/OTT (OpenOffice) formats.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-light" data-dismiss="modal">
+                                                    Cancel
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">
+                                                    Upload
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                     <div class="col-md-8 tab-content">
-                        <div class="block-section tab-pane active"  id="tab1" role="tabpanel">
-                            <h4 class="sub-header">check</h4>
-                            <div class="pull-right">
-                                <a data-toggle="modal" data-target="#exampleModal-1"> <i class="fas fa-trash" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> </a> 
-                                                                    
-                            </div>
-                            <!-- Button trigger modal -->
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="exampleModalLabel">
-                                                Delete this template
-                                            </h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p class="mb-3">Are you sure that you want to delete this template?</p>
-                                            <p class="mb-3">
-                                                Existing assignments of this template remain so outstanding onboarding processes based on this template can be completed.
-                                                <span class="assigned-info">
-                                                    This template has been assigned to the following employees:
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-light" data-dismiss="modal">
-                                                Cancel
-                                            </button>
-                                            <button type="button" class="btn btn-danger">
-                                                Delete
-                                            </button>
+                        @foreach($categories as $category)
+                            @foreach($category->templates as $template)
+                                <div class="block-section tab-pane" id="tab{{ $template->id }}" role="tabpanel">
+                                    <h4 class="sub-header">{{ $template->name }}</h4>
+                                    <div class="pull-right">
+                                        <a data-toggle="modal" data-target="#exampleModal-1"> <i class="fas fa-trash" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> </a> 
+                                                                            
+                                    </div>
+
+
+                                    <iframe class="template" id="pdfviewer-{{ $template->id }}" value="{{ $template->template_file }}" src="{{ url('storage/'.$template->template_file) }}" type="application/pdf"  width="100%" height="500px"></iframe>
+
+                                    <small>
+                                        <a class="btn btn-sm btn-primary" href="{{ url('storage/'.$template->template_file) }}" download="{{ url('storage/'.$template->template_file) }}">Download</a>
+                                    </small>
+                                    <!-- Button trigger modal -->
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="exampleModalLabel">
+                                                        Delete this template
+                                                    </h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="mb-3">Are you sure that you want to delete this template?</p>
+                                                    <p class="mb-3">
+                                                        Existing assignments of this template remain so outstanding onboarding processes based on this template can be completed.
+                                                        <span class="assigned-info">
+                                                            This template has been assigned to the following employees:
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light" data-dismiss="modal">
+                                                        Cancel
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
-                            </div>
+                            @endforeach
+                        @endforeach
+                    </div>
 
-                            </div>
-
-                        </div>
-
-                    </div>   
-                </div>
-            </div>  
+                </div>   
+            </div>
+        </div>  
             <div id="document-category" class="fade">
                 <div class="d-flex gutter30">
                     <div class="col-md-4">
@@ -204,8 +294,31 @@
 </div>
 @endsection      
 @section('admin-additional-js')
-<script src="{{ asset('admin/js/jquery.bootstrap-duallistbox.js') }}"></script>  
+<script src="{{ asset('admin/js/jquery.bootstrap-duallistbox.js') }}"></script>
+
 <script type="text/javascript">
+
+    // $(function() {
+
+    //   var pdfsrc = "admin/assets/pdf/sample.pdf";
+
+    //   var script = $("<script>");
+
+    //   fetch(pdfsrc)
+    //   .then(function(response) {
+    //     return response.arrayBuffer()
+    //   })
+    //   .then(function(data) {
+    //     // do stuff with `data`
+    //     console.log(data, data instanceof ArrayBuffer);
+    //     $("#pdfviewer").attr("src", URL.createObjectURL(new Blob([data], {
+    //         type: "application/pdf"
+    //     })))
+    //   }, function(err) {
+    //       console.log(err);
+    //   });
+
+    // });
 
     function tabPan(id)
     {
@@ -218,12 +331,11 @@
         }
     }
 
-    // function openTab(id){
-    //     console.log(id);
-    //     $('.tab-pane').hide();
-    //     $('#tab'+id).show();
-    //     $('#department-div-'+id).show();
-    // }
+    function openTab(id){
+        console.log(id);
+        $('.tab-pane').hide();
+        $('#tab'+id).show();
+    }
     // function updateDepartment(id) {
     //     $('.department-details').hide();
     //     $('#department-'+id).show();

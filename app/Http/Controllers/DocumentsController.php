@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\DocumentCategory;
+use App\DocumentTemplate;
+use App\Traits\keyFunctionTrait;
+use Illuminate\Support\Facades\Storage;
 use Auth;
 
 class DocumentsController extends Controller
 {
+    use keyFunctionTrait;
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +20,8 @@ class DocumentsController extends Controller
     public function index()
     {
         $categories = Auth::user()->office->documentCategories;
-        return view('setting.documents.index', compact('categories')); 
+        $langs = $this->templateLang();
+        return view('setting.documents.index', compact('categories', 'langs')); 
     }
 
     /**
@@ -44,6 +49,30 @@ class DocumentsController extends Controller
         $documentCategory->save();
 
         return redirect()->route('setting.document')->with('success', 'Document category Added!');
+    }
+
+    public function documentTemplateUpload(Request $request)
+    {
+        $request->validate([
+            'category_id'   => 'required',
+            'name'          => 'required',
+            'lang'          => 'required',
+            'template_file' => 'required',
+        ]);
+        $file = $request->file('template_file');
+        $file_name = uniqid().'.'.strtolower($file->getClientOriginalExtension());
+        $path = Storage::disk('public')->putFileAs(
+            'document-templates', $file, $file_name
+        );
+        
+        $document_template                = new DocumentTemplate;
+        $document_template->category_id   = $request->category_id;
+        $document_template->name          = $request->name;
+        $document_template->lang          = $request->category_id;
+        $document_template->template_file = $path;
+        $document_template->save();
+
+        return redirect()->route('setting.document')->with('success', 'Template Added!');
     }
 
     /**
