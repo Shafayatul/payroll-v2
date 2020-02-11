@@ -104,4 +104,13 @@ trait keyFunctionTrait
         return $data;
     }
 
+    public function roleTabCategory(){
+        return [
+            '0' => 'members',
+            '1' => 'rights',
+            '1' => 'reminders',
+            '3' => 'calendars',
+            '4' => 'security',
+        ];
+    }
 }

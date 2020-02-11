@@ -13,14 +13,6 @@ class CreatePivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('permission_rule', function (Blueprint $table) {
-            $table->unsignedBigInteger('rule_id');
-            $table->unsignedBigInteger('permission_id');
-
-            $table->foreign('rule_id')->references('id')->on('rules');
-            $table->foreign('permission_id')->references('id')->on('permissions');
-        });
-
         Schema::create('attributes_in_personal_data_sheets', function (Blueprint $table) {
             $table->unsignedBigInteger('attribute_id');
             $table->unsignedBigInteger('payroll_setting_id');
@@ -61,6 +53,30 @@ class CreatePivotTable extends Migration
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('group_id')->references('id')->on('boarding_groups');
+        });
+        
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('user_id')->references('id')->on('users');
+        }); 
+        
+        Schema::create('permission_role', function (Blueprint $table) {
+            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('permission_id');
+
+            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('permission_id')->references('id')->on('permissions');
+        }); 
+
+        Schema::create('permission_rule', function (Blueprint $table) {
+            $table->unsignedBigInteger('rule_id');
+            $table->unsignedBigInteger('permission_id');
+
+            $table->foreign('rule_id')->references('id')->on('rules');
+            $table->foreign('permission_id')->references('id')->on('permissions');
         });                
     }
 

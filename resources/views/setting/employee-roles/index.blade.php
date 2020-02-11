@@ -11,132 +11,80 @@
         <div class="col-md-4 ">
             <div class="block-section customvtab vtabs row">
             <h4 class="sub-header">Roles</h4>
-           
-                <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" role="tablist">
+                <ul id="roles_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" role="tablist">
+                    @foreach($roles as $role)
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#tab1" role="tab">
-                            Accounting
-                            <span class="badge pull-right">7</span>
-                        </a> 
+                        <a class="nav-link {{ $loop->iteration == 1? 'active':'' }}" data-toggle="tab" href="#tab{{$role->id}}" role="tab"> {{ $role->name }} <span class="badge pull-right">{{count($role->users)}}</span></a> 
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tab2" role="tab">
-                            Customer Support
-                            <span class="badge pull-right">7</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tab3" role="tab">
-                            Finance & Lega
-                            <span class="badge pull-right" >12</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tab4" role="tab">
-                            HR
-                            <span class="badge pull-right">7</span>
-                        </a> 
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tab5" role="tab">
-                            IT
-                            <span class="badge pull-right">7</span>
-                        </a> 
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tab6" role="tab">
-                            Management
-                            <span class="badge pull-right">7</span>
-                        </a> 
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tab7" role="tab">
-                            Marketing
-                            <span class="badge pull-right">7</span>
-                        </a> 
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#tab8" role="tab">
-                            Sales 
-                            <span class="badge pull-right">7</span>
-                        </a> 
-                    </li>
+                    @endforeach
                 </ul>
             </div>
-       </div>
+        </div>
         <div class="col-md-8 tab-content">
-           <div class="block-section tab-pane active" id="tab1" role="tabpanel">
-                <h4 class="sub-header">Accounting
-                    <small> 
-                        <a href="#" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible1();">
-                            (Edit)
-                        </a> 
-                    </small> 
-                    <a href="#modal-delete-office" data-toggle="modal"> 
-                        <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> 
-                    </a>
+            @foreach($roles as $role)
+            <div class="block-section tab-pane {{ $loop->iteration == 1? 'active':'' }}" id="tab{{$role->id}}" role="tabpanel">
+                <h4 class="sub-header">
+                    <span class="js-role-header role-name role-186826">{{ $role->name }}</span> Role
+                    <span class="js-role-actions">
+                        <a class="js-role-delete-link margin-left-5 pull-right text-muted" data-toggle="modal" data-role-id="186826" data-modal-href="#modal-delete-role" data-not-allowed-title="Role cannot be deleted, because it still contains employees" data-title="Delete this role" data-test-id="delete-role-button" style="cursor: not-allowed; font-weight: normal;">
+                            <i class="js-role-delete-icon far fa-trash" data-toggle="tooltip" data-original-title="" title=""></i>
+                        </a>
+                        <a href="#" class="js-role-duplicate-link duplicate-role margin-left-5 pull-right" data-role-id="186826" data-test-id="duplicate-role-button">
+                            <i class="far fa-copy" data-toggle="tooltip" title="" data-original-title="Duplicate role including access rights and reminder settings"></i>
+                        </a>
+    
+                        <a href="#modal-edit-role" class="js-role-edit-link pull-right" data-toggle="modal" data-role-id="186826" data-test-id="edit-role-button">
+                            <i class="far fa-pencil" data-toggle="tooltip" title="" data-original-title="Edit this role's name"></i>
+                        </a>
+                    </span>
                 </h4>
                 <ul class="nav nav-pills mb-3 roles" id="pills-tab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                        <a class="nav-link {{ $category == 'members'? 'active':''}}" id="pills-member-tab{{$role->id}}" data-toggle="pill" href="#roles-member{{$role->id}}" role="tab" aria-controls="roles-member{{$role->id}}" aria-selected="{{ $category == 'members'? 'true':'false'}}">
                             Members
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                        <a class="nav-link {{ $category == 'rights'? 'active':''}}" id="pills-rights-tab{{$role->id}}" data-toggle="pill" href="#roles-rights{{$role->id}}" role="tab" aria-controls="roles-rights{{$role->id}}" aria-selected="false">
                             Access rights
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false"> 
+                        <a class="nav-link {{ $category == 'reminders'? 'active':''}}" id="roles-reminders-tab{{$role->id}}" data-toggle="pill" href="#roles-reminders{{$role->id}}" role="tab" aria-controls="roles-reminders{{$role->id}}" aria-selected="false"> 
                             Reminders
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="pills-calenders-tab" data-toggle="pill" href="#pills-calenders" role="tab" aria-controls="pills-contact" aria-selected="false">
+                        <a class="nav-link {{ $category == 'calendars'? 'active':''}}" id="roles-calendars-tab{{$role->id}}" data-toggle="pill" href="#roles-calendars{{$role->id}}" role="tab" aria-controls="roles-calendars{{$role->id}}" aria-selected="false">
                             Calendars
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="pills-security-tab" data-toggle="pill" href="#pills-security" role="tab" aria-controls="pills-security-tab" aria-selected="false">
+                        <a class="nav-link {{ $category == 'security'? 'active':''}}" id="roles-security-tab{{$role->id}}" data-toggle="pill" href="#roles-security{{$role->id}}" role="tab" aria-controls="roles-security{{$role->id}}" aria-selected="false">
                             Security
                         </a>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tab Content">
-                    <div class="tab-pane  active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <form id="demoform office1" action="#" method="post">
-                            <select multiple="multiple" size="10" name="duallistbox_demo1[]" title="duallistbox_demo1[]">
-                                <option value="option1">Accounting</option>
-                                <option value="option2">Management</option>
-                                <option value="option3" selected="selected">Administrator</option>
-                                <option value="option4">Office Management</option>
-                                <option value="option5">Recruiting Manager</option>
-                                <option value="option6" selected="selected">Working Student</option>
-                                <option value="option7" selected="selected">Administrator</option>
-                                <option value="option8">Office Management</option>
-                                <option value="option9">Recruiting Manager</option>
-                                <option value="option10" selected="selected">Working Student</option>
-                                <option value="option11" selected="selected">Administrator</option>
-                                <option value="option12">Office Management</option>
-                                <option value="option13">Recruiting Manager</option>
-                                <option value="option14" selected="selected">Working Student</option>                         
-                            </select>                                             
-                        </form>
-                        <div class="submit-buttons-wrapper">
-                            <div class="col-md-12 pull-left">
-                                <button type="button" class="btn btn-default edit-cancel">
-                                    <i class="fas fa-times"></i> 
-                                    Cancel
-                                </button>
-                                <button type="submit" class="btn btn-primary" id="btn-update-rights">
-                                    <i class="fas fa-arrow-right"></i> 
-                                    Save changes
-                                </button>
+                    <div class="tab-pane {{ $category == 'members'? 'active':'fade'}}" id="roles-member{{$role->id}}" role="tabpanel" aria-labelledby="roles-member-tab{{$role->id}}">
+                        <form id="update-members{{$role->id}}" action="{{ route('roles.update.members', 'hello') }}" method="post">
+                            @csrf
+                            @method('POST')
+                            <select class="multi-select duallistbox" multiple="multiple" data-id="{{ $role->id }}" size="10" name="users[]" title="Select members/employees">
+                                @foreach (Auth::user()->office->users as $user)
+                                    <option value="{{$user->id}}" {{ $role->users->contains($user) ? 'selected':'' }}>{{$user->name}}, {{$user->departments->name}}</option>
+                                @endforeach
+                            </select>
+                            @php $role_id = new \Hashids\Hashids(); @endphp
+                            <input type="hidden" name="role" value="{{ $role_id->encode($role->id) }}">
+                            <div class="submit-buttons-wrapper">
+                                <div class="col-md-12 pull-left">
+                                    <button type="submit" class="btn btn-primary"> <i class="fas fa-arrow-right"></i> Save changes</button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="tab-pane {{ $category == 'rights'? 'active':'fade'}}" id="roles-rights{{$role->id}}" role="tabpanel" aria-labelledby="roles-rights-tab{{$role->id}}">
                         <table class="table">
                             <thead class="collapse-trigger" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
                                 <tr style="background: #eee;">
@@ -234,7 +182,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div class="tab-pane {{ $category == 'reminders'? 'active':'fade'}}" id="roles-reminders{{$role->id}}" role="tabpanel" aria-labelledby="roles-reminders{{$role->id}}">
                         <p>
                             The following reminders will be added automatically for every employee with this role.
                         </p>                            
@@ -378,7 +326,7 @@
                             </div>
                         </div>       
                     </div>
-                    <div class="tab-pane fade" id="pills-calenders" role="tabpanel" aria-labelledby="pills-calenders-tab">
+                    <div class="tab-pane {{ $category == 'calendars'? 'active':'fade'}}" id="roles-calendars{{$role->id}}" role="tabpanel" aria-labelledby="roles-calendars-tab{{$role->id}}">
                         <div class="row gutter30">
                             <div class="col-md-12">
                                 <p>
@@ -660,7 +608,7 @@
                         </div> 
              
                     </div>
-                    <div class="tab-pane fade" id="pills-security" role="tabpanel" aria-labelledby="pills-security-tab">
+                    <div class="tab-pane {{ $category == 'security'? 'active':'fade'}}" id="roles-security{{$role->id}}" role="tabpanel" aria-labelledby="roles-security-tab{{$role->id}}">
                         <form method="POST" action="" class="form-horizontal">
                             <input type="hidden" value="">
                             <input  type="hidden" value="">
@@ -693,12 +641,8 @@
                         </form>
                     </div> 
                 </div>    
-             
-            </div>                                       
-            
-            <div class="block-section tab-pane " id="tab2" role="tabpanel">
-               
             </div>
+            @endforeach                                  
         </div>
     </div>
 </div>    
@@ -751,9 +695,9 @@
 
  
      
-    var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
+    var demo1 = $('.multi-select').bootstrapDualListbox();
     $("#demoform").submit(function() {
-        alert($('[name="duallistbox_demo1[]"]').val());
+        alert($('.multi-select').val());
         return false;
     });
     var demo2 = $('.demo2').bootstrapDualListbox({

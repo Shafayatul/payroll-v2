@@ -84,4 +84,8 @@ class Office extends Model
     public function documentCategories(){
         return $this->hasMany(\App\DocumentCategory::class, 'office_id');
     }
+
+    public function roles(){
+        return $this->hasMany(\App\Role::class, 'office_id');
+    }
 }

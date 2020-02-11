@@ -4,8 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\keyFunctionTrait;
+
 class Role extends Model
 {
+    use keyFunctionTrait;
     /**
      * The database table used by the model.
      *
@@ -25,9 +28,18 @@ class Role extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['name', 'slug', 'office_id'];
+
+    public function offices(){
+        return $this->belongsTo(\App\Office::class, 'office_id');
+    }
+
+    public function users(){
+        return $this->belongsToMany(\App\User::class, 'role_user', 'user_id', 'role_id');
+    }
 
     public function reminders(){
         return $this->hasMany(\App\RoleReminder::class, 'role_id');
     }
+
 }

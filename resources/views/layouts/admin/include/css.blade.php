@@ -15,6 +15,7 @@
 <link href="{{ asset('admin/assets/plugins/css-chart/css-chart.css') }}" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+<link href="{{ asset('admin/css/custom.css') }}" rel="stylesheet">
 <!-- You can change the theme colors from here -->
 <link href="{{ asset('admin/css/colors/green.css') }}" id="theme" rel="stylesheet">
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -54,7 +54,7 @@ $factory->define(Company::class, function (Faker $faker) {
 
 $factory->afterCreating(Company::class, function ($company, $faker) {
     $company->publicHolidays()->saveMany(factory(PublicHolidayCalendar::class, 2)->create());
-    $company->employeeInformationSections()->saveMany(factory(EmployeeInformationSection::class, 8)->create());
+    $company->employeeInformationSections()->saveMany(factory(EmployeeInformationSection::class, 5)->create());
     $company->offices()->saveMany(factory(Office::class, 5)->create());
 });
 

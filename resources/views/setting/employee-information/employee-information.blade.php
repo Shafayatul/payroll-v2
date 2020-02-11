@@ -312,6 +312,7 @@
             </div>      
         </div>      
     </div>
+    @include('setting.employee-information.modal-section-create')
 @endsection
 
 @section('admin-additional-js')

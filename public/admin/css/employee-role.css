@@ -263,6 +263,7 @@ a.document-icon:hover {
     background:#fff;
     position: fixed;
     bottom: 0;
+    z-index: 2000;
 }
 .collapse-trigger[aria-expanded="true"] .fa-caret-down {
     transform: rotate(90deg) !important;

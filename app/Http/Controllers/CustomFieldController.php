@@ -14,6 +14,7 @@ class CustomFieldController extends Controller
 {
     public function index(){
         $sections = Auth::user()->office->company->employeeInformationSections;
+        // dd($sections);
         return view('setting.employee-information.employee-information', compact('sections'));
     }
 

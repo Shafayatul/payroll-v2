@@ -90,8 +90,7 @@
 .sub-header {
     margin: 20px 0;
     padding: 10px 0;
-    border-bottom: 1px dotted 
-    #ccc;
+    border-bottom: 1px dotted #ccc;
 }
 .form-horizontal .form-group::after, .form-horizontal .form-group::before {
     content: " ";

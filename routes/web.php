@@ -50,6 +50,15 @@ Route::group(
 				Route::post('section/attribute/update', 'CustomFieldController@attributeUpdate')->name('attribute.update');
 				Route::DELETE('section/attribute/destroy', 'CustomFieldController@attributeDestroy')->name('attribute.destroy');
 			});
+
+			// EMPLOYEE ROLES REQUESTING ROUTE
+			// Route::get('setting/employee-role', 'EmployeeRolesController@index')->name('setting.employee-role');
+			Route::prefix('roles')->name('roles.')->group( function () {
+				// Route::get('setting/employee-role', 'EmployeeRolesController@index')->name('setting.employee-role');
+				Route::get('/{category}', 'EmployeeRolesController@index')->name('index');
+				Route::post('/update/{category}', 'EmployeeRolesController@updateMembers')->name('update.members');
+			});
+
 		});
 		Route::resource('departments', 'DepartmentsController');
 		Route::resource('offices', 'OfficesController');
@@ -96,7 +105,6 @@ Route::group(
 
 		Route::post('group-update', 'OnOffBoardingsController@groupUpdate')->name('group-update');
 
-		Route::get('setting/employee-role', 'EmployeeRolesController@index')->name('setting.employee-role');
 
 		Route::get('setting/document', 'DocumentsController@index')->name('setting.document');
 		Route::post('document-category/store', 'DocumentsController@documentCategoryStore')->name('document-category.store');

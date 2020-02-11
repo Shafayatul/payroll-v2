@@ -1,4 +1,4 @@
-{{-- <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#attributeCreate" data-whatever="@mdo"><i class="fas fa-check"></i> Assign</button>
+<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#attributeCreate" data-whatever="@mdo"><i class="fas fa-check"></i> Assign</button>
 <div class="modal" id="attributeCreate" tabindex="-1" role="dialog" aria-labelledby="attributeCreateLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -41,4 +41,4 @@
             </div>
         </div>
     </div>
-</div> --}}
+</div>

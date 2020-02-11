@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Hashids\Hashids;
+use App\Role;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeRolesController extends Controller
 {
@@ -11,9 +14,12 @@ class EmployeeRolesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($category = null)
     {
-        return view('setting.employee-roles.index');
+        $roles = Auth::user()->office->roles;
+
+        return view('setting.employee-roles.index', compact('roles', 'category'));
+
     }
 
     /**
@@ -21,6 +27,17 @@ class EmployeeRolesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function updateMembers(Request $request){
+        $role = new Hashids();
+        $id = $role->decode($request->role)[0];
+        $role = Role::findOrFail($id);
+        $role->users()->sync($request->users);
+        
+        return redirect()->back();
+
+    }
+
     public function create()
     {
         //

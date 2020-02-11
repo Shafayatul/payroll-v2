@@ -45,7 +45,7 @@ class User extends Authenticatable
         return $this->belongsTo(\App\Office::class, 'office_id');
     }
 
-    public function department(){
+    public function departments(){
         return $this->belongsTo(\App\Department::class, 'department_id');
     }
 
