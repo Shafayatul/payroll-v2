@@ -27,20 +27,20 @@
                             <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
                                 @foreach($categories as $category)
                                     <li class="nav-item">
-                                        <a class="nav-link">
+                                        <strong>
                                             {{ $category->name }}
-                                        </a>
+                                        </strong>
                                         @php
                                             $loo = $loop->iteration;
                                         @endphp
-                                        <ul>
-                                            @foreach($category->templates as $template)
-                                                <li class="nav-item">
-                                                    <a class="nav-link" data-toggle="tab" onclick="openTab({{ $template->id }})" role="tab">{{ $template->name }}</a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                   </li>
+                                @foreach($category->templates as $template)
+                                    <li class="nav-item">
+                                        <a class="pl-2 nav-link" href="#" data-toggle="tab" onclick="openTab({{ $template->id }});" role="tab">{{ $template->name }}</a>
                                     </li>
+                                @endforeach
+                                       
+                                   
                                 @endforeach
                             </ul>
                             <br/>
@@ -135,6 +135,19 @@
                                     <div class="pull-right">
                                         <a data-toggle="modal" data-target="#exampleModal-1"> <i class="fas fa-trash" data-toggle="tooltip" title="" data-original-title="Delete this office"></i> </a> 
                                                                             
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="lang">
+                                            Template Language
+                                        </label>
+                                        <div class="col-md-12">
+                                            <select class="form-control" id="lang" name="lang" required>
+                                                @foreach($langs as $key => $lang)
+                                                    <option value="{{ $key }}">{{ $lang }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
 
 
