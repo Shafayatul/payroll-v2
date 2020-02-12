@@ -4,8 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\keyFunctionTrait;
+
 class Permission extends Model
 {
+    use keyFunctionTrait;
     /**
      * The database table used by the model.
      *
@@ -25,9 +28,13 @@ class Permission extends Model
      *
      * @var array
      */
-    protected $fillable = ['permission_meta', 'permission_key', 'foreign_id', 'access_type'];
+    protected $fillable = ['permission_meta', 'permission_key', 'rule_id', 'access_type'];
 
-    public function permissionRule(){
-        return $this->belongsToMany(\App\Rule::class, 'permission_rule', 'rule_id', 'permission_id');
+    public function rules(){
+        return $this->belongsTo(\App\Rule::class, 'rule_id');
+    }
+
+    public function roles(){
+        return $this->belongsToMany(\App\Role::class, 'permission_role', 'permission_id', 'role_id');
     }
 }

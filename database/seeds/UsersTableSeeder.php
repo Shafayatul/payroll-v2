@@ -40,9 +40,10 @@ class UsersTableSeeder extends Seeder
                 'contact_for_maintenance'      => $faker->phoneNumber,
                 'language'                     => $faker->languageCode,
                 'company_employee_size'        => 25,
-                'user_id'                      => 1,
-                'industry_id'                  => 1,
-                'public_holiday_calendar_id'   => 1,
+                // 'user_id'                      => 1,
+                // 'industry_id'                  => 1,
+                // 'public_holiday_calendar_id'   => 1,
+                
                 // 'user_id'                      => function () {
                 //                                     return (User::inRandomOrder()->first()->id? User::inRandomOrder()->first()->id:1);
                 //                                 },
@@ -60,7 +61,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name'       => $faker->sentence,
                 'type'       => rand(0,5),
-                'company_id' => 1,
+                // 'company_id' => 1,
                 // 'company_id' => function () {
                 //                     return (Company::inRandomOrder()->first()->id? Company::inRandomOrder()->first()->id:1);
                 //                 },
@@ -79,8 +80,9 @@ class UsersTableSeeder extends Seeder
                 'state'                      => $faker->state,
                 'zip'                        => $faker->postcode,
                 'country'                    => $faker->country,
-                'company_id'                 => 1,
-                'public_holiday_calendar_id' => 1,
+                // 'company_id'                 => 1,
+                // 'public_holiday_calendar_id' => 1,
+
                 // 'company_id'                 => function () {
                 //                                     return (Company::inRandomOrder()->first()->id? Company::inRandomOrder()->first()->id:1);
                 //                                 },
@@ -94,7 +96,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name'         => $faker->sentence,
                 'working_hour' => rand(20, 48),
-                'office_id'    => 1,
+                // 'office_id'    => 1,
                 // 'office_id'    => function () {
                 //                     return (Office::inRandomOrder()->first()->id? Office::inRandomOrder()->first()->id:1);
                 //                 },
@@ -108,8 +110,8 @@ class UsersTableSeeder extends Seeder
         $user->email_verified_at = now();
         $user->password          = Hash::make('12345678');
         $user->status            = true;
-        $user->office_id         = 1;
-        $user->department_id     = 1;
+        // $user->office_id         = 1;
+        // $user->department_id     = 1;
         // $user->office_id         = (Office::inRandomOrder()->first()->id? Office::inRandomOrder()->first()->id:1);
         // $user->department_id     = (Department::inRandomOrder()->first()->id? Department::inRandomOrder()->first()->id:1);
         $user->save();
@@ -135,5 +137,32 @@ class UsersTableSeeder extends Seeder
             $role->office_id = (Office::inRandomOrder()->first()->id? Office::inRandomOrder()->first()->id:1);
             $role->save();
         }
+
+        factory(Industry::class, 5)->create();
+
+        $user  = User::first();
+        $user->office_id         = (Office::inRandomOrder()->first()->id? Office::inRandomOrder()->first()->id:1);
+        $user->department_id     = (Department::inRandomOrder()->first()->id? Department::inRandomOrder()->first()->id:1);
+        $user->save();
+
+        $office = Office::first();
+        $office->company_id = (Company::inRandomOrder()->first()->id? Company::inRandomOrder()->first()->id:1);
+        $office->public_holiday_calendar_id = (PublicHolidayCalendar::inRandomOrder()->first()->id? PublicHolidayCalendar::inRandomOrder()->first()->id:1);
+        $user->save();
+
+        $company = Company::first();
+        $company->user_id = (User::inRandomOrder()->first()->id? User::inRandomOrder()->first()->id:1);
+        $company->industry_id = (Industry::inRandomOrder()->first()->id? Industry::inRandomOrder()->first()->id:1);
+        $company->public_holiday_calendar_id = (PublicHolidayCalendar::inRandomOrder()->first()->id? PublicHolidayCalendar::inRandomOrder()->first()->id:1);
+        $company->save();
+
+        $department = Department::first();
+        $department->office_id         = (Office::inRandomOrder()->first()->id? Office::inRandomOrder()->first()->id:1);
+        $department->save();
+
+        $public_calendar = PublicHolidayCalendar::first();
+        $public_calendar->company_id = (Company::inRandomOrder()->first()->id? Company::inRandomOrder()->first()->id:1);
+        $public_calendar->save();
+
     }
 }

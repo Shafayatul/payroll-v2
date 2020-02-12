@@ -67,7 +67,7 @@
                 </ul>
                 <div class="tab-content" id="pills-tab Content">
                     <div class="tab-pane {{ $category == 'members'? 'active':'fade'}}" id="roles-member{{$role->id}}" role="tabpanel" aria-labelledby="roles-member-tab{{$role->id}}">
-                        <form id="update-members{{$role->id}}" action="{{ route('roles.update.members', 'hello') }}" method="post">
+                        <form id="update-members{{$role->id}}" action="{{ route('roles.update.members') }}" method="post">
                             @csrf
                             @method('POST')
                             <select class="multi-select duallistbox" multiple="multiple" data-id="{{ $role->id }}" size="10" name="users[]" title="Select members/employees">
@@ -85,107 +85,68 @@
                         </form>
                     </div>
                     <div class="tab-pane {{ $category == 'rights'? 'active':'fade'}}" id="roles-rights{{$role->id}}" role="tabpanel" aria-labelledby="roles-rights-tab{{$role->id}}">
-                        <table class="table">
-                            <thead class="collapse-trigger" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
-                                <tr style="background: #eee;">
-                                    <th> 
-                                        <i class="fas fa-caret-down"></i> &nbsp;
-                                        <b>Manage accounts</b> 
-                                        <i class="fas fa-info-circle" data-toggle="tooltip" data-title="Access rights for the section 'Actions > Manage Account' in the employee profile" data-original-title="" title=""></i> 
-                                    </th>
-                                    <th  width="20%"> 
-                                        View 
-                                        <i class="fas fa-info-circle" data-toggle="tooltip" data-title="Role members can reset their own password and see the account status (e.g. last login) of other users, if the view right is granted for 'Team' or 'All'." data-original-title="" title=""></i> 
-                                    </th>
-                                    <th  width="20%"> Propose </th>
-                                    <th  width="20%"> 
-                                        Edit 
-                                        <i class="fas fa-info-circle" data-toggle="tooltip" data-title="Role members can invite employees to Personio and send emails for password reset. Only administrators can change users' passwords." data-original-title="" title=""></i> 
-                                    </th> 
-                                </tr>
-                            </thead>
-                            <tbody class="collapse" id="collapseExample2">
-                                <tr class="right-group">                                     
-                                    <td class="view-right">                                           
-                                        <div class="custom">
-                                            <input  type="checkbox" value="own">
-                                            <span class="checkbox-label">Own</span>
-                                        </div>
+                        <form id="update-rights{{$role->id}}" action="{{ route('roles.update.rights') }}" method="post">
+                            @csrf
+                            @method('POST')    
+                            @foreach ($sections as $section)
+                                <table class="table accordion" id="accordionExample{{$section->id}}">
+                                <thead class="#" data-toggle="collapse" data-target="#section{{$section->id}}" role="button" aria-expanded="false" data-parent="#accordionExample{{$section->id}}"aria-controls="section{{$section->id}}">
+                                    <tr style="background: #eee;">
+                                        <th> 
+                                            <a href="#">
+                                                <i class="fas fa-caret-right"></i> &nbsp;
+                                                <b>{{ $section->name }}</b> 
+                                                <i class="fas fa-info-circle" data-toggle="tooltip" data-title="Access rights for the section 'Actions > Manage Account' in the employee profile" data-original-title="" title=""></i> 
+                                            </a>
+                                        </th>
+                                        @foreach($permission->permissionMeta() as $meta)
+                                        <th  width="20%"> 
+                                            {{ $meta }}<i class="fas fa-info-circle" data-toggle="tooltip" data-title="Role members can reset their own password and see the account status (e.g. last login) of other users, if the view right is granted for 'Team' or 'All'." data-original-title="" title="{{ $meta }}"></i> 
+                                        </th>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                                @foreach ($section->employeeDetailAttributes as $attribute)                                    
+                                <tbody class="collapse" id="section{{$section->id}}">
+                                    <tr class="right-group">                                     
+                                        <td class="view-right">
+                                            {{ $attribute->name }}
+                                        </td>
+                                    @foreach ($permission->permissionMeta() as $key => $meta)
+                                        <td class="view-right">                                           
+                                        @foreach($permission->permissionAccessType() as $accessKey => $value)
+                                            @php
+                                                $id = $attribute->id;
+                                                $check = $role->permissions()->where('permission_key', $key)->where('access_type', $accessKey)
+                                                            ->whereHas('rules', function($r) use($id){
+                                                                $r->where('attribute_id', $id);
+                                                            })->first();
+                                            @endphp
+                                            <div class="custom">
+                                                <input type="checkbox" {{ (null !== $check) ? 'checked' : ''}} class="form-check-input" id="permission_{{$role->id}}_{{$attribute->id}}_{{$key}}_{{$accessKey}}" name="permission{{'_'.$role->id}}[{{'attr_'.$attribute->id}}][{{'meta_'.$key}}][{{'access_'.$accessKey}}]" value="1"> <label class="form-check-label" for="permission_{{$role->id}}_{{$attribute->id}}_{{$key}}_{{$accessKey}}" class="checkbox-label"> {{ $value }}</label>
+                                            </div>
                                         <br>
-                                        <div class="custom">
-                                            <input  type="checkbox" value="team"> <span class="checkbox-label">Team</span>
-                                        </div>
-                                       <br>
-                                        <div class="custom">
-                                            <input  type="checkbox">
-                                            <span class="checkbox-label">
-                                                <a href="#modal-custom-permissions"> Custom </a>
-                                            </span>
-                                         </div>
-                                        <br>
-                                        <div class="custom">
-                                            <input  type="checkbox" value="all">
-                                            <span class="checkbox-label">All</span>
-                                        </div>
-                                        <br>
-                                    </td>
-                                    <td class="propose-right right-9">
-                                         
-                                        <div class="custom">
-                                            <input  type="checkbox" value="own">
-                                            <span class="checkbox-label">Own</span>
-                                        </div>
-                                        <br>
-                                        <div class="custom">
-                                            <input  type="checkbox" value="team">
-                                            <span class="checkbox-label">Team</span>
-                                        </div>
-                                        <br>
-                                        <div class="custom">
-                                            <input  type="checkbox">
-                                            <span class="checkbox-label">
-                                                <a href="#modal-custom-permissions" data-toggle="modal" data-right-name="rights[9][edit_right][]" data-role-id="172511"> Custom </a>
-                                            </span>
-                                        </div>
-                                        <br>
-                                        <div class="custom">
-                                            <input  type="checkbox" value="all">
-                                            <span class="checkbox-label">All</span>
-                                        </div>
-                                        <br>                            
-                                    </td>
-                                    <td class="edit-right">                                           
-                                        <div class="custom">
-                                            <input  type="checkbox" value="own">
-                                            <span class="checkbox-label">Own</span>
-                                        </div>
-                                        <br>
-                                        <div class="custom">
-                                            <input  type="checkbox" value="team">
-                                            <span class="checkbox-label">Team</span>
-                                        </div>
-                                        <br>
-                                        <div class="custom">
-                                            <input  type="checkbox">
-                                            <span class="checkbox-label">
-                                                <a href="#modal-custom-permissions" data-toggle="modal" data-right-name="rights[9][edit_right][]" data-role-id="172511"> Custom </a>
-                                            </span>
-                                        </div>
-                                        <br>
-                                        <div class="custom">
-                                            <input  type="checkbox" value="all">
-                                            <span class="checkbox-label">All</span>
-                                        </div>
-                                        <br>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        @endforeach
+                                        </td>
+                                    @endforeach
+                                    </tr>
+                                </tbody>
+                                @endforeach
+                              </table>
+                            @endforeach
+                        <input type="hidden" name="role" value="{{ $role_id->encode($role->id) }}">
+                            <div class="submit-buttons-wrapper">
+                                <div class="col-md-12 pull-left">
+                                    <button type="submit" class="btn btn-primary"> <i class="fas fa-arrow-right"></i> Save changes</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <div class="tab-pane {{ $category == 'reminders'? 'active':'fade'}}" id="roles-reminders{{$role->id}}" role="tabpanel" aria-labelledby="roles-reminders{{$role->id}}">
                         <p>
                             The following reminders will be added automatically for every employee with this role.
-                        </p>                            
+                        </p>
+                        @foreach($role->reminders as $reminder)
                         <div class="reminder box">
                             Remind 
                             <span> 
@@ -201,7 +162,7 @@
                                 <small>*</small>
                             </span>
                             <span> on that day</span>
-                            <a href="#modal-edit-reminder"  data-toggle="modal">
+                            <a href="#modalEditReminder{{ $reminder->id }}"  data-toggle="modal">
                               <i class="fas fa-pencil-alt" data-toggle="tooltip" data-title="Edit reminder" data-original-title="" title=""></i>
                             </a>
                             <a href="#modal-delete-reminder" data-toggle="modal" data-reminder-id="342178" class="text-danger">
@@ -210,12 +171,125 @@
                             <div class="pt-3"> 
                                 <strong>Expiration date:</strong> one day after <i>Last salary change</i> 
                             </div>
-                        </div>                           
-                        <a href="#modal-add-reminder" data-toggle="modal"  class="btn btn-sm btn-primary"> 
+                            <div id="modalEditReminder{{ $reminder->id }}" class="modal" tabindex="-1" role="dialog" aria-hidden="true" >
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Edit reminder</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>              
+                                        </div>                                  
+                                  
+                                        <div class="modal-body">
+                                            <div class="alert alert-info"> 
+                                                Changes made after 5:00 am CET will take effect starting from the next day. 
+                                            </div>                  
+                                            <div class="form-group row">
+                                                <label class="col-md-3 control-label"> Remind </label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control mySelect2" name="automatic_date_field">
+                                                        <option value="">Please select...</option>
+                                                        @foreach ($reminder->roleReminds() as $key => $remind)
+                                                        <option value="{{ $key }}"> {{ $remind }} </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 control-label"> about </label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control mySelect2" name="automatic_date_field">
+                                                        <option value="">Please select...</option>
+                                                        @foreach ($reminder->roleReminds() as $key => $remind)
+                                                        <option value="{{ $key }}"> {{ $remind }} </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 control-label"> of 
+                                                    <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="" data-original-title="The term &quot;All employees&quot; refers to all employees for whom you have view rights regarding the selected attribute. <br/>The term &quot;Own Team&quot; in Personio refers to and includes all the employees who share the same (direct or indirect) supervisor.<br>However, &quot;Direct Team&quot; includes only the employees who share the same direct supervisor."></i> 
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <select class="form-control custom-select">
+                                                        <option value="all" selected="selected">All employees</option>
+                                                        <option value="special">Special</option>
+                                                        <option value="direct_team">Direct team</option>
+                                                        <option value="team">Own team</option>
+                                                    </select>
+                                                    <div class=" margin-top-5 boxs" id="special">
+                                                        <div class="attributeFilterContainer"> </div>
+                                                        <div id="education_fields"></div>                                                           
+                                                        <a class="added" href="#add-attribute-filter" id="copy"> 
+                                                            <i class="fas fa-plus-circle"></i> Add filter 
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 control-label"> when </label>
+                                                <div class="col-md-2"> 
+                                                    <input class="form-control required" number="" name="automatic_offset" type="text" value="4"> 
+                                                </div>
+                                                <div class="col-md-3"> 
+                                                    <select class="form-control valid" name="automatic_offset_unit">
+                                                        <option value=""></option>
+                                                        <option value="1">days</option>
+                                                        <option value="7">weeks</option>
+                                                    </select> 
+                                                </div>
+                                                <div class="col-md-3"> 
+                                                    <select class="form-control" name="automatic_offset_sign">
+                                                        <option value=""></option>
+                                                        <option value="-1">before</option>
+                                                        <option value="1">after</option>
+                                                    </select> 
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-offset-3 col-md-9">
+                                                    <div class="custom-control custom-radio show">
+                                                        <input type="radio" class="custom-control-input" id="customControlValidation2" name="radio-stacked" required>
+                                                        <label class="custom-control-label" for="customControlValidation2">Reminder (automated expiration)</label>
+                                                    </div>                             
+                                                    <div class="custom-control custom-radio mb-3 d-hide">
+                                                        <input type="radio" class="custom-control-input" id="customControlValidation3" name="radio-stacked" required>
+                                                        <label class="custom-control-label" for="customControlValidation3">ask (no expiration)</label>                                     
+                                                    </div>                              
+                                                    <div id="reminder" >
+                                                        Please note that reminders that are triggered before the event, will disappear from the dashboard
+                                                        <strong>one day</strong> after the event. 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 control-label"> Frequency </label>
+                                                <div class="col-md-8 form-control-static">
+                                                    <input name="automatic_yearly" type="checkbox" value="1"> Yearly reminder 
+                                                </div> 
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 control-label"> Note </label>
+                                                <div class="col-md-8">
+                                                    <input class="form-control" placeholder="Optional description..." name="title" type="text" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary" id="add_employee_form_submit">Edit</button>
+                                        </div>
+                                
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        @endforeach
+                        <a href="#modalAddReminder" data-toggle="modal"  class="btn btn-sm btn-primary"> 
                             Add reminder 
                         </a>
                         <p class="margin-top-20">* all employees for whom you have view rights regarding the selected attributes.</p>
-                        <div id="modal-edit-reminder" class="modal" tabindex="-1" role="dialog" aria-hidden="true" >
+                        <div id="modalAddReminder" class="modal" tabindex="-1" role="dialog" aria-hidden="true" >
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -226,24 +300,26 @@
                                     <div class="modal-body">
                                         <div class="alert alert-info"> 
                                             Changes made after 5:00 am CET will take effect starting from the next day. 
-                                        </div>                  
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-md-3 control-label"> Remind </label>
+                                            <div class="col-md-8">
+                                                <select class="form-control mySelect2" name="automatic_date_field">
+                                                    <option value="">Please select...</option>
+                                                    @foreach ($role->roleReminds() as $key => $remind)
+                                                    <option value="{{ $key }}"> {{ $remind }} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="form-group row">
                                                 <label class="col-md-3 control-label"> about </label>
                                             <div class="col-md-8">
                                                 <select class="form-control mySelect2" name="automatic_date_field">
                                                     <option value="">Please select...</option>
-                                                    <option value="probation_period_end">
-                                                        Probation period end
-                                                    </option>
-                                                    <option value="hire_date">Hire date</option>
-                                                    <option value="last_working_day">Last day of work</option>
-                                                    <option value="contract_end_date">Contract ends</option>
-                                                    <option value="termination_date">Termination date</option><option value="last_salary_change">Last salary change</option>
-                                                    <option value="next_time_off_period">Next absence</option>
-                                                    <option value="dynamic_808875">Birthday</option>
-                                                    <option value="dynamic_808877">
-                                                        Enrollment certificate valid until
-                                                    </option>
+                                                    @foreach ($role->roleReminds() as $key => $remind)
+                                                    <option value="{{ $key }}">{{ $remind }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -253,12 +329,17 @@
                                             </label>
                                             <div class="col-md-8">
                                                 <select class="form-control custom-select">
-                                                    <option value="all" selected="selected">All employees</option>
-                                                    <option value="special">Special</option>
-                                                    <option value="direct_team">Direct team</option>
-                                                    <option value="team">Own team</option>
+                                                    @foreach ($role->roleReminderFilterType() as $key => $filter)
+                                                    <option value="{{ $key }}">{{ $filter }}</option>
+                                                    @endforeach
                                                 </select>
-                                                <div class=" margin-top-5 boxs" id="special">
+`                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row" id="special{{$role->id}}">
+                                            <div class="col-md-3"></div>
+                                            <div class="col-md-8">
+                                                <div class=" margin-top-5 boxs">
                                                     <div class="attributeFilterContainer"> </div>
                                                     <div id="education_fields"></div>                                                           
                                                     <a class="added" href="#add-attribute-filter" id="copy"> 
@@ -274,16 +355,16 @@
                                             </div>
                                             <div class="col-md-3"> 
                                                 <select class="form-control valid" name="automatic_offset_unit">
-                                                    <option value=""></option>
-                                                    <option value="1">days</option>
-                                                    <option value="7">weeks</option>
+                                                    @foreach ($role->offsetUnit() as $key => $unit)
+                                                    <option value="{{ $key }}">{{ $unit }}</option>
+                                                    @endforeach
                                                 </select> 
                                             </div>
                                             <div class="col-md-3"> 
                                                 <select class="form-control" name="automatic_offset_sign">
-                                                    <option value=""></option>
-                                                    <option value="-1">before</option>
-                                                    <option value="1">after</option>
+                                                    @foreach ($role->offsetSign() as $key => $sign)
+                                                    <option value="{{ $key }}">{{ $sign }}</option>
+                                                    @endforeach
                                                 </select> 
                                             </div>
                                         </div>
@@ -669,7 +750,29 @@
         var divtest = document.createElement("div");
         divtest.setAttribute("class", "form-group removeclass" + room);
         var rdiv = 'removeclass' + room;
-        divtest.innerHTML = '  <div class="row"><div class="input-group col-md-5"> <select class="form-control select-chosen " ><option value="id">ID</option><option value="first_name">First name</option> <option value="last_name">Last name</option> <option value="email">Email</option> <option value="position">Position</option> <option value="gender">Gender</option> <option value="status">Status</option> <option value="employment_type">Employment type</option> <option value="termination_type">Termination type</option> <option value="termination_reason">Termination reason</option> <option value="termination_date">Termination date</option> <option value="termination_at">Notice pronounced</option></select> </div><div class="input-group-append col-md-5" id="special"></div><div class="clear"><button class="btn " type="button" onclick="remove_education_fields(' + room + ');"> <i class="fas fa-times-circle" data-toggle="tooltip" data-title="Delete" data-original-title="" title=""></i></button></div></div>';
+        divtest.innerHTML = `<div class="row">
+                                <div class="input-group">
+                                    <select class="form-control select-chosen">
+                                        <option value="id">ID</option>
+                                        <option value="first_name">First name</option>
+                                        <option value="last_name">Last name</option>
+                                        <option value="email">Email</option>
+                                        <option value="position">Position</option>
+                                        <option value="gender">Gender</option>
+                                        <option value="status">Status</option>
+                                        <option value="employment_type">Employment type</option>
+                                        <option value="termination_type">Termination type</option>
+                                        <option value="termination_reason">Termination reason</option>
+                                        <option value="termination_date">Termination date</option>
+                                        <option value="termination_at">Notice pronounced</option>
+                                    </select>
+                                </div>
+                                <div class="input-group-append col-md-5" id="special">
+                                </div>
+                                <div class="clear">
+                                    <button class="btn" type="button" onclick="remove_education_fields(` + room + `);"><i class="fas fa-times-circle" data-toggle="tooltip" data-title="Delete" data-original-title="" title=""></i></button>
+                                </div>
+                            </div>`;
             objTo.appendChild(divtest)
   
     });

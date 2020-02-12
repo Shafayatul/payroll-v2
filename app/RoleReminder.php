@@ -4,8 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Traits\keyFunctionTrait;
+
 class RoleReminder extends Model
 {
+    use keyFunctionTrait;
      /**
      * The database table used by the model.
      *

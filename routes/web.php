@@ -56,7 +56,8 @@ Route::group(
 			Route::prefix('roles')->name('roles.')->group( function () {
 				// Route::get('setting/employee-role', 'EmployeeRolesController@index')->name('setting.employee-role');
 				Route::get('/{category}', 'EmployeeRolesController@index')->name('index');
-				Route::post('/update/{category}', 'EmployeeRolesController@updateMembers')->name('update.members');
+				Route::post('/update/members', 'EmployeeRolesController@updateMembers')->name('update.members');
+				Route::post('/update/rights', 'EmployeeRolesController@updateRights')->name('update.rights');
 			});
 
 		});

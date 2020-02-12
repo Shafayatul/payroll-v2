@@ -113,4 +113,59 @@ trait keyFunctionTrait
             '4' => 'security',
         ];
     }
+
+    public function permissionMeta(){
+        return [
+            '0' => 'View',
+            '1' => 'Propose', 
+            '2' => 'Edit',
+        ];
+    }
+
+    public function permissionAccessType(){
+        return [
+            '0' => 'Own',
+            '1' => 'My reports',
+            // '2' => 'Custom',
+            '3' => 'All',
+        ];
+    }
+
+    public function roleReminds(){
+        return [
+            '0' => 'Probation period end ',
+            '1' => 'Hire date',
+            '2' => 'Last day of work',
+            '3' => 'Contract ends',
+            '4' => 'Termination date',
+            '5' => 'Last salary change',
+            '6' => 'Next absence',
+            '7' => 'Birthday',
+            '8' => 'Enrollment certificate valid until',
+        ];
+    }
+
+    public function roleReminderFilterType(){
+        return [
+            'All employees',
+            'Special',
+            'Direct team',
+            'Own team',
+        ];
+    }
+
+    public function offsetUnit(){
+            
+        return [
+            'days',
+            'weeks',
+        ];
+    }    
+
+    public function offsetSign(){
+        return [
+            'after',
+            'before',
+        ];
+    }    
 }

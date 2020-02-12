@@ -42,4 +42,12 @@ class Role extends Model
         return $this->hasMany(\App\RoleReminder::class, 'role_id');
     }
 
+    // public function permissionRoles(){
+    //     return $this->belongsToMany(\App\PermissionRule::class, 'role_permission_rule', 'role_id', 'permission_rule_id');
+    // }
+
+    public function permissions(){
+        return $this->belongsToMany(\App\Permission::class, 'permission_role', 'role_id', 'permission_id');
+    }
+
 }

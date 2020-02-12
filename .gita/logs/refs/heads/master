@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 0a4df1cfd49df2ffa5d4009214fe4024687d6ab9 Md Salman Hider <salman@localhost.localdomain> 1581253483 -0500	clone: from https://github.com/Shafayatul/payroll-v2.git
+0a4df1cfd49df2ffa5d4009214fe4024687d6ab9 7b7b62bad18175a2b6d8892ecf7e60d14ccd3b26 Md Salman Hider <salman@localhost.localdomain> 1581262277 -0500	pull: Fast-forward
+7b7b62bad18175a2b6d8892ecf7e60d14ccd3b26 e605c1e8f0f42ca3b5df31b18a83c8a898b24b44 Md Salman Hider <salman@localhost.localdomain> 1581264307 -0500	commit: Add Document template (migration + el. model)
+e605c1e8f0f42ca3b5df31b18a83c8a898b24b44 605c2b03c1e19d185d5a9e59034df0ecc1215c59 Md Salman Hider <salman@localhost.localdomain> 1581395686 +0600	pull: Fast-forward
+605c2b03c1e19d185d5a9e59034df0ecc1215c59 daeaf46a03444911bf9a291157e86082b1a4b8e5 Md Salman Hider <salman@localhost.localdomain> 1581396081 +0600	commit: Initiate user role

@@ -20,9 +20,10 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard(); // Disable mass assignment
 
+        $this->call(PermissionsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         
-        factory(Industry::class, 5)->create();
+        // factory(Industry::class, 5)->create();
         
         // factory(\App\EmployeeInformationSection::class, 50)->create();
         // factory(PublicHolidayCalendar::class, 5)->create();
