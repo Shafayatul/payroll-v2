@@ -33,7 +33,7 @@ class EmployeeRolesController extends Controller
             $q->where('id', $company_id);
         })->get();
 
-        return view('setting.employee-roles.index2', compact('roles', 'category', 'sections', 'permission', 'attributes'));
+        return view('setting.employee-roles.index', compact('roles', 'category', 'sections', 'permission', 'attributes'));
 
     }
 
@@ -165,7 +165,7 @@ class EmployeeRolesController extends Controller
 
         $reminder = RoleReminder::findOrFail($id);
         $reminder->delete();
-        
+
         return redirect()->back();
     }
 
