@@ -58,6 +58,9 @@ Route::group(
 				Route::get('/{category}', 'EmployeeRolesController@index')->name('index');
 				Route::post('/update/members', 'EmployeeRolesController@updateMembers')->name('update.members');
 				Route::post('/update/rights', 'EmployeeRolesController@updateRights')->name('update.rights');
+				Route::post('/store/reminder', 'EmployeeRolesController@storeReminder')->name('store.reminder');
+				Route::post('/update/reminder', 'EmployeeRolesController@updateReminder')->name('update.reminder');
+				Route::post('/delete/reminder', 'EmployeeRolesController@deleteReminder')->name('delete.reminder');
 			});
 
 		});

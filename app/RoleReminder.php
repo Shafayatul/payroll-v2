@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Traits\keyFunctionTrait;
 
 class RoleReminder extends Model
 {
-    use keyFunctionTrait;
+    use SoftDeletes, keyFunctionTrait;
      /**
      * The database table used by the model.
      *
@@ -28,10 +29,13 @@ class RoleReminder extends Model
      *
      * @var array
      */
-    protected $fillable = ['about_key', 'filter_type', 'automatic_offset', 'automatic_offset_unit', 'automatic_offset_sign', 'reminder_type', 'is_yearly', 'title', 'role_id'];
+    protected $fillable = ['remind_key', 'about_key', 'filter_type', 'automatic_offset', 'automatic_offset_unit', 'automatic_offset_sign', 'reminder_type', 'is_yearly', 'title', 'role_id'];
 
     public function role(){
         return $this->belongsTo(\App\Role::class, 'role_id');
+    }
+    public function reminds(){
+        return $this->belongsTo(\App\Role::class, 'remind_key');
     }
 
     public function specialrole(){

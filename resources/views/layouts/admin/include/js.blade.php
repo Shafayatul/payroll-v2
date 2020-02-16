@@ -125,7 +125,7 @@ jQuery(document).ready(function() {
 });
 </script>
 <!-- chartist chart -->
-<script src="{{ asset('admin/assets/plugins/chartist-js/dist/chartist.min.js') }}"></script>
+{{-- <script src="{{ asset('admin/assets/plugins/chartist-js/dist/chartist.min.js') }}"></script> --}}
 {{-- <script src="{{ asset('admin/assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js') }}"></script> --}}
 <!-- Chart JS -->
 {{-- <script src="{{ asset('admin/assets/plugins/echarts/echarts-all.js') }}"></script> --}}
@@ -133,4 +133,4 @@ jQuery(document).ready(function() {
 <!-- ============================================================== -->
 <!-- Style switcher -->
 <!-- ============================================================== -->
-<script src="{{ asset('admin/assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script>
+{{-- <script src="{{ asset('admin/assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script> --}}

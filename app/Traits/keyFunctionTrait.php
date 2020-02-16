@@ -131,7 +131,7 @@ trait keyFunctionTrait
         ];
     }
 
-    public function roleReminds(){
+    public function roleRemindAbout(){
         return [
             '0' => 'Probation period end ',
             '1' => 'Hire date',

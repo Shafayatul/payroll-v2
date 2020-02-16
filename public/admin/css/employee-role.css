@@ -1,30 +1,9 @@
 .margin-top-20 {
     margin-top: 20px !important;
 }
-
-
 .modal-dialog {
     max-width:600px;
     margin: 30px auto;
-}
-
-.reminder span {
-    padding: 1px 8px;
-    border: 1px solid #c5c5c5;
-    background: #eee;
-    border-radius: 2px;
-    margin: 4px 2px;
-    display: inline-block;
-    max-width: 100%;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
-    hyphens: auto;
-    word-wrap: break-word;
-}
-.reminder.box:last-child {
-    border-bottom: 1px solid 
-    #c5c5c5;
-    margin-bottom: 20px;
 }
 .reminder.box {
     border-top: 1px solid 
@@ -41,15 +20,11 @@
     background-color:
     #f4f7f9;
 }
-.reminder.box {
- border-top:1px solid #c5c5c5;
- padding:20px 0
-}
 .reminder.box:last-child {
  border-bottom:1px solid #c5c5c5;
  margin-bottom:20px
 }
-.reminder span {
+.reminder>span {
  padding:1px 8px;
  border:1px solid #c5c5c5;
  background:#eee;
@@ -271,4 +246,12 @@ a.document-icon:hover {
 .row.gutter30 {
     margin-right: -5px;
     margin-left: -5px;
+}
+
+/* .remind-filter-type {
+    margin-bottom: 0px !important;
+} */
+
+.filter-type {
+    margin-bottom: 0px !important;
 }

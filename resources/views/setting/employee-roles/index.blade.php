@@ -6,6 +6,7 @@
 @endsection
 @section('content')
 @include('layouts.admin.include.alert')
+@php $inc = 0; @endphp
 <div class="shadowed-box">
     <div class="row gutter30 ml-0">
         <div class="col-md-4 ">
@@ -67,10 +68,10 @@
                 </ul>
                 <div class="tab-content" id="pills-tab Content">
                     <div class="tab-pane {{ $category == 'members'? 'active':'fade'}}" id="roles-member{{$role->id}}" role="tabpanel" aria-labelledby="roles-member-tab{{$role->id}}">
-                        <form id="update-members{{$role->id}}" action="{{ route('roles.update.members') }}" method="post">
+                        <form class="update-members" id="update-members{{$role->id}}" action="{{ route('roles.update.members') }}" method="post">
                             @csrf
                             @method('POST')
-                            <select class="multi-select duallistbox" multiple="multiple" data-id="{{ $role->id }}" size="10" name="users[]" title="Select members/employees">
+                            <select select multiple="multiple" size="10" data-id="{{ $role->id }}" size="10" id="user-role-{{$role->id}}" name="users[]" title="Select members/employees">
                                 @foreach (Auth::user()->office->users as $user)
                                     <option value="{{$user->id}}" {{ $role->users->contains($user) ? 'selected':'' }}>{{$user->name}}, {{$user->departments->name}}</option>
                                 @endforeach
@@ -147,85 +148,227 @@
                             The following reminders will be added automatically for every employee with this role.
                         </p>
                         @foreach($role->reminders as $reminder)
+                        @php 
+                            $reminder_id = new \Hashids\Hashids();
+                            $reminder_id->encode($reminder->id);
+                        @endphp
                         <div class="reminder box">
                             Remind 
                             <span> 
-                                employees of Accounting role 
+                                {{ $reminder->roleReminds()[$reminder->remind_key] }} 
                             </span>
                             <br> about 
                             <span class="highlight">
-                                Last salary change
+                                {{ $reminder->roleReminds()[$reminder->about_key] }} 
                             </span>
                             <br> of 
                             <span>
-                                all employees 
+                                {{ $reminder->roleReminderFilterType()[$reminder->filter_type] }} 
                                 <small>*</small>
                             </span>
-                            <span> on that day</span>
-                            <a href="#modalEditReminder{{ $reminder->id }}"  data-toggle="modal">
+                            <span> on {{ $reminder->automatic_offset }} {{ null !== $reminder->automatic_offset_unit ? $reminder->offsetUnit()[$reminder->automatic_offset_unit] : '' }} {{ null !== $reminder->automatic_offset_sign ? $reminder->offsetSign()[$reminder->automatic_offset_sign] : '' }}</span>
+                            <a href="#modalEditReminder{{ $reminder_id }}"  data-toggle="modal">
                               <i class="fas fa-pencil-alt" data-toggle="tooltip" data-title="Edit reminder" data-original-title="" title=""></i>
                             </a>
                             <a href="#modal-delete-reminder" data-toggle="modal" data-reminder-id="342178" class="text-danger">
                                 <i class="fas fa-times-circle" data-toggle="tooltip" data-title="Delete reminder" data-original-title="" title=""></i>
                             </a>
                             <div class="pt-3"> 
-                                <strong>Expiration date:</strong> one day after <i>Last salary change</i> 
+                                <strong>Expiration date:</strong> one day after <i>{{ $reminder->roleReminds()[$reminder->about_key] }}</i> 
                             </div>
-                            <div id="modalEditReminder{{ $reminder->id }}" class="modal" tabindex="-1" role="dialog" aria-hidden="true" >
+                            {{-- <div id="modalEditReminder{{ $reminder_id }}" class="modal"  role="dialog" aria-hidden="true" >
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h4 class="modal-title">Edit reminder</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>              
                                         </div>                                  
-                                  
+                                        <form action="{{ route('roles.update.reminder') }}" method="post">
+                                            @csrf
+                                            @method('POST')
+                                            <div class="modal-body">
+                                                <div class="alert alert-info"> 
+                                                    Changes made after 5:00 am CET will take effect starting from the next day. 
+                                                </div>
+                                                <div class="form-group  row">
+                                                        <label class="col-md-3 control-label"> about </label>
+                                                    <div class="col-md-8">
+                                                        <select class="form-control reminderSelect"  name="role_about">
+                                                            <option value="" disabled>Please select...</option>
+                                                            @foreach ($role->roleReminds() as $key => $remind)
+                                                            <option value="{{ $key }}" {{ $reminder->about_key == $key? 'selected' : '' }}>{{ $remind }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row filter-type">
+                                                    <label class="col-md-3 control-label"> of 
+                                                        <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="" data-original-title="The term &quot;All employees&quot; refers to all employees for whom you have view rights regarding the selected attribute. <br/>The term &quot;Own Team&quot; in Personio refers to and includes all the employees who share the same (direct or indirect) supervisor.<br>However, &quot;Direct Team&quot; includes only the employees who share the same direct supervisor."></i> 
+                                                    </label>
+                                                    <div class="col-md-8">
+                                                        <select class="form-control custom-select remind-filter-type" name="filter_type" data-id="{{$role->id}}">
+                                                            @foreach ($role->roleReminderFilterType() as $key => $filter)
+                                                            <option value="{{ $key }}" {{ $reminder->filter_type == $key? 'selected' : '' }}>{{ $filter }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row special-type mt-2" id="special_{{ $role->id }}">
+                                                    <div class="col-md-3"></div>
+                                                    <div class="col-md-8">
+                                                        <div class="update-attribute-container" id="update-attribute-container-{{ $reminder_id }}">
+                                                            @php
+                                                                $count = 0;
+                                                            @endphp
+                                                            @if(!$reminder->specialrole->isEmpty())
+                                                            @foreach ($reminder->specialrole as $special)
+                                                            <div class="form-group row" id="delete-filter-{{ $reminder_id }}{{ ++$inc }}">
+                                                                <div class="input-group col-md-5">
+                                                                    <select class="form-control  pre-select-attribute" name="filter_attr[]" data-role="{{$reminder_id}}" id="select-attr-{{ $reminder_id }}{{ $inc }}" data-room="{{ $inc }}">
+                                                                        @foreach($attributes as $attribute)
+                                                                        <option id="attr-{{$attribute->id}}" data-attr="{{ $attribute->name }}" value="{{ $attribute->id }}" {{ $attribute->id == $special->attribute_id ? 'selected':'' }}>{{ $attribute->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="input-group-append col-md-5" id="input-{{ $reminder_id }}{{ $inc }}">
+                                                                    <input class="form-control" placeholder="{{ $attribute->id }}" required="" name="filter_value[{{ $attribute->id }}]" type="text" value="{{ $special->value }}">
+                                                                </div>
+                                                                <div class="clear col-md-1">
+                                                                    <button class="btn" type="button" id="delete-{{ $reminder_id }}{{ $inc  }}" data-count="{{ $inc }}" data-role="{{$reminder_id}}" onclick="deleteFilter({{ $inc }});"><i class="fas fa-times-circle" data-toggle="tooltip" data-title="Delete" data-original-title="" title=""></i></button>
+                                                                </div>
+                                                            </div>
+                                                            @php
+                                                                $count = $inc;
+                                                            @endphp
+                                                            @endforeach
+                                                            @endif
+                                                            <span id="another-container-{{ $reminder->id }}"></span>
+                                                        </div>
+                                                        <a class="another-add" data-id="{{ $reminder->id }}" data-count="{{ $count }}"  href="#add-another-filter"><i class="fas fa-plus-circle"></i> Add filter </a>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" style="margin-top:10px !important;">
+                                                    <label class="col-md-3 control-label"> when </label>
+                                                    <div class="col-md-2"> 
+                                                        <input class="form-control required" number="" name="automatic_offset" type="text" value="4"> 
+                                                    </div>
+                                                    <div class="col-md-3"> 
+                                                        <select class="form-control valid" name="automatic_offset_unit">
+                                                            <option value=""></option>
+                                                            @foreach ($role->offsetUnit() as $key => $unit)
+                                                            <option value="{{ $key }}">{{ $unit }}</option>
+                                                            @endforeach
+                                                        </select> 
+                                                    </div>
+                                                    <div class="col-md-3"> 
+                                                        <select class="form-control" name="automatic_offset_sign">
+                                                            <option value=""></option>
+                                                            @foreach ($role->offsetSign() as $key => $sign)
+                                                            <option value="{{ $key }}">{{ $sign }}</option>
+                                                            @endforeach
+                                                        </select> 
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-md-offset-3 col-md-9">
+                                                        <div class="custom-control custom-radio show">
+                                                            <input type="radio" class="custom-control-input" id='staked-{{++$inc}}' name="radio_stacked" checked required>
+                                                            <label class="custom-control-label" for='staked-{{$inc}}'>Reminder (automated expiration)</label>
+                                                        </div>                             
+                                                        <div class="custom-control custom-radio mb-3 d-hide">
+                                                            <input type="radio" class="custom-control-input" id="staked-{{++$inc}}" name="radio_stacked" required>
+                                                            <label class="custom-control-label" for="staked-{{$inc}}">Task (no expiration)</label>                                     
+                                                        </div>                              
+                                                        <div id="reminder" >
+                                                            Please note that reminders that are triggered before the event, will disappear from the dashboard
+                                                            <strong>one day</strong> after the event. 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 control-label"> Frequency </label>
+                                                    <div class="col-md-8 form-control-static">
+                                                        <input name="automatic_yearly" type="checkbox" value="1"> Yearly reminder 
+                                                    </div> 
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label class="col-md-3 control-label"> Note </label>
+                                                    <div class="col-md-8">
+                                                        <input class="form-control" placeholder="Optional description..." name="title" type="text" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" >Edit</button>
+                                            </div>
+                                            <input type="hidden" name="role_id" value="{{ $role->id }}">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>  --}}
+                        </div>
+                        @endforeach
+                        <a href="#modalAddReminder" data-toggle="modal"  class="btn btn-sm btn-primary"> 
+                            Add reminder 
+                        </a>
+                        <p class="margin-top-20">* all employees for whom you have view rights regarding the selected attributes.</p>
+                        <div id="modalAddReminder" class="modal"  role="dialog" aria-hidden="true" >
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Edit reminder</h3></h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>              
+                                    </div>                                  
+                                    <form action="{{ route('roles.store.reminder') }}" method="post">
+                                        @csrf
+                                        @method('POST')
                                         <div class="modal-body">
                                             <div class="alert alert-info"> 
                                                 Changes made after 5:00 am CET will take effect starting from the next day. 
-                                            </div>                  
+                                            </div>
                                             <div class="form-group row">
                                                 <label class="col-md-3 control-label"> Remind </label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control mySelect2" name="automatic_date_field">
+                                                    <select class="form-control reminderSelect" name="role_reminds">
                                                         <option value="">Please select...</option>
-                                                        @foreach ($reminder->roleReminds() as $key => $remind)
-                                                        <option value="{{ $key }}"> {{ $remind }} </option>
+                                                        @foreach ($roles as $role_list)
+                                                        <option value="{{ $role_list->id }}">{{ $role_list->name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-3 control-label"> about </label>
+                                                    <label class="col-md-3 control-label"> about </label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control mySelect2" name="automatic_date_field">
+                                                    <select class="form-control reminderSelect" name="role_about">
                                                         <option value="">Please select...</option>
-                                                        @foreach ($reminder->roleReminds() as $key => $remind)
-                                                        <option value="{{ $key }}"> {{ $remind }} </option>
+                                                        @foreach ($role->roleReminds() as $key => $remind)
+                                                        <option value="{{ $key }}">{{ $remind }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+                                            <div class="form-group row filter-type">
                                                 <label class="col-md-3 control-label"> of 
                                                     <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="" data-original-title="The term &quot;All employees&quot; refers to all employees for whom you have view rights regarding the selected attribute. <br/>The term &quot;Own Team&quot; in Personio refers to and includes all the employees who share the same (direct or indirect) supervisor.<br>However, &quot;Direct Team&quot; includes only the employees who share the same direct supervisor."></i> 
                                                 </label>
                                                 <div class="col-md-8">
-                                                    <select class="form-control custom-select">
-                                                        <option value="all" selected="selected">All employees</option>
-                                                        <option value="special">Special</option>
-                                                        <option value="direct_team">Direct team</option>
-                                                        <option value="team">Own team</option>
+                                                    <select class="form-control custom-select remind-filter-type" name="filter_type" data-id="{{$role->id}}">
+                                                        @foreach ($role->roleReminderFilterType() as $key => $filter)
+                                                        <option value="{{ $key }}">{{ $filter }}</option>
+                                                        @endforeach
                                                     </select>
-                                                    <div class=" margin-top-5 boxs" id="special">
-                                                        <div class="attributeFilterContainer"> </div>
-                                                        <div id="education_fields"></div>                                                           
-                                                        <a class="added" href="#add-attribute-filter" id="copy"> 
-                                                            <i class="fas fa-plus-circle"></i> Add filter 
-                                                        </a>
-                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
+                                            <div class="form-group row special-type mt-2" id="special_{{$role->id}}" style="display:none;">
+                                                <div class="col-md-3"></div>
+                                                <div class="col-md-8">
+                                                    <span class="addAttributeFilterContainer" id="addAttributeFilterContainer-{{$role->id}}"> </span>
+                                                    <a class="add" data-id="{{ $role->id }}" href="#add-filter"><i class="fas fa-plus-circle"></i> Add filter </a>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row" style="margin-top:10px !important;">
                                                 <label class="col-md-3 control-label"> when </label>
                                                 <div class="col-md-2"> 
                                                     <input class="form-control required" number="" name="automatic_offset" type="text" value="4"> 
@@ -233,27 +376,29 @@
                                                 <div class="col-md-3"> 
                                                     <select class="form-control valid" name="automatic_offset_unit">
                                                         <option value=""></option>
-                                                        <option value="1">days</option>
-                                                        <option value="7">weeks</option>
+                                                        @foreach ($role->offsetUnit() as $key => $unit)
+                                                        <option value="{{ $key }}">{{ $unit }}</option>
+                                                        @endforeach
                                                     </select> 
                                                 </div>
                                                 <div class="col-md-3"> 
                                                     <select class="form-control" name="automatic_offset_sign">
                                                         <option value=""></option>
-                                                        <option value="-1">before</option>
-                                                        <option value="1">after</option>
+                                                        @foreach ($role->offsetSign() as $key => $sign)
+                                                        <option value="{{ $key }}">{{ $sign }}</option>
+                                                        @endforeach
                                                     </select> 
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-offset-3 col-md-9">
                                                     <div class="custom-control custom-radio show">
-                                                        <input type="radio" class="custom-control-input" id="customControlValidation2" name="radio-stacked" required>
-                                                        <label class="custom-control-label" for="customControlValidation2">Reminder (automated expiration)</label>
+                                                        <input type="radio" class="custom-control-input" id="expiration-type-reminder-{{ $role->id }}" name="radio_stacked" checked required>
+                                                        <label class="custom-control-label" for="expiration-type-reminder-{{ $role->id }}">Reminder (automated expiration)</label>
                                                     </div>                             
                                                     <div class="custom-control custom-radio mb-3 d-hide">
-                                                        <input type="radio" class="custom-control-input" id="customControlValidation3" name="radio-stacked" required>
-                                                        <label class="custom-control-label" for="customControlValidation3">ask (no expiration)</label>                                     
+                                                        <input type="radio" class="custom-control-input" id="expiration-type-task-{{ $role->id }}" name="radio_stacked" required>
+                                                        <label class="custom-control-label" for="expiration-type-task-{{ $role->id }}">Task (no expiration)</label>                                     
                                                     </div>                              
                                                     <div id="reminder" >
                                                         Please note that reminders that are triggered before the event, will disappear from the dashboard
@@ -264,7 +409,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 control-label"> Frequency </label>
                                                 <div class="col-md-8 form-control-static">
-                                                    <input name="automatic_yearly" type="checkbox" value="1"> Yearly reminder 
+                                                    <input name="automatic_yearly" id="is-yearly-{{ $role->id }}" type="checkbox" value="1"> <label for="is-yearly-{{ $role->id }}">Yearly reminder</label> 
                                                 </div> 
                                             </div>
                                             <div class="form-group row">
@@ -274,135 +419,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary" id="add_employee_form_submit">Edit</button>
+                                            <button type="submit" class="btn btn-primary" >Edit</button>
                                         </div>
-                                
-                                    </div>
-                                </div>
-                            </div> 
-                        </div>
-                        @endforeach
-                        <a href="#modalAddReminder" data-toggle="modal"  class="btn btn-sm btn-primary"> 
-                            Add reminder 
-                        </a>
-                        <p class="margin-top-20">* all employees for whom you have view rights regarding the selected attributes.</p>
-                        <div id="modalAddReminder" class="modal" tabindex="-1" role="dialog" aria-hidden="true" >
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Edit reminder</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>              
-                                    </div>                                  
-                              
-                                    <div class="modal-body">
-                                        <div class="alert alert-info"> 
-                                            Changes made after 5:00 am CET will take effect starting from the next day. 
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 control-label"> Remind </label>
-                                            <div class="col-md-8">
-                                                <select class="form-control mySelect2" name="automatic_date_field">
-                                                    <option value="">Please select...</option>
-                                                    @foreach ($role->roleReminds() as $key => $remind)
-                                                    <option value="{{ $key }}"> {{ $remind }} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                                <label class="col-md-3 control-label"> about </label>
-                                            <div class="col-md-8">
-                                                <select class="form-control mySelect2" name="automatic_date_field">
-                                                    <option value="">Please select...</option>
-                                                    @foreach ($role->roleReminds() as $key => $remind)
-                                                    <option value="{{ $key }}">{{ $remind }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 control-label"> of 
-                                                <i class="fas fa-info-circle" data-toggle="tooltip" data-placement="right" title="" data-original-title="The term &quot;All employees&quot; refers to all employees for whom you have view rights regarding the selected attribute. <br/>The term &quot;Own Team&quot; in Personio refers to and includes all the employees who share the same (direct or indirect) supervisor.<br>However, &quot;Direct Team&quot; includes only the employees who share the same direct supervisor."></i> 
-                                            </label>
-                                            <div class="col-md-8">
-                                                <select class="form-control custom-select">
-                                                    @foreach ($role->roleReminderFilterType() as $key => $filter)
-                                                    <option value="{{ $key }}">{{ $filter }}</option>
-                                                    @endforeach
-                                                </select>
-`                                            </div>
-                                        </div>
-                                        
-                                        <div class="form-group row" id="special{{$role->id}}">
-                                            <div class="col-md-3"></div>
-                                            <div class="col-md-8">
-                                                <div class=" margin-top-5 boxs">
-                                                    <div class="attributeFilterContainer"> </div>
-                                                    <div id="education_fields"></div>                                                           
-                                                    <a class="added" href="#add-attribute-filter" id="copy"> 
-                                                        <i class="fas fa-plus-circle"></i> Add filter 
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 control-label"> when </label>
-                                            <div class="col-md-2"> 
-                                                <input class="form-control required" number="" name="automatic_offset" type="text" value="4"> 
-                                            </div>
-                                            <div class="col-md-3"> 
-                                                <select class="form-control valid" name="automatic_offset_unit">
-                                                    @foreach ($role->offsetUnit() as $key => $unit)
-                                                    <option value="{{ $key }}">{{ $unit }}</option>
-                                                    @endforeach
-                                                </select> 
-                                            </div>
-                                            <div class="col-md-3"> 
-                                                <select class="form-control" name="automatic_offset_sign">
-                                                    @foreach ($role->offsetSign() as $key => $sign)
-                                                    <option value="{{ $key }}">{{ $sign }}</option>
-                                                    @endforeach
-                                                </select> 
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-md-offset-3 col-md-9">
-                                                <div class="custom-control custom-radio show">
-                                                    <input type="radio" class="custom-control-input" id="customControlValidation2" name="radio-stacked" required>
-                                                    <label class="custom-control-label" for="customControlValidation2">Reminder (automated expiration)</label>
-                                                </div>                             
-                                                <div class="custom-control custom-radio mb-3 d-hide">
-                                                    <input type="radio" class="custom-control-input" id="customControlValidation3" name="radio-stacked" required>
-                                                    <label class="custom-control-label" for="customControlValidation3">ask (no expiration)</label>                                     
-                                                </div>                              
-                                                <div id="reminder" >
-                                                    Please note that reminders that are triggered before the event, will disappear from the dashboard
-                                                    <strong>one day</strong> after the event. 
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 control-label"> Frequency </label>
-                                            <div class="col-md-8 form-control-static">
-                                                <input name="automatic_yearly" type="checkbox" value="1"> Yearly reminder 
-                                            </div> 
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-3 control-label"> Note </label>
-                                            <div class="col-md-8">
-                                                <input class="form-control" placeholder="Optional description..." name="title" type="text" value="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary" id="add_employee_form_submit">Edit</button>
-                                    </div>
-                            
+                                        <input type="hidden" name="role_id" value="{{ $role->id }}">
+                                    </form>
                                 </div>
                             </div>
                         </div>       
@@ -729,80 +751,152 @@
 </div>    
 @endsection
 @section('admin-additional-js')
-<script src="{{ asset('admin/js/jquery.bootstrap-duallistbox.js') }}"></script>  
+<script src="{{ asset('admin/js/jquery.bootstrap-duallistbox.js') }}"></script>
 <script type="text/javascript">
         
     $(document).ready(function(){
-        $("select").change(function(){
-            $(this).find("option:selected").each(function(){
-                var optionValue = $(this).attr("value");
-                    $(".boxs").hide();
-                    $("#" + optionValue).show();
-            });
-        }).change();
-    });
+        // $('.reminderSelect').select2({
+        //     placeholder: "What type of attribute is this?",
+        //     allowClear: true,
+        // });
+        $('#mymodal').on('show.bs.modal', function() {
 
-    var room = 1;
+            console.log('qqq');
+        });
 
-    $('#copy').click(function() {
-        room++;
-        var objTo = document.getElementById('education_fields')
-        var divtest = document.createElement("div");
-        divtest.setAttribute("class", "form-group removeclass" + room);
-        var rdiv = 'removeclass' + room;
-        divtest.innerHTML = `<div class="row">
-                                <div class="input-group">
-                                    <select class="form-control select-chosen">
-                                        <option value="id">ID</option>
-                                        <option value="first_name">First name</option>
-                                        <option value="last_name">Last name</option>
-                                        <option value="email">Email</option>
-                                        <option value="position">Position</option>
-                                        <option value="gender">Gender</option>
-                                        <option value="status">Status</option>
-                                        <option value="employment_type">Employment type</option>
-                                        <option value="termination_type">Termination type</option>
-                                        <option value="termination_reason">Termination reason</option>
-                                        <option value="termination_date">Termination date</option>
-                                        <option value="termination_at">Notice pronounced</option>
-                                    </select>
-                                </div>
-                                <div class="input-group-append col-md-5" id="special">
-                                </div>
-                                <div class="clear">
-                                    <button class="btn" type="button" onclick="remove_education_fields(` + room + `);"><i class="fas fa-times-circle" data-toggle="tooltip" data-title="Delete" data-original-title="" title=""></i></button>
-                                </div>
-                            </div>`;
-            objTo.appendChild(divtest)
-  
-    });
+        $('a').click(function(){
+            $('.pre-select-attribute').select2();
+        });
+        // $(".special-type").hide();
+        $(".remind-filter-type").change(function(){
+            var type = $(this).val();
+            var id = $(this).data('id');
+            $("#special_" + id).hide();
+            if(type == 1){
+                $("#special_" + id).show();
+            } else {
+                $("#special_" + id).hide();
+            }
+        });
 
-    function remove_education_fields(rid) {
-        $('.removeclass' + rid).remove();
-    }
-    $(".education_fields").select2({
-        placeholder: "Select a state",
-        allowClear: true
-    });
+        $(".edit-remind-filter-type").change(function(){
+            var type = $(this).val();
+            var id = $(this).data('id');
+            $("#special_" + id).hide();
+            if(type == 1){
+                $("#special_" + id).show();
+            } else {
+                $("#special_" + id).hide();
+            }
+        });
 
+        $('select.select-attribute').select2();
 
-    $(document).ready(function(){ 
+        $(document).on('change', 'select.select-chosen', function () {
+            let role = $(this).data('role'); 
+            let room = $(this).data('room');
+            let attr_id = $('#select-attr-'+room).val();
+            let attr = $('#attr-'+attr_id).data('attr');
+            let html = `<input class="form-control" placeholder="`+attr+`" required="" name="filter_value[`+attr_id+`]" type="text" value="">`;
+            $('#input-'+role+room).html(html);
+        });
+
         $(".show").click(function(){
             $("#reminder").show();
         });
         $(".d-hide").click(function(){
             $("#reminder").hide();
         });
+    
+        var room = 1;
+    
+        $('.add').click(function() {
+            room++;
+            let id = $(this).data('id');
+            let html = `<div class="form-group row" id="delete-filter-`+id+room+`">
+                            <div class="input-group col-md-5">
+                                <select class="form-control select-chosen" name="filter_attr[]" data-role="`+id+`" id="select-attr-`+room+`" data-room="`+room+`">
+                                    @foreach($attributes as $attribute)
+                                    <option id="attr-{{$attribute->id}}" data-attr="{{ $attribute->name }}" value="{{ $attribute->id }}">{{ $attribute->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="input-group-append col-md-5" id="input-`+id+room+`">
+                            </div>
+                            <div class="clear col-md-1">
+                                <button class="btn" type="button" id="delete-`+id+room+`" data-role="`+id+`" onclick="deleteFilter(` + room + `);"><i class="fas fa-times-circle" data-toggle="tooltip" data-title="Delete" data-original-title="" title=""></i></button>
+                            </div>
+                        </div>`;
+            $('#addAttributeFilterContainer-'+id).append(html);
+            // $(document.'.select-chosen').select2();
+            $(document).ready(function() {
+                $('.select-chosen').select2();
+            });        
+        });
+        let counts = 0;
+        $('.another-add').click(function() {
+            let id = $(this).data('id');
+            let count = $(this).data('count');
+            if(count <= counts){
+                counts+=1;
+                count = counts;
+            }else{
+                count+=1;
+                counts = count;
+            }
+            let html = `<div class="form-group row" id="delete-filter-`+id+count+`">
+                            <div class="input-group col-md-5">
+                                <select class="form-control select-attribute" name="filter_attr[]" data-role="`+id+`" id="select-attr-`+count+`" data-room="`+count+`">
+                                    @foreach($attributes as $attribute)
+                                    <option id="attr-{{$attribute->id}}" data-attr="{{ $attribute->name }}" value="{{ $attribute->id }}">{{ $attribute->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="input-group-append col-md-5" id="input-`+id+count+`">
+                            </div>
+                            <div class="clear col-md-1">
+                                <button class="btn" type="button" id="delete-`+id+count+`" data-role="`+id+`" onclick="deleteFilter(` + count + `);"><i class="fas fa-times-circle" data-toggle="tooltip" data-title="Delete" data-original-title="" title=""></i></button>
+                            </div>
+                        </div>`;
+            $('#another-container-'+id).append(html);
+            // $(document.).select2();
+            // $(document).ready(function() {
+                $('.select-attribute').select2();
+            // });
+        });
     });
 
-
- 
+    function deleteFilter(rid) {
+        let role = $('#delete-'+rid).data('role');
+        $('#delete-filter-' +role+rid).remove();
+    }
      
-    var demo1 = $('.multi-select').bootstrapDualListbox();
-    $("#demoform").submit(function() {
-        alert($('.multi-select').val());
-        return false;
-    });
+    // var demo1 = $('.multi-select').bootstrapDualListbox();
+    // $(".update-members").submit(function() {
+    //     alert($('.multi-select').val());
+    //     return false;
+    // });
+    // $('[name=users]').bootstrapDualListbox( { 
+    //     filterTextClear:'show all',
+    //     filterPlaceHolder:'Filter',
+    //     moveSelectedLabel:'Move selected',
+    //     moveAllLabel:'Move all',
+    //     removeSelectedLabel:'Remove selected',
+    //     removeAllLabel:'Remove all',
+    // });
+
+    // var demo2 = $('.demo2').bootstrapDualListbox({
+    //     nonSelectedListLabel: 'Non-selected',
+    //     selectedListLabel: 'Selected',
+    //     preserveSelectionOnMove: 'moved',
+    //     moveOnSelect: false,
+    //     nonSelectedFilter: 'ion ([7-9]|[1][0-2])'
+    // });
+    var demo1 = $('select[name="user[]"]').bootstrapDualListbox();
+          $(".update-members").submit(function() {
+            alert($('[name="user[]"]').val());
+            return false;
+          });
     var demo2 = $('.demo2').bootstrapDualListbox({
         nonSelectedListLabel: 'Non-selected',
         selectedListLabel: 'Selected',
@@ -810,10 +904,8 @@
         moveOnSelect: false,
         nonSelectedFilter: 'ion ([7-9]|[1][0-2])'
     });
+    $('.remindSelect').select2();
 
-    $(".select-chosen").select2({
-        placeholder: "What type of attribute is this?",
-        allowClear: true,
-    });
-</script>    
+</script>
+    
 @endsection
