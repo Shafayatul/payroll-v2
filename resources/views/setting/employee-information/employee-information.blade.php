@@ -32,7 +32,7 @@
                 {{-- <button  class="my-button create cr" type="button"><div class="attrdiv"><div>Create a section</div></div></button> --}}
                 <button  class="my-button create cr" type="button" data-toggle="modal" data-target="#sectionCreate" data-whatever="@mdo"><div class="attrdiv"><div>Create a section</div></div></button>
 
-                <div class="block-section customvtab vtabs ">                    
+                <div class="block-section customvtab vtabs ">
                     <ul id="section-lists" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
                     @foreach ($sections as $section)
                         <li class="nav-item"><a class="nav-link {{ $loop->iteration == 1? 'active':''}}" data-toggle="tab" href="#tab{{ $section->id }}" role="tab">{{ $section->name }}</a></li>
@@ -102,7 +102,7 @@
                                                             </div>
                                                         </div>
                                                         <div id="is-unique-attr-{{ $section->id }}" class="boxs attr-{{ $section->id }}" style="display: none;">
-                                                            <div class="col-md-6 d-flex">                                                
+                                                            <div class="col-md-6 d-flex">
                                                                 <label class="is-unique-id" for="is_unique-{{ $section->id }}">Unique Id</label>
                                                                 <input type="checkbox" name="is_unique" value="1" class="check attr-input-{{ $section->id }}" id="is-unique-{{ $section->id }}">
                                                             </div>
@@ -113,7 +113,7 @@
                                                         <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
                                                         <button type="submit" class="btn btn-info">Add</button>
                                                     </div>
-                                                </form>                                          
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +132,7 @@
                                     </div>
                                 </div>
                                 <!-- Button trigger modal -->
-                                
+
 
                                 <!-- Modal Rename section -->
                                 <div class="modal fade" id="renameSection{{$section->id}}" tabindex="-1" role="dialog" aria-labelledby="#renameSectionLabel" aria-hidden="true">
@@ -151,7 +151,7 @@
                                                     <div class="form-group">
                                                         <input placeholder="Emergency contact" name="name" class="form-control name-attr" value="{{ $section->name }}">
                                                         <input type="hidden" name="section" value="{{ $section->id }}">
-                                                    </div> 
+                                                    </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
@@ -196,9 +196,9 @@
                         </div>
                         @foreach ($section->employeeDetailAttributes as $attribute)
                         <div class="card">
-                            <div class="panel-heading" id="headingAttribute{{ $attribute->id }}">                                                
+                            <div class="panel-heading" id="headingAttribute{{ $attribute->id }}">
                                 <div class="name collapsed " data-toggle="collapse" data-target="#collapseAttribute{{ $attribute->id }}" aria-expanded="false" aria-controls="collapseAttribute{{ $attribute->id }}">
-                                    <i class="fas fa-angle-right right-icon change" ></i>                             
+                                    <i class="fas fa-angle-right right-icon change" ></i>
                                     <span class="coll-title name-1" data-editable>{{ $attribute->name }}</span>
                                     <input class="G2Mft name-2" type="text" name="" value="{{ $attribute->name }}">
                                     @if($attribute->is_system == 1)
@@ -286,13 +286,13 @@
                                                 <label class="uniqueid" for="">Number of Decimals</label>
                                                 <select class="select-chosen select2 edit-attr-input-{{ $attribute->id }}" name="decimal_number" aria-hidden="true">
                                                     @foreach ($attribute->decimalNumbers() as $key => $decimal)
-                                                    <option value="{{ $key }}" {{ (null !== $attribute->dataTypes && null !== $attribute->dataTypes->attributeOptions)? $attribute->dataTypes->attributeOptions()->first()['name'] == $key?'selected':'': '' }}>{{ $decimal }}</option>
+                                                    <option value="{{ $key }}" @if( null !== $attribute->dataTypes && null !== $attribute->dataTypes->attributeOptions) $attribute->dataTypes->attributeOptions()->first()['name'] == $key?'selected':'' @endif >{{ $decimal }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
                                         <div id="edit-is-unique-attr-{{ $attribute->id }}" class="boxs attr-{{ $attribute->id }}" {{ $attribute->dataTypes && ($attribute->dataTypes->key == 1 || $attribute->dataTypes->key == 7 )? 'style=display:none;':'' }}>
-                                            <div class="col-md-6 d-flex">                                                
+                                            <div class="col-md-6 d-flex">
                                                 <label class="is-unique-id" for="edit-is-unique-{{ $attribute->id }}">Unique Id</label>
                                                 <input type="checkbox" name="is_unique" value="1" class="check edit-attr-input-{{ $attribute->id }}" id="edit-is-unique-{{ $attribute->id }}" {{ $attribute->is_unique == 1? 'checked':'' }}>
                                             </div>
@@ -306,11 +306,11 @@
                             </div>
                         </div>
                         @endforeach
-                    </div> 
+                    </div>
                 </div>
                 @endforeach
-            </div>      
-        </div>      
+            </div>
+        </div>
     </div>
     @include('setting.employee-information.modal-section-create')
 @endsection
@@ -318,7 +318,7 @@
 @section('admin-additional-js')
     <!--Custom JavaScript -->
     <script src=".{{ asset('admin/assets/plugins/moment/moment.js') }}" type="text/javascript"></script>
-    <script src=".{{ asset('admin/assets/plugins/footable/js/footable.min.js') }}"></script>     
+    <script src=".{{ asset('admin/assets/plugins/footable/js/footable.min.js') }}"></script>
     <script src="{{ asset('admin/js/main.js') }}"></script>
 
     <script src="js/jquery.bootstrap-duallistbox.js') }}"></script>
