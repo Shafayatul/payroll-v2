@@ -3,3 +3,18 @@
     padding: 10px 0;
     border-bottom: 1px dotted #d6d6d6;
 }
+
+.steps-form {
+    display: table;
+    width: 100%;
+    position: relative; 
+}
+
+.steps-row-2 .btn-amber{
+    background:#0DB5DF;
+     color: #fff;
+}
+
+.steps-row-2 .active a{    
+     color: #fff;
+}

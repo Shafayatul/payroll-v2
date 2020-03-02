@@ -55,21 +55,8 @@ a.btn-circle-2 {
     margin-right: 10px;
     padding: 0;
 }
-.steps-row-2 .btn-amber{
-    background:#0DB5DF;
-     color: #fff;
 
-}
-.steps-row-2 .active a{    
-     color: #fff;
 
-}
-
-.steps-form-2 {
-    display: table;
-    width: 100%;
-    position: relative; 
-}
 .form-group {
     margin-bottom: 15px;
 }

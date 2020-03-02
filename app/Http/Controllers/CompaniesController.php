@@ -28,7 +28,6 @@ class CompaniesController extends Controller
     public function index(Request $request)
     {
         $company = Company::where('user_id', Auth::id())->first();
-        // dd($company);
         $json_currencies = $this->currencies();
         $currencies = json_decode($json_currencies);
         $timezones = $this->timezones();

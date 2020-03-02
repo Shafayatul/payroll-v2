@@ -19,17 +19,10 @@ class DepartmentsController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $departments = Department::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('working_hour', 'LIKE', "%$keyword%")
-                ->orWhere('office_id', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $departments = Department::latest()->paginate($perPage);
-        }
+        $company_id = Auth::user()->office->company_id;
+        $departments = Department::whereHas('office', function($q) use($company_id) {
+            $q->where('company_id', $company_id);
+        })->latest()->get();
         $offices = Office::pluck('name', 'id');
         return view('departments.index', compact('departments', 'offices'));
     }

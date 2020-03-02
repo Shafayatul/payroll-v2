@@ -64,13 +64,12 @@
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Currency </label>
                     <div class="col-md-5">
-                        <p class="form-control-static office_currency">{{ $office->currency }}</p>
-                        <i>(Company default)</i>
+                        <p class="form-control-static office_currency">{!! $office->currency ?? '<i>(Company default)</i>' !!}</p>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Timezone </label>
-                    <div class="col-md-5 form-control-static office_timezone">{{  $office->timezone }}<br> <i>(Company default)</i> </div>
+                    <div class="col-md-5 form-control-static office_timezone">{!!  $office->timezone ?? '<i>(Company default)</i>' !!}<br>  </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Street </label>
@@ -89,7 +88,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Public holidays </label>
                     <div class="col-md-5">
-                        <p class="form-control-static office_public_hoilday"> DE Feiertage <i>(from company)</i> </p>
+                        <p class="form-control-static office_public_hoilday"> {!! $office->calendar ?? $office->company->calendar->name .'<i>(from company)</i>'  !!}</p>
                     </div>
                 </div>
             </div>

@@ -118,7 +118,10 @@ Route::group(
 		
 		// FUNCTION REQUEST ROUTE
 		// Route::resource('companies', 'CompaniesController');
-		
+
+		Route::prefix('employees')->name('employees.')->group( function () {
+			Route::get('index', 'Admin\EmployeeController@index')->name('index');
+		});		
 		
 	});
 });

@@ -87,8 +87,8 @@
                                                                         </div>
                                                                     {{-- </div> --}}
                                                                 </div>
-                                                                <span id="option-field"></span>
-                                                                <a class="added" href="#" id="addOption" data-section-id="{{ $section->id }}"> Add an option </a>
+                                                                <span id="option-field-{{ $section->id }}"></span>
+                                                                <a class="added addOption" href="#" id="" data-section-id="{{ $section->id }}"> Add an option </a>
                                                             </div>
                                                         </div>
                                                         <div id="decimal-number-attr-{{ $section->id }}" class="boxs attr-{{ $section->id }}" style="display: none;">
@@ -332,8 +332,6 @@
             $(document).on('change', '.attrType', function() {
             // $('.attrType').on('change', function() {
                 let section_id = $(this).data('section-id');
-                console.log(section_id);
-                console.log('#is-unique-'+section_id);
                 $('.attr-'+section_id).hide();
                 $('.attr-input-'+section_id).val('');
                 if($(this).val() == 0){
@@ -351,10 +349,11 @@
                 }
             });
 
-            $('#addOption').click(function() {
+            $('.addOption').click(function() {
                 section_id = $(this).data('section-id');
-                option++;
-                $('#option-field').append(`<div class="input-group mb-3 m-input" id="remove-`+option+`">
+                option = makeRandom(8);
+                console.log(option);
+                $('#option-field-'+section_id).append(`<div class="input-group mb-3 m-input" id="remove-`+option+`">
                                                 <input type="text" name="option[]" class="form-control col-md-10" aria-describedby="basic-addon2">
                                                 <div class="input-group-append col-md-2">
                                                     <a href="#" class="btn btn-outline-secondary mr-2 removeOption" data-option="`+option+`" type="button"><i class="fas fa-trash" data-title="Delete" ></i></a>
@@ -364,11 +363,11 @@
 
             $('.editOption').click(function() {
                 attribute_id = $(this).data('attribute-id');
-                attr_option++;
-                $('#option-field'+attribute_id).append(`<div class="input-group mb-3 m-input" id="remove-`+attr_option+`">
-                                                            <input type="text" name="option[`+attr_option+`]" class="form-control col-md-10" aria-describedby="basic-addon2" value="">
+                option = makeRandom(8);
+                $('#option-field'+attribute_id).append(`<div class="input-group mb-3 m-input" id="remove-`+option+`">
+                                                            <input type="text" name="option[`+option+`]" class="form-control col-md-10" aria-describedby="basic-addon2" value="">
                                                             <div class="input-group-append col-md-2">
-                                                                <a href="#" class="btn btn-outline-secondary mr-2 removeOption" data-option="`+attr_option+`" type="button"><i class="fas fa-trash" data-title="Delete" ></i></a>
+                                                                <a href="#" class="btn btn-outline-secondary mr-2 removeOption" data-option="`+option+`" type="button"><i class="fas fa-trash" data-title="Delete" ></i></a>
                                                             </div>
                                                         </div>`);
             });
@@ -383,7 +382,6 @@
                 let attribute_id = $(this).data('attribute-id');
                 $('.attr-'+attribute_id).hide();
                 // $('.attr-input-'+attribute_id).val('');
-                console.log(attribute_id);
                 if($(this).val() == 0){
                     $('#edit-is-unique-attr-'+attribute_id).show();
                     $('#edit-is-unique-'+attribute_id).val('1');
@@ -398,6 +396,16 @@
                     $('#edit-is-unique-'+attribute_id).val('1');
                 }
             });
+
+            function makeRandom(length) {
+            var result           = '';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
         });
     </script>
 @endsection

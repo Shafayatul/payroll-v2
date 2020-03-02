@@ -65,8 +65,7 @@ class CustomFieldController extends Controller
             $attribute->section_id = $request->section;
             $attribute->is_system = false;
             $attribute->save();
-            
-            if ($request->attr_type){
+            if ($request->attr_type != null){
                 $attr_type = $request->attr_type;
                 $data_types = new EmployeeAttributeDatatype();
                 $data_types->name = $attribute->attributeTypes()[$attr_type];

@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
+// use App\Traits\keyFunctiontrait;
+
 use App\BoardingTemplate;
 use App\BoardingStep;
 use App\BoardingStepItem;
 use App\BoardingGroup;
-use Auth;
-use App\Traits\keyFunctiontrait;
 
 class OnOffBoardingsController extends Controller
 {
-    use keyFunctiontrait;
+    // use keyFunctiontrait;
     /**
      * Display a listing of the resource.
      *

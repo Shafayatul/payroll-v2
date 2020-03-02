@@ -19,7 +19,6 @@ class CalendarsController extends Controller
 
     public function update(Request $request)
     {
-        // dd($request->all());
         Auth::user()->office->absenceCalendars()->delete();
         if($request->is_checked){
             foreach ($request->is_checked as $key => $value) {

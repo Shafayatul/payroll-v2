@@ -13,7 +13,7 @@
             <form method="POST" action="{{ route('departments.store') }}" accept-charset="UTF-8" id="new_office_form" novalidate="novalidate">
                 @csrf
                 <div class="input-group input-group-sm"> 
-                    <input class="form-control" placeholder="New office..." required="" minlength="2" name="name" type="text"> 
+                    <input class="form-control" placeholder="New department..." required="" minlength="2" name="name" type="text"> 
                     <span class="input-group-btn"> 
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-plus"></i>

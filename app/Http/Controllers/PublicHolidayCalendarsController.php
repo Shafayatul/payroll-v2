@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests;
+
+use Illuminate\Support\Facades\Auth;
 
 use App\PublicHolidayCalendar;
 use App\Holiday;
 use App\Office;
-use Illuminate\Http\Request;
 
 class PublicHolidayCalendarsController extends Controller
 {
@@ -20,7 +22,8 @@ class PublicHolidayCalendarsController extends Controller
     public function index(Request $request)
     {
         $system_holiday_calendars = PublicHolidayCalendar::where('type', 0)->latest()->get();
-        $custom_holiday_calendars = PublicHolidayCalendar::where('type', 1)->latest()->get();
+        $custom_holiday_calendars = PublicHolidayCalendar::where('type', 1)->where('company_id', Auth::user()->office->company_id)->latest()->get();
+        // dd($custom_holiday_calendars);
         $holiday_calendars = PublicHolidayCalendar::latest()->get();
         return view('public-holiday-calendars.index', compact('holiday_calendars', 'system_holiday_calendars', 'custom_holiday_calendars'));
     }
@@ -45,12 +48,18 @@ class PublicHolidayCalendarsController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $requestData = $request->all();
-        
-        PublicHolidayCalendar::create($requestData);
+        // if(Auth::user()->office->company->user_id == Auth::id()){
+        //     $type = 0;
+        // } else 
+        //     $type = 1;
 
-        return redirect('public-holiday-calendars')->with('success', 'PublicHolidayCalendar added!');
+        PublicHolidayCalendar::create([
+            'name'       => $request->name,
+            'type'       => 1,
+            'company_id' => Auth::user()->office->company_id
+        ]);
+
+        return redirect('public-holiday-calendars')->with('success', 'Public holiday calendar added!');
     }
 
     /**
@@ -93,12 +102,11 @@ class PublicHolidayCalendarsController extends Controller
     public function update(Request $request, $id)
     {
         
-        $requestData = $request->all();
-        
-        $publicholidaycalendar = PublicHolidayCalendar::findOrFail($id);
-        $publicholidaycalendar->update($requestData);
+        $calendar = PublicHolidayCalendar::findOrFail($id);
+        $calendar->name = $request->name;
+        $calendar->save();
 
-        return redirect('public-holiday-calendars')->with('success', 'PublicHolidayCalendar updated!');
+        return redirect('public-holiday-calendars')->with('success', 'Public holiday calendar updated!');
     }
 
     /**
@@ -112,6 +120,6 @@ class PublicHolidayCalendarsController extends Controller
     {
         PublicHolidayCalendar::destroy($id);
 
-        return redirect('public-holiday-calendars')->with('success', 'PublicHolidayCalendar deleted!');
+        return redirect('public-holiday-calendars')->with('success', 'Public holiday calendar deleted!');
     }
 }

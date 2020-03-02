@@ -48,7 +48,15 @@
         <div class="col-md-4">
             <div class="block-section customvtab vtabs row">
                 <h4 class="sub-header">Public holiday calendars</h4>
-                <form method="POST" action="" accept-charset="UTF-8" id="new_office_form" novalidate="novalidate"><input name="_token" type="hidden" value=""> <div class="input-group input-group-sm"> <input class="form-control" placeholder="New office..." required="" minlength="2" name="new_office_name" type="text"> <span class="input-group-btn"> <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i></button> </span> </div> </form><br>
+                <form method="POST" action="{{ route('public-holiday-calendars.store') }}" accept-charset="UTF-8" id="add-holiday-calendar" novalidate="novalidate">
+                    @csrf 
+                    <div class="input-group input-group-sm"> 
+                        <input class="form-control" placeholder="New calendar..." required="" minlength="2" name="name" type="text"> 
+                        <span class="input-group-btn"> 
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i></button> 
+                        </span> 
+                    </div> 
+                </form><br>
                 <ul id="office_list" class="nav nav-tabs tabs-vertical" data-toggle="tabs" ole="tablist">
                     <li class="nav-item"><strong style="font-weight:550;"> Custom holiday calendars</strong></li>
                     @foreach($custom_holiday_calendars as $calendar)
@@ -67,7 +75,10 @@
             <div class="block-section tab-pane {{ $loop->iteration == 1? 'active':'' }}" id="tab{{$calendar->id}}" role="tabpanel">
                 <h4 class="sub-header">{{ $calendar->name }} <small> <a href="#" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible({{$calendar->id}});">(Edit)</a> </small> <a href="#modal-delete-calendar" data-toggle="modal"> <i class="fas fa-trash pull-right" data-toggle="tooltip" title="" data-original-title="Delete calendar"></i> </a></h4>
                 <div class="form-horizontal form-striped compact" id="calendar-year{{$calendar->id}}">
-                    <p>This calendar contains the following public holidays:</p>
+                    @if($calendar->calendarYears->isEmpty())
+                    <p>This calendar doesn't contain any public holidays yet.</p>
+                    @else
+                    <p>This calendar contains the following public holidays.</p>
                     <ul class="nav nav-pills mb-3 ul-tab" id="pills-tab" role="tablist">
                         @foreach($calendar->calendarYears as $year)
                         <li class="nav-item"><a class="nav-link {{ $year->year == date('Y')? 'active':'' }}"" href="#calendar{{$year->id}}" role="tab" data-toggle="tab">{{$year->year}}</a> </li>
@@ -85,15 +96,17 @@
                         </div>
                         @endforeach
                     </div>
+                    @endif
                 </div>
-                <form method="POST" action="" accept-charset="UTF-8" class="form-horizontal" id="calendar{{$calendar->id}}" style="display:none;" novalidate="novalidate">
+                <form method="POST" action="{{ route('public-holiday-calendars.update', $calendar->id ) }}" accept-charset="UTF-8" class="form-horizontal" id="calendar{{$calendar->id}}" style="display:none;" novalidate="novalidate">
                     <div class="form-group row">
                         <label class="col-md-3 control-label">Holiday calendar name</label>
                         <div class="col-md-5">
                             <input class="form-control" placeholder="Holiday calendar name" required="" minlength="2" name="name" type="text" value="{{ $calendar->name }}">
                         </div>
                     </div>
-
+                    @csrf
+                    @method('PUT')
                     <div class="form-group row">
                         <div class="col-md-9 col-md-offset-3">
                             <button type="reset" class="btn btn-default edit-cancel" onclick="switchVisible({{$calendar->id}});"><i class="fas fa-times"></i> Cancel</button>

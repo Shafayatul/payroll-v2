@@ -10,7 +10,7 @@
     <div class="col-md-4">
         <div class="block-section customvtab vtabs row">
             <h4 class="sub-header">Recurring compensation types</h4>
-            <form method="POST" action="{{ route('recurring-compensation-types.store') }}" accept-charset="UTF-8" id="new_office_form" novalidate="novalidate">
+            <form method="POST" action="{{ route('recurring-compensation-types.store') }}" accept-charset="UTF-8" id="new_company_form" novalidate="novalidate">
                 @csrf
                 <div class="input-group input-group-sm"> 
                     <input class="form-control" placeholder="Recurring Compensation Types..." required="" minlength="2" name="name" type="text">

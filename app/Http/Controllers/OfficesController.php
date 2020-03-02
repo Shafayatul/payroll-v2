@@ -20,28 +20,11 @@ class OfficesController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(Request $request)
+    public function index()
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $offices = Office::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('currency', 'LIKE', "%$keyword%")
-                ->orWhere('timezone', 'LIKE', "%$keyword%")
-                ->orWhere('street', 'LIKE', "%$keyword%")
-                ->orWhere('city', 'LIKE', "%$keyword%")
-                ->orWhere('state', 'LIKE', "%$keyword%")
-                ->orWhere('zip', 'LIKE', "%$keyword%")
-                ->orWhere('country', 'LIKE', "%$keyword%")
-                ->orWhere('public_holiday_id', 'LIKE', "%$keyword%")
-                ->orWhere('company_id', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $company = Company::where('user_id', Auth::id())->first();
-            $offices = Office::where('company_id', $company->id)->get();
+        $company = Company::where('user_id', Auth::id())->first();
+        $offices = Office::where('company_id', $company->id)->get();
             
-        }
         $public_holiday_calendars = PublicHolidayCalendar::where('company_id', $company->id)->pluck('name', 'id');
         $json_currencies = $this->currencies();
         $currencies = json_decode($json_currencies);
@@ -70,7 +53,7 @@ class OfficesController extends Controller
     {
         $company = Company::where('user_id', Auth::id())->first();
 
-        $office                             = new Office;
+        $office                             = new Office();
         $office->name                       = $request->name;
         $office->currency                   = $company->currency;
         $office->timezone                   = $company->timezone;
@@ -141,6 +124,7 @@ class OfficesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request->all());
         
         $office                             = Office::findOrFail($id);
         $office->name                       = $request->name;
@@ -154,7 +138,6 @@ class OfficesController extends Controller
         $office->state                      = $request->state;
         $office->country                    = $request->country;
         $office->public_holiday_calendar_id = $request->public_holiday_calendar_id;
-        $office->company_id                 = $id;
         $office->save();
 
         return redirect('offices')->with('success', 'Office updated!');

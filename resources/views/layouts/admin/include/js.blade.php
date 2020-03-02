@@ -17,6 +17,17 @@
 <script src="{{ asset('admin/assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js') }}" type="text/javascript"></script>
 <script src="{{ asset('admin/assets/plugins/dff/dff.js') }}" type="text/javascript"></script>
 <script type="text/javascript" src="{{ asset('admin/assets/plugins/multiselect/js/jquery.multi-select.js') }}"></script>
+{{-- 
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+
+++
+
+
+
+    <script src="js/main.js"></script>      
+--}}
 @yield('admin-additional-js')
 
 <script>

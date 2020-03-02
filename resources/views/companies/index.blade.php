@@ -144,9 +144,7 @@
                                         Public holidays
                                     </label>
                                     <div class="col-md-5 form-control-static">
-                                        @isset($public_holiday_calendars[$company->public_holiday_calendar_id])
-                                            {{ $public_holiday_calendars[$company->public_holiday_calendar_id] }}
-                                        @endisset
+                                            {{ $company->calendar->name }}
                                    </div>
                                 </div>
                                 <div class="form-group row">
