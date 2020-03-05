@@ -29,5 +29,5 @@ $factory->define(EmployeeInformationSection::class, function (Faker $faker) {
 });
 
 $factory->afterCreating(EmployeeInformationSection::class, function ($section, $faker) {
-    $section->employeeDetailAttributes()->saveMany(factory(EmployeeDetailAttribute::class, 5)->create());
+    $section->employeeDetailAttributes()->saveMany(factory(EmployeeDetailAttribute::class, 2)->create());
 });

@@ -121,6 +121,7 @@ Route::group(
 
 		Route::prefix('employees')->name('employees.')->group( function () {
 			Route::get('index', 'Admin\EmployeeController@index')->name('index');
+			Route::post('store', 'Admin\EmployeeController@store')->name('store');
 		});		
 		
 	});

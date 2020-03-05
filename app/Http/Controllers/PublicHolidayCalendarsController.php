@@ -22,7 +22,7 @@ class PublicHolidayCalendarsController extends Controller
     public function index(Request $request)
     {
         $system_holiday_calendars = PublicHolidayCalendar::where('type', 0)->latest()->get();
-        $custom_holiday_calendars = PublicHolidayCalendar::where('type', 1)->where('company_id', Auth::user()->office->company_id)->latest()->get();
+        $custom_holiday_calendars = Auth::user()->office->company->publicHolidays()->where('type', 1)->latest()->get();
         // dd($custom_holiday_calendars);
         $holiday_calendars = PublicHolidayCalendar::latest()->get();
         return view('public-holiday-calendars.index', compact('holiday_calendars', 'system_holiday_calendars', 'custom_holiday_calendars'));
@@ -48,10 +48,10 @@ class PublicHolidayCalendarsController extends Controller
      */
     public function store(Request $request)
     {
-        // if(Auth::user()->office->company->user_id == Auth::id()){
-        //     $type = 0;
-        // } else 
-        //     $type = 1;
+        if(Auth::user()->office->company->user_id == Auth::id()){
+            $type = 0;
+        } else 
+            $type = 1;
 
         PublicHolidayCalendar::create([
             'name'       => $request->name,

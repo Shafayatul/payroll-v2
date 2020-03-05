@@ -28,5 +28,5 @@ $factory->define(PublicHolidayCalendar::class, function (Faker $faker) {
 });
 
 $factory->afterCreating(PublicHolidayCalendar::class, function ($calender, $faker) {
-    $calender->calendarYears()->saveMany(factory(CalendarYear::class, 5)->create());
+    $calender->calendarYears()->saveMany(factory(CalendarYear::class, 2)->create());
 });

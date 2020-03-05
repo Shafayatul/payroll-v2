@@ -49,6 +49,11 @@ class Company extends Model
         return $this->hasMany(\App\Office::class, 'company_id');
     }
 
+    public function departments()
+    {
+        return $this->hasManyThrough(\App\Department::class, \App\Office::class);
+    }
+
     public function payrollGroups(){
         return $this->hasMany(\App\PayrollGroup::class, 'company_id');
     }

@@ -23,6 +23,7 @@ class CreateHolidaysTable extends Migration
         Schema::create('calendar_holidays', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
+            $table->date('date')->nullable();
             $table->text('details')->nullable();
             $table->boolean('is_halfday')->nullable();
             $table->unsignedBigInteger('calendar_year_id')->nullable();

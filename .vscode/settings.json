@@ -1,0 +1,19 @@
+{
+    "editor.formatOnSave": true,
+    "beautify.language": {
+        "js": {
+        "type": ["javascript", "json"],
+        "filename": [".jshintrc", ".jsbeautifyrc"]
+        // "ext": ["js", "json"]
+        // ^^ to set extensions to be beautified using the javascript beautifier
+        },
+        "css": ["css", "scss"],
+        "html": ["htm", "html"]
+        // ^^ providing just an array sets the VS Code file type
+    },
+    {
+    "key": "cmd+b",
+    "command": "HookyQR.beautify",
+    "when": "editorFocus"
+    }
+}

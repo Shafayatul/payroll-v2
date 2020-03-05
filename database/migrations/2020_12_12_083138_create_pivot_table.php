@@ -73,15 +73,17 @@ class CreatePivotTable extends Migration
             $table->foreign('permission_id')->references('id')->on('permissions');
         });
 
-        // Schema::create('permission_rule', function (Blueprint $table) {
-        //     $table->bigIncrements('id');
-        //     $table->unsignedBigInteger('rule_id');
-        //     $table->unsignedBigInteger('permission_id');
-        //     $table->timestamps();
+        Schema::create('user_attendance', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->timestamp('in_time')->nullable();
+            $table->timestamp('out_time')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('weekday_id');
+            $table->timestamps();
 
-        //     $table->foreign('rule_id')->references('id')->on('rules');
-        //     $table->foreign('permission_id')->references('id')->on('permissions');
-        // });
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('weekday_id')->references('id')->on('weekdays');
+        });
 
         // Schema::create('role_permission_rule', function (Blueprint $table) {
         //     $table->bigIncrements('id');
@@ -101,6 +103,13 @@ class CreatePivotTable extends Migration
      */
     public function down()
     {
-        
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('attributes_in_personal_data_sheets');
+        Schema::dropIfExists('absences_type_payroll_settings');
+        Schema::dropIfExists('boarding_template_step');
+        Schema::dropIfExists('employee_boarding_group');
+        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('permission_role');
+        Schema::dropIfExists('user_attendance');
     }
 }

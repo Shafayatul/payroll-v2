@@ -50,6 +50,6 @@ $factory->define(Office::class, function (Faker $faker) {
 });
 
 $factory->afterCreating(Office::class, function ($office, $faker) {
-    $office->departments()->saveMany(factory(Department::class, 5)->create());
-    $office->users()->saveMany(factory(User::class, 5)->create());
+    $office->departments()->saveMany(factory(Department::class, 2)->create());
+    $office->users()->saveMany(factory(User::class, 2)->create());
 });

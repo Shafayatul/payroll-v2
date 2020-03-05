@@ -28,6 +28,6 @@ class CreateBoardingGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('boarding_groups');
     }
 }

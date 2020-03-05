@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
-use App\Holiday;
+use App\CalendarHoliday;
+use App\CalendarYear;
 use App\PublicHolidayCalendar;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class HolidaysController extends Controller
@@ -57,16 +59,43 @@ class HolidaysController extends Controller
         if($request->is_halfday != null){
             $is_halfday = 1;
         }else{
-            $is_halfday = null;
+            $is_halfday = 0;
         }
-
-        $holiday                             = new Holiday;
-        $holiday->name                       = $request->name;
-        $holiday->details                    = $request->details;
-        $holiday->is_halfday                 = $is_halfday;
-        $holiday->public_holiday_calendar_id = $request->public_holiday_calendar_id;
-        $holiday->save();
-        return redirect('/public-holiday-calendars/'.$request->public_holiday_calendar_id)->with('success', 'Holiday added!');
+        
+        if($request->type != 0){
+            $details = $request->details;
+            if($request->type == 1 || $request->type == 2){
+                $date = Carbon::parse($request->date)->format('Y-m-d');
+                $year = Carbon::parse($request->date)->format('Y');
+                $calendar_year = CalendarYear::where('calendar_id', $request->public_holiday_calendar_id)->where('year', $year)->first();
+                if($calendar_year == null){
+                    $calendar_year = new CalendarYear();
+                    $calendar_year->year = Carbon::parse($request->date)->format('Y');
+                    $calendar_year->calendar_id = $request->public_holiday_calendar_id;
+                    $calendar_year->save();
+                }
+            }elseif($request->type == 3){
+                $calendar_year = CalendarYear::where('year', $request->year)->first();
+                $details = $request->weekday_number." ".$request->weekday." ".$request->month." ".$calendar_year->year;
+                $date = Carbon::parse($details);
+                $date = $date->format('Y-m-d');
+            }
+            $holiday                   = new CalendarHoliday();
+            $holiday->name             = $request->name;
+            $holiday->date             = $date;
+            $holiday->details          = $details;
+            $holiday->is_halfday       = $is_halfday;
+            $holiday->calendar_year_id = $calendar_year->id;
+            $holiday->save();
+        }else{
+            $calendar_year = CalendarYear::where('year', $request->year)->first();
+            $exist_holiday = CalendarHoliday::findOrFail($request->exist_holiday);
+            $holiday = $exist_holiday->replicate();
+            // $holiday->is_halfday = $is_halfday;
+            $holiday->calendar_year_id = $calendar_year->id;
+            $holiday->save();
+        }
+        return redirect()->back();
     }
 
     /**

@@ -202,7 +202,7 @@ class CreateForeignTable extends Migration
      */
     public function down()
     {
-        // Schema::disableForeignKeyConstraints();
+        Schema::disableForeignKeyConstraints();
         // Schema::dropIfExists('permission_rule');
     }
 }

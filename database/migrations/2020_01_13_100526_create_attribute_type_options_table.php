@@ -29,6 +29,6 @@ class CreateAttributeTypeOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_attribute_metas');
+        Schema::dropIfExists('attribute_type_options');
     }
 }

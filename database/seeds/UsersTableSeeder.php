@@ -138,7 +138,7 @@ class UsersTableSeeder extends Seeder
             $role->save();
         }
 
-        factory(Industry::class, 5)->create();
+        factory(Industry::class, 1)->create();
 
         $user  = User::first();
         $user->office_id         = (Office::inRandomOrder()->first()->id? Office::inRandomOrder()->first()->id:1);

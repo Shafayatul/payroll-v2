@@ -8,6 +8,7 @@
  <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/plugins/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
  <link href="{{ asset('admin/assets/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet" media="all">
+ <link href="{{ asset('admin/assets/plugins/wizard/steps.css') }}" rel="stylesheet">
  <link href="{{ asset('admin/css/app-contact.css') }}" id="app-contact" rel="stylesheet" media="all">
 @endsection
 @section('content')
@@ -84,7 +85,8 @@
                             <a href="#" class="btn btn-default " data-toggle="tooltip" data-original-title="Orgchart view"><i class="mdi mdi-sitemap"></i></a>
                             <a href="#" class="btn btn-default " data-toggle="tooltip" data-original-title="Timeline view"><i class="fas fa-calendar"></i></a>
                         </div>
-                        <div class="btn-group" data-original-title="Add employee" >      <a  data-toggle="modal" data-target=".bd-example-modal-lg"  class=" btn btn-default"><i class=" fas fa-user-plus"></i></a>
+                        <div class="btn-group" data-original-title="Add employee" >      
+                            <a  data-toggle="modal" data-target=".bd-example-modal-lg"  class=" btn btn-default"><i class=" fas fa-user-plus"></i></a>
                         </div>
 
                         <div class="btn-group">
@@ -99,437 +101,117 @@
                             </ul>
                         </div>
                     </div>
-
-
                     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog ">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                
-                                <h4 class="modal-title text-left">Add new employee</h4>
+                                    <h4 class="modal-title text-left">Add new employee</h4>
                                     <button type="button" class="close" data-dismiss="modal">
                                         <span aria-hidden="true">×</span>
                                         <span class="sr-only">Close</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <!-- Stepper -->
-                                    <div class="steps-form">
-                                        <div class="steps-row-2 setup-panel-2 d-flex justify-content-between">
-                                            @foreach ($sections as $section)
-                                            <div class="steps-step">
-                                                <a href="#step-{{ $loop->iteration }}" type="button" class="btn btn-blue-grey btn-circle-2 waves-effect {{ $loop->iteration == 1? 'active btn-amber':'' }}" data-toggle="tooltip" data-placement="top" title="Personal Data">{{ $loop->iteration }}. {{ $section->name }}</a>
-                                            </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <!-- First Step -->
-                                    <form  role="form" action="" method="post">
-                                        @foreach ($sections as $section)
-                                            <div class=" setup-content-2" id="step-{{ $loop->iteration }}">
-                                                <div class="card-body">
-                                                    {{-- <form action="#" class="form-horizontal form-bordered"> --}}
-                                                    <div class="form-body">
-                                                        @foreach ($section->employeeDetailAttributes as $attribute)
-                                                        <div class="form-group row">
-                                                            <label class="control-label col-md-2">{{$attribute->name}}</label>
-                                                            <div class="col-md-6">
-                                                                @if($attribute->dataTypes->key == 0)
-                                                                <input type="text" name="value[{{$attribute->id}}]" placeholder="{{$attribute->name}}" class="form-control">
-                                                                @elseif($attribute->dataTypes->key == 1)
-                                                                <select class="form-control select2 custom-select" name="value[{{$attribute->id}}]">
-                                                                    @foreach ($attribute->dataTypes->attributeOptions as $option)
-                                                                    <option value="{{ $option->id }}">{{ $option->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                                @elseif($attribute->dataTypes->key == 4)
-                                                                <div class="input-group">
-                                                                    <input type="text" name="value[{{$attribute->id}}]" class="form-control date" id="date-{{$attribute->id}}" data-date="{{$attribute->id}}" placeholder="dd/mm/yyyy">
-                                                                    <div class="input-group-append">
-                                                                        <span class="input-group-text date-calendar" id=""><i class="fas fa-calendar"></i></span>
-                                                                    </div>
-                                                                </div>
-                                                                @elseif($attribute->dataTypes->key == 7)
-                                                                <select class="js-example-disabled-results select multiple form-control" name="value[{{$attribute->id}}]">
-                                                                    @foreach ($attribute->dataTypes->attributeOptions as $option)
-                                                                    <option value="{{ $option->id }}">{{ $option->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                        @endforeach
-                                                        {{-- <div class="form-group row">
-                                                            <label class="control-label col-md-2">First Name*</label>
-                                                            <div class="col-md-6">
-                                                                <input type="text" placeholder="First Name" class="form-control">
-                                                                <small class="form-control-feedback"> This is inline help </small>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="control-label  col-md-2">Gender</label>
-                                                                <div class="col-md-2">
-                                                                    <select class="form-control custom-select">
-                                                                        <option value="">Male</option>
-                                                                        <option value="">Female</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="email2" class="control-label  col-md-2">Email*</label>
-                                                            <div class="col-md-6">
-                                                                <div class="input-group">
-                                                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="somebody@yourcompany.com">
-                                                                    <div class="input-group-append">
-                                                                        
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Office</label>
-                                                            <div class="col-md-6">
-                                                                <select class="js-example-disabled-results  custom-select form-control ">
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                </select>                      
-                                                            </div>
-                                                        </div> 
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Department</label>
-                                                            <div class="col-md-6">
-                                                                <select class="js-example-disabled-results  custom-select form-control ">
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                </select>                      
-                                                            </div>
-                                                        </div>   
-                                                        <div class="form-group row">
-                                                            <label class="control-label col-md-2">Position</label>
-                                                            <div class="col-md-6">
-                                                                <input type="text" placeholder="Senior Marketing Manager, Managing Director, ..." class="form-control">                                                         
-                                                            </div>
-                                                        </div>                                    
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Account</label>
-                                                            <div class="col-md-10">
-                                                                <label class="control-label" title="">
-                                                                    <input class="checkbox-1" name="invited" type="checkbox" value="false">Create  login and send invitation email</label>
-                                                                </div>
-                                                            </div>                                    
-                                                        </div> --}}
-                                                    {{-- </form> --}}
+                                    <div class="card-body wizard-content">
+                                        {{-- <h4 class="card-title">Step wizard</h4> --}}
+                                        <form role="form" action="{{ route('employees.store') }}" id="employee-submit" class="tab-wizard wizard-circle" method="POST">
+                                            @csrf
+                                            @method('POST')
+                                            <h6>User Info</h6>
+                                            <section>
+                                                <div class="form-group row">
+                                                    <label for="input-name" class="control-label col-md-4">Name</label>
+                                                    <div class="col-md-6">
+                                                        <input type="text" id="input-name" name="name" placeholder="Enter Name" class="form-control">
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
-                                        {{-- <div class=" setup-content-2" id="step-1">
-                                            <div class="card-body">
-                                                <form action="#" class="form-horizontal form-bordered">
-                                                <div class="form-body">
-                                                    <div class="form-group row">
-                                                        <label class="control-label col-md-2">First Name*</label>
-                                                        <div class="col-md-6">
-                                                            <input type="text" placeholder="First Name" class="form-control">
-                                                            <small class="form-control-feedback"> This is inline help </small>
-                                                        </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="control-label col-md-2">Last Name*</label>
-                                                            <div class="col-md-6">
-                                                                <input type="text" placeholder="Last Name" class="form-control">
-                                                                <small class="form-control-feedback"> This is inline help </small> 
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Gender</label>
-                                                            <div class="col-md-2">
-                                                                <select class="form-control custom-select">
-                                                                    <option value="">Male</option>
-                                                                    <option value="">Female</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    <div class="form-group row">
-                                                        <label for="email2" class="control-label  col-md-2">Email*</label>
-                                                        <div class="col-md-6">
-                                                            <div class="input-group">
-                                                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="somebody@yourcompany.com">
-                                                                <div class="input-group-append">
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                <div class="form-group row">
+                                                    <label for="input-email" class="control-label col-md-4">Email</label>
+                                                    <div class="col-md-6">
+                                                        <input type="text" id="input-email" name="email" placeholder="Enter email" class="form-control">
                                                     </div>
-                                                    <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Office</label>
-                                                        
-                                                        <div class="col-md-6">
-                                                            <select class="js-example-disabled-results  custom-select form-control ">
-                                                            <option value="one">First</option>
-                                                            <option value="two">Second </option>
-                                                            <option value="three">Third</option>
-                                                            <option value="one">First</option>
-                                                            <option value="two">Second </option>
-                                                            <option value="three">Third</option>
-                                                            </select>                      
-                                                        </div>
-                                                    
-                                                        </div> 
-
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Department</label>
-                                                        
-                                                        <div class="col-md-6">
-                                                            <select class="js-example-disabled-results  custom-select form-control ">
-                                                            <option value="one">First</option>
-                                                            <option value="two">Second </option>
-                                                            <option value="three">Third</option>
-                                                            <option value="one">First</option>
-                                                            <option value="two">Second </option>
-                                                            <option value="three">Third</option>
-                                                            </select>                      
-                                                        </div>
-                                                    
-                                                        </div>   
-                                                        <div class="form-group row">
-                                                            <label class="control-label col-md-2">Position</label>
-                                                            <div class="col-md-6">
-                                                                <input type="text" placeholder="Senior Marketing Manager, Managing Director, ..." class="form-control">                                                         
-                                                            </div>
-                                                        </div>                                    
-                                                        
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Account</label>
-                                                            <div class="col-md-10">
-                                                                
-                                                                    <label class="control-label" title="">
-                                                                        <input class="checkbox-1" name="invited" type="checkbox" value="false">Create  login and send invitation email</label>
-                                                                
-                                                            </div>
-                                                        </div>                                    
-                                            
                                                 </div>
-                                                
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <!-- Second Step -->
-                                        <div class="row setup-content-2" id="step-2">
-                                            <div class="card-body">
-                                                <form action="#" class="form-horizontal form-bordered">
-                                                    <div class="form-body">
-                                                        
-                                                    <div class="form-group row">
-                                                            <label class="control-label  col-md-2">
-                                                                Hire date <i class="fas fa-info-circle "></i>
-                                                            </label>
-                                                            <div class="col-md-3">
-                                                                <div class="input-group">
-                                                            <input type="date" class="form-control" placeholder="dd/mm/yyyy">
-                                                            <div class="input-group-append">
-                                                            <span class="input-group-text" id="basic-addon2">
-                                                                <i class="fas fa-calendar"></i>
-                                                                </span>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                                    <label class="control-label  col-md-2">Department</label>
-                                                                
-                                                                <div class="col-md-6">
-                                                                    <select class="js-example-disabled-results  custom-select form-control ">
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                    </select>                      
-                                                                </div>
-                                                            
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="control-label col-md-2">
-                                                            Contract ends
-                                                            </label>
-                                                            <div class="col-md-3">
-                                                                <div class="input-group">
-                                                            <input type="date" class="form-control" placeholder="dd/mm/yyyy">
-                                                            <div class="input-group-append">
-                                                            <span class="input-group-text" id="basic-addon2">
-                                                                <i class="fas fa-calendar"></i>
-                                                                </span>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Employment type</label>  
-                                                            <div class="col-md-6">
-                                                                    <select class="js-example-disabled-results  custom-select form-control ">
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                    </select>                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Supervisor</label>  
-                                                            <div class="col-md-6">
-                                                                    <select class="js-example-disabled-results  custom-select form-control ">
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                    </select>                      
-                                                                </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="weeklyHours" class="col-md-2 control-label">Weekly hours</label>
-                                                            <div class="col-md-3">
-                                                                <div class="input-group">
-                                                                    <input name="weeklyHours" type="number" class="form-control" value="11">
-                                                                    <span class="input-group-addon">/40</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Cost center</label>
-                                                            <div class="col-md-6">
-                                                            <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
-                                                            <option value="AL">Alabama</option>
-                                                            
-                                                            <option value="WY">Wyoming</option>
-                                                            </select>
-                                                            
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label for="weeklyHours" class="col-md-2 control-label">Weekly hours</label>
-                                                            <div class="col-md-3">
-                                                                <div class="input-group">
-                                                                    <input name="weeklyHours" type="number" class="form-control" value="11">
-                                                                    <span class="input-group-addon">%</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        
-
-                                                    
-                                                    
+                                                <div class="form-group row">
+                                                    <label for="input-salary" class="control-label col-md-4">Salary</label>
+                                                    <div class="col-md-6">
+                                                        <input type="text" id="input-salary" name="salary" placeholder="Enter salary" class="form-control">
                                                     </div>
-                                                
-                                                </form>
-                                            </div>                                    
-
-                                        </div>
-                                        <!-- Third Step -->
-                                        <div class="row setup-content-2" id="step-3">
-                                            <div class="">
-                                                <div class="col-md-12">                                                  
-                                                    <form id="demoform" action="#" method="post">
-                                                        <select multiple="multiple" size="10" name="duallistbox_demo1[]" title="duallistbox_demo1[]">
-                                                            <option value="option1">Accounting</option>
-                                                            <option value="option2">Management</option>
-                                                            <option value="option3" selected="selected">Administrator</option>
-                                                            <option value="option4">Office Management</option>
-                                                            <option value="option5">Recruiting Manager</option>
-                                                            <option value="option6" selected="selected">Working Student</option>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="input-password" class="control-label col-md-4">Password</label>
+                                                    <div class="col-md-6">
+                                                        <input type="password" id="input-password" name="password" placeholder="Enter password" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="input-password_confirmation" class="control-label col-md-4">Confirm password</label>
+                                                    <div class="col-md-6">
+                                                        <input type="password" id="input-password_confirmation" name="password_confirmation" placeholder="Enter password_confirmation" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="input-office" class="control-label col-md-4">Office</label>
+                                                    <div class="col-md-6">
+                                                        <select class="select2 form-control" id="input-office" name="office">
+                                                            @foreach (Auth::user()->office->company->offices as $office)
+                                                            <option value="{{ $office->id }}" id="office-{{ $office->id }}">{{ $office->name }} {{ $office->city ? ', '.$office->city : $office->company->city }}</option>
+                                                            @endforeach
                                                         </select>
-                                                    </form>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <!-- Fourth Step -->
-                                        <div class="row setup-content-2" id="step-4">
-                                            <div class="card-body">
-                                                <form action="#" class="form-horizontal form-bordered">
-                                                    <div class="form-body">
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Onboarding Template</label>        
-                                                            <div class="col-md-6">
-                                                                <select class="js-example-disabled-results  custom-select form-control ">
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                </select>                      
-                                                            </div>                                               
-                                                        </div>
-                                    
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Working Schedule</label>  
-                                                            <div class="col-md-6">
-                                                                <select class="js-example-disabled-results  custom-select form-control ">
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                </select>                      
+                                                <div class="form-group row">
+                                                    <label for="input-department" class="control-label col-md-4">Department</label>
+                                                    <div class="col-md-6">
+                                                        <select class="select2 form-control" id="input-department" name="department">
+                                                            @foreach (Auth::user()->office->company->departments as $department)
+                                                            <option value="{{ $department->id }}" id="department-{{ $department->id }}">{{ $department->name }}{{ $department->city ? ', '.$department->city : '' }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                            @foreach ($sections as $section)
+                                            <!-- Step {{$loop->iteration}} -->
+                                            <h6>{{ $section->name }}</h6>
+                                            <section>
+                                                @foreach ($section->employeeDetailAttributes as $attribute)
+                                                <div class="form-group row">
+                                                    <label for="input-{{$attribute->id}}" class="control-label col-md-4">{{$attribute->name}}</label>
+                                                    <div class="col-md-6">
+                                                        @if($attribute->dataTypes->key == 0)
+                                                        <input type="text" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]" placeholder="{{$attribute->name}}" class="form-control">
+                                                        @elseif($attribute->dataTypes->key == 1)
+                                                        <select class="form-control custom-select" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]">
+                                                            @foreach ($attribute->dataTypes->attributeOptions as $option)
+                                                            <option value="{{ $option->id }}">{{ $option->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @elseif($attribute->dataTypes->key == 4)
+                                                        <div class="input-group">
+                                                            <input type="text" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]" class="form-control date" id="date-{{$attribute->id}}" data-date="{{$attribute->id}}" placeholder="dd/mm/yyyy">
+                                                            <div class="input-group-append">
+                                                                <span class="input-group-text date-calendar" id=""><i class="fas fa-calendar"></i></span>
                                                             </div>
                                                         </div>
-                                                        <div class="form-group row">
-                                                            <label class="control-label col-md-2">Since when? </label>
-                                                            <div class="col-md-3">
-                                                                <div class="input-group">
-                                                                    <input type="date" class="form-control" placeholder="dd/mm/yyyy">
-                                                                    <div class="input-group-append">
-                                                                        <span class="input-group-text" id="basic-addon2">
-                                                                            <i class="fas fa-calendar"></i>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="control-label  col-md-2">Supervisor</label>  
-                                                            <div class="col-md-6">
-                                                                <select class="js-example-disabled-results  custom-select form-control ">
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                    <option value="one">First</option>
-                                                                    <option value="two">Second </option>
-                                                                    <option value="three">Third</option>
-                                                                </select>                      
-                                                            </div>
-                                                        </div>
-                                                    </div>                                   
-                                                </form>
-                                            </div> 
-                                        </div> --}}
-                                    </form>           
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="form-actions">
-                                        <button type="button" data-dismiss="modal" class="btn btn-default ">Cancel</button>
-                                        <button type="button" class="btn btn-primary text-right">Next</button>
+                                                        @elseif($attribute->dataTypes->key == 7)
+                                                        <select class="tag form-control" id="input-{{$attribute->id}}" multiple="multiple" name="value[{{$attribute->id}}][]">
+                                                            @foreach ($attribute->dataTypes->attributeOptions as $option)
+                                                            <option value="{{ $option->id }}" id="taged-{{ $option->id }}">{{ $option->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </section>
+                                            @endforeach
+                                        </form>
                                     </div>
                                 </div>
-
                             </div>
                         </div>  
-                    </div> 
                     </div>
+                </div>
             </div>
             <div class=" table-responsive m-t-40">
                 <section class="filters well">
@@ -633,7 +315,9 @@
                         <thead>
                             <tr>
                                 <th class="table-topper"><input type="checkbox"></th>
-                                <th style="left: 37px;" class="table-topper"></th>
+                                {{-- <th style="left: 37px;" class="table-topper"></th> --}}
+                                <th> Name</th>
+                                <th> Email</th>
                                 @foreach ($attributes as $attribute)
                                 <th class="table-topper">{{ $attribute->name }}</th>
                                 @endforeach
@@ -643,8 +327,14 @@
                             @foreach ($employees as $employee)
                             <tr>
                                 <td><input type="checkbox"></td>
-                                <td style="left: 37px;"> <img src="../assets/images/users/4.jpg" alt="user" width="40"
+                                {{-- <td style="left: 37px;"> <img src="../assets/images/users/4.jpg" alt="user" width="40" --}}
                                     class="img-circle" />
+                                </td>
+                                <td style="left: 37px;">
+                                    {{ $employee->name }}
+                                </td>
+                                <td style="left: 37px;">
+                                    {{ $employee->email }}
                                 </td>
                                 @foreach ($attributes as $attribute)
                                 @php
@@ -666,10 +356,17 @@
 <script src="{{ asset('admin/assets/plugins/daterangepicker/moment.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('admin/assets/plugins/daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
 <script src="{{ asset('admin/assets/plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
-<script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+{{-- <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script> --}}
 <script src="{{ asset('admin/js/jquery.bootstrap-duallistbox.js') }}"></script>
 <script src="{{ asset('admin/assets/plugins/select2/dist/js/select2.min.js') }}"></script>
-{{-- <script src="{{ asset('admin/assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script> --}}
+
+<script src="{{ asset('admin/assets/plugins/wizard/jquery.steps.min.js') }}"></script>
+<script src="{{ asset('admin/assets/plugins/wizard/jquery.validate.min.js') }}"></script>
+<!-- Sweet-Alert  -->
+<script src="{{ asset('admin/assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
+{{-- <script src="{{ asset('admin/assets/plugins/wizard/steps.js') }}"></script> --}}
+
+<script src="{{ asset('admin/assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script>
 
 <script src="{{ asset('admin/js/main.js') }}"></script>
 
@@ -690,39 +387,11 @@
         $('#department-div'+id).show();
     }
 
-    // var demo1 = $('select[name="duallistbox_demo1[]"]').bootstrapDualListbox();
-    // $("#demoform").submit(function() {
-    //     alert($('[name="duallistbox_demo1[]"]').val());
-    //     return false;
-    // });
-    // var demo2 = $('.demo2').bootstrapDualListbox({
-    //     nonSelectedListLabel: 'Non-selected',
-    //     selectedListLabel: 'Selected',
-    //     preserveSelectionOnMove: 'moved',
-    //     moveOnSelect: false,
-    //     nonSelectedFilter: 'ion ([7-9]|[1][0-2])'
-    // });
-    // // Material Select Initialization
-
-    // $(document).ready(function() {
-    //     $('.js-example-basic-multiple').select2();
-    // });
-    // var $disabledResults = $(".js-example-disabled-results");
-    // $disabledResults.select2();
-    // var select2Init = function(){
-    //     $('select').select2({
-    //         dropdownAutoWidth : true,
-    //         allowClear: true,
-    //         placeholder: "Select a grade",
-    //     });
-    // };
     (function($){  
         var dataTable;
         var select2Init = function(){
-            $('select').select2({
-                dropdownAutoWidth : true,
-                allowClear: true,
-                placeholder: "Select a grade",
+            $('.tag').select2({
+                maximumSelectionLength: 3
             });
         };
         var dataTableInit = function(){
@@ -764,11 +433,12 @@
             });
             $('.date, .date-calendar').daterangepicker({
                 "singleDatePicker": true,
-                "showDropdowns": false,
-                "linkedCalendars": false,
-                "autoUpdateInput": false,
-                "alwaysShowCalendars": false,
-                "showCustomRangeLabel": false,
+                "showDropdowns": true,
+                // "linkedCalendars": false,
+                // "autoUpdateInput": false,
+                // "alwaysShowCalendars": false,
+                // "showCustomRangeLabel": false,
+                // "minYear": 1901,
                 "format": "DD/MM/YYYY"
             }, function(start, end, label) {
                 $('#date-'+id).val(start.format('DD/MM/YYYY'));
@@ -779,6 +449,23 @@
         });
     })(jQuery);
 </script>
+<script>
+    // $(function(){"use strict";$(function(){$(".preloader").fadeOut()}),jQuery(document).on("click",".mega-dropdown",function(i){i.stopPropagation()});var i,e,o,s=function(){(window.innerWidth>0?window.innerWidth:this.screen.width)<1170?($("body").addClass("mini-sidebar"),$(".navbar-brand span").hide(),$(".sidebartoggler i").addClass("ti-menu")):($("body").removeClass("mini-sidebar"),$(".navbar-brand span").show(),$(".sidebartoggler i").removeClass("ti-menu"));var i=(window.innerHeight>0?window.innerHeight:this.screen.height)-1;(i-=70)<1&&(i=1),i>70&&$(".page-wrapper").css("min-height",i+"px")};$(window).ready(s),$(window).on("resize",s),$(".sidebartoggler").on("click",function(){$("body").hasClass("mini-sidebar")?($("body").trigger("resize"),$("body").removeClass("mini-sidebar"),$(".navbar-brand span").show(),$(".sidebartoggler i").addClass("ti-menu")):($("body").trigger("resize"),$("body").addClass("mini-sidebar"),$(".navbar-brand span").hide(),$(".sidebartoggler i").removeClass("ti-menu"))}),$(".fix-header .topbar").stick_in_parent({}),$(".nav-toggler").click(function(){$("body").toggleClass("show-sidebar"),$(".nav-toggler i").toggleClass("ti-menu"),$(".nav-toggler i").addClass("ti-close")}),$(".right-side-toggle").click(function(){$(".right-sidebar").slideDown(50),$(".right-sidebar").toggleClass("shw-rside")}),$(function(){for(var i=window.location,e=$("ul#sidebarnav a").filter(function(){return this.href==i}).addClass("active").parent().addClass("active");e.is("li");)e=e.parent().addClass("in").parent().addClass("active")}),$(function(){$('[data-toggle="tooltip"]').tooltip()}),$(function(){$('[data-toggle="popover"]').popover()}),$(function(){$("#sidebarnav").metisMenu()}),$(".message-center").slimScroll({position:"right",size:"5px",color:"#dcdcdc"}),$(".aboutscroll").slimScroll({position:"right",size:"5px",height:"80",color:"#dcdcdc"}),$(".message-scroll").slimScroll({position:"right",size:"5px",height:"570",color:"#dcdcdc"}),$(".chat-box").slimScroll({position:"right",size:"5px",height:"470",color:"#dcdcdc"}),$(".slimscrollright").slimScroll({height:"100%",position:"right",size:"5px",color:"#dcdcdc"}),$("body").trigger("resize"),$(".list-task li label").click(function(){$(this).toggleClass("task-done")}),$("#to-recover").on("click",function(){$("#loginform").slideUp(),$("#recoverform").fadeIn()}),$(".custom-file-input").on("change",function(){var i=$(this).val();$(this).next(".custom-file-label").html(i)}),$(document).on("click",".card-actions a",function(i){i.preventDefault(),$(this).hasClass("btn-close")&&$(this).parent().parent().parent().fadeOut()}),i=jQuery,window,e=document,i(o='[data-perform="card-collapse"]').each(function(){var e=i(this),o=e.closest(".card"),s=o.find(".card-block"),a={toggle:!1};s.length||(s=o.children(".card-heading").nextAll().wrapAll("<div/>").parent().addClass("card-block"),a={}),s.collapse(a).on("hide.bs.collapse",function(){e.children("i").removeClass("ti-minus").addClass("ti-plus")}).on("show.bs.collapse",function(){e.children("i").removeClass("ti-plus").addClass("ti-minus")})}),i(e).on("click",o,function(e){e.preventDefault(),i(this).closest(".card").find(".card-block").collapse("toggle")})});
+
+    $("#employee-submit").steps({
+        headerTag: "h6"
+        , bodyTag: "section"
+        , transitionEffect: "fade"
+        , titleTemplate: '<span class="step">#index#</span> #title#'
+        , labels: {
+            finish: "Submit"
+        }
+        , onFinished: function (event, currentIndex) {
+            $('form#employee-submit').submit();  
+        }
+    });
+</script>
+
 @endsection
 </body>
 

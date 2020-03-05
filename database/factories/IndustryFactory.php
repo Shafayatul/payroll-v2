@@ -21,5 +21,5 @@ $factory->define(Industry::class, function (Faker $faker) {
 });
 
 $factory->afterCreating(Industry::class, function ($industry, $faker) {
-    $industry->companies()->saveMany(factory(Company::class, 5)->create());
+    $industry->companies()->saveMany(factory(Company::class, 2)->create());
 });

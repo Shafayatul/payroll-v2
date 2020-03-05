@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
 use App\EmployeeDetailAttribute;
@@ -31,18 +32,7 @@ class EmployeeController extends Controller
         $attributes = EmployeeDetailAttribute::whereHas('employeeInformationSection', function($q) use($company) {
             $q->where('company_id', $company->id);
         })->get();
-        
         return view('employees.index', compact('employees', 'attributes', 'sections'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -53,7 +43,32 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->salary = $request->salary;
+        $user->status = true;
+        $user->password = Hash::make($request->password);
+        $user->office_id = $request->office;
+        $user->department_id = $request->department;
+        $user->save();
+
+        if($request->value){
+            foreach($request->value as $attribute => $value){
+                if($value != null){
+                    $detail = EmployeeDetail::where('attribute_id', $attribute)->where('user_id', Auth::id())->first();
+                    if(null == $detail)
+                    $detail = new EmployeeDetail();
+                    /* 'value', 'user_id', 'attribute_id' */
+                    $detail->attribute_id = $attribute;
+                    $detail->user_id = Auth::id();
+                    $detail->value = $value;
+                    $detail->save();
+                }
+            }
+        }
+        return redirect()->back();
     }
 
     /**

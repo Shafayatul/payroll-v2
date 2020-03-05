@@ -167,5 +167,55 @@ trait keyFunctionTrait
             'after',
             'before',
         ];
-    }    
+    }   
+    
+    // Holiday Related 
+
+    public function holidayType(){
+        return [
+            "0" => "Existing holiday",
+            "1" => "Fixed date",
+            "2" => "Once on a fixed date",
+            "3" => "Weekday in month",
+            // "4" => "Easter offset"
+        ];
+    }
+
+    public function weekNumber(){
+        return [
+            "first" => "1st",
+            "second" => "2nd",
+            "third" => "3rd",
+            "fourth" => "4th"
+        ];
+    }
+
+    public function weekDay(){
+        return [
+            "sunday" => "Sunday",
+            "monday" => "Monday",
+            "tuesday" => "Tuesday",
+            "wednesday" => "Wednesday",
+            "thursday" => "Thursday",
+            "friday" => "Friday",
+            "saturday" => "Saturday"
+        ];
+    }
+
+    public function monthNumber(){
+        return [
+            "january" => "January",
+            "february" => "February",
+            "march" => "March",
+            "april" => "April",
+            "may" => "May",
+            "june" => "June",
+            "july" => "July",
+            "august" => "August",
+            "september" => "September",
+            "october" => "October",
+            "november" => "November",
+            "december" => "December"
+        ];
+    }
 }
