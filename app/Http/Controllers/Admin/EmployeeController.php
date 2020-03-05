@@ -35,6 +35,20 @@ class EmployeeController extends Controller
         return view('employees.index', compact('employees', 'attributes', 'sections'));
     }
 
+    public function employeesAttendance(){
+        $company = Auth::user()->office->company;
+        $employees = User::whereHas('office', function($u) use($company) {
+            $u->where('company_id', $company->id);
+        })->get();
+
+
+        $sections = $company->employeeInformationSections;
+        $attributes = EmployeeDetailAttribute::whereHas('employeeInformationSection', function($q) use($company) {
+            $q->where('company_id', $company->id);
+        })->get();
+        return view('employees.employee-attendance', compact('employees', 'attributes', 'sections'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *

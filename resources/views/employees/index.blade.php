@@ -218,7 +218,7 @@
                     <fieldset class="row">
                         <div class="filters-list">Filters list</div>
                         <div class="Filter-button">
-                            <div class="form-group">          
+                                   
                             <select id="grade" name="grade">
                             <option value="-1"><button>Status</button></option>
                             <option value="3">3</option>
@@ -230,11 +230,9 @@
                             <option value="-4">-4</option>
                             <option value="-5">-5</option>
                             </select>
-                            </div>
+                           
                         </div>
                         <div class="Filter-button">
-                            <div class="form-group">
-                            
                             <select id="two_grade" name="two_grade">
                                 <option value="2"><button>Employment type</button></option>
                                 <option value="3"></option>
@@ -246,10 +244,8 @@
                                 <option value="-4">-4</option>
                                 <option value="-5">-5</option>
                             </select>
-                            </div>
                         </div>
-                        <div class="Filter-button">        
-                            <div  class="form-group">    
+                        <div class="Filter-button"> 
                                 <select id="tree_grade " name="tree_grade">
                                 <option value="1"><button>Office</button></option>
                                 <option value="3">3</option>
@@ -261,10 +257,8 @@
                                 <option value="-4">-4</option>
                                 <option value="-5">-5</option>
                             </select>
-                            </div>
                         </div>
-                        <div class="Filter-button">        
-                            <div  class="form-group">    
+                        <div class="Filter-button">
                                 <select id="grade-4" name="grade-4">
                                 <option value="1"><button>Office</button></option>
                                 <option value="3">3</option>
@@ -276,10 +270,8 @@
                                 <option value="-4">-4</option>
                                 <option value="-5">-5</option>
                             </select>
-                            </div>
                         </div>
-                        <div class="Filter-button">        
-                            <div  class="form-group">    
+                        <div class="Filter-button">
                                 <select id="grade-5 " name="grade-5">
                                 <option value="1"><button>Office</button></option>
                                 <option value="3">3</option>
@@ -291,10 +283,8 @@
                                 <option value="-4">-4</option>
                                 <option value="-5">-5</option>
                             </select>
-                            </div>
                         </div>
-                        <div class="Filter-button">        
-                            <div  class="form-group">    
+                        <div class="Filter-button"> 
                                 <select id="grade-6" name="grade-6">
                                 <option value="1"><button>Office</button></option>
                                 <option value="3">3</option>
@@ -306,7 +296,6 @@
                                 <option value="-4">-4</option>
                                 <option value="-5">-5</option>
                             </select>
-                            </div>
                         </div>                  
                     </fieldset> 
                 </section>
