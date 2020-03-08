@@ -66,4 +66,20 @@ class User extends Authenticatable
     public function boardingGroups(){
         return $this->belongsToMany(\App\BoardingGroup::class, 'employee_boarding_group', 'user_id', 'group_id');
     }
+
+    public function userAttendances(){
+        return $this->belongsToMany(\App\Weekday::class, 'user_attendance', 'user_id', 'weekday_id')->withPivot('in_time', 'out_time', 'date', );
+    }
+
+    public function attendanceLists(){
+        return $this->hasMany(\App\Attendance::class, 'user_id');
+    }
+
+    public function userAbsences(){
+        return $this->belongsToMany(\App\Absence::class, 'user_absence', 'user_id', 'absence_id')->withPivot('reason', 'absence_from', 'absence_to');
+    }
+
+    public function absenceLists(){
+        return $this->hasMany(\App\UserAbsence::class, 'user_id');
+    }
 }

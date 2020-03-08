@@ -36,7 +36,7 @@ class Absence extends Model
         return $types;
     }
 
-    public function offieces()
+    public function offices()
     {
         return $this->belongsTo(Office::class, 'office_id');
     }
@@ -49,5 +49,13 @@ class Absence extends Model
     public function payrollSettings()
     {
         return $this->belongsToMany(\App\PayrollSetting::class, 'absences_type_payroll_settings', 'absence_id', 'payroll_setting_id');
+    }
+
+    public function userAbsences(){
+        return $this->belongsToMany(\App\User::class, 'user_absence', 'absence_id', 'user_id')->withPivot('reason', 'absence_from', 'absence_to');
+    }
+
+    public function absenceLists(){
+        return $this->hasMany(\App\UserAbsence::class, 'absence_id');
     }
 }

@@ -31,6 +31,14 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('employees.absence') }}" aria-expanded="false">
+                        <i class="fa fa-users"></i>
+                        <span class="hide-menu">
+                            Absences 
+                        </span>
+                    </a>
+                </li>
+                <li>
                     <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-settings"></i><span class="hide-menu">Settings </span></a>
                     <ul aria-expanded="false" class="collapse">
                         {{-- <li><a href="{{ url('users') }}">Users</a></li> --}}

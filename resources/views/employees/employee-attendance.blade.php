@@ -1,5 +1,5 @@
 @extends('layouts.admin.master')
-@section('title', 'Employees')
+@section('title', 'Attendance')
 @section('admin-additional-css')
 <!-- Favicon icon -->
 <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/images/favicon.png') }}">
@@ -9,129 +9,82 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/plugins/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
  <link href="{{ asset('admin/assets/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet" media="all">
  <link href="{{ asset('admin/assets/plugins/wizard/steps.css') }}" rel="stylesheet">
+ <link href="{{ asset('admin/assets/plugins/timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet">
+ <link href="{{ asset('admin/assets/plugins/clockpicker/dist/jquery-clockpicker.min.css') }}" rel="stylesheet">
+
  <link href="{{ asset('admin/css/app-contact.css') }}" id="app-contact" rel="stylesheet" media="all">
 @endsection
 @section('content')
 @include('layouts.admin.include.alert')
-             <div class=" table-responsive m-t-40">
-                <section class="filters well">
-                    <fieldset class="row">
-                        <div class="filters-list">Filters list</div>
-                        <div class="Filter-button">                                   
-                            <select id="grade" name="grade">
-                            <option value="-1"><button>Status</button></option>
-                            <option value="3">3</option>
-                            <option value="2">2</option>
-                            <option value="">1</option>
-                            <option value="">-1</option>
-                            <option value="-2">-2</option>
-                            <option value="-3">-3</option>
-                            <option value="-4">-4</option>
-                            <option value="-5">-5</option>
-                            </select>
-                           
-                        </div>
-                        <div class="Filter-button">
-                            <select id="two_grade" name="two_grade">
-                                <option value="2"><button>Employment type</button></option>
-                                <option value="3"></option>
-                                <option value="">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button"> 
-                                <select id="tree_grade " name="tree_grade">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button">
-                                <select id="grade-4" name="grade-4">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button">
-                                <select id="grade-5 " name="grade-5">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button"> 
-                                <select id="grade-6" name="grade-6">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>                  
-                    </fieldset> 
-                </section>
-                <section class="data">   
-                    <table id="example" class="display datatable table table-bordered table-striped table-hover" data-table-source="" data-table-filter-target >
+             <div class=" table-responsive m-t-40">           
+                <section>   
+                    {{-- <table id="example" class="display datatable table table-bordered table-striped table-hover" data-table-source="" data-table-filter-target > --}}
+                    <table id="" class="display table table-bordered table-striped table-hover" data-table-source="" data-table-filter-target >
                         <thead>
                             <tr>
-                                <th class="table-topper"><input type="checkbox"></th>
-                                {{-- <th style="left: 37px;" class="table-topper"></th> --}}
-                                <th> Name</th>
-                                <th> Email</th>
-                                @foreach ($attributes as $attribute)
-                                <th class="table-topper">{{ $attribute->name }}</th>
-                                @endforeach
+                                <th> Employee</th>
+                                <th> Date</th>
+                                <th> Office In Time</th>
+                                <th> Office Out Time</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($employees as $employee)
+                            <form action="{{ route('employees.attendance.set') }}" method="post">
+                                @csrf
+                                <tr>
+                                    <td style="left: 37px;">                                    
+                                        <select class="form-control custom-select" id="custom-select" name="employee">
+                                            <option value="">Select Employee</option>
+                                            @foreach ($employees as $employee)
+                                            <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="text" id="date" class="form-control" name="date">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="far fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group clockpicker">
+                                            <input type="text" class="form-control" name="time_in" value="09:00">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="left: 37px;">
+                                        <div class="input-group clockpicker">
+                                            <input type="text" class="form-control" name="time_out" value="18:00">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                            </div>
+                                        </div>
+                                    
+                                    </td>
+                                
+                                    <td><button class="btn btn-primary">Save</button></td>
+                                </tr>
+                            </form>
+                        </tbody>
+                    </table>
+                    <table id="" class="display table table-bordered table-striped table-hover" data-table-source="" data-table-filter-target >
+                        <thead>
                             <tr>
-                                <td><input type="checkbox"></td>
-                                {{-- <td style="left: 37px;"> <img src="../assets/images/users/4.jpg" alt="user" width="40" --}}
-                                    class="img-circle" />
-                                </td>
-                                <td style="left: 37px;">
-                                    {{ $employee->name }}
-                                </td>
-                                <td style="left: 37px;">
-                                    {{ $employee->email }}
-                                </td>
-                                @foreach ($attributes as $attribute)
-                                @php
-                                    $detail = $employee->employeeDetails()->where('attribute_id', $attribute->id)->first();
-                                @endphp
-                                <td>{{ $detail->value ?? '' }}</td>
-                                @endforeach
+                                <th> Date</th>
+                                <th> Weekday</th>
+                                <th> Office In Time</th>
+                                <th> Office Out Time</th>
+                                <th> In Office</th>
+                                <th>Breaktime</th>
+                                <th>Working hour</th>
                             </tr>
-                            @endforeach
+                        </thead>
+                        <tbody id="employee-attendance">
                         </tbody>
                     </table>
                 </section>
@@ -152,108 +105,106 @@
 <script src="{{ asset('admin/assets/plugins/wizard/jquery.validate.min.js') }}"></script>
 <!-- Sweet-Alert  -->
 <script src="{{ asset('admin/assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
-{{-- <script src="{{ asset('admin/assets/plugins/wizard/steps.js') }}"></script> --}}
-
+<script src="{{ asset('admin/assets/plugins/clockpicker/dist/jquery-clockpicker.min.js') }}"></script>
 <script src="{{ asset('admin/assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script>
+<script src="../assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<!-- Date range Plugin JavaScript -->
 
 <script src="{{ asset('admin/js/main.js') }}"></script>
 
-<script type="text/javascript">
-    function openTab(id){
-        $('.tab-pane').hide();
-        $('#tab'+id).show();
-        $(".department-update-form").hide();
-        // $('#department'+id).attr('style', 'display:none !important');
-        $('#department-div'+id).show();
-    }
-    function updateDepartment(id) {
-        $('.department-details').hide();
-        $('#department-'+id).show();
-    }
-    function cancelUpdate(id){
-        $('#department-'+id).hide();
-        $('#department-div'+id).show();
-    }
-
-    (function($){  
-        var dataTable;
-        var select2Init = function(){
-            $('.tag').select2({
-                maximumSelectionLength: 3
-            });
-        };
-        var dataTableInit = function(){
-            dataTable = $('table').dataTable({
-                "columnDefs" : [{
-                    "targets": 2,
-                    "type": 'num',
-                },{
-                    "targets": 3,
-                    "type": 'num',
-                }],
-            });
-        }; 
-        var dtSearchInit = function(){
-            $('#grade').change(function(){
-                dtSearchAction( $(this) , 2)
-            });
-            $('#two_grade').change(function(){
-                dtSearchAction( $(this) , 3);
-            });
-            $('#tree_grade').change(function(){
-                dtSearchAction( $(this) , 4);
-            });
-        }; 
-    
-        dtSearchAction = function(selector,columnId){
-            var fv = selector.val();
-            if( (fv == '') || (fv == null) ){
-                dataTable.api().column(columnId).search('', true, false).draw();
-            } else {
-                dataTable.api().column(columnId).search(fv, true, false).draw();
-            }
-        };
-        $(document).ready(function(){
-            $('.custom-select').select2();
-            var id = '';
-            $('.date, .date-calendar').on('focus',function() {
-                id = $(this).data('date');
-            });
-            $('.date, .date-calendar').daterangepicker({
-                "singleDatePicker": true,
-                "showDropdowns": true,
-                // "linkedCalendars": false,
-                // "autoUpdateInput": false,
-                // "alwaysShowCalendars": false,
-                // "showCustomRangeLabel": false,
-                // "minYear": 1901,
-                "format": "DD/MM/YYYY"
-            }, function(start, end, label) {
-                $('#date-'+id).val(start.format('DD/MM/YYYY'));
-            });
-            select2Init();
-            dataTableInit();
-            dtSearchInit();
-        });
-    })(jQuery);
-</script>
 <script>
-    // $(function(){"use strict";$(function(){$(".preloader").fadeOut()}),jQuery(document).on("click",".mega-dropdown",function(i){i.stopPropagation()});var i,e,o,s=function(){(window.innerWidth>0?window.innerWidth:this.screen.width)<1170?($("body").addClass("mini-sidebar"),$(".navbar-brand span").hide(),$(".sidebartoggler i").addClass("ti-menu")):($("body").removeClass("mini-sidebar"),$(".navbar-brand span").show(),$(".sidebartoggler i").removeClass("ti-menu"));var i=(window.innerHeight>0?window.innerHeight:this.screen.height)-1;(i-=70)<1&&(i=1),i>70&&$(".page-wrapper").css("min-height",i+"px")};$(window).ready(s),$(window).on("resize",s),$(".sidebartoggler").on("click",function(){$("body").hasClass("mini-sidebar")?($("body").trigger("resize"),$("body").removeClass("mini-sidebar"),$(".navbar-brand span").show(),$(".sidebartoggler i").addClass("ti-menu")):($("body").trigger("resize"),$("body").addClass("mini-sidebar"),$(".navbar-brand span").hide(),$(".sidebartoggler i").removeClass("ti-menu"))}),$(".fix-header .topbar").stick_in_parent({}),$(".nav-toggler").click(function(){$("body").toggleClass("show-sidebar"),$(".nav-toggler i").toggleClass("ti-menu"),$(".nav-toggler i").addClass("ti-close")}),$(".right-side-toggle").click(function(){$(".right-sidebar").slideDown(50),$(".right-sidebar").toggleClass("shw-rside")}),$(function(){for(var i=window.location,e=$("ul#sidebarnav a").filter(function(){return this.href==i}).addClass("active").parent().addClass("active");e.is("li");)e=e.parent().addClass("in").parent().addClass("active")}),$(function(){$('[data-toggle="tooltip"]').tooltip()}),$(function(){$('[data-toggle="popover"]').popover()}),$(function(){$("#sidebarnav").metisMenu()}),$(".message-center").slimScroll({position:"right",size:"5px",color:"#dcdcdc"}),$(".aboutscroll").slimScroll({position:"right",size:"5px",height:"80",color:"#dcdcdc"}),$(".message-scroll").slimScroll({position:"right",size:"5px",height:"570",color:"#dcdcdc"}),$(".chat-box").slimScroll({position:"right",size:"5px",height:"470",color:"#dcdcdc"}),$(".slimscrollright").slimScroll({height:"100%",position:"right",size:"5px",color:"#dcdcdc"}),$("body").trigger("resize"),$(".list-task li label").click(function(){$(this).toggleClass("task-done")}),$("#to-recover").on("click",function(){$("#loginform").slideUp(),$("#recoverform").fadeIn()}),$(".custom-file-input").on("change",function(){var i=$(this).val();$(this).next(".custom-file-label").html(i)}),$(document).on("click",".card-actions a",function(i){i.preventDefault(),$(this).hasClass("btn-close")&&$(this).parent().parent().parent().fadeOut()}),i=jQuery,window,e=document,i(o='[data-perform="card-collapse"]').each(function(){var e=i(this),o=e.closest(".card"),s=o.find(".card-block"),a={toggle:!1};s.length||(s=o.children(".card-heading").nextAll().wrapAll("<div/>").parent().addClass("card-block"),a={}),s.collapse(a).on("hide.bs.collapse",function(){e.children("i").removeClass("ti-minus").addClass("ti-plus")}).on("show.bs.collapse",function(){e.children("i").removeClass("ti-plus").addClass("ti-minus")})}),i(e).on("click",o,function(e){e.preventDefault(),i(this).closest(".card").find(".card-block").collapse("toggle")})});
+    $(document).ready(function(){
+        // Clock pickers
+        $('#single-input').clockpicker({
+            placement: 'bottom',
+            align: 'left',
+            autoclose: true,
+            'default': 'now'
+        });
+        $('.clockpicker').clockpicker({
+            donetext: 'Done',
+        }).find('input').change(function() {
+            console.log(this.value);
+        });
+        $('#check-minutes').click(function(e) {
+            // Have to stop propagation here
+            e.stopPropagation();
+            input.clockpicker('show').clockpicker('toggleView', 'minutes');
+        });
+        if (/mobile/i.test(navigator.userAgent)) {
+            $('input').prop('readOnly', true);
+        }
+        $('#date').daterangepicker({
+            singleDatePicker: true,
+            // autoApply:true,
+            timePicker: false,
+            locale: {
+                format: 'YYYY-MM-DD'
+            },
+            callback: function (start, end, period) {
+                $(this).val(start);
+            }
+        });
 
-    $("#employee-submit").steps({
-        headerTag: "h6"
-        , bodyTag: "section"
-        , transitionEffect: "fade"
-        , titleTemplate: '<span class="step">#index#</span> #title#'
-        , labels: {
-            finish: "Submit"
-        }
-        , onFinished: function (event, currentIndex) {
-            $('form#employee-submit').submit();  
-        }
+        $('#custom-select').change(function(){
+            let id = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: "{{ url('employees/attendance/get/') }}/"+id,
+                success:function(data){
+                    let html = '';
+                    $.each(data.attendance, function(month, value) {
+                        let m = `<tr style="border-bottom:2pt solid #212529;"><td colspan="7" style='text-align:center;vertical-align:middle;font-weight:600;font-size:16px;'>`+month+`</td></tr>`;
+                        $('#employee-attendance').append(m);
+                        $.each(value, function(index, value) {
+                            let office_duration = moment.duration(moment(value.end_time, [moment.ISO_8601, 'HH:mm']).diff(moment(value.start_time, [moment.ISO_8601, 'HH:mm']))).asMinutes();
+                            let breaktime = value.break_time.split(":");
+
+
+                            let duration =moment.duration(moment(value.pivot.out_time).diff(moment(value.pivot.in_time))).asMinutes();
+                            let hour = Math.floor(duration/60);
+                            let minutes = duration%60;
+
+                            b_hour = 0;
+                            b_minute = 0;
+                            if(minutes<breaktime[1]){
+                                b_minute = (minutes-breaktime[1])+60;
+                                b_hour = (hour-breaktime[0])-1;
+                            }else{
+                                b_minute = minutes-breaktime[1];
+                                b_hour = hour-breaktime[0];
+                            }
+                            html += `<tr>
+                                <td>
+                                    `+moment(value.pivot.date).format('MMMM-DD YYYY')+`
+                                </td>
+                                <td>
+                                    `+moment(value.pivot.date).format('dddd')+`
+                                </td>
+                                <td>
+                                    `+moment(value.pivot.in_time).format('hh:mm A')+`
+                                </td>
+                                <td>
+                                    `+moment(value.pivot.out_time).format('hh:mm A')+`
+                                </td>
+                                <td>
+                                    `+hour+`:`+minutes+` Hr
+                                </td>
+                                <td>
+                                    `+value.break_time+` Hr
+                                </td>
+                                <td>
+                                    `+b_hour+`:`+b_minute+` Hr
+                                </td>
+                            </tr>`;
+                        });
+                        $('#employee-attendance').append(html);
+                    });
+                }
+            });
+        });
     });
-</script>
-
+    </script>
 @endsection
 </body>
 

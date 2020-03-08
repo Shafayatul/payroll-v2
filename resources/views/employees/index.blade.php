@@ -36,7 +36,7 @@
                             </a>                                      
                         </div>
                     </div>
-                    <div class="btn-group" data-toggle="tooltip" data-original-title="Save current view">
+                    {{-- <div class="btn-group" data-toggle="tooltip" data-original-title="Save current view">
                         <div id="staff-views" class="btn-group dropdown">
                             <button class="btn btn-default dropdown-toggle " type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Views
                                 <span class="caret"></span>
@@ -75,7 +75,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>            
                 <div class="col-md-3">
                     <div class="btn-toolbar pull-right">
@@ -214,7 +214,7 @@
                 </div>
             </div>
             <div class=" table-responsive m-t-40">
-                <section class="filters well">
+                {{-- <section class="filters well">
                     <fieldset class="row">
                         <div class="filters-list">Filters list</div>
                         <div class="Filter-button">
@@ -298,12 +298,12 @@
                             </select>
                         </div>                  
                     </fieldset> 
-                </section>
+                </section> --}}
                 <section class="data">   
                     <table id="example" class="display datatable table table-bordered table-striped table-hover" data-table-source="" data-table-filter-target >
                         <thead>
                             <tr>
-                                <th class="table-topper"><input type="checkbox"></th>
+                                <th style="width: 15px;" class="table-topper"><input type="checkbox"></th>
                                 {{-- <th style="left: 37px;" class="table-topper"></th> --}}
                                 <th> Name</th>
                                 <th> Email</th>
@@ -316,8 +316,8 @@
                             @foreach ($employees as $employee)
                             <tr>
                                 <td><input type="checkbox"></td>
-                                {{-- <td style="left: 37px;"> <img src="../assets/images/users/4.jpg" alt="user" width="40" --}}
-                                    class="img-circle" />
+                                {{-- <td style="left: 37px;"> <img src="../assets/images/users/4.jpg" alt="user" width="40"
+                                    class="img-circle" /> --}}
                                 </td>
                                 <td style="left: 37px;">
                                     {{ $employee->name }}

@@ -64,19 +64,19 @@
                     </h4>
                     <div class="form-horizontal form-striped compact department-details" id="department-div{{ $attendenceworkinghour->id }}">
                         <div class="form-horizontal form-striped compact" style="">
-                            <div class="form-group d-flex">
+                            {{-- <div class="form-group d-flex">
                                 <div class="col-md-11 form-control-static">
                                     <a href="#modal-confirm-make-default-schedule" data-schedule-id="166716">
                                         Make default schedule
                                     </a>
                                 </div>
-                            </div>
-                            <div class="form-group d-flex">
+                            </div> --}}
+                            {{-- <div class="form-group d-flex">
                                 <div class="col-md-12 form-control-static" style="text-align: justify">
                                     <i class="fas fa-info-circle"></i>
                                     The following schedule informs the assigned employee about his/her working schedule and defines the working hours for each work day (used in overtime calculation) as well as the free days that then do not count into absence calculations
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-group d-flex">
                                 <div class="col-md-10 offset-1 form-control-static">
                                     <table class="table table-striped">
@@ -99,7 +99,7 @@
                                    </table>
                                 </div>
                             </div>
-                            <div class="form-group  d-flex">
+                            {{-- <div class="form-group  d-flex">
                                 <label class="col-md-3 control-label"> Track overtime </label>
                                 <div class="col-md-8 form-control-static">
                                     @if($attendenceworkinghour->is_track_overtime == 1) 
@@ -182,7 +182,7 @@
                                     5
                                 </div>
                             </div>
-                            @endif                            
+                            @endif                             --}}
                         </div>
                     </div>
                     <form method="POST" action="{{ route('attendence-working-hours-update', ) }}" accept-charset="UTF-8" class="form-horizontal department-update-form" id="department-{{ $attendenceworkinghour->id }}" novalidate="novalidate" style="display:none">
@@ -223,29 +223,29 @@
                                 <div class="col-md-9 d-flex">                    
                                     <div class="col-md-3 total">
                                         <div class="input-group ">
-                                           <input class="form-control selectExample working-hour" placeholder="hh:mm"  type="text" id="working-hour-{{ $weekday->id }}" serial="{{ $weekday->id }}" value="{{ $weekday->working_hours }}" autocomplete="off" default-val="08:00" name="working_hours[{{ $weekday->weekday }}]">
+                                           <input class="form-control selectExample working-hour" placeholder="hh:mm"  type="text" name="working_hours[{{ $weekday->weekday }}]" id="working-hour-{{ $weekday->id }}" readonly serial="{{ $weekday->id }}" value="{{ $weekday->working_hours }}" autocomplete="off" default-val="08:00">
                                         </div>
                                     </div>
                                     <div class="col-md-3 start">
                                         <div class="input-group ">
-                                           <input class="form-control selectExample start-time" placeholder="hh:mm" type="text" name="start_time[{{ $weekday->weekday }}]" serial="{{ $weekday->id }}" value="{{ $weekday->start_time }}" autocomplete="off" id="start-time-{{ $weekday->id }}">
+                                           <input class="form-control selectExample start-time" placeholder="hh:mm" type="text" name="start_time[{{ $weekday->weekday }}]" serial="{{ $weekday->id }}" value="{{ $weekday->start_time }}" default-val="09:00" autocomplete="off" id="start-time-{{ $weekday->id }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3 end">
                                         <div class="input-group ">
-                                            <input class="form-control selectExample end-time" placeholder="hh:mm"  type="text" serial="{{ $weekday->id }}" name="end_time[{{ $weekday->weekday }}]" value="{{ $weekday->end_time }}" autocomplete="off" id="end-time-{{ $weekday->id }}">
+                                            <input class="form-control selectExample end-time" placeholder="hh:mm"  type="text" serial="{{ $weekday->id }}" name="end_time[{{ $weekday->weekday }}]" value="{{ $weekday->end_time }}"  default-val="18:00" autocomplete="off" id="end-time-{{ $weekday->id }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3 break">
                                         <div class="input-group ">
-                                            <input class="form-control selectExample break-time" placeholder="hh:mm" name="break_time[{{ $weekday->weekday }}]" disabled="disabled" serial="{{ $weekday->id }}" type="text" autocomplete="off" id="break-time-{{ $weekday->id }}">
+                                            <input class="form-control selectExample break-time" placeholder="hh:mm" name="break_time[{{ $weekday->weekday }}]" disabled="disabled" serial="{{ $weekday->id }}" type="text"  default-val="01:00" autocomplete="off" id="break-time-{{ $weekday->id }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach                        
                              
-                        <div class="form-group d-flex">
+                        {{-- <div class="form-group d-flex">
                             <label class="col-md-3 control-label">
                                 Track overtime
                             </label>
@@ -253,43 +253,42 @@
                                 <input id="is-track" type="checkbox" name="is_track_overtime" value="1" {{ ($attendenceworkinghour->is_track_overtime == 1) ? 'checked' : '' }}>
                             </div>
                         </div>
-                    <div id="track-overtime-data" style="display: none;">
-                        <div class="form-group d-flex">
-                            <label class="col-md-3 control-label">
-                                Overtime calculation
-                            </label>
-                            <div class="col-md-9 form-inline">
-                                on
-                                <select id="overtime-calculation-type" name="overtime_calculation" class="form-control" style="width:auto" >
-                                    <option value="daily" {{ ($attendenceworkinghour->overtime_calculation == 'daily') ? 'selected' : '' }}>daily</option>
-                                    <option value="weekly" {{ ($attendenceworkinghour->overtime_calculation == 'weekly') ? 'selected' : '' }}>weekly</option>
-                                </select>
-                                basis
+                        <div id="track-overtime-data" style="display: none;">
+                            <div class="form-group d-flex">
+                                <label class="col-md-3 control-label">
+                                    Overtime calculation
+                                </label>
+                                <div class="col-md-9 form-inline">
+                                    on
+                                    <select id="overtime-calculation-type" name="overtime_calculation" class="form-control" style="width:auto" >
+                                        <option value="daily" {{ ($attendenceworkinghour->overtime_calculation == 'daily') ? 'selected' : '' }}>daily</option>
+                                        <option value="weekly" {{ ($attendenceworkinghour->overtime_calculation == 'weekly') ? 'selected' : '' }}>weekly</option>
+                                    </select>
+                                    basis
+                                </div>
+                            </div>
+                            <div class="form-group d-flex">
+                                <label class="col-md-3 control-label">
+                                    Overtime cliff
+                                </label>
+                                <div class="col-md-9 form-inline">
+                                    Overtime does not apply for the first
+                                    <input class="form-control number" name="overtime_cliff" style="width:80px"  type="text" value="{{ $attendenceworkinghour->overtime_cliff }}">
+                                    overtime hours an employee worked in a month
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group d-flex">
+                        <div class="form-group deficit-data" style="display: none;">
                             <label class="col-md-3 control-label">
-                                Overtime cliff
+                                Deficit hours
+                                <span data-toggle="tooltip" data-title="When activated, deficit hours are set off against overtime" data-original-title="" title="">
+                                    <i class="far fa-info-circle"></i>
+                                </span>
                             </label>
-                            <div class="col-md-9 form-inline">
-                                Overtime does not apply for the first
-                                <input class="form-control number" name="overtime_cliff" style="width:80px"  type="text" value="{{ $attendenceworkinghour->overtime_cliff }}">
-                                overtime hours an employee worked in a month
+                            <div class="col-md-9 form-control-static">                 
+                                <input name="is_deficit" id="is-deficit" type="checkbox" value="1" {{ ($attendenceworkinghour->is_deficit == 1) ? 'checked' : '' }}>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="form-group deficit-data" style="display: none;">
-                        <label class="col-md-3 control-label">
-                            Deficit hours
-                            <span data-toggle="tooltip" data-title="When activated, deficit hours are set off against overtime" data-original-title="" title="">
-                                <i class="far fa-info-circle"></i>
-                            </span>
-                        </label>
-                        <div class="col-md-9 form-control-static">                 
-                            <input name="is_deficit" id="is-deficit" type="checkbox" value="1" {{ ($attendenceworkinghour->is_deficit == 1) ? 'checked' : '' }}>
-                        </div>
-                    </div>
                         <div class="form-group d-flex">
                             <label class="col-md-3 control-label">
                                 Prorate vacation
@@ -316,7 +315,7 @@
                                     <option value="7" {{ ($attendenceworkinghour->reference_value == 7) ? 'selected' : '' }}>7</option>
                                 </select>
                             </div>
-                        </div>                     
+                        </div>                      --}}
                         <div class="form-group row">
                             <div class="col-md-9 offset-3">
                                 <button type="reset" class="btn btn-default edit-cancel" onclick="cancelUpdate({{ $attendenceworkinghour->id  }});">
@@ -398,8 +397,12 @@
         var serial = $(this).attr('serial');
         var time = $(this).val();
         // console.log(serial);
-        $("#working-hour-"+serial).attr('disabled','disabled');
+        // $("#working-hour-"+serial).attr('disabled','disabled');
         $("#break-time-"+serial).removeAttr('disabled','disabled');
+        
+        $("#working-hour-"+serial).attr('readonly');
+        // $("#break-time-"+serial).removeAttr('readonly');
+
 
         // $("#end-time-"+serial).timepicker({ 
         //     'timeFormat': "H:i",

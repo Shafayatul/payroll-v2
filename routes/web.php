@@ -122,7 +122,14 @@ Route::group(
 		Route::prefix('employees')->name('employees.')->group( function () {
 			Route::get('index', 'Admin\EmployeeController@index')->name('index');
 			Route::get('attendance', 'Admin\EmployeeController@employeesAttendance')->name('attendance');
+			Route::post('attendance/set', 'Admin\EmployeeController@setAttendance')->name('attendance.set');
+			
+			Route::get('absence', 'Admin\EmployeeController@employeesAbsence')->name('absence');
+			Route::get('absence/get/{id}', 'Admin\EmployeeController@getAbsence')->name('absence.get');
+			Route::post('absence/set', 'Admin\EmployeeController@setAbsence')->name('absence.set');
+			
 			Route::post('store', 'Admin\EmployeeController@store')->name('store');
+			Route::get('attendance/get/{id}', 'Admin\EmployeeController@getAttendance')->name('get');
 		});		
 		
 	});
