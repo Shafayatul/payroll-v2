@@ -1,0 +1,242 @@
+@extends('layouts.admin.master')
+@section('title', 'Employees')
+@section('admin-additional-css')
+<!-- Favicon icon -->
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/images/favicon.png') }}">
+<link rel="canonical" href="https://www.wrappixel.com/templates/monsteradmin/" />
+<!-- Bootstrap Core CSS -->
+ <link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/plugins/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('admin/assets/plugins/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
+ <link href="{{ asset('admin/assets/plugins/daterangepicker/daterangepicker.css') }}" rel="stylesheet" media="all">
+ <link href="{{ asset('admin/assets/plugins/wizard/steps.css') }}" rel="stylesheet">
+ <link href="{{ asset('admin/css/app-contact.css') }}" id="app-contact" rel="stylesheet" media="all">
+@endsection
+@section('content')
+@include('layouts.admin.include.alert')
+        <div class=" table-responsive m-t-40">
+            <section class="data">   
+                <table id="example" class="display datatable table table-bordered table-striped table-hover" data-table-source="" data-table-filter-target >
+                    <thead>
+                        <tr>
+                            <th> Year</th>
+                            <th> Month</th>
+                            <th> Basic</th>
+                            <th> $ Per hr</th>
+                            <th> Workday</th>
+                            <th> Office Work Hour</th>
+                            <th> Work Hour</th>
+                            <th> Overtime</th>
+                            <th> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($months as $key => $month)
+                        
+                        <tr>
+                            <td style="left: 37px;">
+                                {{ \Carbon\Carbon::parse($key)->format('Y') }}
+                            </td>
+                            <td style="left: 37px;">
+                                {{ \Carbon\Carbon::parse($key)->format('F') }}
+                            </td>
+                            @php
+                                $salary = number_format($employee->salary, 2, '.', ',');
+                            @endphp
+                            <td style="left: 37px;">
+                                {{ ' $'. $salary }}
+                            </td>
+                            <td style="left: 37px;">
+                                {{ ' $'. number_format(($employee->salary / 173), 2, '.', ',') }}
+                            </td>
+                            <td style="left: 37px;">
+                                {{ $month->count > 1? $month->count.' days':'0'.$month->count.' day' }}
+                            </td>
+                            <td style="left: 37px;">
+                                @php
+                                    $office_work_time = (($month->work_time - $month->break_time) * 60);
+                                @endphp
+                                {{ intdiv($office_work_time, 60).' hours '.($office_work_time % 60).' minutes' }}
+                            </td>
+                            <td style="left: 37px;">
+                                @php
+                                    $work_time = (($month->total_time - $month->break_time) * 60);
+                                @endphp
+                                {{ intdiv($work_time, 60).' hours '. ($work_time % 60).' minutes' }}
+                            </td>
+                            <td style="left: 37px;">
+                                @php
+                                    $overtime = ($work_time - ( 173 * 60 ) > 0 ? $work_time - ( 173 * 60 ) : 00);
+                                @endphp
+                                {{ intdiv($overtime, 60).' hours '. ($overtime % 60).' minutes' }}
+                            </td>
+                            <td style="left: 37px;">
+                                <button data-toggle="modal" data-target="#salary-info-details-{{ \Carbon\Carbon::parse($key)->format('F-Y') }}"  class=" btn btn-default"><i class=" fas fa-eye"></i> View Details</button>
+                            </td>
+                        </tr>
+
+                        <div class="modal in fade" id="salary-info-details-{{ \Carbon\Carbon::parse($key)->format('F-Y') }}" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog ">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title text-left">Salary {{ \Carbon\Carbon::parse($key)->format('F-Y') }}</h4>
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span aria-hidden="true">×</span>
+                                            <span class="sr-only">Close</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6 my-1">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <span><b>Name :</b></span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <span>{{ $employee->name }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 my-1">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <span><b>Basic Salary :</b></span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <span>${{ number_format($employee->salary, 2, '.','') }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="thead">
+                                                <div class="tr" style="display:flex;">
+                                                    <div class="col-md-4 my-1">NAME</div>
+                                                    <div class="col-md-4 my-1">DESCRIPTION</div>
+                                                    <div class="col-md-2 my-1">RATE</div>
+                                                    <div class="col-md-2 my-1 text-right">TOTAL</div>
+                                                </div>
+                                            </div>
+                                            <div class="tbody">
+                                            @foreach ($employee->office->contributions as $key => $contribution)
+                                                <div class="tr row" style="display:flex;">
+                                                    <div class="col-md-4 my-1"> {{ $contribution['name'] }}</div>
+                                                    <div class="col-md-4 my-1"> {{ $contribution['description'] }}</div>
+                                                    <div class="col-md-2 my-1"> % {{ $contribution['rate'] }}</div>
+                                                    <div class="col-md-2 my-1 text-right">
+                                                        @php
+                                                            $basic = $employee->salary;
+                                                            $contribute = ($basic*$contribution['rate'])/100;
+                                                        @endphp
+                                                        ${{ number_format($contribute, 2, '.','') }}
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                                <div class="tr row" style="display:flex;">
+                                                    <div class="col-md-4 my-1"></div>
+                                                    <div class="col-md-4 my-1"></div>
+                                                    <div class="col-md-2 my-1 text-right"> Total </div>
+                                                    <div class="col-md-2 my-1 text-right">
+                                                        @php
+                                                            $rate = $employee->office->contributions()->sum('rate');
+                                                            $contribute = ($basic*$rate)/100;
+                                                        @endphp
+                                                        ${{ number_format($contribute, 2, '.','') }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                        @endforeach
+                    </tbody>
+                </table>
+            </section>
+        </div>
+@endsection
+                                                       
+@section('admin-additional-js')
+{{-- /home/salman/Projects/payroll-v2/public/admin/assets/plugins/daterangepicker/moment.min.js --}}
+{{-- <script src="{{ asset('admin/assets/plugins/moment/moment.js') }}" type="text/javascript"></script> --}}
+<script src="{{ asset('admin/assets/plugins/daterangepicker/moment.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('admin/assets/plugins/daterangepicker/daterangepicker.js') }}" type="text/javascript"></script>
+<script src="{{ asset('admin/assets/plugins/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+{{-- <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script> --}}
+<script src="{{ asset('admin/js/jquery.bootstrap-duallistbox.js') }}"></script>
+<script src="{{ asset('admin/assets/plugins/select2/dist/js/select2.min.js') }}"></script>
+
+<script src="{{ asset('admin/assets/plugins/wizard/jquery.steps.min.js') }}"></script>
+<script src="{{ asset('admin/assets/plugins/wizard/jquery.validate.min.js') }}"></script>
+<!-- Sweet-Alert  -->
+<script src="{{ asset('admin/assets/plugins/sweetalert/sweetalert.min.js') }}"></script>
+{{-- <script src="{{ asset('admin/assets/plugins/wizard/steps.js') }}"></script> --}}
+
+<script src="{{ asset('admin/assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script>
+
+<script src="{{ asset('admin/js/main.js') }}"></script>
+
+<script type="text/javascript">
+    function openTab(id){
+        $('.tab-pane').hide();
+        $('#tab'+id).show();
+        $(".department-update-form").hide();
+        // $('#department'+id).attr('style', 'display:none !important');
+        $('#department-div'+id).show();
+    }
+    function updateDepartment(id) {
+        $('.department-details').hide();
+        $('#department-'+id).show();
+    }
+    function cancelUpdate(id){
+        $('#department-'+id).hide();
+        $('#department-div'+id).show();
+    }
+
+    (function($){  
+        var dataTable;
+        var dataTableInit = function(){
+            dataTable = $('table').dataTable({
+                "columnDefs" : [{
+                    "targets": 2,
+                    "type": 'num',
+                },{
+                    "targets": 3,
+                    "type": 'num',
+                }],
+            });
+        }; 
+        dtSearchAction = function(selector,columnId){
+            var fv = selector.val();
+            if( (fv == '') || (fv == null) ){
+                dataTable.api().column(columnId).search('', true, false).draw();
+            } else {
+                dataTable.api().column(columnId).search(fv, true, false).draw();
+            }
+        };
+        $(document).ready(function(){
+            $('.custom-select').select2();
+            var id = '';
+            $('.date, .date-calendar').on('focus',function() {
+                id = $(this).data('date');
+            });
+            $('.date, .date-calendar').daterangepicker({
+                "singleDatePicker": true,
+                "showDropdowns": true,
+                // "linkedCalendars": false,
+                // "autoUpdateInput": false,
+                // "alwaysShowCalendars": false,
+                // "showCustomRangeLabel": false,
+                // "minYear": 1901,
+                "format": "DD/MM/YYYY"
+            }, function(start, end, label) {
+                $('#date-'+id).val(start.format('DD/MM/YYYY'));
+            });
+            dataTableInit();
+        });
+    })(jQuery);
+</script>
+@endsection
+</body>
+
+</html>

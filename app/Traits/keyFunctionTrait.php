@@ -4,6 +4,14 @@ namespace App\Traits;
 
 trait keyFunctionTrait
 {
+    // User-Employee
+    public function employeeType(){
+        return [
+            '0' => 'Half Time',
+            '1' => 'Full Time'
+        ];
+    }
+
     // EmployeeAttributeDatatype
     public function attributeTypes()
     {
@@ -216,6 +224,15 @@ trait keyFunctionTrait
             "october" => "October",
             "november" => "November",
             "december" => "December"
+        ];
+    }
+
+    // Overtime compensation type
+    public function compensationType(){
+        return [
+            '0' => 'Sunday',
+            '1' => 'Holiday',
+            '2' => 'Other'
         ];
     }
 }

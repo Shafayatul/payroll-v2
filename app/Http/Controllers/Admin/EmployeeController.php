@@ -29,10 +29,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $company = Auth::user()->office->company;
-        $employees = User::whereHas('office', function($u) use($company) {
-            $u->where('company_id', $company->id);
-        })->get();
+        $office = Auth::user()->office;
+        $company = $office->company;
+        $employees = User::where('office_id', $office->id)->get();
 
 
         $sections = $company->employeeInformationSections;
@@ -70,17 +69,9 @@ class EmployeeController extends Controller
     public function setAttendance(Request $request){
         $in_time = Carbon::createFromFormat('H:i', $request->time_in);
         $out_time = Carbon::createFromFormat('H:i', $request->time_out);
-        // $employee = User::findOrFail($request->employee);
-        // $today = Carbon::today()->format('Y-m-d');
+        
         $today = $request->date;
-        // $year = Carbon::today()->format('Y');
-        // $holiday = CalendarHoliday::where('date', $today)->whereHas('calendarYears', function($q) use($employee,$year){
-        //     $q->where('year', $year)->whereHas('calendars', function($p) use($employee){
-        //         $p->where('company_id', $employee->office->company_id);
-        //     });
-        // })->first();
         $day_name = Carbon::today()->format('l');
-
         $weekday = Weekday::where('weekday', $day_name)->first();
 
         $attendance = Attendance::where('date', $today)->first();
@@ -148,6 +139,7 @@ class EmployeeController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->salary = $request->salary;
+        $user->employee_type = $request->employee_type;
         $user->status = true;
         $user->password = Hash::make($request->password);
         $user->office_id = $request->office;

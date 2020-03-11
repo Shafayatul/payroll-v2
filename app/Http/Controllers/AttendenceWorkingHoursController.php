@@ -151,13 +151,17 @@ class AttendenceWorkingHoursController extends Controller
                 if(($weekday->weekday == 'Saturday') || ($weekday->weekday == 'Sunday')){
                     $weekday->working_hours   = "Closed";
                 }else{
-                    $weekday->working_hours   = ($request->working_hours[$weekday->weekday] ?? null);
+                    if(isset($request->start_time[$weekday->weekday]))
+                    $weekday->working_hours   = $request->working_hours[$weekday->weekday];
                 }
                 // $weekday->weekday         = $day;
-                $weekday->working_hour_id = $attendenceworkinghour->id;
+                // $weekday->working_hour_id = $attendenceworkinghour->id;
+                if(isset($request->start_time[$weekday->weekday]))
                 $weekday->start_time      = ($request->start_time[$weekday->weekday] ?? null);
+                if(isset($request->end_time[$weekday->weekday]))
                 $weekday->end_time        = ($request->end_time[$weekday->weekday] ?? null);
-                $weekday->break_time      = (isset($request->break_time[$weekday->weekday])?$request->break_time[$weekday->weekday] ?? null:null);
+                if(isset($request->break_time[$weekday->weekday]))
+                $weekday->break_time      = $request->break_time[$weekday->weekday];
                 $weekday->is_active       = 1;
                 $weekday->save();
             }

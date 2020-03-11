@@ -158,7 +158,10 @@
                         $('#employee-attendance').append(m);
                         $.each(value, function(index, value) {
                             let office_duration = moment.duration(moment(value.end_time, [moment.ISO_8601, 'HH:mm']).diff(moment(value.start_time, [moment.ISO_8601, 'HH:mm']))).asMinutes();
-                            let breaktime = value.break_time.split(":");
+                            let breaktime = 0;
+                            if(value.break_time != null){
+                                breaktime = value.break_time.split(":");
+                            }
 
 
                             let duration =moment.duration(moment(value.pivot.out_time).diff(moment(value.pivot.in_time))).asMinutes();

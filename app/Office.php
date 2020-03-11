@@ -88,4 +88,15 @@ class Office extends Model
     public function roles(){
         return $this->hasMany(\App\Role::class, 'office_id');
     }
+
+    public function compensations(){
+        return $this->hasMany(\App\OvertimeCompensation::class, 'office_id');
+    }
+    public function mutualities(){
+        return $this->hasMany(\App\Mutuality::class, 'office_id');
+    }
+
+    public function contributions(){
+        return $this->hasMany(\App\Contribution::class, 'office_id');
+    }
 }

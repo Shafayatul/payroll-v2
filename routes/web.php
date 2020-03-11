@@ -121,6 +121,8 @@ Route::group(
 
 		Route::prefix('employees')->name('employees.')->group( function () {
 			Route::get('index', 'Admin\EmployeeController@index')->name('index');
+			Route::post('store', 'Admin\EmployeeController@store')->name('store');
+
 			Route::get('attendance', 'Admin\EmployeeController@employeesAttendance')->name('attendance');
 			Route::post('attendance/set', 'Admin\EmployeeController@setAttendance')->name('attendance.set');
 			
@@ -128,10 +130,30 @@ Route::group(
 			Route::get('absence/get/{id}', 'Admin\EmployeeController@getAbsence')->name('absence.get');
 			Route::post('absence/set', 'Admin\EmployeeController@setAbsence')->name('absence.set');
 			
-			Route::post('store', 'Admin\EmployeeController@store')->name('store');
 			Route::get('attendance/get/{id}', 'Admin\EmployeeController@getAttendance')->name('get');
-		});		
-		
+		});
+
+		Route::prefix('overtime')->name('overtime.')->group(function (){
+			Route::get('index', 'AbsensesController@overtimeIndex')->name('index');
+			Route::post('store', 'AbsensesController@overtimeStore')->name('store');
+		});
+
+		Route::prefix('mutuality')->name('mutuality.')->group(function (){
+			Route::get('index', 'AbsensesController@mutualityIndex')->name('index');
+			Route::post('store', 'AbsensesController@mutualityStore')->name('store');
+			Route::post('update', 'AbsensesController@mutualityUpdate')->name('update');
+		});
+
+		Route::prefix('contribution')->name('contribution.')->group(function (){
+			Route::get('index', 'AbsensesController@contributionIndex')->name('index');
+			Route::post('store', 'AbsensesController@contributionStore')->name('store');
+			Route::post('update', 'AbsensesController@contributionUpdate')->name('update');
+		});
+
+		Route::prefix('salary')->name('salary.')->group(function () {
+			Route::get('/', 'SalaryController@index')->name('index');
+			Route::get('/info/{id}', 'SalaryController@salaryInfo')->name('info');
+		});
 	});
 });
 

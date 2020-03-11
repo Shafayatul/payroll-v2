@@ -7,10 +7,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 use App\Traits\keyFunctionTrait;
+use App\Traits\salaryTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable, keyFunctionTrait;
+    use Notifiable, keyFunctionTrait, salaryTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'salary', 'email', 'password', 'office_id', 'department_id'
+        'name', 'salary', 'employee_type', 'email', 'password', 'office_id', 'department_id'
     ];
 
     /**
@@ -81,5 +82,9 @@ class User extends Authenticatable
 
     public function absenceLists(){
         return $this->hasMany(\App\UserAbsence::class, 'user_id');
+    }
+
+    public function salaries(){
+        return $this->hasMany(\App\Salary::class, 'user_id');
     }
 }

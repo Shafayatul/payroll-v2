@@ -18,3 +18,11 @@
 .steps-row-2 .active a{    
      color: #fff;
 }
+
+.thead {
+    font-weight: 600;
+}
+
+.tbody {
+    font-weight: 500;
+}

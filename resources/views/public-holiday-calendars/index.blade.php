@@ -40,6 +40,9 @@
 
         <div class="col-md-8 tab-content">
             @foreach($holiday_calendars as $calendar)
+            @php
+                $crypt_key = Str::random(10);
+            @endphp
             <div class="block-section tab-pane {{ $loop->iteration == 1? 'active':'' }}" id="tab{{$calendar->id}}" role="tabpanel">
                 <h4 class="sub-header">{{ $calendar->name }} <small> <a href="#" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible({{$calendar->id}});">(Edit)</a> </small> <span class="pull-right"><a href="#modal-delete-calendar" data-toggle="modal"> <i class="fas fa-trash mr-1" data-toggle="tooltip" title="" data-original-title="Delete calendar"></i></a><a href=""><i class="fas fa-copy" data-toggle="tooltip" title="" data-original-title="Duplicate calendar"></i> </a></span></h4>
                 <div class="form-horizontal form-striped compact" id="calendar-year{{$calendar->id}}">
@@ -59,7 +62,7 @@
                                 <li>{{ $holiday->name }}: {{ \Carbon\Carbon::parse($holiday->date)->format('d-m-Y') }} - {{ \Carbon\Carbon::parse($holiday->date)->format('l') }} {{ $holiday->details ? ','.$holiday->details:''}} </li>
                                 @endforeach
                             </ul>
-                            <div id="modal-add-holiday{{ $year->year }}" class="modal in" tabindex="-1" role="dialog" aria-hidden="true" >
+                            <div id="modal-add-holiday-{{ $crypt_key }}" class="modal in" tabindex="-1" role="dialog" aria-hidden="true" >
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">                   
@@ -104,7 +107,7 @@
                                 </div>
                             </div>
                             @if($calendar->type == 1)
-                            <a href="#modal-add-holiday{{ $year->year }}" data-toggle="modal">
+                            <a href="#modal-add-holiday-{{ $crypt_key }}" data-toggle="modal">
                                 <i class="fas fa-plus-circle"></i> Add holiday
                             </a><br>
                             @endif

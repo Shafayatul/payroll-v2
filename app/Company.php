@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\PublicHolidayCalendar;
 
+use App\Traits\keyFunctionTrait;
 class Company extends Model
 {
+    use keyFunctionTrait;
     /**
      * The database table used by the model.
      *

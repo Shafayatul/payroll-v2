@@ -77,7 +77,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'status'   => 1,
         ]);
-
+        
         $company                        = new Company;
         $company->user_id               = $user->id;
         $company->name                  = $data['company_name'];
