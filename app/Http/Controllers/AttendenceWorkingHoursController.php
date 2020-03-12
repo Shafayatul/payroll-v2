@@ -144,21 +144,24 @@ class AttendenceWorkingHoursController extends Controller
         $attendenceworkinghour->is_prorate_vacation  = $is_prorate_vacation;
         $attendenceworkinghour->reference_value      = $request->reference_value;
         $attendenceworkinghour->save();
-
         if($attendenceworkinghour){
-            Weekday::where('working_hour_id', $id)->delete();
-            foreach($attendenceworkinghour->days() as $key => $day){
-                $weekday                  = new Weekday;
-                if(($day == 'Saturday') || ($day == 'Sunday')){
+            // Weekday::where('working_hour_id', $id)->delete();
+            foreach($attendenceworkinghour->weekdays as $key => $weekday){
+                // $weekday                  = new Weekday;
+                if(($weekday->weekday == 'Saturday') || ($weekday->weekday == 'Sunday')){
                     $weekday->working_hours   = "Closed";
                 }else{
-                    $weekday->working_hours   = ($request->working_hours[$key] ?? null);
+                    if(isset($request->start_time[$weekday->weekday]))
+                    $weekday->working_hours   = $request->working_hours[$weekday->weekday];
                 }
-                $weekday->weekday         = $day;
-                $weekday->working_hour_id = $attendenceworkinghour->id;
-                $weekday->start_time      = ($request->start_time[$key] ?? null);
-                $weekday->end_time        = ($request->end_time[$key] ?? null);
-                $weekday->break_time      = ($request->break_time[$key] ?? null);
+                // $weekday->weekday         = $day;
+                // $weekday->working_hour_id = $attendenceworkinghour->id;
+                if(isset($request->start_time[$weekday->weekday]))
+                $weekday->start_time      = ($request->start_time[$weekday->weekday] ?? null);
+                if(isset($request->end_time[$weekday->weekday]))
+                $weekday->end_time        = ($request->end_time[$weekday->weekday] ?? null);
+                if(isset($request->break_time[$weekday->weekday]))
+                $weekday->break_time      = $request->break_time[$weekday->weekday];
                 $weekday->is_active       = 1;
                 $weekday->save();
             }

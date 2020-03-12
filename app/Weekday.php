@@ -25,9 +25,17 @@ class Weekday extends Model
      *
      * @var array
      */
-    protected $fillable = ['weekday', 'working_hours', 'start_time', 'end_time', 'is_active', 'working_hour_id'];
+    protected $fillable = ['weekday', 'working_hours', 'start_time', 'end_time', 'break_time', 'is_active', 'working_hour_id'];
 
     public function attendenceWorkingHour(){
         return $this->belongsTo(\App\AttendenceWorkingHour::class, 'working_hour_id');
+    }
+
+    public function userAttendances(){
+        return $this->belongsToMany(\App\User::class, 'user_attendance', 'weekday_id', 'user_id')->withPivot('in_time', 'out_time', 'date', );
+    }
+
+    public function attendanceLists(){
+        return $this->hasMany(\App\Attendance::class, 'weekday_id');
     }
 }

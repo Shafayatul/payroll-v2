@@ -85,10 +85,6 @@
                             <a href="#" class="btn btn-default " data-toggle="tooltip" data-original-title="Orgchart view"><i class="mdi mdi-sitemap"></i></a>
                             <a href="#" class="btn btn-default " data-toggle="tooltip" data-original-title="Timeline view"><i class="fas fa-calendar"></i></a>
                         </div>
-                        <div class="btn-group" data-original-title="Add employee" >      
-                            <a  data-toggle="modal" data-target=".bd-example-modal-lg"  class=" btn btn-default"><i class=" fas fa-user-plus"></i></a>
-                        </div>
-
                         <div class="btn-group">
                             <a href="javascript:void(0)" data-toggle="dropdown" class="btn btn-default dropdown-toggle" data-test-id="employeeheader-actionbutton">
                                 <i class="fas fa-ellipsis-h"></i>
@@ -101,214 +97,9 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog ">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title text-left">Add new employee</h4>
-                                    <button type="button" class="close" data-dismiss="modal">
-                                        <span aria-hidden="true">×</span>
-                                        <span class="sr-only">Close</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="card-body wizard-content">
-                                        {{-- <h4 class="card-title">Step wizard</h4> --}}
-                                        <form role="form" action="{{ route('employees.store') }}" id="employee-submit" class="tab-wizard wizard-circle" method="POST">
-                                            @csrf
-                                            @method('POST')
-                                            <h6>User Info</h6>
-                                            <section>
-                                                <div class="form-group row">
-                                                    <label for="input-name" class="control-label col-md-4">Name</label>
-                                                    <div class="col-md-6">
-                                                        <input type="text" id="input-name" name="name" placeholder="Enter Name" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="input-email" class="control-label col-md-4">Email</label>
-                                                    <div class="col-md-6">
-                                                        <input type="text" id="input-email" name="email" placeholder="Enter email" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="employee_type" class="control-label col-md-4">Employee type</label>
-                                                    <div class="col-md-6">
-                                                        <select class="select2 form-control" id="employee_type" name="employee_type">
-                                                            @foreach (Auth::user()->employeeType() as $key => $type)
-                                                            <option value="{{ $key }}">{{ $type }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="input-salary" class="control-label col-md-4">Salary</label>
-                                                    <div class="col-md-6">
-                                                        <input type="text" id="input-salary" name="salary" placeholder="Enter salary" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="input-password" class="control-label col-md-4">Password</label>
-                                                    <div class="col-md-6">
-                                                        <input type="password" id="input-password" name="password" placeholder="Enter password" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="input-password_confirmation" class="control-label col-md-4">Confirm password</label>
-                                                    <div class="col-md-6">
-                                                        <input type="password" id="input-password_confirmation" name="password_confirmation" placeholder="Enter password_confirmation" class="form-control">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="input-office" class="control-label col-md-4">Office</label>
-                                                    <div class="col-md-6">
-                                                        <select class="select2 form-control" id="input-office" name="office">
-                                                            @foreach (Auth::user()->office->company->offices as $office)
-                                                            <option value="{{ $office->id }}" id="office-{{ $office->id }}">{{ $office->name }} {{ $office->city ? ', '.$office->city : $office->company->city }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="input-department" class="control-label col-md-4">Department</label>
-                                                    <div class="col-md-6">
-                                                        <select class="select2 form-control" id="input-department" name="department">
-                                                            @foreach (Auth::user()->office->company->departments as $department)
-                                                            <option value="{{ $department->id }}" id="department-{{ $department->id }}">{{ $department->name }}{{ $department->city ? ', '.$department->city : '' }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </section>
-                                            @foreach ($sections as $section)
-                                            <!-- Step {{$loop->iteration}} -->
-                                            <h6>{{ $section->name }}</h6>
-                                            <section>
-                                                @foreach ($section->employeeDetailAttributes as $attribute)
-                                                <div class="form-group row">
-                                                    <label for="input-{{$attribute->id}}" class="control-label col-md-4">{{$attribute->name}}</label>
-                                                    <div class="col-md-6">
-                                                        @if($attribute->dataTypes->key == 0)
-                                                        <input type="text" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]" placeholder="{{$attribute->name}}" class="form-control">
-                                                        @elseif($attribute->dataTypes->key == 1)
-                                                        <select class="form-control custom-select" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]">
-                                                            @foreach ($attribute->dataTypes->attributeOptions as $option)
-                                                            <option value="{{ $option->id }}">{{ $option->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @elseif($attribute->dataTypes->key == 4)
-                                                        <div class="input-group">
-                                                            <input type="text" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]" class="form-control date" id="date-{{$attribute->id}}" data-date="{{$attribute->id}}" placeholder="dd/mm/yyyy">
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text date-calendar" id=""><i class="fas fa-calendar"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        @elseif($attribute->dataTypes->key == 7)
-                                                        <select class="tag form-control" id="input-{{$attribute->id}}" multiple="multiple" name="value[{{$attribute->id}}][]">
-                                                            @foreach ($attribute->dataTypes->attributeOptions as $option)
-                                                            <option value="{{ $option->id }}" id="taged-{{ $option->id }}">{{ $option->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                @endforeach
-                                            </section>
-                                            @endforeach
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
-                    </div>
                 </div>
             </div>
             <div class=" table-responsive m-t-40">
-                {{-- <section class="filters well">
-                    <fieldset class="row">
-                        <div class="filters-list">Filters list</div>
-                        <div class="Filter-button">
-                                   
-                            <select id="grade" name="grade">
-                            <option value="-1"><button>Status</button></option>
-                            <option value="3">3</option>
-                            <option value="2">2</option>
-                            <option value="">1</option>
-                            <option value="">-1</option>
-                            <option value="-2">-2</option>
-                            <option value="-3">-3</option>
-                            <option value="-4">-4</option>
-                            <option value="-5">-5</option>
-                            </select>
-                           
-                        </div>
-                        <div class="Filter-button">
-                            <select id="two_grade" name="two_grade">
-                                <option value="2"><button>Employment type</button></option>
-                                <option value="3"></option>
-                                <option value="">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button"> 
-                                <select id="tree_grade " name="tree_grade">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button">
-                                <select id="grade-4" name="grade-4">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button">
-                                <select id="grade-5 " name="grade-5">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button"> 
-                                <select id="grade-6" name="grade-6">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>                  
-                    </fieldset> 
-                </section> --}}
                 <section class="data">   
                     <table id="example" class="display datatable table table-bordered table-striped table-hover" data-table-source="" data-table-filter-target >
                         <thead>
@@ -317,9 +108,11 @@
                                 {{-- <th style="left: 37px;" class="table-topper"></th> --}}
                                 <th> Name</th>
                                 <th> Email</th>
-                                @foreach ($attributes as $attribute)
+                                <th> Action</th>
+                                {{-- @foreach ($attributes as $attribute)
                                 <th class="table-topper">{{ $attribute->name }}</th>
-                                @endforeach
+                                @endforeach --}}
+
                             </tr>
                         </thead>
                         <tbody>
@@ -335,12 +128,17 @@
                                 <td style="left: 37px;">
                                     {{ $employee->email }}
                                 </td>
-                                @foreach ($attributes as $attribute)
+                                <td style="left: 37px;">
+                                    <a href="{{ route('salary.info', $employee->id) }}" class="btn btn-primary">
+                                        Salary Details
+                                    </a>
+                                </td>
+                                {{-- @foreach ($attributes as $attribute)
                                 @php
                                     $detail = $employee->employeeDetails()->where('attribute_id', $attribute->id)->first();
                                 @endphp
                                 <td>{{ $detail->value ?? '' }}</td>
-                                @endforeach
+                                @endforeach --}}
                             </tr>
                             @endforeach
                         </tbody>

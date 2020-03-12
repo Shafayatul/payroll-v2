@@ -77,6 +77,7 @@ class CreatePivotTable extends Migration
             $table->bigIncrements('id');
             $table->timestamp('in_time')->nullable();
             $table->timestamp('out_time')->nullable();
+            $table->date('date')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('weekday_id');
             $table->timestamps();
@@ -85,15 +86,18 @@ class CreatePivotTable extends Migration
             $table->foreign('weekday_id')->references('id')->on('weekdays');
         });
 
-        // Schema::create('role_permission_rule', function (Blueprint $table) {
-        //     $table->bigIncrements('id');
-        //     $table->unsignedBigInteger('role_id');
-        //     $table->unsignedBigInteger('permission_rule_id');
-        //     $table->timestamps();
+        Schema::create('user_absence', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->timestamp('absence_from')->nullable();
+            $table->timestamp('absence_to')->nullable();
+            $table->string('reason')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('absence_id');
+            $table->timestamps();
 
-        //     $table->foreign('permission_rule_id')->references('id')->on('permission_rules');
-        //     $table->foreign('role_id')->references('id')->on('roles');
-        // });
+            $table->foreign('absence_id')->references('id')->on('absences');
+            $table->foreign('user_id')->references('id')->on('users');
+        });
     }
 
     /**
@@ -111,5 +115,6 @@ class CreatePivotTable extends Migration
         Schema::dropIfExists('role_user');
         Schema::dropIfExists('permission_role');
         Schema::dropIfExists('user_attendance');
+        Schema::dropIfExists('user_absence');
     }
 }

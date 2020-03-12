@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Absence;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+use Carbon\Carbon;
+
 use App\EmployeeDetailAttribute;
+use App\CalendarHoliday;
 use App\EmployeeDetail;
+use App\UserAbsence;
+use App\Attendance;
+use App\Weekday;
 use App\User;
 
 
@@ -22,10 +29,9 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $company = Auth::user()->office->company;
-        $employees = User::whereHas('office', function($u) use($company) {
-            $u->where('company_id', $company->id);
-        })->get();
+        $office = Auth::user()->office;
+        $company = $office->company;
+        $employees = User::where('office_id', $office->id)->get();
 
 
         $sections = $company->employeeInformationSections;
@@ -49,6 +55,77 @@ class EmployeeController extends Controller
         return view('employees.employee-attendance', compact('employees', 'attributes', 'sections'));
     }
 
+    public function employeesAbsence(){
+        $company = Auth::user()->office->company;
+        $employees = User::whereHas('office', function($u) use($company) {
+            $u->where('company_id', $company->id);
+        })->get();
+        $absences = Absence::whereHas('offices', function($u) use($company) {
+            $u->where('company_id', $company->id);
+        })->get();
+        return view('employees.employee-absence', compact('employees', 'absences'));
+    }
+
+    public function setAttendance(Request $request){
+        $in_time = Carbon::createFromFormat('H:i', $request->time_in);
+        $out_time = Carbon::createFromFormat('H:i', $request->time_out);
+        
+        $today = $request->date;
+        $day_name = Carbon::today()->format('l');
+        $weekday = Weekday::where('weekday', $day_name)->first();
+
+        $attendance = Attendance::where('date', $today)->first();
+        if(!$attendance){
+            $attendance = new Attendance();
+        }
+        $attendance->in_time = $in_time->format('Y-m-d H:s');
+        $attendance->out_time = $out_time->format('Y-m-d H:s');
+        $attendance->date = $today;
+        $attendance->user_id = $request->employee;
+        $attendance->weekday_id = $weekday->id;
+        $attendance->save();
+        
+        return redirect()->back();
+    }
+
+    public function setAbsence(Request $request){
+        $absence_from = Carbon::createFromFormat('m-d-Y h:i A', $request->absence_from);
+        $absence_to = Carbon::createFromFormat('m-d-Y h:i A', $request->absence_to);
+        // $employee = User::findOrFail($request->employee);
+        
+        $absence = new UserAbsence();
+        $absence->absence_from = Carbon::parse($absence_from);
+        $absence->absence_to = Carbon::parse($absence_to);
+        $absence->reason = $request->reason;
+        $absence->user_id = $request->employee;
+        $absence->absence_id = $request->absence;
+        $absence->save();
+
+        // $absence->absence_to = $absence_from->format('Y-m-d ');
+        
+        return redirect()->back();
+    }
+
+    public function getAbsence($id){
+        $employee = User::findOrFail($id);
+        $absences = $employee->userAbsences()->orderBy('pivot_absence_from', 'DESC')->get()->groupBy(function($q){
+            return Carbon::parse($q->pivot->absence_from)->format('F Y');
+        });
+        return response()->json([
+            'absences' => $absences,
+        ]);
+    }
+
+    public function getAttendance($id){
+        $employee = User::findOrFail($id);
+        $attendance = $employee->userAttendances()->orderBy('pivot_date', 'DESC')->get()->groupBy(function($q){
+            return Carbon::parse($q->pivot->date)->format('F Y');
+        });
+        return response()->json([
+            'attendance' => $attendance,
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -62,6 +139,7 @@ class EmployeeController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->salary = $request->salary;
+        $user->employee_type = $request->employee_type;
         $user->status = true;
         $user->password = Hash::make($request->password);
         $user->office_id = $request->office;

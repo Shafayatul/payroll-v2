@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use App\OvertimeCompensation;
 use App\Absence;
+use App\Contribution;
+use App\Mutuality;
 use Auth;
 
 class AbsensesController extends Controller
@@ -113,6 +117,94 @@ class AbsensesController extends Controller
      */
     public function destroy($id)
     {
+        return redirect()->back();
+    }
+
+    public function overtimeIndex(){
+        $company = Auth::user()->office->company;
+        $compensations = OvertimeCompensation::whereHas('offices', function($q) use($company) {
+            $q->where('company_id', $company->id);
+        })->get();
+
+        return view('compensation.index', compact('compensations', 'company'));
+    }
+
+    public function overtimeStore(Request $request){
+        $compensatory = OvertimeCompensation::where('type', $request->type)->where('office_id', $request->office)->first();
+        if(!$compensatory)
+        $compensatory = new OvertimeCompensation();
+
+        $compensatory->type = $request->type;
+        $compensatory->increase = $request->increase;
+        $compensatory->office_id = $request->office;
+        $compensatory->save();
+
+        return redirect()->back();
+    }
+
+    public function mutualityIndex(){
+        $company = Auth::user()->office->company;
+        $mutualities = Mutuality::whereHas('offices', function($q) use($company) {
+            $q->where('company_id', $company->id);
+        })->get();
+
+        return view('mutuality.index', compact('mutualities', 'company'));
+    }
+
+    public function mutualityStore(Request $request){
+        $mutuality = new Mutuality();
+
+        $mutuality->name        = $request->name;
+        $mutuality->description = 'Contribution';
+        $mutuality->rate        = $request->rate;
+        $mutuality->office_id   = $request->office;
+        $mutuality->save();
+
+        return redirect()->back();
+    }
+
+    public function mutualityUpdate(Request $request){
+        $mutuality = Mutuality::findOrFail($request->id);
+
+        $mutuality->name        = $request->name;
+        $mutuality->description = 'Contribution';
+        $mutuality->rate        = $request->rate;
+        $mutuality->office_id   = $request->office;
+        $mutuality->save();
+
+        return redirect()->back();
+    }
+
+    public function contributionIndex(){
+        $company = Auth::user()->office->company;
+        $contributions = Contribution::whereHas('offices', function($q) use($company) {
+            $q->where('company_id', $company->id);
+        })->get();
+
+        return view('contribution.index', compact('contributions', 'company'));
+    }
+
+    public function contributionStore(Request $request){
+        $contribution = new Contribution();
+
+        $contribution->name        = $request->name;
+        $contribution->description = 'Contribution';
+        $contribution->rate        = $request->rate;
+        $contribution->office_id   = $request->office;
+        $contribution->save();
+
+        return redirect()->back();
+    }
+
+    public function contributionUpdate(Request $request){
+        $contribution = Contribution::findOrFail($request->id);
+
+        $contribution->name        = $request->name;
+        $contribution->description = 'Contribution';
+        $contribution->rate        = $request->rate;
+        $contribution->office_id   = $request->office;
+        $contribution->save();
+
         return redirect()->back();
     }
 }

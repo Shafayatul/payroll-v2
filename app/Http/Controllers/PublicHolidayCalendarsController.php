@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 use App\PublicHolidayCalendar;
+use App\CalendarYear;
 use App\Holiday;
 use App\Office;
 
@@ -53,11 +55,16 @@ class PublicHolidayCalendarsController extends Controller
         } else 
             $type = 1;
 
-        PublicHolidayCalendar::create([
+        $calendar = PublicHolidayCalendar::create([
             'name'       => $request->name,
             'type'       => 1,
             'company_id' => Auth::user()->office->company_id
         ]);
+
+        $calendar_year = new CalendarYear();
+        $calendar_year->year = Carbon::today()->format('Y');
+        $calendar_year->calendar_id = $calendar->id;
+        $calendar_year->save();
 
         return redirect('public-holiday-calendars')->with('success', 'Public holiday calendar added!');
     }

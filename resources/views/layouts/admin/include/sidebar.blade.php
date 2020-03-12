@@ -23,10 +23,26 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('salary.index') }}" aria-expanded="false">
+                        <i class="fa fa-users"></i>
+                        <span class="hide-menu">
+                            Salaries 
+                        </span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('employees.attendance') }}" aria-expanded="false">
                         <i class="fa fa-users"></i>
                         <span class="hide-menu">
                             Attendances 
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('employees.absence') }}" aria-expanded="false">
+                        <i class="fa fa-users"></i>
+                        <span class="hide-menu">
+                            Absences 
                         </span>
                     </a>
                 </li>
@@ -67,9 +83,12 @@
                                 <li><a href="#">Roles</a></li>
                             </ul>
                         </li>
-                        <li><a href="{{ url('cost-centers') }}">Cost Center</a></li>
-                        <li><a href="{{ route('on-off-boardings.index') }}">On Off Boarding</a></li>
-                        <li><a href="{{ route('setting.document') }}">Documents</a></li>
+                        {{-- <li><a href="{{ url('cost-centers') }}">Cost Center</a></li> --}}
+                        {{-- <li><a href="{{ route('on-off-boardings.index') }}">On Off Boarding</a></li> --}}
+                        <li><a href="{{ route('overtime.index') }}">Overtime Compensation</a></li>
+                        <li><a href="{{ route('contribution.index') }}">Contribution</a></li>
+                        <li><a href="{{ route('mutuality.index') }}">mutuality</a></li>
+                        {{-- <li><a href="{{ route('setting.document') }}">Documents</a></li> --}}
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false">Salary & Payroll</a>
                             <ul aria-expanded="false" class="collapse">

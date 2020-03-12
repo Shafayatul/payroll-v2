@@ -73,22 +73,22 @@
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Street </label>
-                    <div class="col-md-5"> <p class="form-control-static office_street">Abbey Road 112</p>
+                    <div class="col-md-5"> <p class="form-control-static office_street">{{ $office->street }}</p>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> ZIP, City </label>
-                    <div class="col-md-5"><p class="form-control-static office_zip_city">Abbey Road 112 </p>
+                    <div class="col-md-5"><p class="form-control-static office_zip_city">{{ $office->zip }}, {{ $office->city }}</p>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> State, Country </label>
-                    <div class="col-md-5"> <p class="form-control-static office_state_country">Abbey Road 112 </p> </div>
+                    <div class="col-md-5"> <p class="form-control-static office_state_country">{{ $office->state }}, {{ $office->country }}</p> </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Public holidays </label>
                     <div class="col-md-5">
-                        <p class="form-control-static office_public_hoilday"> {!! $office->calendar ?? $office->company->calendar->name .'<i>(from company)</i>'  !!}</p>
+                        <p class="form-control-static office_public_hoilday"> {!! $office->calendar->name ?? $office->company->calendar->name .'<i>(from company)</i>'  !!}</p>
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@
                 'method' => 'PATCH',
                 'route' => ['offices.update', $office->id],
                 'class' => 'form-horizontal office-update-form',
-                'id' => "office-$office->id",
+                'id' => "office-".$office->id,
                 'files' => true,
                 'novalidate' => 'novalidate',
                 'style' => 'display:none'
@@ -148,7 +148,7 @@
                         Street
                     </label>
                     <div class="col-md-4">
-                    <input class="form-control" placeholder="Street" name="street" type="text" value="{{ $office->street }}">
+                        <input class="form-control" placeholder="Street" name="street" type="text" value="{{ $office->street }}">
                     </div>
                     <div class="col-md-1">
                         <input class="form-control" placeholder="House number" name="house" type="text"  value="{{ $office->house }}">
