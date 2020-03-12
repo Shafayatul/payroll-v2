@@ -152,7 +152,8 @@ Route::group(
 
 		Route::prefix('salary')->name('salary.')->group(function () {
 			Route::get('/', 'SalaryController@index')->name('index');
-			Route::get('/info/{id}', 'SalaryController@salaryInfo')->name('info');
+			// Route::get('/info/{id}', 'SalaryController@salaryInfo')->name('info');
+			Route::get('/info/{id}', 'SalaryController@info')->name('info');
 		});
 	});
 });
