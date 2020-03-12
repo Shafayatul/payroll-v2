@@ -26,3 +26,6 @@
 .tbody {
     font-weight: 500;
 }
+.tb-footer{
+    border-top: 2px solid;
+}

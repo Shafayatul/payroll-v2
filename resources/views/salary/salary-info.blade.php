@@ -84,15 +84,15 @@
                                             <span class="sr-only">Close</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="card-body">
-                                            <div class="row">
+                                    <div class="modal-body pt-0">
+                                        <div class="card-body pt-0">
+                                            <div class="d-flex pb-2 ">
                                                 <div class="col-md-6 my-1">
                                                     <div class="row">
-                                                        <div class="col-md-4">
-                                                            <span><b>Name :</b></span>
+                                                        <div class="">
+                                                            <span ><b class="font-weight-bold">Name :</b></span>
                                                         </div>
-                                                        <div class="col-md-8">
+                                                        <div class="ml-2">
                                                             <span>{{ $employee->name }}</span>
                                                         </div>
                                                     </div>
@@ -100,7 +100,7 @@
                                                 <div class="col-md-6 my-1">
                                                     <div class="row">
                                                         <div class="col-md-4">
-                                                            <span><b>Basic Salary :</b></span>
+                                                            <span><b class="font-weight-bold">Basic Salary :</b></span>
                                                         </div>
                                                         <div class="col-md-8">
                                                             <span>${{ number_format($employee->salary, 2, '.','') }}</span>
@@ -108,8 +108,53 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="thead">
-                                                <div class="tr" style="display:flex;">
+                                            <div class="d-flex pb-2 ">
+                                                <div class="col-md-6 my-1">
+                                                    <div class="row">
+                                                        <div class="">
+                                                            <span ><b class="font-weight-bold">Name :</b></span>
+                                                        </div>
+                                                        <div class="ml-2">
+                                                            <span>{{ $employee->name }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 my-1">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <span><b class="font-weight-bold">Basic Salary :</b></span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <span>${{ number_format($employee->salary, 2, '.','') }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex pb-2 ">
+                                                <div class="col-md-6 my-1">
+                                                    <div class="row">
+                                                        <div class="">
+                                                            <span ><b class="font-weight-bold">Name :</b></span>
+                                                        </div>
+                                                        <div class="ml-2">
+                                                            <span>{{ $employee->name }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 my-1">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <span><b class="font-weight-bold">Basic Salary :</b></span>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <span>${{ number_format($employee->salary, 2, '.','') }}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="thead tb-footer">
+                                                <div class="tr d-flex" >
                                                     <div class="col-md-4 my-1">NAME</div>
                                                     <div class="col-md-4 my-1">DESCRIPTION</div>
                                                     <div class="col-md-2 my-1">RATE</div>
@@ -118,7 +163,7 @@
                                             </div>
                                             <div class="tbody">
                                             @foreach ($employee->office->contributions as $key => $contribution)
-                                                <div class="tr row" style="display:flex;">
+                                                <div class="tr d-flex" >
                                                     <div class="col-md-4 my-1"> {{ $contribution['name'] }}</div>
                                                     <div class="col-md-4 my-1"> {{ $contribution['description'] }}</div>
                                                     <div class="col-md-2 my-1"> % {{ $contribution['rate'] }}</div>
@@ -131,11 +176,11 @@
                                                     </div>
                                                 </div>
                                             @endforeach
-                                                <div class="tr row" style="display:flex;">
+                                                <div class="tb-footer row" style="display:flex;">
                                                     <div class="col-md-4 my-1"></div>
                                                     <div class="col-md-4 my-1"></div>
-                                                    <div class="col-md-2 my-1 text-right"> Total </div>
-                                                    <div class="col-md-2 my-1 text-right">
+                                                    <div class="col-md-4 my-1 text-right"><b class="font-weight-bold"> Total :</b>
+                                                   
                                                         @php
                                                             $rate = $employee->office->contributions()->sum('rate');
                                                             $contribute = ($basic*$rate)/100;

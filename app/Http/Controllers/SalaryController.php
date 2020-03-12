@@ -73,10 +73,9 @@ class SalaryController extends Controller
         return view('salary.salary', compact('attributes', 'employees'));
     }
 
+  
     public function salaryInfo($id){
-        $employee = User::query()->findOrFail($id);
-        
-        // dd(\Carbon\Carbon::today());
+        $employee = User::query()->findOrFail($id);        // dd(\Carbon\Carbon::today());
         // $attendances = $employee->userAttendances()->whereBetween('user_attendance.date', [$this_month, $next_month])->orderBy('pivot_date', 'DESC')->get()
         $attendances = $employee->userAttendances()->orderBy('pivot_date', 'DESC')->get()
         ->groupBy(function($q){
@@ -86,9 +85,7 @@ class SalaryController extends Controller
         $loop = 1;
         foreach($attendances as $key => $attendance){
             $this_month = Carbon::parse($key)->firstOfMonth()->format('Y-m-d');
-            $next_month = Carbon::parse($key)->endOfMonth()->format('Y-m-d');
-            
-            $total_time_count = DB::table('users')
+            $next_month = Carbon::parse($key)->endOfMonth()->format('Y-m-d');            $total_time_count = DB::table('users')
                 ->join('user_attendance AS at', 'at.user_id', 'users.id')
                 ->join('weekdays AS wd', 'wd.id', 'at.weekday_id')
                 ->whereBetween('at.date', [$this_month, $next_month])
@@ -98,41 +95,42 @@ class SalaryController extends Controller
                     DB::raw("SUM(time_to_sec(timediff(break_time, '00:00')) / 3600) as break_time"),
                     DB::raw("SUM(time_to_sec(timediff(end_time, start_time)) / 3600) as work_time"),
                     DB::raw("COUNT(at.id) as count"),
-                )->first('total_time', 'break_time', 'work_time', 'count');
-            
-            $months[$key] = $total_time_count;
-        $days = $employee->userAttendances()->whereBetween('user_attendance.date', [$this_month, $next_month])->orderBy('pivot_date', 'DESC')->get();
-        $sunday = 0;
-        $holiday = 0;
-        foreach($days as $day){
-            $weekday = Carbon::createFromFormat('Y-m-d', $day->pivot->date)->format('l');
-            $date = Carbon::createFromFormat('Y-m-d', $day->pivot->date)->format('Y-m-d');
-            $year = Carbon::createFromFormat('Y-m-d', $day->pivot->date)->format('Y');
-            
-            $finishTime = Carbon::createFromFormat('Y-m-d H:i:s', $day->pivot->out_time);
-            $startTime = Carbon::createFromFormat('Y-m-d H:i:s', $day->pivot->in_time);
-
-            // $calendar = CalendarYear::where('calendar_id', $employee->office->public_holiday_calendar_id)->where('year', $year)->first();
-            $calendar = CalendarHoliday::where('date', $day->pivot->date);
-            // dd($calendar);
-            if($calendar == null){
-                if($weekday == 'Sunday'){
+                )->first('total_time', 'break_time', 'work_time', 'count');            $months[$key] = $total_time_count;
+            $days = $employee->userAttendances()->whereBetween('user_attendance.date', [$this_month, $next_month])->orderBy('pivot_date', 'DESC')->get();
+            $sunday = 0;
+            $holiday = 0;
+            foreach($days as $day){
+                $weekday = Carbon::createFromFormat('Y-m-d', $day->pivot->date)->format('l');
+                $date = Carbon::createFromFormat('Y-m-d', $day->pivot->date)->format('Y-m-d');
+                $year = Carbon::createFromFormat('Y-m-d', $day->pivot->date)->format('Y');                $finishTime = Carbon::createFromFormat('Y-m-d H:i:s', $day->pivot->out_time);
+                $startTime = Carbon::createFromFormat('Y-m-d H:i:s', $day->pivot->in_time);                $breaktime = 0;
+                if($day->break_time != null){
+                    $break = Carbon::createFromFormat('H:i', $day->break_time);
+                    $breaktime = $break->diffInSeconds(Carbon::today());
+                }                // $calendar = CalendarYear::where('calendar_id', $employee->office->public_holiday_calendar_id)->where('year', $year)->first();
+                $calendar = CalendarHoliday::where('date', $day->pivot->date)->first();
+                if($calendar == null){
+                    if($weekday == 'Sunday'){
+                        $time = $finishTime->diffInSeconds($startTime);
+                        $time -= $breaktime;
+                        $sunday += $time;
+                    }
+                } else {
                     $time = $finishTime->diffInSeconds($startTime);
-                    $sunday += $time;
+                    $time -= $breaktime;
+                    $holiday += $time;
                 }
-            } else {
-                $time = $finishTime->diffInSeconds($startTime);
-                $holiday += $time;
             }
+            $months[$key]->sunday = $sunday / 3600;
+            $months[$key]->holiday = $holiday / 3600;
+            // $working_hour = $total_time_count->total_time - $total_time_count->break_time;
+                // $overtime = 0;
+                // if($working_hour > 173)
+                // $overtime = $working_hour - 173;
+                // dump($total_time_count, $working_hour, $overtime);
+            // dd($total_time_count->total_time - $total_time_count->break_time);
+            // dd($months);
         }
-        dd($calendar, $holiday, $sunday);
-        // $working_hour = $total_time_count->total_time - $total_time_count->break_time;
-            // $overtime = 0;
-            // if($working_hour > 173)
-            // $overtime = $working_hour - 173;
-            // dump($total_time_count, $working_hour, $overtime);
-        }
-        // dd($total_time_count->total_time - $total_time_count->break_time);
         // dd($months);
         return view('salary.salary-info', compact('employee', 'months'));
     }
