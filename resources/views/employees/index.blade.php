@@ -320,6 +320,7 @@
                                 @foreach ($attributes as $attribute)
                                 <th class="table-topper">{{ $attribute->name }}</th>
                                 @endforeach
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -337,10 +338,17 @@
                                 </td>
                                 @foreach ($attributes as $attribute)
                                 @php
-                                    $detail = $employee->employeeDetails()->where('attribute_id', $attribute->id)->first();
+                                    $detail = $employee->employeeDetails()->where('attribute_id', $attribute->id)->where('user_id', $employee->id)->first();
                                 @endphp
                                 <td>{{ $detail->value ?? '' }}</td>
                                 @endforeach
+                                <td>
+                                    <a href="{{ route('employees.edit', ['id' => $employee->id]) }}" title="Edit emplyee">
+                                        <button class="btn btn-success btn-sm">
+                                            <i class="fa fa-edit"></i> Edit
+                                        </button>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -466,6 +474,3 @@
 </script>
 
 @endsection
-</body>
-
-</html>

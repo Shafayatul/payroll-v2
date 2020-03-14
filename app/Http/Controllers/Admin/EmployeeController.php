@@ -149,7 +149,7 @@ class EmployeeController extends Controller
         if($request->value){
             foreach($request->value as $attribute => $value){
                 if($value != null){
-                    $detail = EmployeeDetail::where('attribute_id', $attribute)->where('user_id', Auth::id())->first();
+                    $detail = EmployeeDetail::where('attribute_id', $attribute)->where('user_id', $user->id)->first();
                     if(null == $detail)
                     $detail = new EmployeeDetail();
                     /* 'value', 'user_id', 'attribute_id' */
@@ -182,7 +182,19 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $office = Auth::user()->office;
+        $company = $office->company;
+        $employees = User::where('office_id', $office->id)->get();
+
+
+        $sections = $company->employeeInformationSections;
+        $attributes = EmployeeDetailAttribute::whereHas('employeeInformationSection', function($q) use($company) {
+            $q->where('company_id', $company->id);
+        })->get();
+
+        //Edit Data
+        $user = User::findOrFail($id);
+        return view('employees.edit', compact('user', 'office', 'company', 'sections', 'attributes'));
     }
 
     /**
@@ -192,9 +204,39 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $user = User::findOrFail($request->user_id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->salary = $request->salary;
+        $user->employee_type = $request->employee_type;
+        $user->status = true;
+        $user->office_id = $request->office;
+        $user->department_id = $request->department;
+        $user->save();
+
+        if($request->value){
+            foreach($request->value as $attribute => $value){
+                if($value != null){
+                    $detail = EmployeeDetail::where('attribute_id', $attribute)->where('user_id', $user->id)->first();
+                    if($user->employeeDetails->contains($attribute) == true){
+                        $attribute_value = $user->employeeDetails()->where('attribute_id', $attribute)->first();
+                        $attribute_value->attribute_id = $attribute;
+                        $attribute_value->user_id = $user->id;
+                        $attribute_value->value = $value;
+                        $attribute_value->save();
+                    }
+                    // $detail = EmployeeDetail::();
+                    // /* 'value', 'user_id', 'attribute_id' */
+                    // $detail->attribute_id = $attribute;
+                    // $detail->user_id = Auth::id();
+                    // $detail->value = $value;
+                    // $detail->save();
+                }
+            }
+        }
+        return redirect()->back();
     }
 
     /**

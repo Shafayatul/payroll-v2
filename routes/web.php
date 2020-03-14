@@ -122,6 +122,8 @@ Route::group(
 		Route::prefix('employees')->name('employees.')->group( function () {
 			Route::get('index', 'Admin\EmployeeController@index')->name('index');
 			Route::post('store', 'Admin\EmployeeController@store')->name('store');
+			Route::get('{id}/edit', 'Admin\EmployeeController@edit')->name('edit');
+			Route::post('update', 'Admin\EmployeeController@update')->name('update');
 
 			Route::get('attendance', 'Admin\EmployeeController@employeesAttendance')->name('attendance');
 			Route::post('attendance/set', 'Admin\EmployeeController@setAttendance')->name('attendance.set');
