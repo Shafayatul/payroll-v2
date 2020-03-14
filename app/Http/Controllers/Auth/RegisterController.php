@@ -83,7 +83,7 @@ class RegisterController extends Controller
         $company->name                  = $data['company_name'];
         $company->language              = $data['language'];
         $company->company_employee_size = $data['company_employee_size'];
-        $company->public_holiday_calendar_id = 1;
+        // $company->public_holiday_calendar_id = 1;
         $company->save();     
 
         $office = new Office;

@@ -32,6 +32,6 @@ class Smtp extends Model
     }
 
     public function emailTemplates(){
-        return $this->hasMany(\App\RecuritingEmailTemplate::class, 'smtp_id');
+        return $this->hasMany(\App\RecruitingEmailTemplate::class, 'smtp_id');
     }
 }

@@ -30,7 +30,7 @@ class Salary extends Model
      * @var array
      */
      
-    protected $fillable = ['get_salary_month', 'month', 'complements', 'advantage', 'unemployment', 'user_id', 'office_id'];
+    protected $fillable = ['get_salary_month', 'date', 'total', 'complements', 'advantage', 'unemployment', 'is_paid', 'user_id', 'office_id'];
 
     public function offices(){
         return $this->belongsTo(\App\Office::class, 'office_id');
@@ -39,6 +39,4 @@ class Salary extends Model
     public function employees(){
         return $this->belongsTo(\App\User::class, 'user_id');
     }
-
-    
 }

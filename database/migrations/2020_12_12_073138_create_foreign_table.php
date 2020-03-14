@@ -79,7 +79,7 @@ class CreateForeignTable extends Migration
         });
         
         Schema::table('recurring_compensation_types', function (Blueprint $table) {
-            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('office_id')->references('id')->on('offices');
         });
         
         Schema::table('payroll_histories', function (Blueprint $table) {
@@ -124,7 +124,7 @@ class CreateForeignTable extends Migration
             $table->foreign('compensation_type_id')->references('id')->on('recurring_compensation_types');
         });
         
-        Schema::table('recuriting_categories', function (Blueprint $table) {
+        Schema::table('recruiting_categories', function (Blueprint $table) {
             $table->foreign('autoresponder_template_id')->references('id')->on('recruiting_email_templates');
             $table->foreign('autoresponder_id')->references('id')->on('users');
         });
@@ -138,7 +138,7 @@ class CreateForeignTable extends Migration
             $table->foreign('boarding_step_id')->references('id')->on('boarding_steps');
         });
 
-        Schema::table('recuriting_settings', function (Blueprint $table) {
+        Schema::table('recruiting_settings', function (Blueprint $table) {
             $table->foreign('company_id')->references('id')->on('companies');
         });
 

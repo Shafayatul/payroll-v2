@@ -16,7 +16,7 @@ class CreateRecurringCompensationTypesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->boolean('is_system_type')->default(0)->nullable();
-            $table->unsignedBigInteger('company_id')->default(null);
+            $table->unsignedBigInteger('office_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

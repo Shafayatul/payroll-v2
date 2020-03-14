@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('employee_type')->default(1);
-            $table->decimal('salary',8,2)->nullable();
+            $table->decimal('salary',8,2)->default(0);
             $table->boolean('status')->default(true);
             $table->unsignedBigInteger('office_id')->nullable();
             $table->unsignedBigInteger('department_id')->nullable();

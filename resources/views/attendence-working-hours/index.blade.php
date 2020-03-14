@@ -9,11 +9,11 @@
 @include('layouts.admin.include.alert')
 <div class="shadowed-box">
     <div class="full">
-        <h2 class="text-bold">Public Holidays</h2>  
+        <h2 class="text-bold">Attendance</h2>  
         <div class="d-flex gutter30">
             <div class="col-md-4">
                 <div class="block-section customvtab vtabs row">
-                    <h4 class="sub-header">Public holiday calendars</h4>
+                    <h4 class="sub-header">Attendance working hour</h4>
                     <form method="POST" action="{{ route('attendence-working-hours.store') }}" accept-charset="UTF-8" id="new_office_form" novalidate="novalidate">
                         @csrf
                         <div class="input-group input-group-sm"> 

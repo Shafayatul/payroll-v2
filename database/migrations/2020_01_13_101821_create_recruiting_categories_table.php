@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRecuritingCategoriesTable extends Migration
+class CreateRecruitingCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRecuritingCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('recuriting_categories', function (Blueprint $table) {
+        Schema::create('recruiting_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->tinyInteger('sorting_order')->nullable();
@@ -30,8 +30,9 @@ class CreateRecuritingCategoriesTable extends Migration
      *
      * @return void
      */
+    
     public function down()
     {
-        Schema::dropIfExists('recuriting_categories');
+        Schema::dropIfExists('recruiting_categories');
     }
 }

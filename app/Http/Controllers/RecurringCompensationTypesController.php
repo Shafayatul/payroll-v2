@@ -21,13 +21,7 @@ class RecurringCompensationTypesController extends Controller
         $keyword = $request->get('search');
         $perPage = 25;
 
-        if (!empty($keyword)) {
-            $recurringcompensationtypes = RecurringCompensationType::where('name', 'LIKE', "%$keyword%")
-                ->orWhere('is_system_type', 'LIKE', "%$keyword%")
-                ->latest()->paginate($perPage);
-        } else {
-            $recurringcompensationtypes = RecurringCompensationType::latest()->paginate($perPage);
-        }
+        $recurringcompensationtypes = RecurringCompensationType::latest()->paginate($perPage);
 
         return view('recurring-compensation-types.index', compact('recurringcompensationtypes'));
     }
@@ -59,7 +53,7 @@ class RecurringCompensationTypesController extends Controller
         $recurringcompensationtype                 = new RecurringCompensationType;
         $recurringcompensationtype->name           = $request->name;
         $recurringcompensationtype->is_system_type = $is_system_type;
-        $recurringcompensationtype->company_id     = Auth::user()->company->id;
+        $recurringcompensationtype->office_id     = Auth::user()->office->id;
         $recurringcompensationtype->save();
 
         return redirect('recurring-compensation-types')->with('success', 'RecurringCompensationType added!');
@@ -105,7 +99,7 @@ class RecurringCompensationTypesController extends Controller
     {
         $recurringcompensationtype                 = RecurringCompensationType::findOrFail($id);
         $recurringcompensationtype->name           = $request->name;
-        $recurringcompensationtype->company_id     = Auth::user()->company->id;
+        $recurringcompensationtype->office_id     = Auth::user()->office->id;
         $recurringcompensationtype->save();
 
         return redirect('recurring-compensation-types')->with('success', 'RecurringCompensationType updated!');
@@ -120,6 +114,8 @@ class RecurringCompensationTypesController extends Controller
      */
     public function destroy($id)
     {
+        RecurringCompensationType::destroy($id);
+
         return redirect('recurring-compensation-types');
     }
 }

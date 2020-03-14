@@ -70,7 +70,7 @@
                                 {{ intdiv($overtime, 60).' hours '. ($overtime % 60).' minutes' }}
                             </td>
                             <td style="left: 37px;">
-                                <button data-toggle="modal" data-target="#salary-info-details-{{ \Carbon\Carbon::parse($key)->format('F-Y') }}"  class=" btn btn-default"><i class=" fas fa-eye"></i> View Details</button>
+                                <button data-toggle="modal" data-target="#salary-info-details-{{ \Carbon\Carbon::parse($key)->format('F-Y') }}" class=" btn btn-secondary"><i class=" fas fa-eye"></i> View Details</button>
                             </td>
                         </tr>
 
@@ -78,6 +78,10 @@
                             <div class="modal-dialog ">
                                 <div class="modal-content">
                                     <div class="modal-header">
+                                        @php
+                                            $month_year = \Carbon\Carbon::parse($key)->format('F-Y');
+                                            $paid = $employee->salaries()->where('get_salary_month', $month_year)->first();
+                                        @endphp
                                         <h4 class="modal-title text-left">Salary Details {{ \Carbon\Carbon::parse($key)->format('F-Y') }}</h4>
                                         <button type="button" class="close" data-dismiss="modal">
                                             <span aria-hidden="true">×</span>
@@ -138,29 +142,36 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{--<div class="d-flex pb-2 ">
+                                            <div class="d-flex pb-2 ">
                                                 <div class="col-md-6 my-1">
                                                     <div class="row">
                                                         <div class="">
-                                                            <span ><b class="font-weight-bold">Name :</b></span>
+                                                            <span ><b class="font-weight-bold">Salary Status:</b></span>
                                                         </div>
                                                         <div class="ml-2">
-                                                            <span>{{ $employee->name }}</span>
+                                                            <span>{{ $paid == null? 'Not paid':'Paid' }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 my-1">
+                                                {{-- <div class="col-md-6 my-1">
                                                     <div class="row">
-                                                        <div class="col-md-4">
-                                                            <span><b class="font-weight-bold">Basic Salary :</b></span>
+                                                        <div class="col-md-5">
+                                                            <span><b class="font-weight-bold">$/hr for Month:</b></span>
                                                         </div>
-                                                        <div class="col-md-8">
-                                                            <span>${{ number_format($employee->salary, 2, '.','') }}</span>
+                                                        <div class="col-md-7">
+                                                            @php
+                                                                $h = 0;
+                                                                if($employee->employee_type == 1){
+                                                                    $h = $employee->salary/86.5;
+                                                                } else {
+                                                                    $h = $employee->salary/173;
+                                                                }
+                                                            @endphp
+                                                            <span>${{ number_format($h, 2, '.','') }}</span>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div> --}}
-                                            
+                                                </div> --}}
+                                            </div>
                                             <div class="thead tb-footer">
                                                 <div class="tr d-flex" >
                                                     <div class="col-md-3 my-1">NAME</div>
@@ -171,64 +182,51 @@
                                                 </div>
                                             </div>
                                             <div class="tbody">
-                                            @php
-                                                $compensatory = [];
-                                            @endphp
-                                            @foreach ($employee->office->compensations as $i => $compensation)
-                                            <div class="tr d-flex" >
-                                                <div class="col-md-3 my-1"> {{ $compensation->compensationType()[$compensation->type] }}</div>
-                                                <div class="col-md-3 my-1 text-right"> {{ 'Compensation' }}</div>
-                                                @if($compensation->type == 0)
-                                                <div class="col-md-2 my-1 text-right">{{ $months[$key]->sunday }} hr</div>
-                                                <div class="col-md-2 my-1 text-right">{{ $compensation->increase }} % </div>
-                                                <div class="col-md-2 my-1 text-right">
-                                                    @php
-                                                        $compensatory[$i] = ($months[$key]->sunday*$h)*($compensation->increase/100);
-                                                    @endphp
-                                                    ${{ number_format($compensatory[$i], 2, '.','') }}
-                                                </div>
-                                                @elseif($compensation->type == 1)
-                                                <div class="col-md-2 my-1 text-right">{{ $months[$key]->holiday }} hr</div>
-                                                <div class="col-md-2 my-1 text-right">{{ $compensation->increase }} % </div>
-                                                <div class="col-md-2 my-1 text-right">
-                                                    @php
-                                                        $compensatory[$i] = ($months[$key]->holiday*$h)*($compensation->increase/100);
-                                                    @endphp
-                                                    ${{ number_format($compensatory[$i], 2, '.','') }}
-                                                </div>
-                                                @else
                                                 @php
-                                                    $other = ($overtime/60) - ($months[$key]->holiday + $months[$key]->sunday);
+                                                    $compensatory = [];
                                                 @endphp
-                                                <div class="col-md-2 my-1 text-right">{{ $other }} hr</div>
-                                                <div class="col-md-2 my-1 text-right">{{ $compensation->increase }} % </div>
-                                                <div class="col-md-2 my-1 text-right">
+                                                @foreach ($employee->office->compensations as $i => $compensation)
+                                                <div class="tr d-flex" >
+                                                    <div class="col-md-3 my-1"> {{ $compensation->compensationType()[$compensation->type] }}</div>
+                                                    <div class="col-md-3 my-1 text-right"> {{ 'Compensation' }}</div>
+                                                    @if($compensation->type == 0)
+                                                    <div class="col-md-2 my-1 text-right">{{ $months[$key]->sunday }} hr</div>
+                                                    <div class="col-md-2 my-1 text-right">{{ $compensation->increase }} % </div>
+                                                    <div class="col-md-2 my-1 text-right">
+                                                        @php
+                                                            $compensatory[$i] = ($months[$key]->sunday*$h)*($compensation->increase/100);
+                                                        @endphp
+                                                        ${{ number_format($compensatory[$i], 2, '.','') }}
+                                                    </div>
+                                                    @elseif($compensation->type == 1)
+                                                    <div class="col-md-2 my-1 text-right">{{ $months[$key]->holiday }} hr</div>
+                                                    <div class="col-md-2 my-1 text-right">{{ $compensation->increase }} % </div>
+                                                    <div class="col-md-2 my-1 text-right">
+                                                        @php
+                                                            $compensatory[$i] = ($months[$key]->holiday*$h)*($compensation->increase/100);
+                                                        @endphp
+                                                        ${{ number_format($compensatory[$i], 2, '.','') }}
+                                                    </div>
+                                                    @else
                                                     @php
-                                                        $compensatory[$i] = ($other*$h)*($compensation->increase/100);
+                                                        $other = ($overtime/60) - ($months[$key]->holiday + $months[$key]->sunday);
                                                     @endphp
-                                                    ${{ number_format($compensatory[$i], 2, '.','') }}
+                                                    <div class="col-md-2 my-1 text-right">{{ $other }} hr</div>
+                                                    <div class="col-md-2 my-1 text-right">{{ $compensation->increase }} % </div>
+                                                    <div class="col-md-2 my-1 text-right">
+                                                        @php
+                                                            $compensatory[$i] = ($other*$h)*($compensation->increase/100);
+                                                        @endphp
+                                                        ${{ number_format($compensatory[$i], 2, '.','') }}
+                                                    </div>
+                                                    @endif
                                                 </div>
-                                                @endif
-                                            </div>
-                                            {{-- <div class="tr d-flex" >
-                                                <div class="col-md-4 my-1"> {{ $compensation->compensationType()[$compensation->type] }}</div>
-                                                <div class="col-md-4 my-1"> {{ 'Compensation' }}</div>
-                                                <div class="col-md-2 my-1"> % {{ $months[$key]->sunday }}</div>
-                                                <div class="col-md-2 my-1"> % {{ $compensation->increase }}</div>
-                                                <div class="col-md-2 my-1 text-right">
-                                                    @php
-                                                        $basic = $employee->salary;
-                                                        $compensatory = ($basic*$compensation->increase)/100;
-                                                    @endphp
-                                                    ${{ number_format($compensatory, 2, '.','') }}
-                                                </div>
-                                            </div> --}}
-                                            @endforeach
+                                                @endforeach
                                                 <div class="tb-footer row" style="display:flex;">
                                                     <div class="col-md-4 my-1"></div>
                                                     <div class="col-md-4 my-1"></div>
                                                     <div class="col-md-4 my-1 text-right"><b class="font-weight-bold"> Total :</b>
-                                                   
+                                                    
                                                         @php
                                                             $t_compensatory = array_sum($compensatory);
                                                         @endphp
@@ -259,6 +257,7 @@
                                                     </div>
                                                 </div>
                                             @endforeach
+
                                                 <div class="tb-footer row" style="display:flex;">
                                                     <div class="col-md-4 my-1 text-right"></div>
                                                     <div class="col-md-4 my-1 text-right"></div>
@@ -278,10 +277,18 @@
                                                    
                                                         @php
                                                             $total = ($employee->salary + $t_compensatory) - $contribute;
+                                                            
                                                         @endphp
                                                         ${{ number_format($total, 2, '.','') }}
                                                     </div>
                                                 </div>
+                                                @if(!$paid)
+                                                <div class="tb-footer row justify-content-end " style="display:flex;">
+                                                    <div class="m-2">
+                                                        <a href="{{ url('salary/payment/'.$employee->id.'-'.$month_year) }}" class="btn btn-secondary">Pay Salary</a>
+                                                    </div>
+                                                </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>

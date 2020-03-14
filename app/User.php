@@ -60,8 +60,8 @@ class User extends Authenticatable
         return $this->hasMany(\App\EmployeeDetail::class, 'user_id');
     }
 
-    public function recuritingCategories(){
-        return $this->hasMany(\App\RecuritingCategory::class, 'autoresponder_id');
+    public function recruitingCategories(){
+        return $this->hasMany(\App\RecruitingCategory::class, 'autoresponder_id');
     }
 
     public function boardingGroups(){

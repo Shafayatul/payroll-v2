@@ -47,7 +47,6 @@ class EmployeeController extends Controller
             $u->where('company_id', $company->id);
         })->get();
 
-
         $sections = $company->employeeInformationSections;
         $attributes = EmployeeDetailAttribute::whereHas('employeeInformationSection', function($q) use($company) {
             $q->where('company_id', $company->id);
@@ -121,6 +120,8 @@ class EmployeeController extends Controller
         $attendance = $employee->userAttendances()->orderBy('pivot_date', 'DESC')->get()->groupBy(function($q){
             return Carbon::parse($q->pivot->date)->format('F Y');
         });
+
+        dd($employee->userAttendances);
         return response()->json([
             'attendance' => $attendance,
         ]);
