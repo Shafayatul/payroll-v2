@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RecuritingEmailTemplate extends Model
+class RecruitingEmailTemplate extends Model
 {
     /**
      * The database table used by the model.
@@ -31,7 +31,7 @@ class RecuritingEmailTemplate extends Model
         return $this->belongsTo(\App\Smtp::class, 'smtp_id');
     }
 
-    public function recuritingCategories(){
-        return $this->hasMany(\App\RecuritingCategory::class, 'autoresponder_template_id');
+    public function recruitingCategories(){
+        return $this->hasMany(\App\RecruitingCategory::class, 'autoresponder_template_id');
     }
 }

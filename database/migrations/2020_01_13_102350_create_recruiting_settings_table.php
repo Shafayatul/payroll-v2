@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRecuritingSettingsTable extends Migration
+class CreateRecruitingSettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRecuritingSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('recuriting_settings', function (Blueprint $table) {
+        Schema::create('recruiting_settings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->boolean('is_xml_interface_enabled')->default(false);
             $table->string('email_for_applicants')->nullable();
@@ -34,6 +34,6 @@ class CreateRecuritingSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recuriting_settings');
+        Schema::dropIfExists('recruiting_settings');
     }
 }

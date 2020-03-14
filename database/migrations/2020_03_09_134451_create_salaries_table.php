@@ -16,10 +16,12 @@ class CreateSalariesTable extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('get_salary_month')->nullable();
-            $table->string('month')->nullable();
+            $table->string('date')->nullable();
             $table->string('complements')->nullable();
             $table->string('advantage')->nullable();
             $table->string('unemployment')->nullable();
+            $table->decimal('total',2,8)->default(0);
+            $table->boolean('is_paid')->default(false);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('office_id')->nullable();
             $table->timestamps();

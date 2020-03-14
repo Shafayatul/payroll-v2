@@ -22,26 +22,26 @@
             <div class="tab-pane active">
                 <h2 class="company-title">Company</h2>
                 <br>
-                <div class="alert alert-warning">
+                {{-- <div class="alert alert-warning">
                     This account was pre-filled with demo employees.
                     To clear all demo data, please 
                     <a href="" class="text-warning ">complete the setup wizard</a>.
-                </div>
+                </div> --}}
                 <div class="row gutter30">
                     <div class="col-md-12 tab-content">
                         <div class="block-section">
                             <h4 class="sub-header">
                                 Company information
-                                {{-- <small> --}}
-                                {{-- <a href="javascript:void(0)" class="edit-toggle" data-toggle="modal" data-target="#company-{{ $company->id }}">
-                                    (Edit)
-                                </a> --}}
                                 <small>
-                                    <a href="javascript:void(0)" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible1();">(Edit)</a>
+                                    {{-- <a href="javascript:void(0)" class="edit-toggle" data-toggle="modal" data-target="#company-{{ $company->id }}">
+                                        (Edit)
+                                    </a> --}}
+                                    <small>
+                                        <a href="javascript:void(0)" class="edit-toggle" data-toggle="tooltip" data-original-title="" title="" onclick="switchVisible1();">(Edit)</a>
+                                    </small>
                                 </small>
-                                {{-- </small> --}}
                             </h4>
-                            <div id="status-page-info-react-entrypoint" class="status">
+                            {{-- <div id="status-page-info-react-entrypoint" class="status">
                                 <div class="_1eEHQ">
                                     <div class="_1A_Fo _3SL8z _3d3hy">
                                        <div class="_3eTCz">
@@ -59,7 +59,7 @@
                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="form-horizontal form-striped compact" id="company-data">
                                 <div class="form-group row">
@@ -144,7 +144,7 @@
                                         Public holidays
                                     </label>
                                     <div class="col-md-5 form-control-static">
-                                            {{ $company->calendar->name }}
+                                            {{ $company->calendar->name ?? 'Not yet set' }}
                                    </div>
                                 </div>
                                 <div class="form-group row">
@@ -306,7 +306,7 @@
                     </div>
                 </div>
 
-                <div class="block-section">
+                {{-- <div class="block-section">
                     <h4 class="sub-header">
                         Delete trial account
                     </h4>
@@ -337,7 +337,7 @@
                             <button data-action-name="dataportability-send" data-test-id="dataportability-send" type="button" class="btn btn-primary">Create new data export</button>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

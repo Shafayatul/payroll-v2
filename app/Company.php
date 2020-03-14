@@ -72,8 +72,8 @@ class Company extends Model
         return $this->hasMany(\App\EmployeeInformationSection::class, 'company_id');
     }
 
-    public function recuritingSettings(){
-        return $this->hasMany(\App\RecuritingSetting::class, 'company_id');
+    public function recruitingSettings(){
+        return $this->hasMany(\App\RecruitingSetting::class, 'company_id');
     }
 
     public function formSections(){

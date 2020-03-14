@@ -35,4 +35,6 @@ class OvertimeCompensation extends Model
     public function offices(){
         return $this->belongsTo(\App\Office::class, 'office_id');
     }
+
+    
 }

@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class RecuritingSetting extends Model
+class RecruitingSetting extends Model
 {
      /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'recuriting_settings';
+    protected $table = 'recruiting_settings';
 
     /**
     * The database primary key value.

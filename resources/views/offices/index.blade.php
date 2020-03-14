@@ -88,7 +88,7 @@
                 <div class="form-group row">
                     <label class="col-md-3 control-label"> Public holidays </label>
                     <div class="col-md-5">
-                        <p class="form-control-static office_public_hoilday"> {!! $office->calendar->name ?? $office->company->calendar->name .'<i>(from company)</i>'  !!}</p>
+                        <p class="form-control-static office_public_hoilday"> @isset($office->calendar){{$office->calendar->name}} @elseif($office->company->calendar) {!! $office->company->calendar->name .'<i>(from company)</i>' ?? '' !!} @else Not set yet @endisset</p>
                     </div>
                 </div>
             </div>

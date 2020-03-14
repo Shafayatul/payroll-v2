@@ -42,7 +42,7 @@
                                         <i class="fas fa-info-circle" data-toggle="tooltip" data-original-title=" We'll send you a reminder to review all the changes on the current month's payroll on this day. You can manage your notification channels from your Personal Settings."></i>
                                     </label>
                                     <div class="col-md-7 form-control-static">
-                                        {{ $payrollSetting->review_reminder_on }} of each month
+                                        {{-- {{ $payrollSetting->review_reminder_on }} of each month --}}
                                     </div>
                                 </div>                   
                                 <div class="form-group d-flex">
@@ -51,11 +51,11 @@
                                         <i class="fas fa-info-circle" data-toggle="tooltip" data-original-title=" Salary data will be listed in a separate table sheet"></i>
                                     </label>
                                     <div class="col-md-7 form-control-static">
-                                        @if($payrollSetting->is_separate == 1)
+                                        {{-- @if($payrollSetting->is_separate == 1)
                                             <i class="fas fa-check"></i>
                                         @else
                                             <i class="fas fa-times"></i>
-                                        @endif
+                                        @endif --}}
                                     </div>
                                 </div>
                                 
@@ -64,9 +64,9 @@
                                         Attributes in personal data sheet
                                     </label>
                                     <div class="col-md-7 form-control-static">
-                                        @foreach($payrollSetting->absences as $absence)
+                                        {{-- @foreach($payrollSetting->absences as $absence)
                                             <span class="label label-primary">{{ $absence->name }}</span>
-                                        @endforeach
+                                        @endforeach --}}
                                     </div>
                                 </div>
 
@@ -75,9 +75,9 @@
                                         Absence types in absence periods sheet
                                     </label>
                                     <div class="col-md-7 form-control-static">
-                                        @foreach($payrollSetting->attributes as $item)
+                                        {{-- @foreach($payrollSetting->attributes as $item)
                                             <span class="label label-primary">{{ $item->name }}</span>
-                                        @endforeach
+                                        @endforeach --}}
                                     </div>
                                 </div>
                                 <div class="form-horizontal compact">
@@ -98,7 +98,7 @@
                             {{-- <form method="POST" accept-charset="UTF-8" class="form-horizontal" novalidate="novalidate" id="payroll-update-form">  --}}
                             {!! Form::model($payrollSetting, [
                                 'method' => 'POST',
-                                'route' => ['payroll.update', $payrollSetting->id],
+                                // 'route' => ['payroll.update', $payrollSetting->id],
                                 'class' => 'form-horizontal',
                                 'id' => 'payroll-update-form',
                                 'files' => true,
@@ -110,7 +110,7 @@
                                     <i class="fas fa-info-circle" data-toggle="tooltip" data-original-title=" We'll send you a reminder to review all the changes on the current month's payroll on this day. You can manage your notification channels from your Personal Settings."></i>
                                 </label>
                                 <div class="col-md-1">
-                                    <input class="form-control" number="" min="1" max="31" name="review_reminder_on" type="text" value="{{ $payrollSetting->review_reminder_on }}">
+                                    {{-- <input class="form-control" number="" min="1" max="31" name="review_reminder_on" type="text" value="{{ $payrollSetting->review_reminder_on }}"> --}}
                                 </div>
                                 <div class="col-md-7 form-control-static">
                                     of each month
@@ -121,7 +121,7 @@
                                     Separate salary data
                                 </label>
                                 <div class="col-md-8 form-control-static">                      
-                                    <input confirm-message="With this setting, salary data will be displayed in a separate sheet. Therefore, all salary-related attributes will be removed from the current payroll export configuration." name="is_separate" type="checkbox" value="1" {{ ($payrollSetting->is_separate == 1) ? 'checked' : ''}}>
+                                    {{-- <input confirm-message="With this setting, salary data will be displayed in a separate sheet. Therefore, all salary-related attributes will be removed from the current payroll export configuration." name="is_separate" type="checkbox" value="1" {{ ($payrollSetting->is_separate == 1) ? 'checked' : ''}}> --}}
                                 </div>
                             </div>
                             
@@ -132,11 +132,11 @@
                                  </label>
                                 <div class="col-md-8">
                                     <select class="form-control select2 placeholder" name="select_attribute_id[]" id="absence_ids" multiple>
-                                        @foreach($employeeInfoSections as $employeeInfoSection)
-                                            @foreach($employeeInfoSection->employeeDetailAttributes as $attribute)
+                                        {{-- @foreach($employeeInfoSections as $employeeInfoSection) --}}
+                                            {{-- @foreach($employeeInfoSection->employeeDetailAttributes as $attribute)
                                                 <option value="{{ $attribute->id }}" {{ ($payrollSetting->attributes->contains($attribute->id )) ? 'selected' : '' }}>{{ $attribute->name }}</option>
-                                            @endforeach
-                                        @endforeach
+                                            @endforeach --}}
+                                        {{-- @endforeach --}}
                                     </select>
                                 </div>
                             </div>
@@ -147,9 +147,9 @@
                                 </label>
                                 <div class="col-md-8">
                                     <select class="form-control select2 placeholder" name="select_absence_id[]" id="e2_2" multiple>
-                                        @foreach($absences as $absence)
+                                        {{-- @foreach($absences as $absence)
                                             <option value="{{ $absence->id }}" {{ ($payrollSetting->absences->contains($absence->id )) ? 'selected' : '' }}>{{ $absence->name }}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
                                 </div>
                             </div>
@@ -160,9 +160,9 @@
                                 </label>
                                 <div class="col-md-3">
                                     <select class="form-control" name="prorate_salary_calculation">
-                                        @foreach($payrollSetting->prorateSalaryType() as $key => $value)
+                                        {{-- @foreach($payrollSetting->prorateSalaryType() as $key => $value)
                                             <option value="{{ $key }}" {{ ($payrollSetting->prorate_salary_calculation == $key) ? 'selected' : '' }}>{{ $value }}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
                                 </div>
                             </div>
