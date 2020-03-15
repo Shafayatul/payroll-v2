@@ -39,4 +39,12 @@ class Salary extends Model
     public function employees(){
         return $this->belongsTo(\App\User::class, 'user_id');
     }
+
+    public function compensations(){
+        return $this->belongsToMany(\App\Compensation::class, 'salary_compensation', 'salary_id', 'compensation_id')->withPivot('amount');
+    }
+
+    public function contributions(){
+        return $this->belongsToMany(\App\Contribution::class, 'salary_contribution', 'salary_id', 'contribution_id')->withPivot('amount');
+    }
 }

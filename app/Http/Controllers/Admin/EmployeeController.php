@@ -66,8 +66,8 @@ class EmployeeController extends Controller
     }
 
     public function setAttendance(Request $request){
-        $in_time = Carbon::createFromFormat('H:i', $request->time_in);
-        $out_time = Carbon::createFromFormat('H:i', $request->time_out);
+        $in_time = Carbon::createFromFormat('Y-m-d H:i', $request->date.' '.$request->time_in);
+        $out_time = Carbon::createFromFormat('Y-m-d H:i', $request->date.' '.$request->time_out);
         
         $today = $request->date;
         $day_name = Carbon::today()->format('l');
@@ -120,8 +120,6 @@ class EmployeeController extends Controller
         $attendance = $employee->userAttendances()->orderBy('pivot_date', 'DESC')->get()->groupBy(function($q){
             return Carbon::parse($q->pivot->date)->format('F Y');
         });
-
-        dd($employee->userAttendances);
         return response()->json([
             'attendance' => $attendance,
         ]);

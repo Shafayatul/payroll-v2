@@ -152,9 +152,9 @@
                 type: 'GET',
                 url: "{{ url('employees/attendance/get/') }}/"+id,
                 success:function(data){
-                    let html = '';
                     $.each(data.attendance, function(month, value) {
-                        let m = `<tr style="border-bottom:2pt solid #212529;"><td colspan="7" style='text-align:center;vertical-align:middle;font-weight:600;font-size:16px;'>`+month+`</td></tr>`;
+                        let html = '';
+                        let m = `<tr style="border-bottom:2pt solid #212529;"><td colspan="7" style='text-align:center;vertical-align:middle;font-weight:600;font-size:25px;'>`+month+`</td></tr>`;
                         $('#employee-attendance').append(m);
                         $.each(value, function(index, value) {
                             let office_duration = moment.duration(moment(value.end_time, [moment.ISO_8601, 'HH:mm']).diff(moment(value.start_time, [moment.ISO_8601, 'HH:mm']))).asMinutes();

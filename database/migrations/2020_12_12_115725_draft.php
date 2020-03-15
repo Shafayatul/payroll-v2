@@ -38,6 +38,16 @@ class Draft extends Migration
         // Schema::table('calendar_holidays', function (Blueprint $table) {
         //     $table->foreign('calendar_year_id')->references('id')->on('calendar_years');
         // });
+        Schema::create('salary_compensation', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->decimal('amount')->nullable();
+            $table->unsignedBigInteger('salary_id');
+            $table->unsignedBigInteger('compensation_id');
+            $table->timestamps();
+
+            $table->foreign('salary_id')->references('id')->on('salaries');
+            $table->foreign('compensation_id')->references('id')->on('compensations');
+        });
     }
 
     /**
