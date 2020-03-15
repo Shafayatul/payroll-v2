@@ -11,6 +11,8 @@ use Carbon\Carbon;
 
 use App\EmployeeDetailAttribute;
 use App\CalendarHoliday;
+use App\Compensation;
+use App\Contribution;
 use App\CalendarYear;
 use App\Attendance;
 use App\Salary;
@@ -31,11 +33,6 @@ class SalaryController extends Controller
         $this_month = Carbon::parse('March 2020')->firstOfMonth()->format('Y-m-d');
         $next_month = Carbon::parse('March 2020')->endOfMonth()->format('Y-m-d');
 
-        // $attendances = $employee->userAttendances()->whereBetween('user_attendance.date', [$this_month, $next_month])->orderBy('pivot_date', 'DESC')->get()
-        /* ->groupBy(function($q){
-            return Carbon::parse($q->pivot->date)->format('F Y');
-        }) */;
-        // $hour = $employee->userAttendances()->whereBetween('user_attendance.date', [$this_month, $next_month])->select('user_attendance.date')->get();
         $today = Carbon::today()->format('H:i');
         $test = DB::table('users')
                 ->join('user_attendance AS at', 'at.user_id', 'users.id')
@@ -54,30 +51,13 @@ class SalaryController extends Controller
                     DB::raw("SUM(time_to_sec(timediff(end_time, start_time)) / 3600) as work_time"),
                     // DB::raw("TIME_FORMAT(SEC_TO_TIME(SUM(time_to_sec(timediff(break_time, '00:00')))),'%I') as break")
                 )->first('total_time', 'break_time', 'work_time');
-                
-        // dd($test, $hour, $today);
-        // ->select(DB::raw("SUM(time_to_sec(timediff('pivot_out_time', 'pivot_in_time')) / 3600) as result"))->first();
-        // ->select(DB::raw('user_attendance.out_time'), DB::raw('user_attendance.in_time'))->get();
-        /* ->groupBy(function($q){
-            return Carbon::parse($q->pivot->date)->format('F Y');
-        }) */;
 
-        // dd(Attendance::select(DB::raw("SUM(time_to_sec(timediff(user_attendance.out_time, user_attendance.in_time)) / 3600) as result"))->first('result'));
-
-        // $test = DB::table('user_attendance')->where('user_id', $employee->id)->whereBetween('date', [$this_month, $next_month])
-        // ->select(DB::raw("SUM(time_to_sec(timediff(out_time, in_time)) / 3600) as result"))->first('result');
-        
-        // $hello = DB::raw('TIMESTAMPDIFF(minute, startDateTime, endDateTime) as duration');
-
-        // dd($hour, $test);
-        // dd($office, $employee, $attendances);
-        // dd('hello');
         return view('salary.salary', compact('attributes', 'employees'));
     }
 
   
     public function salaryInfo($id){
-        $employee = User::query()->findOrFail($id);        // dd(\Carbon\Carbon::today());
+        $employee = User::query()->findOrFail($id);
         // $attendances = $employee->userAttendances()->whereBetween('user_attendance.date', [$this_month, $next_month])->orderBy('pivot_date', 'DESC')->get()
         $attendances = $employee->userAttendances()->orderBy('pivot_date', 'DESC')->get()
         ->groupBy(function($q){
@@ -133,23 +113,13 @@ class SalaryController extends Controller
             }
             $months[$key]->sunday = $sunday / 3600;
             $months[$key]->holiday = $holiday / 3600;
-            // $working_hour = $total_time_count->total_time - $total_time_count->break_time;
-                // $overtime = 0;
-                // if($working_hour > 173)
-                // $overtime = $working_hour - 173;
-                // dump($total_time_count, $working_hour, $overtime);
-            // dd($total_time_count->total_time - $total_time_count->break_time);
-            // dd($months);
         }
-        // dd($months);
         return view('salary.salary-info', compact('employee', 'months'));
     }
 
     public function info($id){
         $employee = User::query()->findOrFail($id);
         
-        // dd(\Carbon\Carbon::today());
-        // $attendances = $employee->userAttendances()->whereBetween('user_attendance.date', [$this_month, $next_month])->orderBy('pivot_date', 'DESC')->get()
         $attendances = $employee->userAttendances()->orderBy('pivot_date', 'DESC')->get()
         ->groupBy(function($q){
             return Carbon::parse($q->pivot->date)->format('F Y');
@@ -191,7 +161,6 @@ class SalaryController extends Controller
                     $breaktime = $break->diffInSeconds(Carbon::today());
                 }
                 
-                // $calendar = CalendarYear::where('calendar_id', $employee->office->public_holiday_calendar_id)->where('year', $year)->first();
                 $calendar = CalendarHoliday::where('date', $day->pivot->date)->first();
                 if($calendar == null){
                     if($weekday == 'Sunday'){
@@ -209,19 +178,14 @@ class SalaryController extends Controller
             $months[$key]->sunday = $sunday / 3600;
             $months[$key]->holiday = $holiday / 3600;
             $months[$key]->other = $other / 3600;
-
-            // $working_hour = $total_time_count->total_time - $total_time_count->break_time;
-                // $overtime = 0;
-                // if($working_hour > 173)
-                // $overtime = $working_hour - 173;
-                // dump($total_time_count, $working_hour, $overtime);
-            // dd($total_time_count->total_time - $total_time_count->break_time);
-            // dd($months);
         }
         return view('salary.salary-info', compact('employee', 'months'));
     }
 
-    public function payment($id,$month_year){
+    public function payment(Request $request){
+        $id = $request->id;
+        $month_year = $request->month_year;
+
         $employee = User::query()->findOrFail($id);
         
         $month = Carbon::createFromFormat('F-Y', $month_year);
@@ -270,7 +234,7 @@ class SalaryController extends Controller
                 $holiday += $time;
             }
         }
-        /* get_salary_month	month	complements	advantage	unemployment	is_paid	user_id	office_id */
+
         $salary_info = new Salary();
         $salary_info->get_salary_month = $month_year;
         $salary_info->date = Carbon::now()->format('Y-m-d H:i:s');
@@ -278,9 +242,9 @@ class SalaryController extends Controller
         $salary_info->office_id = $employee->office->id;
         $salary_info->save();
 
-        $sunday / 3600;
-        $holiday / 3600;
-        $other / 3600;
+        $sunday = $sunday / 3600;
+        $holiday = $holiday / 3600;
+        $other = $other / 3600;
         $salary = $employee->salary;
         $office_work_time = (($total_time_count->work_time - $total_time_count->break_time) * 60);
         $work_time = (($total_time_count->total_time - $total_time_count->break_time) * 60);
@@ -292,20 +256,38 @@ class SalaryController extends Controller
             $h = $employee->salary/173;
         }
         $compensatory = 0;
-        foreach ($employee->office->compensations as $i => $compensation){
-            if($compensation->type == 0){
-            } elseif($compensation->type == 1){
-                $compensatory += ($holiday*$h)*($compensation->increase/100);
-            } else {
-                $compensatory += ($overtime/60) - ($holiday + $sunday);
+        $contribute = 0;
+        foreach ($request->compensation as $compensation){
+            $compensation = Compensation::find($compensation);
+            if($compensation){
+                /* number_format($contribute, 2, '.','') */
+                if($compensation->type == 0){
+                    $amount = ($sunday*$h)*($compensation->increase/100);
+                    $salary_info->compensations()->attach($compensation->id, array('amount' => number_format($amount, 2, '.','')));
+                    $compensatory += $amount;
+                } elseif($compensation->type == 1){
+                    $amount = ($holiday*$h)*($compensation->increase/100);
+                    $salary_info->compensations()->attach($compensation->id, array('amount' => number_format($amount, 2, '.','')));
+                    $compensatory += $amount;
+                } else {
+                    $amount = ((($overtime/60) - ($holiday + $sunday))*$h)*($compensation->increase/100);
+                    $salary_info->compensations()->attach($compensation->id, array('amount' => number_format($amount, 2, '.','')));
+                    $compensatory += $amount;
+                }
             }
         }
-        $contribution = $salary*($employee->office->contributions()->sum('rate'))/100;
-        $total = ($salary + $compensatory) - $contribution;
+        foreach ($request->contribution as $contribution){
+            $contribution = Contribution::find($contribution);
+            if($contribution){
+                $amount = ($salary*$contribution['rate'])/100;
+                $salary_info->contributions()->attach($contribution->id, array('amount' => number_format($amount, 2, '.','')));
+                $contribute += $amount;
+            }
+        }
+        $total = ($salary + $compensatory) - $contribute;
         $salary_info->total = number_format($total, 2, '.','');
         $salary_info->is_paid = true;
         $salary_info->save();
-
         return redirect()->back();
     }
 }

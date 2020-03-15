@@ -35,4 +35,8 @@ class Contribution extends Model
     public function offices(){
         return $this->belongsTo(\App\Office::class, 'office_id');
     }
+
+    public function salaries(){
+        return $this->belongsToMany(\App\Contribution::class, 'salary_contribution', 'contribution_id', 'salary_id')->withPivot('amount');
+    }
 }

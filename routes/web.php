@@ -156,7 +156,7 @@ Route::group(
 			Route::get('/', 'SalaryController@index')->name('index');
 			// Route::get('/info/{id}', 'SalaryController@salaryInfo')->name('info');
 			Route::get('/info/{id}', 'SalaryController@info')->name('info');
-			Route::get('/payment/{id}-{month}', 'SalaryController@payment')->name('payment');
+			Route::post('/payment', 'SalaryController@payment')->name('payment');
 		});
 	});
 });

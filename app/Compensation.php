@@ -35,4 +35,8 @@ class Compensation extends Model
     public function offices(){
         return $this->belongsTo(\App\Office::class, 'office_id');
     }
+
+    public function salaries(){
+        return $this->belongsToMany(\App\Salary::class, 'salary_compensation', 'compensation_id', 'salary_id')->withPivot('amount');
+    }
 }

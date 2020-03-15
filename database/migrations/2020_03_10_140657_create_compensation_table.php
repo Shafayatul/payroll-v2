@@ -24,6 +24,17 @@ class CreateCompensationTable extends Migration
             $table->foreign('office_id')->references('id')->on('offices');
         });
 
+        Schema::create('salary_compensation', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->decimal('amount')->nullable();
+            $table->unsignedBigInteger('salary_id');
+            $table->unsignedBigInteger('compensation_id');
+            $table->timestamps();
+
+            $table->foreign('salary_id')->references('id')->on('salaries');
+            $table->foreign('compensation_id')->references('id')->on('compensations');
+        });
+
         Schema::create('mutualities', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
@@ -79,6 +90,7 @@ class CreateCompensationTable extends Migration
         Schema::dropIfExists('compensations');
         Schema::dropIfExists('mutualities');
         Schema::dropIfExists('contributions');
+        Schema::dropIfExists('salary_compensation');
         Schema::dropIfExists('salary_contribution');
         Schema::dropIfExists('salary_mutual');
     }
