@@ -17,7 +17,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         </div>
                         <div class="modal-body">
-                            <form method="POST" id="complete" action="{{ route('overtime.store') }}" accept-charset="UTF-8" style="display:inline">
+                            <form method="POST" id="complete" action="{{ route('compensation.store') }}" accept-charset="UTF-8" style="display:inline">
                                 @csrf
                                 <div class="row">
                                     <label class="control-group" for="type">Compensation type</label>
@@ -97,7 +97,7 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form method="POST" id="complete" action="{{ route('overtime.store') }}" accept-charset="UTF-8" style="display:inline">
+                                            <form method="POST" id="complete" action="{{ route('compensation.store') }}" accept-charset="UTF-8" style="display:inline">
                                                 @csrf
                                                 <div class="row">
                                                     <label class="control-group" for="type">Compensation type</label>

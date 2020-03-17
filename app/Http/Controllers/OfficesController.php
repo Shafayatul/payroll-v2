@@ -87,14 +87,6 @@ class OfficesController extends Controller
         return view('offices.show', compact('office', 'countries', 'companies', 'holidays'));
     }
 
-    public function getAjaxOfficeData($id)
-    {
-        $office = Office::findOrFail($id);
-        $office->calendar;
-        $office->company;
-        return response()->json($office);
-    }
-
     /**
      * Show the form for editing the specified resource.
      *

@@ -55,6 +55,7 @@
                         <li><a href="{{ url('departments') }}">Departments</a></li>
                         <li><a href="{{ route('setting.employee-information') }}">Employee Information</a></li>
                         {{-- <li><a href="{{ route('roles.index','members') }}">Employee Roles</a></li> --}}
+                        <li><a href="{{ route('employees.roles') }}">Employee Roles</a></li>
                         {{-- <li><a href="{{ url('industries') }}">Industry</a></li> --}}
                         <li><a href="{{ url('public-holiday-calendars') }}">Public Holiday</a></li>
                         <li><a href="{{ url('absenses') }}">Absence</a></li>
@@ -85,7 +86,7 @@
                         </li> --}}
                         {{-- <li><a href="{{ url('cost-centers') }}">Cost Center</a></li> --}}
                         {{-- <li><a href="{{ route('on-off-boardings.index') }}">On Off Boarding</a></li> --}}
-                        <li><a href="{{ route('overtime.index') }}">Overtime Compensation</a></li>
+                        <li><a href="{{ route('compensation.index') }}">Overtime Compensation</a></li>
                         <li><a href="{{ route('contribution.index') }}">Contribution</a></li>
                         <li><a href="{{ route('mutuality.index') }}">mutuality</a></li>
                         {{-- <li><a href="{{ route('setting.document') }}">Documents</a></li> --}}

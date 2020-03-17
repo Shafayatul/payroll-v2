@@ -185,9 +185,8 @@ class SalaryController extends Controller
     public function payment(Request $request){
         $id = $request->id;
         $month_year = $request->month_year;
-
         $employee = User::query()->findOrFail($id);
-        
+
         $month = Carbon::createFromFormat('F-Y', $month_year);
         $startofmonth = $month->firstOfMonth()->format('Y-m-d');
         $endofmonth = $month->endOfMonth()->format('Y-m-d');
@@ -260,7 +259,6 @@ class SalaryController extends Controller
         foreach ($request->compensation as $compensation){
             $compensation = Compensation::find($compensation);
             if($compensation){
-                /* number_format($contribute, 2, '.','') */
                 if($compensation->type == 0){
                     $amount = ($sunday*$h)*($compensation->increase/100);
                     $salary_info->compensations()->attach($compensation->id, array('amount' => number_format($amount, 2, '.','')));

@@ -99,4 +99,8 @@ class Office extends Model
     public function contributions(){
         return $this->hasMany(\App\Contribution::class, 'office_id');
     }
+
+    public function temRoles(){
+        return $this->hasMany(\App\TemRole::class, 'office_id');
+    }
 }

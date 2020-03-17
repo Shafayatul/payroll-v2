@@ -9,6 +9,9 @@ use Auth;
 use App\User;
 use App\Office;
 use App\Company;
+use App\TemRole;
+use App\TemPermission;
+
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -91,8 +94,20 @@ class RegisterController extends Controller
         $office->company_id = $company->id;
         $office->save();
 
+        $role = new TemRole();
+        $role->name = 'Owner';
+        $role->slug = 'owner';
+        $role->office_id = $office->id;
+        $role->save();
+
+        $permission = TemPermission::all();
+
+        $role->permissions()->sync($permission);
+
         $user->office_id = $office->id;
         $user->save();
+
+        $user->roles()->attach($role->id);
 
         return $user;
     }

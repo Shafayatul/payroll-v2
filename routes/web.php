@@ -35,11 +35,20 @@ Route::group(
 		// PAYROLL SETTINGS REQUESTING ROUTE
 		Route::group(['prefix' => 'configuration'], function () {
 
-			Route::resource('companies', 'CompaniesController');
+			Route::prefix('companies')->name('companies.')->group(function (){
+				Route::get('/', 'CompaniesController@index')->name('index')->middleware('permission:company-read');
+				Route::get('/{id}', 'CompaniesController@show')->name('show')->middleware('permission:company-read');
+				Route::get('/create', 'CompaniesController@create')->name('create')->middleware('permission:company-create');
+				Route::post('/', 'CompaniesController@store')->name('store')->middleware('permission:company-create');
+				Route::get('/{company}/edit', 'CompaniesController@edit')->name('edit')->middleware('permission:company-update');
+				Route::put('/{id}', 'CompaniesController@update')->name('update')->middleware('permission:company-update');
+				Route::DELETE('/{company}', 'CompaniesController@destroy')->name('destroy')->middleware('permission:company-delete');
+			});
+
+			// Route::resource('companies', 'CompaniesController');
 
 			// CUSTOM-FIELDS REQUESTING ROUTE
-			Route::prefix('custom-fields')->name('setting.')->group( function () {
-				
+			Route::prefix('custom-fields')->name('setting.')->middleware('permission:custom-field')->group( function () {
 				Route::get('/', 'CustomFieldController@index')->name('employee-information');
 				Route::post('section/store', 'CustomFieldController@sectionStore')->name('section.store');
 				Route::post('section/update', 'CustomFieldController@sectionUpdate')->name('section.update');
@@ -64,9 +73,39 @@ Route::group(
 			});
 
 		});
-		Route::resource('departments', 'DepartmentsController');
-		Route::resource('offices', 'OfficesController');
-		Route::resource('public-holiday-calendars', 'PublicHolidayCalendarsController');
+
+		Route::prefix('departments')->name('departments.')->group(function (){
+			Route::get('/', 'DepartmentsController@index')->name('index')->middleware('permission:department-read');
+			Route::get('/{id}', 'DepartmentsController@show')->name('show')->middleware('permission:department-read');
+			Route::get('/create', 'DepartmentsController@create')->name('create')->middleware('permission:department-create');
+			Route::post('/', 'DepartmentsController@store')->name('store')->middleware('permission:department-create');
+			Route::get('/{department}/edit', 'DepartmentsController@edit')->name('edit')->middleware('permission:department-update');
+			Route::patch('/{id}', 'DepartmentsController@update')->name('update')->middleware('permission:department-update');
+			Route::DELETE('/{department}', 'DepartmentsController@destroy')->name('destroy')->middleware('permission:department-delete');
+		});
+		
+		Route::prefix('offices')->name('offices.')->group(function (){
+			Route::get('/', 'OfficesController@index')->name('index')->middleware('permission:office-read');
+			Route::get('/{id}', 'OfficesController@show')->name('show')->middleware('permission:office-read');
+			Route::get('/create', 'OfficesController@create')->name('create')->middleware('permission:office-create');
+			Route::post('/', 'OfficesController@store')->name('store')->middleware('permission:office-create');
+			Route::get('/{office}/edit', 'OfficesController@edit')->name('edit')->middleware('permission:office-update');
+			Route::patch('/{id}', 'OfficesController@update')->name('update')->middleware('permission:office-update');
+			Route::DELETE('/{office}', 'OfficesController@destroy')->name('destroy')->middleware('permission:office-delete');
+		});
+		
+		Route::prefix('public-holiday-calendars')->name('public-holiday-calendars.')->group(function (){
+			Route::get('/', 'PublicHolidayCalendarsController@index')->name('index')->middleware('permission:holiday-calendar-read');
+			Route::get('/{id}', 'PublicHolidayCalendarsController@show')->name('show')->middleware('permission:holiday-calendar-read');
+			Route::get('/create', 'PublicHolidayCalendarsController@create')->name('create')->middleware('permission:holiday-calendar-create');
+			Route::post('/', 'PublicHolidayCalendarsController@store')->name('store')->middleware('permission:holiday-calendar-create');
+			Route::get('/{holiday-calendar}/edit', 'PublicHolidayCalendarsController@edit')->name('edit')->middleware('permission:holiday-calendar-update');
+			Route::patch('/{id}', 'PublicHolidayCalendarsController@update')->name('update')->middleware('permission:holiday-calendar-update');
+			Route::DELETE('/{holiday-calendar}', 'PublicHolidayCalendarsController@destroy')->name('destroy')->middleware('permission:holiday-calendar-delete');
+		});
+
+		// Route::resource('offices', 'OfficesController');
+		// Route::resource('public-holiday-calendars', 'PublicHolidayCalendarsController');
 		Route::resource('holidays', 'HolidaysController');
 		Route::resource('feedback-categories', 'FeedbackCategoriesController');
 		Route::resource('feedback-category-attributes', 'FeedbackCategoryAttributesController');
@@ -81,7 +120,7 @@ Route::group(
 		Route::post('attendence-working-hours/update', 'AttendenceWorkingHoursController@update')->name('attendence-working-hours-update');
 		
 		// AJAX REQUESTING ROUTE
-		Route::get('get-ajax-office-data/{id}', 'OfficesController@getAjaxOfficeData');
+		Route::get('get-ajax-office-data/{id}', 'AjaxController@getAjaxOfficeData');
 		Route::get('absenses', 'AbsensesController@index');
 		Route::post('absenses', 'AbsensesController@store')->name('absences.store');
 		Route::post('absenses/{id}', 'AbsensesController@update')->name('absence.update');
@@ -120,43 +159,48 @@ Route::group(
 		// Route::resource('companies', 'CompaniesController');
 
 		Route::prefix('employees')->name('employees.')->group( function () {
-			Route::get('index', 'Admin\EmployeeController@index')->name('index');
-			Route::post('store', 'Admin\EmployeeController@store')->name('store');
-			Route::get('{id}/edit', 'Admin\EmployeeController@edit')->name('edit');
-			Route::post('update', 'Admin\EmployeeController@update')->name('update');
+			Route::get('index', 'Admin\EmployeeController@index')->name('index')->middleware('permission:employee-read');
+			Route::post('store', 'Admin\EmployeeController@store')->name('store')->middleware('permission:employee-create');
+			Route::get('{id}/edit', 'Admin\EmployeeController@edit')->name('edit')->middleware('permission:employee-create');
+			Route::post('update', 'Admin\EmployeeController@update')->name('update')->middleware('permission:employee-update');
 
-			Route::get('attendance', 'Admin\EmployeeController@employeesAttendance')->name('attendance');
-			Route::post('attendance/set', 'Admin\EmployeeController@setAttendance')->name('attendance.set');
+			Route::get('attendance', 'Admin\EmployeeController@employeesAttendance')->name('attendance')->middleware('permission:employee-attendance-read');
+			Route::post('attendance/set', 'Admin\EmployeeController@setAttendance')->name('attendance.set')->middleware('permission:employee-attendance-create');
 			
-			Route::get('absence', 'Admin\EmployeeController@employeesAbsence')->name('absence');
-			Route::get('absence/get/{id}', 'Admin\EmployeeController@getAbsence')->name('absence.get');
-			Route::post('absence/set', 'Admin\EmployeeController@setAbsence')->name('absence.set');
+			Route::get('attendance/get/{id}', 'Admin\EmployeeController@getAttendance')->name('get')->middleware('permission:employee-attendance-read');
 			
-			Route::get('attendance/get/{id}', 'Admin\EmployeeController@getAttendance')->name('get');
+			Route::get('absence', 'Admin\EmployeeController@employeesAbsence')->name('absence')->middleware('permission:employee-absence-read');
+			Route::get('absence/get/{id}', 'Admin\EmployeeController@getAbsence')->name('absence.get')->middleware('permission:employee-absence-read');
+			Route::post('absence/set', 'Admin\EmployeeController@setAbsence')->name('absence.set')->middleware('permission:employee-absence-create');
+
+			Route::get('roles', 'Admin\EmployeeController@employeeRoles')->name('roles')->middleware('permission:employee-roles-read');
+			Route::post('roles/store', 'Admin\EmployeeController@employeeRolesStore')->name('roles.store')->middleware('permission:employee-roles-create');
+			Route::put('roles/update/{id}', 'Admin\EmployeeController@employeeRolesUpdate')->name('roles.update')->middleware('permission:employee-roles-update');
+			Route::DELETE('roles/destroy/{id}', 'Admin\EmployeeController@employeeRolesDestroy')->name('roles.destroy')->middleware('permission:employee-roles-delete');
 		});
 
-		Route::prefix('overtime')->name('overtime.')->group(function (){
-			Route::get('index', 'AbsensesController@overtimeIndex')->name('index');
-			Route::post('store', 'AbsensesController@overtimeStore')->name('store');
+		Route::prefix('compensation')->name('compensation.')->group(function (){
+			Route::get('index', 'AbsensesController@overtimeIndex')->name('index')->middleware('permission:compensation-read');
+			Route::post('store', 'AbsensesController@overtimeStore')->name('store')->middleware('permission:compensation-create');
 		});
 
 		Route::prefix('mutuality')->name('mutuality.')->group(function (){
-			Route::get('index', 'AbsensesController@mutualityIndex')->name('index');
-			Route::post('store', 'AbsensesController@mutualityStore')->name('store');
-			Route::post('update', 'AbsensesController@mutualityUpdate')->name('update');
+			Route::get('index', 'AbsensesController@mutualityIndex')->name('index')->middleware('permission:mutuality-read');
+			Route::post('store', 'AbsensesController@mutualityStore')->name('store')->middleware('permission:mutuality-create');
+			Route::post('update', 'AbsensesController@mutualityUpdate')->name('update')->middleware('permission:mutuality-update');
 		});
 
 		Route::prefix('contribution')->name('contribution.')->group(function (){
-			Route::get('index', 'AbsensesController@contributionIndex')->name('index');
-			Route::post('store', 'AbsensesController@contributionStore')->name('store');
-			Route::post('update', 'AbsensesController@contributionUpdate')->name('update');
+			Route::get('index', 'AbsensesController@contributionIndex')->name('index')->middleware('permission:contribution-read');
+			Route::post('store', 'AbsensesController@contributionStore')->name('store')->middleware('permission:contribution-create');
+			Route::post('update', 'AbsensesController@contributionUpdate')->name('update')->middleware('permission:contribution-update');
 		});
 
 		Route::prefix('salary')->name('salary.')->group(function () {
-			Route::get('/', 'SalaryController@index')->name('index');
+			Route::get('/', 'SalaryController@index')->name('index')->middleware('permission:salary-read');
 			// Route::get('/info/{id}', 'SalaryController@salaryInfo')->name('info');
-			Route::get('/info/{id}', 'SalaryController@info')->name('info');
-			Route::post('/payment', 'SalaryController@payment')->name('payment');
+			Route::get('/info/{id}', 'SalaryController@info')->name('info')->middleware('permission:salary-read');
+			Route::post('/payment', 'SalaryController@payment')->name('payment');//->middleware('permission:salary-payment-create');
 		});
 	});
 });

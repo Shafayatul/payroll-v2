@@ -98,6 +98,30 @@ class CreatePivotTable extends Migration
             $table->foreign('absence_id')->references('id')->on('absences');
             $table->foreign('user_id')->references('id')->on('users');
         });
+
+        Schema::create('users_tem_roles', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('role_id');
+         
+          //FOREIGN KEY CONSTRAINTS
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('tem_roles')->onDelete('cascade');
+         
+          //SETTING THE PRIMARY KEYS
+            $table->primary(['user_id','role_id']);
+        });
+
+        Schema::create('roles_tem_permissions', function (Blueprint $table) {
+            $table->unsignedBigInteger('role_id');
+            $table->unsignedBigInteger('permission_id');
+           
+            //FOREIGN KEY CONSTRAINTS
+            $table->foreign('role_id')->references('id')->on('tem_roles')->onDelete('cascade');
+            $table->foreign('permission_id')->references('id')->on('tem_permissions')->onDelete('cascade');
+           
+            //SETTING THE PRIMARY KEYS
+            $table->primary(['role_id','permission_id']);
+        });
     }
 
     /**
@@ -116,5 +140,7 @@ class CreatePivotTable extends Migration
         Schema::dropIfExists('permission_role');
         Schema::dropIfExists('user_attendance');
         Schema::dropIfExists('user_absence');
+        Schema::dropIfExists('users_tem_roles');
+        Schema::dropIfExists('roles_tem_permissions');
     }
 }

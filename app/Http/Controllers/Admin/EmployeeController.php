@@ -6,9 +6,11 @@ use App\Absence;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 use App\EmployeeDetailAttribute;
@@ -16,6 +18,8 @@ use App\CalendarHoliday;
 use App\EmployeeDetail;
 use App\UserAbsence;
 use App\Attendance;
+use App\TemPermission;
+use App\TemRole;
 use App\Weekday;
 use App\User;
 
@@ -145,6 +149,8 @@ class EmployeeController extends Controller
         $user->department_id = $request->department;
         $user->save();
 
+        $user->roles()->sync($request->role);
+
         if($request->value){
             foreach($request->value as $attribute => $value){
                 if($value != null){
@@ -153,7 +159,7 @@ class EmployeeController extends Controller
                     $detail = new EmployeeDetail();
                     /* 'value', 'user_id', 'attribute_id' */
                     $detail->attribute_id = $attribute;
-                    $detail->user_id = Auth::id();
+                    $detail->user_id = $user->id;
                     $detail->value = $value;
                     $detail->save();
                 }
@@ -184,7 +190,7 @@ class EmployeeController extends Controller
         $office = Auth::user()->office;
         $company = $office->company;
         $employees = User::where('office_id', $office->id)->get();
-
+        $roles = $office->temRoles;
 
         $sections = $company->employeeInformationSections;
         $attributes = EmployeeDetailAttribute::whereHas('employeeInformationSection', function($q) use($company) {
@@ -193,7 +199,7 @@ class EmployeeController extends Controller
 
         //Edit Data
         $user = User::findOrFail($id);
-        return view('employees.edit', compact('user', 'office', 'company', 'sections', 'attributes'));
+        return view('employees.edit', compact('user', 'office', 'roles', 'company', 'sections', 'attributes'));
     }
 
     /**
@@ -215,6 +221,8 @@ class EmployeeController extends Controller
         $user->department_id = $request->department;
         $user->save();
 
+        $user->roles()->sync($request->role);
+
         if($request->value){
             foreach($request->value as $attribute => $value){
                 if($value != null){
@@ -235,7 +243,7 @@ class EmployeeController extends Controller
                 }
             }
         }
-        return redirect()->back();
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -247,5 +255,64 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function employeeRoles(){
+        $roles = Auth::user()->office->temRoles;
+        $users = Auth::user()->office->users;
+        $permissions = TemPermission::all();
+        return view('admin.role.roles', compact('roles', 'permissions', 'users'));
+    }
+
+    public function employeeRolesStore(Request $request){
+
+        $role = new TemRole();
+        $role->name = $request->name;
+        $role->slug = Str::slug($request->name, '-');
+        $role->office_id = Auth::user()->office_id;
+        $role->save();
+
+        if ($request->permission) {
+            foreach ($request->permission as $permission) {
+                $role->permissions()->attach($permission);
+            }
+        }
+
+        if ($request->user) {
+            foreach ($request->user as $user) {
+                $role->users()->attach($user);
+            }
+        }
+
+        return redirect()->back();
+    }
+
+    public function employeeRolesUpdate(Request $request, $id){
+
+        $role = TemRole::findOrFail($id);
+        $role->name = $request->name;
+        $role->slug = Str::slug($request->name, '-');
+        $role->save();
+
+        if ($request->permission) {
+            $permissions = $request->permission;
+            $role->permissions()->sync($permissions);
+        }
+
+        if ($request->user) {
+            $users = $request->user;
+            $role->users()->sync($users);
+        }
+
+        return redirect()->back();
+    }
+
+    public function employeeRolesDestroy($id){
+
+        $role = TemRole::findOrFail($id);
+        $role->permissions()->detach();
+        $role->delete();
+
+        return redirect()->back();
     }
 }

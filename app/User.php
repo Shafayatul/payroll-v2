@@ -6,12 +6,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Traits\HasPermissionsTrait;
 use App\Traits\keyFunctionTrait;
 use App\Traits\salaryTrait;
 
 class User extends Authenticatable
 {
-    use Notifiable, keyFunctionTrait, salaryTrait;
+    use Notifiable, keyFunctionTrait, salaryTrait, HasPermissionsTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -86,5 +87,9 @@ class User extends Authenticatable
 
     public function salaries(){
         return $this->hasMany(\App\Salary::class, 'user_id');
+    }
+
+    public function roles(){
+        return $this->belongsToMany(\App\TemRole::class, 'users_tem_roles', 'user_id', 'role_id');
     }
 }

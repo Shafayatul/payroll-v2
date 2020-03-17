@@ -158,13 +158,16 @@
                             </div>
 
                         {!! Form::model($company, [
-                            'method' => 'PATCH',
+                            'method' => 'PUT',
                             'route' => ['companies.update', $company->id],
                             'class' => 'form-horizontal',
                             'id' => 'company-edit-form',
                             'files' => true,
                             'novalidate' => 'novalidate'
                         ]) !!}
+                        {{-- <form class='form-horizontal' id="company-edit-form" novalidate="novalidate" action="{{ route('companies.update', $company->id) }}"  method="post"></form>
+                            @csrf
+                            @method('PUT') --}}
                                 <div class="form-group row">
                                     <label class="col-md-4 control-label">
                                         Company name

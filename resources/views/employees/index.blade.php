@@ -179,6 +179,16 @@
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <div class="form-group row">
+                                                    <label for="input-role" class="control-label col-md-4">User Role</label>
+                                                    <div class="col-md-6">
+                                                        <select class="select2 form-control" id="input-role" name="role">
+                                                            @foreach (Auth::user()->office->temRoles as $role)
+                                                            <option value="{{ $role->id }}" id="role-{{ $role->id }}">{{ $role->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </section>
                                             @foreach ($sections as $section)
                                             <!-- Step {{$loop->iteration}} -->
@@ -193,7 +203,7 @@
                                                         @elseif($attribute->dataTypes->key == 1)
                                                         <select class="form-control custom-select" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]">
                                                             @foreach ($attribute->dataTypes->attributeOptions as $option)
-                                                            <option value="{{ $option->id }}">{{ $option->name }}</option>
+                                                            <option value="{{ $option->name }}">{{ $option->name }}</option>
                                                             @endforeach
                                                         </select>
                                                         @elseif($attribute->dataTypes->key == 4)
@@ -206,7 +216,7 @@
                                                         @elseif($attribute->dataTypes->key == 7)
                                                         <select class="tag form-control" id="input-{{$attribute->id}}" multiple="multiple" name="value[{{$attribute->id}}][]">
                                                             @foreach ($attribute->dataTypes->attributeOptions as $option)
-                                                            <option value="{{ $option->id }}" id="taged-{{ $option->id }}">{{ $option->name }}</option>
+                                                            <option value="{{ $option->name }}" id="taged-{{ $option->id }}">{{ $option->name }}</option>
                                                             @endforeach
                                                         </select>
                                                         @endif
@@ -224,91 +234,6 @@
                 </div>
             </div>
             <div class=" table-responsive m-t-40">
-                {{-- <section class="filters well">
-                    <fieldset class="row">
-                        <div class="filters-list">Filters list</div>
-                        <div class="Filter-button">
-                                   
-                            <select id="grade" name="grade">
-                            <option value="-1"><button>Status</button></option>
-                            <option value="3">3</option>
-                            <option value="2">2</option>
-                            <option value="">1</option>
-                            <option value="">-1</option>
-                            <option value="-2">-2</option>
-                            <option value="-3">-3</option>
-                            <option value="-4">-4</option>
-                            <option value="-5">-5</option>
-                            </select>
-                           
-                        </div>
-                        <div class="Filter-button">
-                            <select id="two_grade" name="two_grade">
-                                <option value="2"><button>Employment type</button></option>
-                                <option value="3"></option>
-                                <option value="">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button"> 
-                                <select id="tree_grade " name="tree_grade">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button">
-                                <select id="grade-4" name="grade-4">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button">
-                                <select id="grade-5 " name="grade-5">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>
-                        <div class="Filter-button"> 
-                                <select id="grade-6" name="grade-6">
-                                <option value="1"><button>Office</button></option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                                <option value="-1">-1</option>
-                                <option value="-2">-2</option>
-                                <option value="-3">-3</option>
-                                <option value="-4">-4</option>
-                                <option value="-5">-5</option>
-                            </select>
-                        </div>                  
-                    </fieldset> 
-                </section> --}}
                 <section class="data">   
                     <table id="example" class="display datatable table table-bordered table-striped table-hover" data-table-source="" data-table-filter-target >
                         <thead>

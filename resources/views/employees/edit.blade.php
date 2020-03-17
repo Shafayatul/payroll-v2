@@ -78,6 +78,16 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="input-role" class="control-label col-md-4">User Role</label>
+                        <div class="col-md-6">
+                            <select class="select2 form-control" id="input-role" name="role">
+                                @foreach ($roles as $role)
+                                <option value="{{ $role->id }}" id="role-{{ $role->id }}" {{ ($role->id == $user->role_id) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </section>
                 @foreach ($sections as $section)
                 <!-- Step {{$loop->iteration}} -->
@@ -88,23 +98,31 @@
                         <label for="input-{{$attribute->id}}" class="control-label col-md-4">{{$attribute->name}}</label>
                         <div class="col-md-6">
                             @php
+                                // dd($user->employeeDetails->contains($attribute->id), $attribute->id);
+                                $attribute_value = null;
                                 if($user->employeeDetails->contains($attribute->id) == true){
                                     $attribute_value = $user->employeeDetails()->where('employee_details.attribute_id', $attribute->id)->first();
                                 }
                             @endphp
                             @if($attribute->dataTypes->key == 0)
-                            <input type="text" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]" placeholder="{{$attribute->name}}" class="form-control" value="{{ $attribute_value->value }}">
+                                @if($attribute_value)
+                                <input type="text" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]" placeholder="{{$attribute->name}}" class="form-control" value="{{ $attribute_value->value ?? null}}">
+                                @else
+                                <input type="text" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]" placeholder="{{$attribute->name}}" class="form-control">
+                                @endif
                             @elseif($attribute->dataTypes->key == 1)
-                            
                             <select class="form-control custom-select" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]">
                                 @foreach ($attribute->dataTypes->attributeOptions as $option)
-                                <option value="{{ $option->id }}" {{ ($option->id == $attribute_value->value) ? 'selected' : '' }}>{{ $option->name }}</option>
+                                    @if($attribute_value)
+                                    <option value="{{ $option->name }}" {{ ($option->name == $attribute_value->value) ? 'selected' : '' }}>{{ $option->name }}</option>
+                                    @else
+                                    <option value="{{ $option->name }}">{{ $option->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
-                            
                             @elseif($attribute->dataTypes->key == 4)
                             <div class="input-group">
-                                <input type="text" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]" class="form-control date" id="date-{{$attribute->id}}" data-date="{{$attribute->id}}" placeholder="dd/mm/yyyy" value="{{ $attribute_value->value }}">
+                                <input type="text" id="input-{{$attribute->id}}" name="value[{{$attribute->id}}]" class="form-control date" id="date-{{$attribute->id}}" data-date="{{$attribute->id}}" placeholder="dd/mm/yyyy" value="{{ $attribute_value? $attribute_value->value : ''}}">
                                 <div class="input-group-append">
                                     <span class="input-group-text date-calendar" id=""><i class="fas fa-calendar"></i></span>
                                 </div>
@@ -112,7 +130,11 @@
                             @elseif($attribute->dataTypes->key == 7)
                             <select class="tag form-control" id="input-{{$attribute->id}}" multiple="multiple" name="value[{{$attribute->id}}][]">
                                 @foreach ($attribute->dataTypes->attributeOptions as $option)
-                                <option value="{{ $option->id }}" id="taged-{{ $option->id }}" {{ ($option->id == $attribute_value->value) ? 'selected' : '' }}>{{ $option->name }}</option>
+                                    @if($attribute_value)    
+                                    <option value="{{ $option->name }}" id="taged-{{ $option->name }}" {{ ($option->name == $attribute_value->value) ? 'selected' : '' }}>{{ $option->name }}</option>
+                                    @else
+                                    <option value="{{ $option->name }}" id="taged-{{ $option->name }}">{{ $option->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                             @endif
